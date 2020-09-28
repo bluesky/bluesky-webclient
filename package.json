@@ -7,11 +7,15 @@
     "@material-ui/icons": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
+    "axios": "^0.20.0",
     "http-proxy-middleware": "^1.0.5",
     "react": "latest",
     "react-dom": "latest",
+    "react-redux": "^7.2.1",
     "react-router-dom": "latest",
     "react-scripts": "latest",
+    "redux": "^4.0.5",
+    "redux-thunk": "^2.3.0",
     "typescript": "latest"
   },
   "scripts": {
@@ -33,6 +37,8 @@
     ]
   },
   "devDependencies": {
-    "@types/react-router-dom": "^5.1.5"
+    "@types/react-redux": "^7.1.9",
+    "@types/react-router-dom": "^5.1.5",
+    "@types/redux-thunk": "^2.1.0"
   }
 }
