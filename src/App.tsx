@@ -3,6 +3,7 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
+import {getOverview, IPlan} from './queueserver'
 
 function Copyright() {
   return (
@@ -17,13 +18,6 @@ function Copyright() {
   );
 }
 
-interface IPlan {
-  manager_state: string,
-  msg: string,
-  plans_in_queue: number,
-  running_plan_uid: string,
-  worker_environment_exists: boolean
-}
 interface IState {
   plan: IPlan;
 }
@@ -60,8 +54,7 @@ class App extends React.Component<{}, IState> {
   }
 
   componentDidMount() {
-      fetch('/qs/')
-          .then(res => res.json())
+      getOverview()
           .then((data) => {
               this.setState({ plan: data })
               console.log(data)
