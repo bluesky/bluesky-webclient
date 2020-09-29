@@ -7,7 +7,8 @@ var axiosInstance = axios.create({
 export enum PlanActionTypes {
     GETOVERVIEW = "PLANS/GETOVERVIEWS",
     LOADING = "PLANS/LOADING",
-    GETPLANLIST = "PLANS/GETPLANLIST"
+    GETPLANLIST = "PLANS/GETPLANLIST",
+    SUBMITPLAN = "PLANS/SUBMITPLAN"
 }
 
 export interface IPlan {
@@ -42,11 +43,22 @@ export interface IPlanObjectsLoadingAction {
     type: PlanActionTypes.LOADING
 }
 
+export interface IPlanSubmitAction {
+    type: PlanActionTypes.SUBMITPLAN ,
+    plan: IPlanObject
+}
+
+export interface IPlanSubmitLoadingAction {
+    type: PlanActionTypes.LOADING
+}
+
 export type PlanActions =
   | IPlanGetOverviewAction
   | IPlanLoadingAction
   | IPlanObjectsAction
   | IPlanObjectsLoadingAction
+  | IPlanSubmitAction
+  | IPlanSubmitLoadingAction
 
 export interface IPlanState {
     readonly plan: IPlan;
@@ -66,6 +78,25 @@ export interface IPlanObjectsState {
 
 export const getQueuedPlans = async(): Promise<IPlanObject[]> => {
     const res = await axiosInstance.get('/queue_view');
-    console.log(res)
+    console.log(res);
     return res.data.queue;
+}
+
+export interface IPlanSubmitState {
+    readonly plan: IPlanObject;
+    readonly planLoading: boolean;
+}
+
+export const submitPlan = async(): Promise<IPlanObject> => {
+    const res = await axiosInstance.post('/add_to_queue',
+        {
+            plan:
+            {
+                name: "count",
+                args: [["det1", "det2"]],
+                kwargs: {"num": 10, "delay": 1}
+            }
+        });
+    console.log(res);
+    return res.data;
 }
