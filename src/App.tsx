@@ -1,9 +1,14 @@
 import React from 'react';
+import { connect } from 'react-redux'
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
-import {getOverview, IPlan} from './queueserver'
+//import {getOverview, IPlan} from './queueserver'
+import { IApplicationState } from './store'
+import { getOverview } from './planactions'
+import { RouteComponentProps } from 'react-router-dom';
+import { IPlan } from './queueserver'
 
 function Copyright() {
   return (
@@ -18,24 +23,13 @@ function Copyright() {
   );
 }
 
-interface IState {
+interface IProps extends RouteComponentProps {
+  getOverview: typeof getOverview;
+  loading: boolean;
   plan: IPlan;
 }
 
-class App extends React.Component<{}, IState> {
-  public constructor() {
-    super({});
-    this.state = {
-        plan: {
-            manager_state: "undefined",
-            msg: "",
-            plans_in_queue: 0,
-            running_plan_uid: "",
-            worker_environment_exists: false
-        }
-    };
-  }
-
+class App extends React.Component<IProps> {
   render() {
       return (
         <Container maxWidth="sm">
@@ -44,8 +38,8 @@ class App extends React.Component<{}, IState> {
             This is the future of all your Bluesky acquisition dreams on the web!
           </Typography>
           <Typography variant="h6" component="h4" gutterBottom>
-            There are {this.state.plan.plans_in_queue} plans in the queue.
-            The running plan uid is '{this.state.plan.running_plan_uid}'
+            There are {this.props.plan.plans_in_queue} plans in the queue.
+            The running plan uid is '{this.props.plan.running_plan_uid}'
           </Typography>
           <Copyright />
         </Box>
@@ -54,13 +48,25 @@ class App extends React.Component<{}, IState> {
   }
 
   componentDidMount() {
-      getOverview()
-          .then((data) => {
-              this.setState({ plan: data })
-              console.log(data)
-          })
-          .catch(console.log)
+      this.props.getOverview();
   }
+
 }
 
-export default App;
+const mapStateToProps = (store: IApplicationState) => {
+  return {
+    loading: store.plan.planLoading,
+    plan: store.plan.plan
+  };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+  return {
+    getOverview: () => dispatch(getOverview())
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(App);
