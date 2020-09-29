@@ -6,9 +6,9 @@ import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 //import {getOverview, IPlan} from './queueserver'
 import { IApplicationState } from './store'
-import { getOverview } from './planactions'
+import { getOverview, getQueuedPlans } from './planactions'
 import { RouteComponentProps } from 'react-router-dom';
-import { IPlan } from './queueserver'
+import { IPlan, IPlanObject } from './queueserver'
 
 function Copyright() {
   return (
@@ -25,8 +25,11 @@ function Copyright() {
 
 interface IProps extends RouteComponentProps {
   getOverview: typeof getOverview;
-  loading: boolean;
+  getQueuedPlans: typeof getQueuedPlans;
+  loadingPlan: boolean;
   plan: IPlan;
+  loadingPlans: boolean;
+  plans: IPlanObject[];
 }
 
 class App extends React.Component<IProps> {
@@ -41,6 +44,13 @@ class App extends React.Component<IProps> {
             There are {this.props.plan.plans_in_queue} plans in the queue.
             The running plan uid is '{this.props.plan.running_plan_uid}'
           </Typography>
+          <div>
+            <ul>
+              {this.props.plans.map(planObject => (
+                <li key={planObject.plan_uid}>{planObject.plan_uid.substr(0,8)}: {planObject.name}</li>
+              ))}
+            </ul>
+          </div>
           <Copyright />
         </Box>
       </Container>
@@ -49,20 +59,24 @@ class App extends React.Component<IProps> {
 
   componentDidMount() {
       this.props.getOverview();
+      this.props.getQueuedPlans();
   }
 
 }
 
 const mapStateToProps = (store: IApplicationState) => {
   return {
-    loading: store.plan.planLoading,
-    plan: store.plan.plan
+    loadingPlan: store.plan.planLoading,
+    plan: store.plan.plan,
+    loadingPlans: store.plans.plansLoading,
+    plans: store.plans.plans
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    getOverview: () => dispatch(getOverview())
+    getOverview: () => dispatch(getOverview()),
+    getQueuedPlans: () => dispatch(getQueuedPlans())
   };
 };
 

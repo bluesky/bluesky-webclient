@@ -1,14 +1,16 @@
 import { applyMiddleware, combineReducers, createStore, Store } from "redux"
 import thunk from "redux-thunk"
-import { planReducer } from "./planreducers"
-import { IPlanState } from "./queueserver"
+import { planObjectsReducer, planReducer } from "./planreducers"
+import { IPlanState, IPlanObjectsState } from "./queueserver"
 
 export interface IApplicationState {
     plan: IPlanState;
+    plans: IPlanObjectsState;
 }
 
 const rootReducer = combineReducers<IApplicationState>({
-    plan: planReducer
+    plan: planReducer,
+    plans: planObjectsReducer
 })
 
 export default function configureStore(): Store<IApplicationState> {

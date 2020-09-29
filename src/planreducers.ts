@@ -1,5 +1,5 @@
 import { Reducer } from "redux";
-import { IPlanState, PlanActions, PlanActionTypes } from "./queueserver";
+import { IPlanState, IPlanObjectsState, PlanActions, PlanActionTypes } from "./queueserver";
 
 const initialPlanState: IPlanState = {
     plan: {
@@ -28,6 +28,39 @@ export const planReducer: Reducer<IPlanState, PlanActions> = (
                 ...state,
                 plan: action.plan,
                 planLoading: false
+            };
+        }
+        default: {
+            return state;
+        }
+    }
+};
+
+const initialPlanObjectsState: IPlanObjectsState = {
+    plans: [{
+        args: [],
+        name: "",
+        plan_uid: ""
+    }],
+    plansLoading: false
+};
+
+export const planObjectsReducer: Reducer<IPlanObjectsState, PlanActions> = (
+    state = initialPlanObjectsState,
+    action
+) => {
+    switch (action.type) {
+        case PlanActionTypes.LOADING: {
+            return {
+                ...state,
+                plansLoading: true
+            };
+        }
+        case PlanActionTypes.GETPLANLIST: {
+            return {
+                ...state,
+                plans: action.plans,
+                plansLoading: false
             };
         }
         default: {
