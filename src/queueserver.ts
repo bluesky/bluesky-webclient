@@ -77,7 +77,7 @@ export interface IPlanObjectsState {
 }
 
 export const getQueuedPlans = async(): Promise<IPlanObject[]> => {
-    const res = await axiosInstance.get('/queue_view');
+    const res = await axiosInstance.get('/get_queue');
     console.log(res);
     return res.data.queue;
 }
