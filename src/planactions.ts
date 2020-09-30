@@ -1,9 +1,10 @@
 import { ActionCreator, AnyAction, Dispatch } from "redux"
 import { ThunkAction } from "redux-thunk"
 import { getOverview as getOverviewAPI,
-    getQueuedPlans as getQueuedPlansAPI } from "./queueserver"
-import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction,
-    IPlanState, IPlanObjectsState, PlanActionTypes} from "./queueserver"
+    getQueuedPlans as getQueuedPlansAPI,
+    submitPlan as submitPlanAPI } from "./queueserver"
+import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, IPlanSubmitAction,
+    IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes} from "./queueserver"
 
 const loading: ActionCreator<IPlanLoadingAction> = () => ({
     type: PlanActionTypes.LOADING
@@ -27,6 +28,17 @@ export const getQueuedPlans: ActionCreator<ThunkAction<Promise<AnyAction>, IPlan
         return dispatch({
           plans,
           type: PlanActionTypes.GETPLANLIST
+        });
+    };
+};
+
+export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = () => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const plan = await submitPlanAPI();
+        return dispatch({
+          plan,
+          type: PlanActionTypes.SUBMITPLAN
         });
     };
 };

@@ -1,8 +1,11 @@
 import React from 'react';
+import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-
+import { IApplicationState } from './store';
+import { submitPlan } from './planactions';
+import { IPlanObject } from './queueserver';
 import {
     RouteComponentProps
 } from "react-router-dom";
@@ -20,52 +23,56 @@ type RouteParams = { id: string, uid: string };
 
 interface Props extends RouteComponentProps<RouteParams> { }
 
-class AcquirePage extends React.Component<Props, IState> {
-    public constructor(props: Props) {
-        super(props);
-        this.state = {
-            run: {
-                uid: "undefined",
-                start: {
-                    time: 0,
-                    uid: "undefined",
-                    scan_id: -1,
-                },
-                streams: [ "" ]
-            }
-        };
-    }
+interface IProps extends RouteComponentProps {
+    submitPlan: typeof submitPlan;
+    loading: boolean;
+    plan: IPlanObject;
+}
 
+class AcquirePage extends React.Component<IProps> {
     render() {
         return (
           <Container maxWidth="sm">
           <Box my={4}>
             <Typography variant="h4" component="h1" gutterBottom>
-              This is where we will acquire data {this.props.match.params.uid}
+              This is where we will acquire data...
+              <button onClick={this.handleSubmitClick}>Submit</button>
               </Typography>
               <Typography variant="h6" component="h1" gutterBottom>
               <div>
-                  scan_id: {this.state.run.start.scan_id} with&nbsp;
-                  {this.state.run.streams.length} streams.
+                  loading: {this.props.loading}.
               </div>
             </Typography>
             <div><pre>The pretty printed JSON:<br />
-                { JSON.stringify(this.state.run, null, 2) }</pre></div>
+                { JSON.stringify(this.props.plan, null, 2) }</pre></div>
           </Box>
         </Container>
         )
     }
 
+    private handleSubmitClick = () => {
+        this.props.submitPlan();
+    }
+
     componentDidMount() {
-        var catalogUrl = `/db/runs/${this.props.match.params.id}/${this.props.match.params.uid}`;
-        fetch(catalogUrl)
-            .then(res => res.json())
-            .then((data) => {
-                this.setState({ run: data })
-                console.log(data)
-            })
-            .catch(console.log)
+        //this.props.submitPlan();
     }
 }
 
-export default AcquirePage;
+const mapStateToProps = (store: IApplicationState) => {
+    return {
+      loading: store.submitted.planLoading,
+      plan: store.submitted.plan,
+    };
+};
+
+const mapDispatchToProps = (dispatch: any) => {
+    return {
+      submitPlan: () => dispatch(submitPlan())
+    };
+};
+
+export default connect(
+    mapStateToProps,
+    mapDispatchToProps
+)(AcquirePage);
