@@ -4,11 +4,10 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
-//import {getOverview, IPlan} from './queueserver'
-import { IApplicationState } from './store'
-import { getOverview, getQueuedPlans } from './planactions'
+import { IApplicationState } from './store';
+import { getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
-import { IPlan, IPlanObject } from './queueserver'
+import { IPlan, IPlanObject } from './queueserver';
 
 function Copyright() {
   return (

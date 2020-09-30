@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { IApplicationState } from './store'
-import { submitPlan } from './planactions'
-import { IPlanObject } from './queueserver'
+import { IApplicationState } from './store';
+import { submitPlan } from './planactions';
+import { IPlanObject } from './queueserver';
 import {
     RouteComponentProps
 } from "react-router-dom";
