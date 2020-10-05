@@ -5,6 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import { IApplicationState } from './store';
 import { submitPlan } from './planactions';
+import { clearQueue } from './planactions';
 import { IPlanObject } from './queueserver';
 import {
     RouteComponentProps
@@ -25,6 +26,7 @@ interface Props extends RouteComponentProps<RouteParams> { }
 
 interface IProps extends RouteComponentProps {
     submitPlan: typeof submitPlan;
+    clearQueue: typeof clearQueue;
     loading: boolean;
     plan: IPlanObject;
 }
@@ -37,7 +39,8 @@ class AcquirePage extends React.Component<IProps> {
             <Typography variant="h4" component="h1" gutterBottom>
               This is where we will acquire data...
               <button onClick={this.handleSubmitClick}>Submit</button>
-              </Typography>
+              <button onClick={this.handleClearQueue}>Clear Queue</button>
+            </Typography>
               <Typography variant="h6" component="h1" gutterBottom>
               <div>
                   loading: {this.props.loading}.
@@ -54,6 +57,9 @@ class AcquirePage extends React.Component<IProps> {
         this.props.submitPlan();
     }
 
+    private handleClearQueue = () => {
+        this.props.clearQueue();
+    }
     componentDidMount() {
         //this.props.submitPlan();
     }
@@ -68,7 +74,8 @@ const mapStateToProps = (store: IApplicationState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
-      submitPlan: () => dispatch(submitPlan())
+      submitPlan: () => dispatch(submitPlan()),
+      clearQueue: () => dispatch(clearQueue()),
     };
 };
 

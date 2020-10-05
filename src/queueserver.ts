@@ -8,7 +8,8 @@ export enum PlanActionTypes {
     GETOVERVIEW = "PLANS/GETOVERVIEWS",
     LOADING = "PLANS/LOADING",
     GETPLANLIST = "PLANS/GETPLANLIST",
-    SUBMITPLAN = "PLANS/SUBMITPLAN"
+    SUBMITPLAN = "PLANS/SUBMITPLAN",
+    CLEARQUEUE = "PLANS/CLEARQUEUE",
 }
 
 export interface IPlan {
@@ -97,6 +98,13 @@ export const submitPlan = async(): Promise<IPlanObject> => {
                 kwargs: {"num": 10, "delay": 1}
             }
         });
+    console.log(res);
+    return res.data;
+}
+
+export const clearQueue = async(): Promise<IPlan> => {
+    const res = await axiosInstance.post('/clear_queue',
+        {});
     console.log(res);
     return res.data;
 }
