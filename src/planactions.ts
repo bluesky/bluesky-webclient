@@ -50,7 +50,7 @@ export const clearQueue: ActionCreator<ThunkAction<Promise<AnyAction>, null, nul
         const queueState = await clearQueueAPI();
         return dispatch({
             queueState,
-            type: PlanActionTypes.GETPLANLIST
+            type: PlanActionTypes.CLEARQUEUE
         });
     };
 };
