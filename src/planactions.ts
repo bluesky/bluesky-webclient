@@ -2,7 +2,8 @@ import { ActionCreator, AnyAction, Dispatch } from "redux"
 import { ThunkAction } from "redux-thunk"
 import { getOverview as getOverviewAPI,
     getQueuedPlans as getQueuedPlansAPI,
-    submitPlan as submitPlanAPI } from "./queueserver"
+    submitPlan as submitPlanAPI,
+    clearQueue as clearQueueAPI} from "./queueserver"
 import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, IPlanSubmitAction,
     IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes} from "./queueserver"
 
@@ -39,6 +40,17 @@ export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubm
         return dispatch({
           plan,
           type: PlanActionTypes.SUBMITPLAN
+        });
+    };
+};
+
+export const clearQueue: ActionCreator<ThunkAction<Promise<AnyAction>, null, null, any>> = () => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const queueState = await clearQueueAPI();
+        return dispatch({
+            queueState,
+            type: PlanActionTypes.GETPLANLIST
         });
     };
 };

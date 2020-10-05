@@ -100,3 +100,10 @@ export const submitPlan = async(): Promise<IPlanObject> => {
     console.log(res);
     return res.data;
 }
+
+export const clearQueue = async(): Promise<IPlan> => {
+    const res = await axiosInstance.post('/clear_queue',
+        {});
+    console.log(res);
+    return res.data;
+}
