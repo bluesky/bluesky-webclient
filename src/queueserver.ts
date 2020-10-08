@@ -1,7 +1,7 @@
 import axios from "axios";
 
 var axiosInstance = axios.create({
-    baseURL: '/qs',
+    baseURL: process.env.REACT_APP_API_PREFIX,
 });
 
 export enum PlanActionTypes {
@@ -67,7 +67,7 @@ export interface IPlanState {
 }
 
 export const getOverview = async(): Promise<IPlan> => {
-    const res = await axiosInstance.get('/');
+    const res = await axiosInstance.get('/status');
     console.log(res)
     return res.data;
 }
