@@ -78,7 +78,7 @@ export interface IPlanObjectsState {
 }
 
 export const getQueuedPlans = async(): Promise<IPlanObject[]> => {
-    const res = await axiosInstance.get('/qs/queue/get');
+    const res = await axiosInstance.get('/queue/get');
     console.log(res);
     return res.data.queue;
 }
@@ -89,7 +89,7 @@ export interface IPlanSubmitState {
 }
 
 export const submitPlan = async(): Promise<IPlanObject> => {
-    const res = await axiosInstance.post('/qs/queue/plan/add',
+    const res = await axiosInstance.post('/queue/plan/add',
         {
             plan:
             {
@@ -103,7 +103,7 @@ export const submitPlan = async(): Promise<IPlanObject> => {
 }
 
 export const clearQueue = async(): Promise<IPlan> => {
-    const res = await axiosInstance.post('/qs/queue/clear',
+    const res = await axiosInstance.post('/queue/clear',
         {});
     console.log(res);
     return res.data;
