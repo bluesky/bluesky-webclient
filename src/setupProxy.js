@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/qs',
     createProxyMiddleware({
-      target: 'http://localhost:8080',
+      target: 'http://localhost:60610',
       changeOrigin: true,
       pathRewrite: {
         "^/qs": "",
