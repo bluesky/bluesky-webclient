@@ -9,7 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import { IApplicationState } from './store';
-import { submitPlan } from './planactions';
+import { submitPlan, modifyEnvironment, modifyQueue } from './planactions';
 import { clearQueue } from './planactions';
 import { IPlanObject } from './queueserver';
 import {
@@ -22,6 +22,8 @@ interface Props extends RouteComponentProps<RouteParams> { }
 
 interface IProps extends RouteComponentProps {
     submitPlan: typeof submitPlan;
+    modifyEnvironment: typeof modifyEnvironment;
+    modifyQueue: typeof modifyQueue;
     clearQueue: typeof clearQueue;
     loading: boolean;
     plan: IPlanObject;
@@ -30,6 +32,10 @@ interface IProps extends RouteComponentProps {
 interface IState {
     planId: number;
     onPlanChange: (planId: number) => void;
+    env: string;
+    onEnvChange: (env: string) => void;
+    queue: string;
+    onQueueChange: (queue: string) => void;
 }
 
 class AcquirePage extends React.Component<IProps, IState> {
@@ -37,7 +43,11 @@ class AcquirePage extends React.Component<IProps, IState> {
         super(props);
         this.state = {
           planId: -1,
-          onPlanChange: this.handlePlanChange
+          onPlanChange: this.handlePlanChange,
+          env: "Open",
+          onEnvChange: this.handleEnvChange,
+          queue: "Start",
+          onQueueChange: this.handleQueueChange,
         };
       }
     render() {
@@ -69,6 +79,11 @@ class AcquirePage extends React.Component<IProps, IState> {
             <div><pre>The pretty printed JSON:<br />
                 { JSON.stringify(this.props.plan, null, 2) }</pre></div>
           </Box>
+          <Box my={4}>
+              <Button variant="contained" onClick={this.handleEnvClick}>{this.state.env} environment</Button>
+              <Button variant="contained" onClick={this.handleQueueClick}>{this.state.queue} queue</Button>
+
+          </Box>
         </Container>
         )
     }
@@ -81,8 +96,38 @@ class AcquirePage extends React.Component<IProps, IState> {
         this.setState({ planId });
     };
 
+    private handleEnvChange = (env: string) => {
+        this.setState({ env });
+    };
+
+    private handleQueueChange = (queue: string) => {
+        this.setState({ queue });
+    };
+
     private handleSubmitClick = () => {
         this.props.submitPlan(this.state.planId);
+    }
+
+    private handleEnvClick = () => {
+        if (this.state.env === "Open") {
+            this.props.modifyEnvironment(0);
+            this.state.onEnvChange("Close");
+        }
+        else {
+            this.props.modifyEnvironment(1);
+            this.state.onEnvChange("Open");
+        }
+    }
+
+    private handleQueueClick = () => {
+        if (this.state.queue === "Start") {
+            this.props.modifyQueue(0);
+            this.state.onQueueChange("Stop");
+        }
+        else {
+            this.props.modifyQueue(1);
+            this.state.onQueueChange("Start");
+        }
     }
 
     private handleClearQueue = () => {
@@ -102,6 +147,8 @@ const mapStateToProps = (store: IApplicationState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
     return {
+      modifyEnvironment: (opId: number) => dispatch(modifyEnvironment(opId)),
+      modifyQueue: (opId: number) => dispatch(modifyQueue(opId)),
       submitPlan: (planId: number) => dispatch(submitPlan(planId)),
       clearQueue: () => dispatch(clearQueue()),
     };

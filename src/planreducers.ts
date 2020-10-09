@@ -1,5 +1,6 @@
 import { Reducer } from "redux";
-import { IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActions, PlanActionTypes } from "./queueserver";
+import { IPlanState, IPlanObjectsState, IPlanSubmitState, IPlanModifyState,
+    PlanActions, PlanActionTypes } from "./queueserver";
 
 const initialPlanState: IPlanState = {
     plan: {
@@ -94,6 +95,70 @@ export const planSubmitReducer: Reducer<IPlanSubmitState, PlanActions> = (
                 ...state,
                 plan: action.plan,
                 plansLoading: false
+            };
+        }
+        default: {
+            return state;
+        }
+    }
+};
+
+const initialEnvModifyState: IPlanModifyState = {
+    modify: {
+        msg: "",
+        success: false
+    },
+    loading: false
+};
+
+export const environmentModifyReducer: Reducer<IPlanModifyState, PlanActions> = (
+    state = initialEnvModifyState,
+    action
+) => {
+    switch (action.type) {
+        case PlanActionTypes.LOADING: {
+            return {
+                ...state,
+                loading: true
+            };
+        }
+        case PlanActionTypes.MODIFYENVIRONMENT: {
+            return {
+                ...state,
+                modify: action.modify,
+                loading: false
+            };
+        }
+        default: {
+            return state;
+        }
+    }
+};
+
+const initialQueueModifyState: IPlanModifyState = {
+    modify: {
+        msg: "",
+        success: false
+    },
+    loading: false
+};
+
+export const queueModifyReducer: Reducer<IPlanModifyState, PlanActions> = (
+    state = initialQueueModifyState,
+    action
+) => {
+    switch (action.type) {
+        case PlanActionTypes.LOADING: {
+            return {
+                ...state,
+                loading: true
+            };
+        }
+        case PlanActionTypes.MODIFYQUEUE: {
+            return {
+                ...state,
+                modify: action.modify,
+                loading: false
             };
         }
         default: {
