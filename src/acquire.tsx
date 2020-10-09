@@ -65,7 +65,7 @@ class AcquirePage extends React.Component<IProps, IState> {
                     <MenuItem value={1}>scan</MenuItem>
                 </Select>
             </FormControl>
-            <Button variant="contained" onClick={this.handleSubmitClick}>Submit</Button>
+            <Button variant="contained" onClick={this.handleSubmitClick}>Submit plan to queue</Button>
             <div><pre>The pretty printed JSON:<br />
                 { JSON.stringify(this.props.plan, null, 2) }</pre></div>
           </Box>
