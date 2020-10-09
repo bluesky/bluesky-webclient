@@ -12,6 +12,10 @@ port you will need to change that in the `package.json` (or just switch the
 server port to match using --port 60610 when launching it).
 
 The API prefix is set up to default to `/qs` when developing against pods or
-a deplpoyed version, this can be overridden by creating a file in the root of
+a deployed version, this can be overridden by creating a file in the root of
 the source tree `.env.local` where you define `REACT_APP_API_PREFIX=` to use a
 local instance of the queueserver running standalone for development.
+
+See the
+[documentation](https://create-react-app.dev/docs/adding-custom-environment-variables)
+on details about the variables.
