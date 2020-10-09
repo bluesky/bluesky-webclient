@@ -33,10 +33,10 @@ export const getQueuedPlans: ActionCreator<ThunkAction<Promise<AnyAction>, IPlan
     };
 };
 
-export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = () => {
+export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (planId: number) => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
-        const plan = await submitPlanAPI();
+        const plan = await submitPlanAPI(planId);
         return dispatch({
           plan,
           type: PlanActionTypes.SUBMITPLAN
