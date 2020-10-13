@@ -11,7 +11,7 @@ import Select from '@material-ui/core/Select';
 import { IApplicationState } from './store';
 import { submitPlan, modifyEnvironment, modifyQueue } from './planactions';
 import { clearQueue } from './planactions';
-import { IPlanObject } from './queueserver';
+import { IPlanObject, EnvOps, QueueOps } from './queueserver';
 import {
     RouteComponentProps
 } from "react-router-dom";
@@ -110,22 +110,22 @@ class AcquirePage extends React.Component<IProps, IState> {
 
     private handleEnvClick = () => {
         if (this.state.env === "Open") {
-            this.props.modifyEnvironment(0);
+            this.props.modifyEnvironment(EnvOps.open);
             this.state.onEnvChange("Close");
         }
         else {
-            this.props.modifyEnvironment(1);
+            this.props.modifyEnvironment(EnvOps.close);
             this.state.onEnvChange("Open");
         }
     }
 
     private handleQueueClick = () => {
         if (this.state.queue === "Start") {
-            this.props.modifyQueue(0);
+            this.props.modifyQueue(QueueOps.start);
             this.state.onQueueChange("Stop");
         }
         else {
-            this.props.modifyQueue(1);
+            this.props.modifyQueue(QueueOps.stop);
             this.state.onQueueChange("Start");
         }
     }

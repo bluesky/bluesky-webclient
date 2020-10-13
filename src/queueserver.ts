@@ -152,36 +152,28 @@ export interface IPlanModifyState {
     readonly loading: boolean;
 }
 
-export const modifyEnvironment = async(op: number): Promise<IPlanModify> => {
-    var operation = "open";
-    if (op === 0) {
-        operation = "open";
-    }
-    else if (op === 1) {
-        operation = "close";
-    }
-    else if (op === 2) {
-        operation = "destroy";
-    }
+export enum EnvOps {
+    open = "open",
+    close = "close",
+    destroy = "destroy",
+}
+
+export const modifyEnvironment = async(op: EnvOps): Promise<IPlanModify> => {
+    var operation = EnvOps[op];
     const res = await axiosInstance.post(`/environment/${operation}`, {});
     console.log(res);
     return res.data;
 }
 
-export const modifyQueue = async(op: number): Promise<IPlanModify> => {
-    var operation = "start";
-    if (op === 0) {
-        operation = "start";
-    }
-    else if (op === 1) {
-        operation = "stop";
-    }
-    else if (op === 2) {
-        operation = "halt";
-    }
-    else if (op === 3) {
-        operation = "resume";
-    }
+export enum QueueOps {
+    start = "start",
+    stop = "stop",
+    halt = "halt",
+    resume = "resume",
+}
+
+export const modifyQueue = async(op: QueueOps): Promise<IPlanModify> => {
+    var operation = QueueOps[op];
     const res = await axiosInstance.post(`/queue/${operation}`, {});
     console.log(res);
     return res.data;

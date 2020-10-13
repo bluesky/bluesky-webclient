@@ -4,8 +4,8 @@ import { getOverview as getOverviewAPI,
     getQueuedPlans as getQueuedPlansAPI,
     submitPlan as submitPlanAPI,
     clearQueue as clearQueueAPI,
-    modifyEnvironment as modifyEnvironmentAPI,
-    modifyQueue as modifyQueueAPI} from "./queueserver"
+    modifyEnvironment as modifyEnvironmentAPI, EnvOps,
+    modifyQueue as modifyQueueAPI, QueueOps} from "./queueserver"
 import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, IPlanSubmitAction,
     IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes} from "./queueserver"
 
@@ -46,10 +46,10 @@ export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubm
     };
 };
 
-export const modifyEnvironment: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (planId: number) => {
+export const modifyEnvironment: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (op: EnvOps) => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
-        const env = await modifyEnvironmentAPI(planId);
+        const env = await modifyEnvironmentAPI(op);
         return dispatch({
           env,
           type: PlanActionTypes.MODIFYENVIRONMENT
@@ -57,7 +57,7 @@ export const modifyEnvironment: ActionCreator<ThunkAction<Promise<AnyAction>, IP
     };
 };
 
-export const modifyQueue: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (opId: number) => {
+export const modifyQueue: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (opId: QueueOps) => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
         const queue = await modifyQueueAPI(opId);
