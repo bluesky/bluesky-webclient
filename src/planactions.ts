@@ -3,7 +3,9 @@ import { ThunkAction } from "redux-thunk"
 import { getOverview as getOverviewAPI,
     getQueuedPlans as getQueuedPlansAPI,
     submitPlan as submitPlanAPI,
-    clearQueue as clearQueueAPI} from "./queueserver"
+    clearQueue as clearQueueAPI,
+    modifyEnvironment as modifyEnvironmentAPI, EnvOps,
+    modifyQueue as modifyQueueAPI, QueueOps} from "./queueserver"
 import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, IPlanSubmitAction,
     IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes} from "./queueserver"
 
@@ -40,6 +42,28 @@ export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubm
         return dispatch({
           plan,
           type: PlanActionTypes.SUBMITPLAN
+        });
+    };
+};
+
+export const modifyEnvironment: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (op: EnvOps) => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const env = await modifyEnvironmentAPI(op);
+        return dispatch({
+          env,
+          type: PlanActionTypes.MODIFYENVIRONMENT
+        });
+    };
+};
+
+export const modifyQueue: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (opId: QueueOps) => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const queue = await modifyQueueAPI(opId);
+        return dispatch({
+          queue,
+          type: PlanActionTypes.MODIFYQUEUE
         });
     };
 };

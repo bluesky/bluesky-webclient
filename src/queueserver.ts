@@ -10,6 +10,8 @@ export enum PlanActionTypes {
     GETPLANLIST = "PLANS/GETPLANLIST",
     SUBMITPLAN = "PLANS/SUBMITPLAN",
     CLEARQUEUE = "PLANS/CLEARQUEUE",
+    MODIFYENVIRONMENT = "PLANS/MODIFYENVIRONMENT",
+    MODIFYQUEUE = "PLANS/MODIFYQUEUE",
 }
 
 export interface IPlan {
@@ -18,6 +20,11 @@ export interface IPlan {
     plans_in_queue: number,
     running_plan_uid: string,
     worker_environment_exists: boolean
+}
+
+export interface IPlanModify {
+    msg: string;
+    success: boolean;
 }
 
 export interface IPlanGetOverviewAction {
@@ -53,6 +60,24 @@ export interface IPlanSubmitLoadingAction {
     type: PlanActionTypes.LOADING
 }
 
+export interface IPlanModifyEnvironmentAction {
+    type: PlanActionTypes.MODIFYENVIRONMENT,
+    modify: IPlanModify
+}
+
+export interface IPlanModifyEnvironmentLoadingAction {
+    type: PlanActionTypes.LOADING
+}
+
+export interface IPlanModifyQueueAction {
+    type: PlanActionTypes.MODIFYQUEUE,
+    modify: IPlanModify
+}
+
+export interface IPlanModifyQueueLoadingAction {
+    type: PlanActionTypes.LOADING
+}
+
 export type PlanActions =
   | IPlanGetOverviewAction
   | IPlanLoadingAction
@@ -60,6 +85,10 @@ export type PlanActions =
   | IPlanObjectsLoadingAction
   | IPlanSubmitAction
   | IPlanSubmitLoadingAction
+  | IPlanModifyEnvironmentAction
+  | IPlanModifyEnvironmentLoadingAction
+  | IPlanModifyQueueAction
+  | IPlanModifyQueueLoadingAction
 
 export interface IPlanState {
     readonly plan: IPlan;
@@ -114,6 +143,38 @@ export const submitPlan = async(planId: number): Promise<IPlanObject> => {
 export const clearQueue = async(): Promise<IPlan> => {
     const res = await axiosInstance.post('/queue/clear',
         {});
+    console.log(res);
+    return res.data;
+}
+
+export interface IPlanModifyState {
+    readonly modify: IPlanModify;
+    readonly loading: boolean;
+}
+
+export enum EnvOps {
+    open = "open",
+    close = "close",
+    destroy = "destroy",
+}
+
+export const modifyEnvironment = async(op: EnvOps): Promise<IPlanModify> => {
+    var operation = EnvOps[op];
+    const res = await axiosInstance.post(`/environment/${operation}`, {});
+    console.log(res);
+    return res.data;
+}
+
+export enum QueueOps {
+    start = "start",
+    stop = "stop",
+    halt = "halt",
+    resume = "resume",
+}
+
+export const modifyQueue = async(op: QueueOps): Promise<IPlanModify> => {
+    var operation = QueueOps[op];
+    const res = await axiosInstance.post(`/queue/${operation}`, {});
     console.log(res);
     return res.data;
 }
