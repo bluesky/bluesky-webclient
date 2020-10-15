@@ -117,19 +117,19 @@ export interface IPlanSubmitState {
     readonly planLoading: boolean;
 }
 
-export const submitPlan = async(planId: number): Promise<IPlanObject> => {
+export const submitPlan = async(planId: number, param: number): Promise<IPlanObject> => {
     var planObj = {};
     if (planId === 0) {
         planObj = {
             name: "count",
             args: [["det1", "det2"]],
-            kwargs: {"num": 10, "delay": 1}
+            kwargs: {"num": param, "delay": 1}
         };
     }
     else {
         planObj = {
             name: "scan",
-            args: [["det1", "det2"], "motor", -1, 1, 10 ]
+            args: [["det1", "det2"], "motor", -1, 1, param ]
         };
     }
     const res = await axiosInstance.post('/queue/plan/add',

@@ -9,6 +9,7 @@ import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
 import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
+import TextField from '@material-ui/core/TextField';
 import { IApplicationState } from './store';
 import { submitPlan, modifyEnvironment, modifyQueue } from './planactions';
 import { clearQueue } from './planactions';
@@ -33,6 +34,8 @@ interface IProps extends RouteComponentProps {
 interface IState {
     planId: number;
     onPlanChange: (planId: number) => void;
+    planParam: number;
+    onPlanParamChange: (planParam: number) => void;
     env: string;
     onEnvChange: (env: string) => void;
     queue: string;
@@ -45,6 +48,8 @@ class AcquirePage extends React.Component<IProps, IState> {
         this.state = {
           planId: -1,
           onPlanChange: this.handlePlanChange,
+          planParam: 10,
+          onPlanParamChange: this.handlePlanParamChange,
           env: "Open",
           onEnvChange: this.handleEnvChange,
           queue: "Start",
@@ -77,6 +82,29 @@ class AcquirePage extends React.Component<IProps, IState> {
                     <MenuItem value={0}>count</MenuItem>
                     <MenuItem value={1}>scan</MenuItem>
                 </Select>
+                {}
+                {(() => {
+                    switch (this.state.planId) {
+                        case 0:
+                            return <TextField
+                                id="filled-number"
+                                label="num"
+                                type="number"
+                                value={this.state.planParam}
+                                onChange={this.handleParamChange}
+                            />;
+                        case 1:
+                            return <TextField
+                                id="filled-number"
+                                label="step"
+                                type="number"
+                                value={this.state.planParam}
+                                onChange={this.handleParamChange}
+                            />;
+                        default:
+                            return <p>Make a choice!</p>;
+                    }
+                })()}
             </FormControl>
             <Tooltip title="Submit the plan to the queue">
               <Button variant="contained" onClick={this.handleSubmitClick}>Submit</Button>
@@ -101,6 +129,14 @@ class AcquirePage extends React.Component<IProps, IState> {
         this.setState({ planId });
     };
 
+    private handleParamChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+        this.state.onPlanParamChange(event.target.value as number);
+    };
+
+    private handlePlanParamChange = (planParam: number) => {
+        this.setState({ planParam });
+    };
+
     private handleEnvChange = (env: string) => {
         this.setState({ env });
     };
@@ -110,7 +146,7 @@ class AcquirePage extends React.Component<IProps, IState> {
     };
 
     private handleSubmitClick = () => {
-        this.props.submitPlan(this.state.planId);
+        this.props.submitPlan(this.state.planId, this.state.planParam);
     }
 
     private handleEnvClick = () => {
@@ -154,7 +190,7 @@ const mapDispatchToProps = (dispatch: any) => {
     return {
       modifyEnvironment: (opId: number) => dispatch(modifyEnvironment(opId)),
       modifyQueue: (opId: number) => dispatch(modifyQueue(opId)),
-      submitPlan: (planId: number) => dispatch(submitPlan(planId)),
+      submitPlan: (planId: number, param: number) => dispatch(submitPlan(planId, param)),
       clearQueue: () => dispatch(clearQueue()),
     };
 };
