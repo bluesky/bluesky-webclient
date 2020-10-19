@@ -45,9 +45,7 @@ class App extends React.Component<IProps> {
             There are {this.props.plan.plans_in_queue} plans in the queue.
             The running plan uid is '{this.props.plan.running_plan_uid}'
           </Typography>
-          <div>
-            <RunList plans={this.props.plans}></RunList>
-          </div>
+          <RunList plans={this.props.plans}></RunList>
           <Copyright />
         </Box>
       </Container>
