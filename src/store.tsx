@@ -3,6 +3,8 @@ import thunk from "redux-thunk"
 import { planObjectsReducer, planReducer, planSubmitReducer,
     environmentModifyReducer, queueModifyReducer } from "./planreducers"
 import { IPlanState, IPlanObjectsState, IPlanSubmitState, IPlanModifyState } from "./queueserver"
+import { userReducer } from "./userreducers"
+import { IUserState } from "./facility"
 
 export interface IApplicationState {
     plan: IPlanState;
@@ -10,6 +12,7 @@ export interface IApplicationState {
     submitted: IPlanSubmitState;
     environment: IPlanModifyState;
     queue: IPlanModifyState;
+    user: IUserState
 }
 
 const rootReducer = combineReducers<IApplicationState>({
@@ -18,6 +21,7 @@ const rootReducer = combineReducers<IApplicationState>({
     submitted: planSubmitReducer,
     environment: environmentModifyReducer,
     queue: queueModifyReducer,
+    user: userReducer
 })
 
 export default function configureStore(): Store<IApplicationState> {

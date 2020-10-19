@@ -1,8 +1,13 @@
 import axios from "axios";
 
 var axiosInstance = axios.create({
-    baseURL: process.env.REACT_APP_API_PREFIX,
+    baseURL: 'facility'
 });
+
+export enum UserActionTypes {
+    GETINFO = "USER/GETACTION",
+    LOADING = "USER/LOADING"
+}
 
 export interface IUser {
     userid: number,
@@ -26,6 +31,24 @@ export interface IExperiment {
     users: number[], 
     experiment_id: number,
     resource_id: number
+}
+
+
+export interface IUserGetAction {
+    type: UserActionTypes.GETINFO,
+    user: IUser
+  }
+  
+  export interface IUserLoadingAction {
+    type: UserActionTypes.LOADING
+  }
+
+export type UserInfo =
+  |  IUser | IProposal | IExperiment
+
+export interface IUserState {
+    readonly user: IUser;
+    readonly userLoading: boolean;
 }
 
 export const getUsers = async(): Promise<IUser[]> => {

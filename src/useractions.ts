@@ -2,15 +2,15 @@ import { ActionCreator, AnyAction, Dispatch } from "redux"
 import { ThunkAction } from "redux-thunk"
 import { getUsers as getUsersAPI,
     getProposalsForUser as getProposalsForUserAPI,
-    getExperimentsForProposal as getExperimentsForProposalAPI} from "./facility"
-import { IUser, IProposal, IExperiment, UserInfo} from "./facility"
-import { IUserGetAction, IUserLoadingAction, UserActionTypes} from "./user"
+    getExperimentsForProposal as getExperimentsForProposalAPI,
+    IUserState} from "./facility"
+import { IUser, IProposal, IExperiment, UserInfo, UserActionTypes, IUserGetAction, IUserLoadingAction} from "./facility"
 
 const loading: ActionCreator<IUserLoadingAction> = () => ({
     type: UserActionTypes.LOADING
 });
 
-export const getUsers: ActionCreator<ThunkAction<Promise<AnyAction>, null, null, IUserGetAction>> = () => {
+export const getUsers: ActionCreator<ThunkAction<Promise<AnyAction>, IUserState, null, IUserGetAction>> = () => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
         const users = await getUsersAPI();
