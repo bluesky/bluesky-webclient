@@ -3,7 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
-    "@material-ui/core": "^4.11.0",
+    "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
     "@types/react": "latest",
     "@types/react-dom": "latest",
