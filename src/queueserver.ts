@@ -123,13 +123,13 @@ export const submitPlan = async(planId: number, param: number): Promise<IPlanObj
         planObj = {
             name: "count",
             args: [["det1", "det2"]],
-            kwargs: {"num": param, "delay": 1}
+            kwargs: {"num": Number(param), "delay": 1}
         };
     }
     else {
         planObj = {
             name: "scan",
-            args: [["det1", "det2"], "motor", -1, 1, param ]
+            args: [["det1", "det2"], "motor", -1, 1, Number(param) ]
         };
     }
     const res = await axiosInstance.post('/queue/plan/add',
