@@ -16,7 +16,7 @@ export const getUsers: ActionCreator<ThunkAction<Promise<AnyAction>, IUserState,
         const users = await getUsersAPI();
         return dispatch({
           users,
-          type: null
+          type: UserActionTypes.GETINFO
         });
     };
 };

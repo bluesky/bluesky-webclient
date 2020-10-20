@@ -53,7 +53,7 @@ class UserPage extends React.Component<IProps, IState> {
     }
 
     componentDidMount() {
-        //this.props.submitPlan();
+        this.props.getUsers();
     }
 }
 const mapStateToProps = (store: IApplicationState) => {
