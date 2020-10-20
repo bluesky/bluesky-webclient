@@ -8,7 +8,6 @@
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "axios": "^0.20.0",
-    "npm-watch": "^0.7.0",
     "react": "latest",
     "react-dom": "latest",
     "react-redux": "^7.2.1",
