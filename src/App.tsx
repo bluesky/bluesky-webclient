@@ -8,6 +8,8 @@ import { IApplicationState } from './store';
 import { getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
 import { IPlan, IPlanObject } from './queueserver';
+import { RunList } from './runlist';
+
 
 function Copyright() {
   return (
@@ -43,13 +45,7 @@ class App extends React.Component<IProps> {
             There are {this.props.plan.plans_in_queue} plans in the queue.
             The running plan uid is '{this.props.plan.running_plan_uid}'
           </Typography>
-          <div>
-            <ul>
-              {this.props.plans.map(planObject => (
-                <li key={planObject.plan_uid}>{planObject.plan_uid.substr(0,8)}: {planObject.name}</li>
-              ))}
-            </ul>
-          </div>
+          <RunList plans={this.props.plans}></RunList>
           <Copyright />
         </Box>
       </Container>
