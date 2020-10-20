@@ -22,8 +22,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject",
-    "watch": "npm-watch"
+    "eject": "react-scripts eject"
   },
   "proxy": "http://localhost:60610",
   "browserslist": {
@@ -42,8 +41,5 @@
     "@types/react-redux": "^7.1.9",
     "@types/react-router-dom": "^5.1.5",
     "@types/redux-thunk": "^2.1.0"
-  },
-  "watch": {
-    "build": "{src,test}/*.js"
   }
 }
