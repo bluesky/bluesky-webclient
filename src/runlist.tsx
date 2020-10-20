@@ -7,10 +7,17 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import { IPlanObject } from './queueserver';
+import { RouteComponentProps } from 'react-router-dom';
 
-export function RunList(props: any) {
-  return (<List>
-              {props.plans.map((planObject: any) => (
+type Plans = {
+  plans: IPlanObject[];
+}
+
+export class RunList extends React.Component<Plans>{
+  render() {
+    return (<List>
+              {this.props.plans.map((planObject: any) => (
                   <ListItem divider={true} button={true} key={planObject.plan_uid}>
                       <ListItemIcon>
                         <StarIcon />
@@ -26,5 +33,5 @@ export function RunList(props: any) {
                   </ListItem>
               ))}
           </List>
-         );
+         );}
 }
