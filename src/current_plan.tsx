@@ -21,6 +21,7 @@ import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
+import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 
 type Plans = {
   plans: IPlanObject[];
@@ -34,29 +35,6 @@ interface IState {
   avatar: any;
   expanded: boolean
 }
-
-const useStyles = makeStyles((theme) => ({
-  root: {
-    //maxWidth: 345,
-  },
-  media: {
-    height: 0,
-    paddingTop: '56.25%', // 16:9
-  },
-  expand: {
-    transform: 'rotate(0deg)',
-    marginLeft: 'auto',
-    transition: theme.transitions.create('transform', {
-      duration: theme.transitions.duration.shortest,
-    }),
-  },
-  expandOpen: {
-    transform: 'rotate(180deg)',
-  },
-  avatar: {
-    backgroundColor: red[500],
-  },
-}));
 
 export class CurrentPlan extends React.Component<Plans, IState> {
   constructor(props: Plans) {
@@ -140,7 +118,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             <PauseCircleOutlineIcon />
           </IconButton>
           <IconButton onClick={() => this.handleDelete(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
-            <DeleteForeverIcon />
+            <HighlightOffIcon />
           </IconButton>
           <IconButton aria-label="add to favorites">
             <FavoriteIcon />
