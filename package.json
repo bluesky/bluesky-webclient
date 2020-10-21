@@ -8,6 +8,7 @@
     "@types/react": "latest",
     "@types/react-dom": "latest",
     "axios": "^0.20.0",
+    "http-proxy-middleware": "^1.0.6",
     "react": "latest",
     "react-dom": "latest",
     "react-redux": "^7.2.1",
@@ -23,7 +24,6 @@
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
-  "proxy": "http://localhost:60610",
   "browserslist": {
     "production": [
       ">0.2%",
