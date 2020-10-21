@@ -19,11 +19,8 @@ type Plans = {
   plans: IPlanObject[];
 }
 
-type Plan = {
-  plan: IPlan;
-}
 
-export class CurrentPlan extends React.Component<Plans>{
+export class CurrentPlan_Old extends React.Component<Plans>{
 
   handlePlay(uid: string) {
     alert(uid)
@@ -41,11 +38,11 @@ export class CurrentPlan extends React.Component<Plans>{
     return (<List>
                   <ListItem divider={true} button={true} key={this.props.plans[0].plan_uid}>
                       <ListItemIcon>
-                        <AccountCircleIcon />
+                        <AccountCircleIcon fontSize='large' />
                       </ListItemIcon>
                       <ListItemText
-                        primary={this.props.plans[0].plan_uid.substr(0,8)}
-                        secondary={this.props.plans[0].name}/>
+                        primary={this.props.plans[0].name}
+                        secondary={this.props.plans[0].plan_uid.substr(0,8)}/>
                       <ListItemSecondaryAction>
                         <IconButton onClick={() => this.handlePlay(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
                           <PlayCircleOutlineIcon />
@@ -64,7 +61,7 @@ export class CurrentPlan extends React.Component<Plans>{
 
 
 
-export class RunList extends React.Component<Plans>{
+export class PlanList extends React.Component<Plans>{
 
   handleDelete(uid: string) {
     alert(uid)
@@ -83,11 +80,11 @@ export class RunList extends React.Component<Plans>{
               {this.props.plans.map((planObject: IPlanObject) => (
                   <ListItem divider={true} button={true} key={planObject.plan_uid}>
                       <ListItemIcon>
-                        <AccountCircleIcon />
+                        <AccountCircleIcon fontSize='large' />
                       </ListItemIcon>
                       <ListItemText
-                        primary={planObject.plan_uid.substr(0,8)}
-                        secondary={planObject.name}/>
+                        primary={planObject.name}
+                        secondary={planObject.plan_uid.substr(0,8)}/>
                       <ListItemSecondaryAction>
                         <IconButton onClick={() => this.handleMoveForward(planObject.plan_uid)} edge="end" aria-label="comments">
                           <KeyboardArrowUpIcon />

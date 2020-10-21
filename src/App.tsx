@@ -8,7 +8,8 @@ import { IApplicationState } from './store';
 import { getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
 import { IPlan, IPlanObject } from './queueserver';
-import { RunList, CurrentPlan } from './runlist';
+import { PlanList } from './plan_list';
+import { CurrentPlan } from './current_plan';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
 
@@ -50,7 +51,7 @@ class App extends React.Component<IProps> {
           <Typography variant="h6" component="h4" gutterBottom>
             There are {this.props.plan.plans_in_queue -1} plans waiting:
           </Typography>
-          <RunList plans={this.props.plans.slice(1,this.props.plans.length)}> </RunList>
+          <PlanList plans={this.props.plans.slice(1,this.props.plans.length)}> </PlanList>
           <Copyright />
         </Box>
       </Container>
