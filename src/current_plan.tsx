@@ -20,6 +20,7 @@ import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 
 type Plans = {
   plans: IPlanObject[];
@@ -121,9 +122,10 @@ export class CurrentPlan extends React.Component<Plans, IState> {
           subheader={this.props.plans[0].plan_uid}
         />
         <CardMedia
-          className={this.props.plans[0].name}
-          image="/static/images/cards/paella.jpg"
+          className={this.state.media}
+          image={Thumb}
           title="Thumbnail Image"
+          component="img"
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
