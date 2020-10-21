@@ -8,7 +8,14 @@ import { IApplicationState } from './store';
 import { getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
 import { IPlan, IPlanObject } from './queueserver';
-import { RunList } from './runlist';
+import { PlanList } from './plan_list';
+import { CurrentPlan } from './current_plan';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import Paper from '@material-ui/core/Paper';
+import { Card, CardContent, Grid } from '@material-ui/core';
 
 
 function Copyright() {
@@ -36,22 +43,30 @@ interface IProps extends RouteComponentProps {
 class App extends React.Component<IProps> {
   render() {
       return (
-        <Container maxWidth="sm">
-        <Box my={4}>
-          <Typography variant="h4" component="h1" gutterBottom>
-            This is the future of all your Bluesky acquisition dreams on the web!
-          </Typography>
-          <Typography variant="h6" component="h4" gutterBottom>
-            There are {this.props.plan.plans_in_queue} plans in the queue.
-            The running plan uid is '{this.props.plan.running_plan_uid}'
-          </Typography>
-          <RunList plans={this.props.plans}></RunList>
-          <Copyright />
-        </Box>
-      </Container>
+        <Container maxWidth="xl">
+          <Box width="70vw" height="2vh"></Box>
+          <Grid container spacing={10} direction="row">
+            <Grid item justify="center" spacing={10}>
+              <CurrentPlan plans={this.props.plans}></CurrentPlan> 
+            </Grid>
+            <Grid item justify="center" spacing={10}>    
+              <PlanList plans={this.props.plans.slice(1,this.props.plans.length)}> </PlanList>
+            </Grid>   
+          </Grid>
+          <Copyright/>
+        </Container>
       )
   }
-
+/*
+<Card>
+  <CardContent>
+    <Typography align="center" variant="h5" component="h1" gutterBottom>
+      This is the future of all your Bluesky acquisition dreams on the web!
+    </Typography>
+  </CardContent>
+</Card>
+*/
+  
   componentDidMount() {
       this.props.getOverview();
       this.props.getQueuedPlans();
