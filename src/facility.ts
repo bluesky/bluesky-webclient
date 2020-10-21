@@ -1,7 +1,7 @@
 import axios from "axios";
 
 var axiosInstance = axios.create({
-    baseURL: 'facility'
+    baseURL: process.env.REACT_APP_API_PREFIX
 });
 
 export enum UserActionTypes {
