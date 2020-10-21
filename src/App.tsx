@@ -44,30 +44,29 @@ class App extends React.Component<IProps> {
   render() {
       return (
         <Container maxWidth="xl">
+          <Box width="70vw" height="2vh"></Box>
           <Grid container spacing={10} direction="row">
-            <Grid item xs={4} justify="center" spacing={10}>
-              <Paper style={{height: "85vh", maxWidth: "40", overflow: 'auto', margin: "50"}}>
-                <CurrentPlan plans={this.props.plans}></CurrentPlan>
-                <PlanList plans={this.props.plans.slice(1,this.props.plans.length)}> </PlanList>
-              </Paper>
-            </Grid>
             <Grid item justify="center" spacing={10}>
-              <Paper style={{width:"40vw", overflow: 'auto', margin: "50"}}>
-                <Card>
-                  <CardContent>
-                    <Typography align="center" variant="h5" component="h1" gutterBottom>
-                      This is the future of all your Bluesky acquisition dreams on the web!
-                    </Typography>
-                  </CardContent>
-                </Card>
-              </Paper>
+              <CurrentPlan plans={this.props.plans}></CurrentPlan> 
+            </Grid>
+            <Grid item justify="center" spacing={10}>    
+              <PlanList plans={this.props.plans.slice(1,this.props.plans.length)}> </PlanList>
             </Grid>   
           </Grid>
           <Copyright/>
         </Container>
       )
   }
-
+/*
+<Card>
+  <CardContent>
+    <Typography align="center" variant="h5" component="h1" gutterBottom>
+      This is the future of all your Bluesky acquisition dreams on the web!
+    </Typography>
+  </CardContent>
+</Card>
+*/
+  
   componentDidMount() {
       this.props.getOverview();
       this.props.getQueuedPlans();

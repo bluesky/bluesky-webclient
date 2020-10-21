@@ -14,6 +14,7 @@ import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IPlan, IPlanObject } from './queueserver';
 import { RouteComponentProps } from 'react-router-dom';
+import { Box, Card, CardContent, Container, Paper, Typography } from '@material-ui/core';
 
 type Plans = {
   plans: IPlanObject[];
@@ -76,28 +77,41 @@ export class PlanList extends React.Component<Plans>{
   }
 
   render() {
-    return (<List>
-              {this.props.plans.map((planObject: IPlanObject) => (
-                  <ListItem divider={true} button={true} key={planObject.plan_uid}>
-                      <ListItemIcon>
-                        <AccountCircleIcon fontSize='large' />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={planObject.name}
-                        secondary={planObject.plan_uid.substr(0,8)}/>
-                      <ListItemSecondaryAction>
-                        <IconButton onClick={() => this.handleMoveForward(planObject.plan_uid)} edge="end" aria-label="comments">
-                          <KeyboardArrowUpIcon />
-                        </IconButton>
-                        <IconButton onClick={() => this.handleMoveBackward(planObject.plan_uid)} edge="end" aria-label="comments">
-                          <KeyboardArrowDownIcon />
-                        </IconButton>
-                        <IconButton onClick={() => this.handleDelete(planObject.plan_uid)} edge="end" aria-label="comments">
-                          <DeleteForeverIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                  </ListItem>
-              ))}
-          </List>
+    return (
+          <Box> 
+            <Card>
+              <CardContent>
+                <Typography align="center" variant="h5" component="h1" gutterBottom>
+                  Bluesky Queue
+                </Typography>
+              </CardContent>
+            </Card>
+            <Box height="2vh"></Box>
+            <Paper style={{width:"40vw", overflow: 'auto', margin: "auto"}}>
+              <List>
+                {this.props.plans.map((planObject: IPlanObject) => (
+                    <ListItem divider={true} button={true} key={planObject.plan_uid}>
+                        <ListItemIcon>
+                          <AccountCircleIcon fontSize='large' />
+                        </ListItemIcon>
+                        <ListItemText
+                          primary={planObject.name}
+                          secondary={planObject.plan_uid.substr(0,8)}/>
+                        <ListItemSecondaryAction>
+                          <IconButton onClick={() => this.handleMoveForward(planObject.plan_uid)} edge="end" aria-label="comments">
+                            <KeyboardArrowUpIcon />
+                          </IconButton>
+                          <IconButton onClick={() => this.handleMoveBackward(planObject.plan_uid)} edge="end" aria-label="comments">
+                            <KeyboardArrowDownIcon />
+                          </IconButton>
+                          <IconButton onClick={() => this.handleDelete(planObject.plan_uid)} edge="end" aria-label="comments">
+                            <DeleteForeverIcon />
+                          </IconButton>
+                        </ListItemSecondaryAction>
+                    </ListItem>
+                ))}
+            </List>
+            </Paper>
+          </Box>
          );}
 }

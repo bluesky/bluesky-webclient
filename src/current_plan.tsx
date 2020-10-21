@@ -23,6 +23,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
+import { Box, Container, Paper } from '@material-ui/core';
 
 type Plans = {
   plans: IPlanObject[];
@@ -85,70 +86,82 @@ export class CurrentPlan extends React.Component<Plans, IState> {
   }
   render(){
     return (
-      <Card className={this.state.root}>
-        <CardHeader
-          avatar={
-            <Avatar aria-label="recipe" className={this.state.avatar}>
-              R
-            </Avatar>
-          }
-          action={
-            <IconButton aria-label="settings">
-              <MoreVertIcon />
-            </IconButton>
-          }
-          titleTypographyProps={{variant:'h6' }}
-          title="Current Plan"
-          subheader={this.props.plans[0].name}
-        />
-        <CardMedia
-          className={this.state.media}
-          image={Thumb}
-          title="Thumbnail Image"
-          component="img"
-        />
-        <CardContent>
-          <Typography variant="body2" color="textSecondary" component="p">
-            Something interesting is happening!
-          </Typography>
-          <LinearProgress variant="determinate" value={50} />
-        </CardContent>
-        <CardActions disableSpacing>
-          <IconButton onClick={() => this.handlePlay(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
-            <PlayCircleOutlineIcon />
-          </IconButton>
-          <IconButton onClick={() => this.handlePause(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
-            <PauseCircleOutlineIcon />
-          </IconButton>
-          <IconButton onClick={() => this.handleDelete(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
-            <HighlightOffIcon />
-          </IconButton>
-          <IconButton>
-            <FavoriteIcon />
-          </IconButton>
-          <IconButton>
-            <ShareIcon />
-          </IconButton>
-          <IconButton
-            className={clsx(this.state.expand, {
-              [this.state.expandOpen]: this.state.expanded,
-            })}
-            onClick={this.handleExpandClick}
-            aria-expanded={this.state.expanded}
-            aria-label="show more"
-          >
-            <ExpandMoreIcon />
-          </IconButton>
-        </CardActions>
-        <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+      <Box>
+        <Card>
           <CardContent>
-            <Typography paragraph>Plan metadata</Typography>
-            <Typography>
-              Some text here.
+            <Typography align="center" variant="h5" component="h1" gutterBottom>
+              Current Plan
             </Typography>
           </CardContent>
-        </Collapse>
-      </Card>
+        </Card>
+        <Box height="2vh"></Box>
+        <Paper className={this.state.root} style={{maxWidth:"32vw", maxHeight:"60vw", overflow: 'auto', margin: "auto"}}>
+        <Card >
+          <CardHeader
+            avatar={
+              <Avatar aria-label="recipe" className={this.state.avatar}>
+                R
+              </Avatar>
+            }
+            action={
+              <IconButton aria-label="settings">
+                <MoreVertIcon />
+              </IconButton>
+            }
+            titleTypographyProps={{variant:'h6' }}
+            title={this.props.plans[0].name}
+            subheader={this.props.plans[0].plan_uid}
+          />
+          <CardMedia
+            className={this.state.media}
+            image={Thumb}
+            title="Thumbnail Image"
+            component="img"
+          />
+          <CardContent>
+            <Typography variant="body2" color="textSecondary" component="p">
+              Something interesting is happening!
+            </Typography>
+            <LinearProgress variant="determinate" value={50} />
+          </CardContent>
+          <CardActions disableSpacing>
+            <IconButton onClick={() => this.handlePlay(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
+              <PlayCircleOutlineIcon />
+            </IconButton>
+            <IconButton onClick={() => this.handlePause(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
+              <PauseCircleOutlineIcon />
+            </IconButton>
+            <IconButton onClick={() => this.handleDelete(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
+              <HighlightOffIcon />
+            </IconButton>
+            <IconButton>
+              <FavoriteIcon />
+            </IconButton>
+            <IconButton>
+              <ShareIcon />
+            </IconButton>
+            <IconButton
+              className={clsx(this.state.expand, {
+                [this.state.expandOpen]: this.state.expanded,
+              })}
+              onClick={this.handleExpandClick}
+              aria-expanded={this.state.expanded}
+              aria-label="show more"
+            >
+              <ExpandMoreIcon />
+            </IconButton>
+          </CardActions>
+          <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
+            <CardContent>
+              <Typography paragraph>Plan metadata</Typography>
+              <Typography>
+                Some text here.
+              </Typography>
+            </CardContent>
+          </Collapse>
+        </Card>
+      </Paper>
+      </Box>
     );
   }
 }
