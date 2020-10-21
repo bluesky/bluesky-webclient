@@ -8,7 +8,9 @@ import { IApplicationState } from './store';
 import { getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
 import { IPlan, IPlanObject } from './queueserver';
-import { RunList } from './runlist';
+import { RunList, CurrentPlan } from './runlist';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
 
 
 function Copyright() {
@@ -42,10 +44,13 @@ class App extends React.Component<IProps> {
             This is the future of all your Bluesky acquisition dreams on the web!
           </Typography>
           <Typography variant="h6" component="h4" gutterBottom>
-            There are {this.props.plan.plans_in_queue} plans in the queue.
-            The running plan uid is '{this.props.plan.running_plan_uid}'
+            The currently running plan is:
           </Typography>
-          <RunList plans={this.props.plans}></RunList>
+          <CurrentPlan plans={this.props.plans}></CurrentPlan>
+          <Typography variant="h6" component="h4" gutterBottom>
+            There are {this.props.plan.plans_in_queue -1} plans waiting:
+          </Typography>
+          <RunList plans={this.props.plans.slice(1,this.props.plans.length)}> </RunList>
           <Copyright />
         </Box>
       </Container>
