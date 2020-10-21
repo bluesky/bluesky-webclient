@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Tooltip from '@material-ui/core/Tooltip';
 import { IApplicationState } from './store';
-import { getUsers } from './useractions'
+import { getUser } from './useractions'
 import { IUser, IUserGetAction } from './facility';
 import {
     RouteComponentProps
@@ -16,9 +16,8 @@ export type UserActions =
 
 type RouteParams = { id: string, uid: string };
 
-
 interface IProps extends RouteComponentProps {
-    getUsers: typeof getUsers;
+    getUser: typeof getUser;
     loading: boolean;
     user: IUser;
 }
@@ -53,7 +52,7 @@ class UserPage extends React.Component<IProps, IState> {
     }
 
     componentDidMount() {
-        this.props.getUsers();
+        this.props.getUser(this.props.user.username);
     }
 }
 const mapStateToProps = (store: IApplicationState) => {
@@ -65,7 +64,7 @@ const mapStateToProps = (store: IApplicationState) => {
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    getUsers: () => dispatch(getUsers())
+    getUser: (username: string) => dispatch(getUser(username))
   };
 };
 

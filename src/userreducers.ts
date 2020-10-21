@@ -5,9 +5,9 @@ import {UserActions} from "./user";
 
 const initialUserState: IUserState = {
     user: {
-        userid:0,
+        userid:1,
         globus_email:'',
-        username:''
+        username:'jdoe'
     },
     userLoading: false
 };

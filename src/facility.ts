@@ -57,6 +57,10 @@ export const getUsers = async(): Promise<IUser[]> => {
     return res.data;
 }
 
+export const getUserByUsername = async(username: string): Promise<IUser> => {
+    const res = await axiosInstance.get(`/users/username/${username}`);
+    return res.data;
+}
 export const getProposalsForUser = async(userid: number): Promise<IProposal[]> => {
     const res = await axiosInstance.get(`/proposals/user/${userid}`);
     return res.data;
