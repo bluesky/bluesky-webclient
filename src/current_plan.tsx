@@ -22,6 +22,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
+import LinearProgress from '@material-ui/core/LinearProgress';
 
 type Plans = {
   plans: IPlanObject[];
@@ -96,8 +97,9 @@ export class CurrentPlan extends React.Component<Plans, IState> {
               <MoreVertIcon />
             </IconButton>
           }
-          title={this.props.plans[0].name}
-          subheader={this.props.plans[0].plan_uid}
+          titleTypographyProps={{variant:'h6' }}
+          title="Current Plan"
+          subheader={this.props.plans[0].name}
         />
         <CardMedia
           className={this.state.media}
@@ -107,8 +109,9 @@ export class CurrentPlan extends React.Component<Plans, IState> {
         />
         <CardContent>
           <Typography variant="body2" color="textSecondary" component="p">
-            Something interesting.
+            Something interesting is happening!
           </Typography>
+          <LinearProgress variant="determinate" value={50} />
         </CardContent>
         <CardActions disableSpacing>
           <IconButton onClick={() => this.handlePlay(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
@@ -120,10 +123,10 @@ export class CurrentPlan extends React.Component<Plans, IState> {
           <IconButton onClick={() => this.handleDelete(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
             <HighlightOffIcon />
           </IconButton>
-          <IconButton aria-label="add to favorites">
+          <IconButton>
             <FavoriteIcon />
           </IconButton>
-          <IconButton aria-label="share">
+          <IconButton>
             <ShareIcon />
           </IconButton>
           <IconButton

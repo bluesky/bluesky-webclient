@@ -10,8 +10,11 @@ import { RouteComponentProps } from 'react-router-dom';
 import { IPlan, IPlanObject } from './queueserver';
 import { PlanList } from './plan_list';
 import { CurrentPlan } from './current_plan';
+import Tabs from '@material-ui/core/Tabs';
+import Tab from '@material-ui/core/Tab';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
+import Paper from '@material-ui/core/Paper';
 
 
 function Copyright() {
@@ -44,14 +47,10 @@ class App extends React.Component<IProps> {
           <Typography variant="h4" component="h1" gutterBottom>
             This is the future of all your Bluesky acquisition dreams on the web!
           </Typography>
-          <Typography variant="h6" component="h4" gutterBottom>
-            The currently running plan is:
-          </Typography>
-          <CurrentPlan plans={this.props.plans}></CurrentPlan>
-          <Typography variant="h6" component="h4" gutterBottom>
-            There are {this.props.plan.plans_in_queue -1} plans waiting:
-          </Typography>
-          <PlanList plans={this.props.plans.slice(1,this.props.plans.length)}> </PlanList>
+          <Paper>
+            <CurrentPlan plans={this.props.plans}></CurrentPlan>
+            <PlanList plans={this.props.plans.slice(1,this.props.plans.length)}> </PlanList>
+          </Paper>
           <Copyright />
         </Box>
       </Container>
