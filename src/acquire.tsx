@@ -69,10 +69,10 @@ class AcquirePage extends React.Component<IProps, IState> {
                 <Grid item justify="center" spacing={10} xs={3}>    
                   <AvailablePlans plans={['count', 'scan']}> </AvailablePlans>
                 </Grid>
-                <Grid item justify="center" spacing={10} xs={3}> 
+                <Grid item justify="center" spacing={10} xs={5}> 
                   <PlanForm name='count'> </PlanForm>   
                 </Grid>   
-                <Grid item justify="center" spacing={10} xs={5}>
+                <Grid item justify="center" spacing={10} xs={3}>
                   <PlanList plans={this.props.plans}></PlanList> 
                 </Grid>
             </Grid>
