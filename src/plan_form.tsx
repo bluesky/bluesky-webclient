@@ -24,6 +24,7 @@ import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Box, Container, Paper } from '@material-ui/core';
+import SendIcon from '@material-ui/icons/Send';
 
 type PlanType = {
   name: string;
@@ -83,12 +84,12 @@ export class PlanForm extends React.Component<PlanType, IState> {
         <Card style={{height: "6vh"}} raised={true}>
           <CardContent>
             <Typography align="center" variant="h5" component="h1" gutterBottom>
-              Current Plan
+              Plan Form
             </Typography>
           </CardContent>
         </Card>
       <Box height="2vh"></Box>
-        <Card raised={true} >
+        <Card raised={true}>
           <CardHeader
             avatar={
               <Avatar aria-label="recipe" className={this.state.avatar}>
@@ -110,17 +111,7 @@ export class PlanForm extends React.Component<PlanType, IState> {
           </CardContent>
           <CardActions disableSpacing>
             <IconButton onClick={() => this.handleSubmit(this.props.name)} edge="end" aria-label="comments">
-              <PlayCircleOutlineIcon />
-            </IconButton>
-            <IconButton
-              className={clsx(this.state.expand, {
-                [this.state.expandOpen]: this.state.expanded,
-              })}
-              onClick={this.handleExpandClick}
-              aria-expanded={this.state.expanded}
-              aria-label="show more"
-            >
-              <ExpandMoreIcon />
+              <SendIcon />
             </IconButton>
           </CardActions>
           <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
