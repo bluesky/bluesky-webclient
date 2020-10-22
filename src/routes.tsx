@@ -13,7 +13,7 @@ const Routes: React.FunctionComponent = () => {
                 <Header />
                 <Route exact path="/" component={App} />
                 <Route exact path="/acquire" component={AcquirePage} />
-		        <Route exact path="/user" component={UserPage} />
+                <Route exact path="/user" component={UserPage} />
             </div>
         </Router>
     );
