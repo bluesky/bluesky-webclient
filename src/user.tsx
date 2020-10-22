@@ -71,4 +71,4 @@ const mapDispatchToProps = (dispatch: any) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-  )(UserPage);
+)(UserPage);
