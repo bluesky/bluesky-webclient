@@ -46,14 +46,14 @@ class App extends React.Component<IProps> {
       return (
         <Container maxWidth="xl">
           <Box width="80vw" height="2vh"></Box>
-          <Grid container spacing={10} direction="row">
-            <Grid item justify="center" spacing={10}>    
+          <Grid container spacing={5} direction="row" justify="center">
+            <Grid item justify="center" spacing={10} xs={3}>    
               <PlanList plans={this.props.plans.slice(1,this.props.plans.length)}> </PlanList>
             </Grid>
-            <Grid item justify="center" spacing={10}>
+            <Grid item justify="center" spacing={10} xs={5}>
               <CurrentPlan plans={this.props.plans}></CurrentPlan> 
             </Grid>
-            <Grid item justify="center" spacing={10}>    
+            <Grid item justify="center" spacing={10} xs={3}>    
               <HistoricalPlanList plans={this.props.plans.slice(1,this.props.plans.length)}> </HistoricalPlanList>
             </Grid>   
           </Grid>

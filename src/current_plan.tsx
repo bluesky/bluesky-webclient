@@ -86,7 +86,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
   }
   render(){
     return (
-      <Box>
+      <Box maxHeight="50vh">
         <Card style={{height: "6vh"}} raised={true}>
           <CardContent>
             <Typography align="center" variant="h5" component="h1" gutterBottom>
@@ -132,9 +132,6 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             </IconButton>
             <IconButton onClick={() => this.handleDelete(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
               <HighlightOffIcon />
-            </IconButton>
-            <IconButton>
-              <FavoriteIcon />
             </IconButton>
             <IconButton>
               <ShareIcon />
