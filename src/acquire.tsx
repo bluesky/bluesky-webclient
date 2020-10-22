@@ -14,9 +14,15 @@ import { IApplicationState } from './store';
 import { submitPlan, modifyEnvironment, modifyQueue } from './planactions';
 import { clearQueue } from './planactions';
 import { IPlanObject, EnvOps, QueueOps } from './queueserver';
+import { getOverview, getQueuedPlans } from './planactions';
 import {
     RouteComponentProps
 } from "react-router-dom";
+import { Grid } from '@material-ui/core';
+import { PlanList } from './plan_list';
+import { CurrentPlan } from './current_plan';
+import { AvailablePlans } from './available_plans';
+import { PlanForm } from './plan_form';
 
 type RouteParams = { id: string, uid: string };
 
@@ -27,8 +33,11 @@ interface IProps extends RouteComponentProps {
     modifyEnvironment: typeof modifyEnvironment;
     modifyQueue: typeof modifyQueue;
     clearQueue: typeof clearQueue;
+    getOverview: typeof getOverview;
+    getQueuedPlans: typeof getQueuedPlans;
     loading: boolean;
     plan: IPlanObject;
+    plans: IPlanObject[];
 }
 
 interface IState {
@@ -56,16 +65,29 @@ class AcquirePage extends React.Component<IProps, IState> {
           onQueueChange: this.handleQueueChange,
         };
       }
+
     render() {
         return (
-          <Container maxWidth="sm">
+          <Container maxWidth="xl">
+            <Box width="80vw" height="2vh"></Box>
+            <Grid container spacing={5} direction="row" justify="center">
+                <Grid item justify="center" spacing={10} xs={3}>    
+                  <AvailablePlans plans={['count', 'scan']}> </AvailablePlans>
+                </Grid>
+                <Grid item justify="center" spacing={10} xs={3}> 
+                  <PlanForm name='count'> </PlanForm>   
+                </Grid>   
+                <Grid item justify="center" spacing={10} xs={5}>
+                  <PlanList plans={this.props.plans}></PlanList> 
+                </Grid>
+            </Grid>
+          </Container>
+
+        )
+    }
+
+/*
           <Box my={4}>
-            <Typography variant="h4" component="h1" gutterBottom>
-              This is where we will acquire data...
-              <Tooltip title="Clear the queue of the queueserver">
-                <button onClick={this.handleClearQueue}>Clear Queue</button>
-              </Tooltip>
-            </Typography>
               <Typography variant="h6" component="h1" gutterBottom>
               <div>
                   loading: {this.props.loading}.
@@ -118,8 +140,7 @@ class AcquirePage extends React.Component<IProps, IState> {
 
           </Box>
         </Container>
-        )
-    }
+*/
 
     private handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
         this.state.onPlanChange(event.target.value as number);
@@ -175,6 +196,8 @@ class AcquirePage extends React.Component<IProps, IState> {
         this.props.clearQueue();
     }
     componentDidMount() {
+        this.props.getOverview();
+        this.props.getQueuedPlans();
         //this.props.submitPlan();
     }
 }
@@ -183,6 +206,8 @@ const mapStateToProps = (store: IApplicationState) => {
     return {
       loading: store.submitted.planLoading,
       plan: store.submitted.plan,
+      loadingPlans: store.plans.plansLoading,
+      plans: store.plans.plans
     };
 };
 
@@ -192,9 +217,12 @@ const mapDispatchToProps = (dispatch: any) => {
       modifyQueue: (opId: number) => dispatch(modifyQueue(opId)),
       submitPlan: (planId: number, param: number) => dispatch(submitPlan(planId, param)),
       clearQueue: () => dispatch(clearQueue()),
+      getOverview: () => dispatch(getOverview()),
+      getQueuedPlans: () => dispatch(getQueuedPlans())
     };
 };
 
+  
 export default connect(
     mapStateToProps,
     mapDispatchToProps
