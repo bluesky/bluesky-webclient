@@ -16,12 +16,13 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { IPlan, IPlanObject } from './queueserver';
 import { RouteComponentProps } from 'react-router-dom';
 import { Box, Card, CardActions, CardContent, Container, Paper, Typography } from '@material-ui/core';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 type Plans = {
   plans: IPlanObject[];
 }
 
-export class PlanList extends React.Component<Plans>{
+export class HistoricalPlanList extends React.Component<Plans>{
 
   handleDelete(uid: string) {
     alert(uid)
@@ -49,16 +50,7 @@ export class PlanList extends React.Component<Plans>{
             <Card style={{height: "6vh"}} raised={true}>
               <CardContent>
                 <Typography align="center" variant="h5" component="h1" gutterBottom>
-                  Queue
-                  <IconButton onClick={() => this.handlePlay(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
-                    <PlayCircleOutlineIcon />
-                  </IconButton>
-                  <IconButton onClick={() => this.handlePause(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
-                    <PauseCircleOutlineIcon />
-                  </IconButton>
-                  <IconButton onClick={() => this.handleDelete(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
-                    <AddCircleOutlineIcon />
-                  </IconButton>
+                  History
                 </Typography>
               </CardContent>
             </Card>
@@ -75,13 +67,7 @@ export class PlanList extends React.Component<Plans>{
                           secondary={planObject.plan_uid.substr(0,8)}/>
                         <ListItemSecondaryAction>
                           <IconButton onClick={() => this.handleMoveForward(planObject.plan_uid)} edge="end" aria-label="comments">
-                            <KeyboardArrowUpIcon />
-                          </IconButton>
-                          <IconButton onClick={() => this.handleMoveBackward(planObject.plan_uid)} edge="end" aria-label="comments">
-                            <KeyboardArrowDownIcon />
-                          </IconButton>
-                          <IconButton onClick={() => this.handleDelete(planObject.plan_uid)} edge="end" aria-label="comments">
-                            <DeleteForeverIcon />
+                            <ExpandMoreIcon />
                           </IconButton>
                         </ListItemSecondaryAction>
                     </ListItem>

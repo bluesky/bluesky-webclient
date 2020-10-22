@@ -9,6 +9,7 @@ import { getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
 import { IPlan, IPlanObject } from './queueserver';
 import { PlanList } from './plan_list';
+import { HistoricalPlanList } from './historical_plan_list';
 import { CurrentPlan } from './current_plan';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
@@ -44,13 +45,16 @@ class App extends React.Component<IProps> {
   render() {
       return (
         <Container maxWidth="xl">
-          <Box width="70vw" height="2vh"></Box>
+          <Box width="80vw" height="2vh"></Box>
           <Grid container spacing={10} direction="row">
+            <Grid item justify="center" spacing={10}>    
+              <PlanList plans={this.props.plans.slice(1,this.props.plans.length)}> </PlanList>
+            </Grid>
             <Grid item justify="center" spacing={10}>
               <CurrentPlan plans={this.props.plans}></CurrentPlan> 
             </Grid>
             <Grid item justify="center" spacing={10}>    
-              <PlanList plans={this.props.plans.slice(1,this.props.plans.length)}> </PlanList>
+              <HistoricalPlanList plans={this.props.plans.slice(1,this.props.plans.length)}> </HistoricalPlanList>
             </Grid>   
           </Grid>
           <Copyright/>

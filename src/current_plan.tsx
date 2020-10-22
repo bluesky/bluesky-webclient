@@ -87,16 +87,15 @@ export class CurrentPlan extends React.Component<Plans, IState> {
   render(){
     return (
       <Box>
-        <Card>
+        <Card style={{height: "6vh"}} raised={true}>
           <CardContent>
             <Typography align="center" variant="h5" component="h1" gutterBottom>
               Current Plan
             </Typography>
           </CardContent>
         </Card>
-        <Box height="2vh"></Box>
-        <Paper className={this.state.root} style={{maxWidth:"32vw", maxHeight:"60vw", overflow: 'auto', margin: "auto"}}>
-        <Card >
+      <Box height="2vh"></Box>
+        <Card raised={true} >
           <CardHeader
             avatar={
               <Avatar aria-label="recipe" className={this.state.avatar}>
@@ -160,7 +159,6 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             </CardContent>
           </Collapse>
         </Card>
-      </Paper>
       </Box>
     );
   }
