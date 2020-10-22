@@ -18,10 +18,10 @@ import { RouteComponentProps } from 'react-router-dom';
 import { Box, Card, CardActions, CardContent, Container, Paper, Typography } from '@material-ui/core';
 
 type Plans = {
-  plans: IPlanObject[];
+  plans: string[];
 }
 
-export class PlanList extends React.Component<Plans>{
+export class AvailablePlans extends React.Component<Plans>{
 
   handleDelete(uid: string) {
     alert(uid)
@@ -49,41 +49,21 @@ export class PlanList extends React.Component<Plans>{
             <Card style={{height: "6vh"}} raised={true}>
               <CardContent>
                 <Typography align="center" variant="h5" component="h1" gutterBottom>
-                  Queue
-                  <IconButton onClick={() => this.handlePlay(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
-                    <PlayCircleOutlineIcon />
-                  </IconButton>
-                  <IconButton onClick={() => this.handlePause(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
-                    <PauseCircleOutlineIcon />
-                  </IconButton>
-                  <IconButton onClick={() => this.handleDelete(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
-                    <AddCircleOutlineIcon />
-                  </IconButton>
+                  Available Plans
                 </Typography>
               </CardContent>
             </Card>
             <Box height="2vh"></Box>
-            <Paper style={{height: "70vh", overflow: 'auto', margin: "auto"}}>
+            <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
               <List>
-                {this.props.plans.map((planObject: IPlanObject) => (
-                    <ListItem divider={true} button={true} key={planObject.plan_uid}>
+                {this.props.plans.map((planObject: string) => (
+                    <ListItem divider={true} button={true} key={planObject}>
                         <ListItemIcon>
                           <AccountCircleIcon fontSize='large' />
                         </ListItemIcon>
                         <ListItemText
-                          primary={planObject.name}
-                          secondary={planObject.plan_uid.substr(0,8)}/>
-                        <ListItemSecondaryAction>
-                          <IconButton onClick={() => this.handleMoveForward(planObject.plan_uid)} edge="end" aria-label="comments">
-                            <KeyboardArrowUpIcon />
-                          </IconButton>
-                          <IconButton onClick={() => this.handleMoveBackward(planObject.plan_uid)} edge="end" aria-label="comments">
-                            <KeyboardArrowDownIcon />
-                          </IconButton>
-                          <IconButton onClick={() => this.handleDelete(planObject.plan_uid)} edge="end" aria-label="comments">
-                            <DeleteForeverIcon />
-                          </IconButton>
-                        </ListItemSecondaryAction>
+                          primary={planObject}
+                          secondary={planObject}/>
                     </ListItem>
                 ))}
             </List>

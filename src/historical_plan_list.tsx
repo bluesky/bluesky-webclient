@@ -55,7 +55,7 @@ export class HistoricalPlanList extends React.Component<Plans>{
               </CardContent>
             </Card>
             <Box height="2vh"></Box>
-            <Paper style={{overflow: 'auto', margin: "auto"}}>
+            <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
               <List>
                 {this.props.plans.map((planObject: IPlanObject) => (
                     <ListItem divider={true} button={true} key={planObject.plan_uid}>
