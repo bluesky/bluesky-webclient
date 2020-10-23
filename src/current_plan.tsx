@@ -86,7 +86,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
   }
   render(){
     return (
-      <Box maxHeight="50vh">
+      <Box>
         <Card style={{height: "6vh"}} raised={true}>
           <CardContent>
             <Typography align="center" variant="h5" component="h1" gutterBottom>

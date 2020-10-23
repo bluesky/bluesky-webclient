@@ -24,23 +24,7 @@ type Plans = {
 
 export class HistoricalPlanList extends React.Component<Plans>{
 
-  handleDelete(uid: string) {
-    alert(uid)
-  }
-
-  handleMoveForward(uid: string) {
-    alert(uid)
-  }
-
-  handleMoveBackward(uid: string) {
-    alert(uid)
-  }
-
-  handlePlay(uid: string) {
-    alert(uid)
-  }
-
-  handlePause(uid: string) {
+  handleExpand(uid: string) {
     alert(uid)
   }
 
@@ -66,7 +50,7 @@ export class HistoricalPlanList extends React.Component<Plans>{
                           primary={planObject.name}
                           secondary={planObject.plan_uid.substr(0,8)}/>
                         <ListItemSecondaryAction>
-                          <IconButton onClick={() => this.handleMoveForward(planObject.plan_uid)} edge="end" aria-label="comments">
+                          <IconButton onClick={() => this.handleExpand(planObject.plan_uid)} edge="end" aria-label="comments">
                             <ExpandMoreIcon />
                           </IconButton>
                         </ListItemSecondaryAction>
