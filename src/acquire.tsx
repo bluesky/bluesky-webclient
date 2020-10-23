@@ -39,8 +39,8 @@ interface IProps extends RouteComponentProps {
 }
 
 interface IState {
-    planId: number;
-    onPlanChange: (planId: number) => void;
+    selected_plan: string;
+    onPlanChange: (selected_plan: string) => void;
     planParam: number;
     onPlanParamChange: (planParam: number) => void;
     env: string;
@@ -53,8 +53,8 @@ class AcquirePage extends React.Component<IProps, IState> {
     public constructor(props: IProps) {
         super(props);
         this.state = {
-          planId: -1,
-          onPlanChange: this.handlePlanChange,
+          selected_plan: "",
+          onPlanChange: this.handleSelectPlan,
           planParam: 10,
           onPlanParamChange: this.handlePlanParamChange,
           env: "Open",
@@ -70,17 +70,16 @@ class AcquirePage extends React.Component<IProps, IState> {
             <Box width="80vw" height="2vh"></Box>
             <Grid container spacing={5} direction="row" justify="center">
                 <Grid item justify="center" spacing={10} xs={3}>    
-                  <AvailablePlans plans={['count', 'scan']}> </AvailablePlans>
+                  <AvailablePlans selected_plan={this.state.selected_plan} handleSelect={this.handleSelectPlan} plans={['count', 'scan']}> </AvailablePlans>
                 </Grid>
                 <Grid item justify="center" spacing={10} xs={5}> 
-                  <PlanForm name='count'> </PlanForm>   
+                  <PlanForm name={this.state.selected_plan}> </PlanForm>   
                 </Grid>   
                 <Grid item justify="center" spacing={10} xs={3}>
                   <PlanList plans={this.props.plans}></PlanList> 
                 </Grid>
             </Grid>
           </Container>
-
         )
     }
 
@@ -140,12 +139,12 @@ class AcquirePage extends React.Component<IProps, IState> {
         </Container>
 */
 
-    private handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        this.state.onPlanChange(event.target.value as number);
-    };
+    //private handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
+    //    this.state.onPlanChange(event.target.value as number);
+    //};
 
-    private handlePlanChange = (planId: number) => {
-        this.setState({ planId });
+    private handleSelectPlan = (selected_plan: string) => {
+        this.setState({ selected_plan });
     };
 
     private handleParamChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -165,7 +164,7 @@ class AcquirePage extends React.Component<IProps, IState> {
     };
 
     private handleSubmitClick = () => {
-        this.props.submitPlan(this.state.planId, this.state.planParam);
+        this.props.submitPlan(this.state.selected_plan, this.state.planParam);
     }
 
     private handleEnvClick = () => {
