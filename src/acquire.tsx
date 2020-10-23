@@ -76,7 +76,7 @@ class AcquirePage extends React.Component<IProps, IState> {
                   <PlanForm submit_plan={this.props.submitPlan} name={this.state.selected_plan}> </PlanForm>   
                 </Grid>   
                 <Grid item justify="center" spacing={10} xs={3}>
-                  <PlanList plans={this.props.plans}></PlanList> 
+                  <PlanList clear_queue={this.props.clearQueue} plans={this.props.plans}></PlanList> 
                 </Grid>
             </Grid>
           </Container>

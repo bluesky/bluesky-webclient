@@ -11,6 +11,7 @@ import { IPlan, IPlanObject } from './queueserver';
 import { PlanList } from './plan_list';
 import { HistoricalPlanList } from './historical_plan_list';
 import { CurrentPlan } from './current_plan';
+import { clearQueue } from './planactions';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import List from '@material-ui/core/List';
@@ -35,6 +36,7 @@ function Copyright() {
 interface IProps extends RouteComponentProps {
   getOverview: typeof getOverview;
   getQueuedPlans: typeof getQueuedPlans;
+  clearQueue: typeof clearQueue;
   loadingPlan: boolean;
   plan: IPlan;
   loadingPlans: boolean;
@@ -48,7 +50,7 @@ class App extends React.Component<IProps> {
           <Box width="80vw" height="2vh"></Box>
           <Grid container spacing={5} direction="row" justify="center">
             <Grid item justify="center" spacing={10} xs={3}>    
-              <PlanList plans={this.props.plans.slice(1,this.props.plans.length)}> </PlanList>
+              <PlanList clear_queue={this.props.clearQueue} plans={this.props.plans.slice(1,this.props.plans.length)}> </PlanList>
             </Grid>
             <Grid item justify="center" spacing={10} xs={5}>
               <CurrentPlan plans={this.props.plans}></CurrentPlan> 

@@ -16,16 +16,15 @@ import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { IPlan, IPlanObject } from './queueserver';
 import { RouteComponentProps } from 'react-router-dom';
 import { Box, Card, CardActions, CardContent, Container, Paper, Typography } from '@material-ui/core';
+import { clearQueue } from './planactions';
 
 type Plans = {
   plans: IPlanObject[];
+  clear_queue: typeof clearQueue
 }
 
 export class PlanList extends React.Component<Plans>{
 
-  handleDelete(uid: string) {
-    alert(uid)
-  }
 
   handleMoveForward(uid: string) {
     alert(uid)
@@ -43,6 +42,10 @@ export class PlanList extends React.Component<Plans>{
     alert(uid)
   }
 
+  handleDelete(uid: string){
+
+  }
+
   render() {
     return (
           <Box> 
@@ -56,8 +59,8 @@ export class PlanList extends React.Component<Plans>{
                   <IconButton onClick={() => this.handlePause(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
                     <PauseCircleOutlineIcon />
                   </IconButton>
-                  <IconButton onClick={() => this.handleDelete(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
-                    <AddCircleOutlineIcon />
+                  <IconButton onClick={() => this.props.clear_queue()} edge="end" aria-label="comments">
+                    <DeleteForeverIcon />
                   </IconButton>
                 </Typography>
               </CardContent>
