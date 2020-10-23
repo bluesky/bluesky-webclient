@@ -15,9 +15,7 @@ import { submitPlan, modifyEnvironment, modifyQueue } from './planactions';
 import { clearQueue } from './planactions';
 import { IPlanObject, EnvOps, QueueOps } from './queueserver';
 import { getOverview, getQueuedPlans } from './planactions';
-import {
-    RouteComponentProps
-} from "react-router-dom";
+import { RouteComponentProps } from "react-router-dom";
 import { Grid } from '@material-ui/core';
 import { PlanList } from './plan_list';
 import { CurrentPlan } from './current_plan';
