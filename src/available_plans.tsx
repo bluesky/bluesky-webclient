@@ -15,7 +15,8 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { IPlan, IPlanObject } from './queueserver';
 import { RouteComponentProps } from 'react-router-dom';
-import { Box, Card, CardActions, CardContent, Container, MenuItem, Paper, Typography } from '@material-ui/core';
+import { Avatar, Box, Card, CardActions, CardContent, Container, MenuItem, Paper, Typography } from '@material-ui/core';
+import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 
 type Plans = {
   plans: string[];
@@ -41,7 +42,11 @@ export class AvailablePlans extends React.Component<Plans>{
                 {this.props.plans.map((planObject: string) => (
                     <MenuItem selected={planObject == this.props.selected_plan} onClick={() => this.props.handleSelect(planObject)} divider={true} button={true} key={planObject}>
                         <ListItemIcon>
-                          <AccountCircleIcon fontSize='large' />
+                          <Avatar>
+                            <Typography align="center" variant="body2" gutterBottom>
+                              BMM
+                            </Typography>
+                          </Avatar>
                         </ListItemIcon>
                         <ListItemText
                           primary={planObject}

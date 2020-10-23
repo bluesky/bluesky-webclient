@@ -73,7 +73,7 @@ class AcquirePage extends React.Component<IProps, IState> {
                   <AvailablePlans selected_plan={this.state.selected_plan} handleSelect={this.handleSelectPlan} plans={['count', 'scan']}> </AvailablePlans>
                 </Grid>
                 <Grid item justify="center" spacing={10} xs={5}> 
-                  <PlanForm name={this.state.selected_plan}> </PlanForm>   
+                  <PlanForm submit_plan={this.props.submitPlan} name={this.state.selected_plan}> </PlanForm>   
                 </Grid>   
                 <Grid item justify="center" spacing={10} xs={3}>
                   <PlanList plans={this.props.plans}></PlanList> 
@@ -82,66 +82,6 @@ class AcquirePage extends React.Component<IProps, IState> {
           </Container>
         )
     }
-
-/*
-          <Box my={4}>
-              <Typography variant="h6" component="h1" gutterBottom>
-              <div>
-                  loading: {this.props.loading}.
-              </div>
-            </Typography>
-            <FormControl>
-                <InputLabel id="demo-simple-select-label">type</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={this.state.planId}
-                    onChange={this.handleChange}
-                >
-                    <MenuItem value={0}>count</MenuItem>
-                    <MenuItem value={1}>scan</MenuItem>
-                </Select>
-                {}
-                {(() => {
-                    switch (this.state.planId) {
-                        case 0:
-                            return <TextField
-                                id="filled-number"
-                                label="num"
-                                type="number"
-                                value={this.state.planParam}
-                                onChange={this.handleParamChange}
-                            />;
-                        case 1:
-                            return <TextField
-                                id="filled-number"
-                                label="step"
-                                type="number"
-                                value={this.state.planParam}
-                                onChange={this.handleParamChange}
-                            />;
-                        default:
-                            return <p>Make a choice!</p>;
-                    }
-                })()}
-            </FormControl>
-            <Tooltip title="Submit the plan to the queue">
-              <Button variant="contained" onClick={this.handleSubmitClick}>Submit</Button>
-            </Tooltip>
-            <div><pre>The pretty printed JSON:<br />
-                { JSON.stringify(this.props.plan, null, 2) }</pre></div>
-          </Box>
-          <Box my={4}>
-              <Button variant="contained" onClick={this.handleEnvClick}>{this.state.env} environment</Button>
-              <Button variant="contained" onClick={this.handleQueueClick}>{this.state.queue} queue</Button>
-
-          </Box>
-        </Container>
-*/
-
-    //private handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-    //    this.state.onPlanChange(event.target.value as number);
-    //};
 
     private handleSelectPlan = (selected_plan: string) => {
         this.setState({ selected_plan });

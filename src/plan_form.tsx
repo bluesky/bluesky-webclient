@@ -28,13 +28,12 @@ import SendIcon from '@material-ui/icons/Send';
 
 type PlanType = {
   name: string;
+  submit_plan: (selected_plan: string) => void
 }
 
 interface IState {
   root: any;
   media: any;
-  expand: any;
-  expandOpen: any;
   avatar: any;
   expanded: boolean
 }
@@ -50,16 +49,6 @@ export class PlanForm extends React.Component<PlanType, IState> {
         height: 0,
         paddingTop: '56.25%', // 16:9
       },
-      expand: {
-        transform: 'rotate(0deg)',
-        marginLeft: 'auto',
-        //transition: theme.transitions.create('transform', {
-        //  duration: theme.transitions.duration.shortest,
-        //}),
-      },
-      expandOpen: {
-        transform: 'rotate(180deg)',
-      },
       avatar: {
         backgroundColor: red[500],
       },
@@ -67,17 +56,6 @@ export class PlanForm extends React.Component<PlanType, IState> {
     }
 
   }
-  //const [expanded, setExpanded] = React.useState(false);
-  
-  handleExpandClick() {
-    alert("Expand")
-    //setExpanded(!expanded);
-  };
-
-  handleSubmit(uid: string) {
-    alert(uid)
-  }
-
   render(){
     return (
       <Box>
@@ -92,9 +70,7 @@ export class PlanForm extends React.Component<PlanType, IState> {
         <Card raised={true}>
           <CardHeader
             avatar={
-              <Avatar aria-label="recipe" className={this.state.avatar}>
-                R
-              </Avatar>
+              <AccountCircleIcon fontSize='large' />
             }
             action={
               <IconButton aria-label="settings">
@@ -109,19 +85,16 @@ export class PlanForm extends React.Component<PlanType, IState> {
               Enter the plan parameters!
             </Typography>
           </CardContent>
+          <CardContent>
+            <Typography>
+                Plan description.
+            </Typography>
+          </CardContent>
           <CardActions disableSpacing>
-            <IconButton onClick={() => this.handleSubmit(this.props.name)} edge="end" aria-label="comments">
+            <IconButton onClick={() => this.props.submit_plan(this.props.name)} edge="end" aria-label="comments">
               <SendIcon />
             </IconButton>
           </CardActions>
-          <Collapse in={this.state.expanded} timeout="auto" unmountOnExit>
-            <CardContent>
-              <Typography paragraph>Plan metadata</Typography>
-              <Typography>
-                Some text here.
-              </Typography>
-            </CardContent>
-          </Collapse>
         </Card>
       </Box>
     );
