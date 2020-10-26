@@ -20,7 +20,7 @@ import { clearQueue } from './planactions';
 
 type Plans = {
   plans: IPlanObject[];
-  clear_queue: typeof clearQueue
+  clearQueue: typeof clearQueue
 }
 
 export class PlanList extends React.Component<Plans>{
@@ -59,7 +59,7 @@ export class PlanList extends React.Component<Plans>{
                   <IconButton onClick={() => this.handlePause(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
                     <PauseCircleOutlineIcon />
                   </IconButton>
-                  <IconButton onClick={() => this.props.clear_queue()} edge="end" aria-label="comments">
+                  <IconButton onClick={() => this.props.clearQueue()} edge="end" aria-label="comments">
                     <DeleteForeverIcon />
                   </IconButton>
                 </Typography>
