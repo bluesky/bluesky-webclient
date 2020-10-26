@@ -6,8 +6,9 @@ import {UserActions} from "./user";
 const initialUserState: IUserState = {
     user: {
         userid:1,
-        globus_email:'',
-        username:'jdoe'
+        email:'',
+        username:'jdoe',
+        orcid:''
     },
     userLoading: false
 };
@@ -24,12 +25,6 @@ export const userReducer: Reducer<IUserState, UserActions> = (
                 userLoading: false
             };
         }
-        // case UserActionTypes.LOADING: {
-        //     return {
-        //         ...state,
-        //         userLoading: true
-        //     };
-        // }
         default: {
             return state;
         }

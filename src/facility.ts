@@ -12,7 +12,8 @@ export enum UserActionTypes {
 export interface IUser {
     userid: number,
     username: string,
-    globus_email: string,
+    email: string,
+    orcid: string
 }
 
 export interface IProposal {

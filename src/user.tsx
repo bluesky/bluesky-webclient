@@ -34,18 +34,14 @@ class UserPage extends React.Component<IProps, IState> {
           <Container maxWidth="sm">
           <Box my={4}>
             <Typography variant="h4" component="h1" gutterBottom>
-              This is where we will display information for the user...
+              Page to display Login or Logout/User information
             </Typography>
-              <Typography variant="h6" component="h1" gutterBottom>
-              <div>
-                  loading: {this.props.loading}.
-              </div>
-            </Typography>
-            <Tooltip title="Just show something pretty">
+            <Tooltip title="Local username">
               <Typography variant="h5">User: {this.props.user.username}</Typography>
               </Tooltip>
-	      <Typography variant="h3">Globus email: {this.props.user.globus_email}</Typography>
-            <div><pre>no plan so not printing something pretty here</pre></div>
+	      <Typography variant="h6">User info - email: {this.props.user.email}
+        <p>ORCiD: {this.props.user.orcid}</p></Typography>
+            <div><pre>More information about the user here...</pre></div>
           </Box>
         </Container>
         )
