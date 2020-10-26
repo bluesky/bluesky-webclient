@@ -20,25 +20,3 @@ export const getUser: ActionCreator<ThunkAction<Promise<AnyAction>, IUserState, 
         });
     };
 };
-
-// export const getProposalsForUser: ActionCreator<ThunkAction<Promise<AnyAction>, null, null, IPlanObjectsAction>> = (userId: number) => {
-//     return async (dispatch: Dispatch) => {
-//         dispatch(loading());
-//         const plans = await getProposalsForUserAPI(userId);
-//         return dispatch({
-//           plans,
-//           type: null
-//         });
-//     };
-// };
-
-// export const getExperimentsForProposal: ActionCreator<ThunkAction<Promise<AnyAction>, null, null, IPlanSubmitAction>> = (proposalId: number) => {
-//     return async (dispatch: Dispatch) => {
-//         dispatch(loading());
-//         const experiments = await getExperimentsForProposalAPI(proposalId);
-//         return dispatch({
-//           plan,
-//           type: null
-//         });
-//     };
-// };
