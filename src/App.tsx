@@ -5,9 +5,9 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import { IApplicationState } from './store';
-import { getOverview, getQueuedPlans } from './planactions';
+import { getAllowedPlans, getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
-import { IPlan, IPlanObject } from './queueserver';
+import { IPlan, IPlanAllowedObject, IPlanObject } from './queueserver';
 import { PlanList } from './PlanList';
 import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
@@ -37,10 +37,12 @@ interface IProps extends RouteComponentProps {
   getOverview: typeof getOverview;
   getQueuedPlans: typeof getQueuedPlans;
   clearQueue: typeof clearQueue;
+  getAllowedPlans: typeof getAllowedPlans;
   loadingPlan: boolean;
   plan: IPlan;
   loadingPlans: boolean;
   plans: IPlanObject[];
+  allowedPlans: IPlanAllowedObject[];
 }
 
 class App extends React.Component<IProps> {
@@ -76,6 +78,7 @@ class App extends React.Component<IProps> {
   componentDidMount() {
       this.props.getOverview();
       this.props.getQueuedPlans();
+      this.props.getAllowedPlans();
   }
 
 }
