@@ -27,19 +27,19 @@ export class PlanList extends React.Component<Plans>{
 
 
   handleMoveForward(uid: string) {
-    alert(uid)
+    alert(uid);
   }
 
   handleMoveBackward(uid: string) {
-    alert(uid)
+    alert(uid);
   }
 
   handlePlay(uid: string) {
-    alert(uid)
+    alert(uid);
   }
 
   handlePause(uid: string) {
-    alert(uid)
+    alert(uid);
   }
 
   handleDelete(uid: string){

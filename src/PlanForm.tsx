@@ -28,7 +28,7 @@ import SendIcon from '@material-ui/icons/Send';
 
 type PlanType = {
   name: string;
-  submitPlan: (selectedPlan: string) => void
+  submitPlan: (selectedPlan: string) => void;
 }
 
 interface IState {

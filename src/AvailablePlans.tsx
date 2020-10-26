@@ -21,7 +21,7 @@ import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 type Plans = {
   plans: string[];
   selectedPlan: string;
-  handleSelect: (selectedPlan: string) => void
+  handleSelect: (selectedPlan: string) => void;
 }
 
 export class AvailablePlans extends React.Component<Plans>{

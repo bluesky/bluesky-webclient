@@ -25,7 +25,7 @@ type Plans = {
 export class HistoricalPlanList extends React.Component<Plans>{
 
   handleExpand(uid: string) {
-    alert(uid)
+    alert(uid);
   }
 
   render() {

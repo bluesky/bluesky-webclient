@@ -36,7 +36,7 @@ interface IState {
   expand: any;
   expandOpen: any;
   avatar: any;
-  expanded: boolean
+  expanded: boolean;
 }
 
 export class CurrentPlan extends React.Component<Plans, IState> {
@@ -66,27 +66,27 @@ export class CurrentPlan extends React.Component<Plans, IState> {
   }
   
   handleExpandClick() {
-    alert("Expand")
+    alert("Expand");
     //setExpanded(!expanded);
   };
 
   handlePlay() {
-    alert("Play")
+    alert("Play");
   }
 
   handlePause() {
-    alert("Pause")
+    alert("Pause");
   }
 
   handleDelete(uid: string) {
-    alert(uid)
+    alert(uid);
   }
 
   getName(plans: IPlanObject[]){
     if (plans.length == 0) {
       return "No plan currently executing";
     } else {
-      return plans[0].name
+      return plans[0].name;
     }
   }
 
@@ -94,7 +94,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
     if (plans.length == 0) {
       return "";
     } else {
-      return plans[0].plan_uid
+      return plans[0].plan_uid;
     }
   }
 
