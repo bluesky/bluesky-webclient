@@ -118,7 +118,7 @@ export interface IAllowedPlansState {
 }
 
 export const getAllowedPlans = async(): Promise<IAllowedPlans> => {
-    const res = await axiosInstance.post('/plans/allowed',
+    const res = await axiosInstance.get('/plans/allowed',
         {});
     console.log(res);
     return res.data;

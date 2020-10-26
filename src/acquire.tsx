@@ -139,6 +139,7 @@ class AcquirePage extends React.Component<IProps, IState> {
         this.props.getOverview();
         this.props.getQueuedPlans();
         //this.props.submitPlan();
+        this.props.getAllowedPlans();
     }
 }
 
