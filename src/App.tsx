@@ -56,7 +56,7 @@ class App extends React.Component<IProps> {
               <CurrentPlan plans={this.props.plans}></CurrentPlan> 
             </Grid>
             <Grid item justify="center" spacing={10} xs={3}>    
-              <HistoricalPlanList plans={this.props.plans.slice(1,this.props.plans.length)}> </HistoricalPlanList>
+              <HistoricalPlanList plans={this.props.plans.slice(1, this.props.plans.length)}> </HistoricalPlanList>
             </Grid>   
           </Grid>
           <Copyright/>
