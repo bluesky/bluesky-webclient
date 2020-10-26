@@ -20,7 +20,7 @@ import { clearQueue } from './planactions';
 
 type Plans = {
   plans: IPlanObject[];
-  clearQueue: typeof clearQueue
+  clearQueue: typeof clearQueue;
 }
 
 export class PlanList extends React.Component<Plans>{
