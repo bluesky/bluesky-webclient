@@ -12,6 +12,7 @@ export enum PlanActionTypes {
     CLEARQUEUE = "PLANS/CLEARQUEUE",
     MODIFYENVIRONMENT = "PLANS/MODIFYENVIRONMENT",
     MODIFYQUEUE = "PLANS/MODIFYQUEUE",
+    ALLOWED = "PLANS/ALLOWED",
 }
 
 export interface IPlan {
@@ -34,6 +35,16 @@ export interface IPlanGetOverviewAction {
 
 export interface IPlanLoadingAction {
     type: PlanActionTypes.LOADING
+}
+
+export interface IPlanAllowedAction {
+    type: PlanActionTypes.ALLOWED
+}
+
+export interface IPlanAllowedObject {
+    // args: (string|number|string[])[],
+    name: string,
+    parameters: object,
 }
 
 export interface IPlanObject {
@@ -104,6 +115,7 @@ export const getOverview = async(): Promise<IPlan> => {
 export interface IPlanObjectsState {
     readonly plans: IPlanObject[];
     readonly plansLoading: boolean;
+    readonly allowedPlans: IPlanAllowedObject[];
 }
 
 export const getQueuedPlans = async(): Promise<IPlanObject[]> => {
@@ -136,6 +148,13 @@ export const submitPlan = async(planName: string, param: number): Promise<IPlanO
         {
             plan: planObj
         });
+    console.log(res);
+    return res.data;
+}
+
+export const allowedPlans = async(): Promise<any> => {
+    const res = await axiosInstance.get('plans/allowed',
+        {});
     console.log(res);
     return res.data;
 }

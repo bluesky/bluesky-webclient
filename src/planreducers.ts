@@ -43,7 +43,11 @@ const initialPlanObjectsState: IPlanObjectsState = {
         name: "",
         plan_uid: ""
     }],
-    plansLoading: false
+    plansLoading: false,
+    allowedPlans: [{
+        name: "",
+        parameters: Map,
+    }]
 };
 
 export const planObjectsReducer: Reducer<IPlanObjectsState, PlanActions> = (

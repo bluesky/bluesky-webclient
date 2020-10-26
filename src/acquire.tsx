@@ -11,9 +11,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import { IApplicationState } from './store';
-import { submitPlan, modifyEnvironment, modifyQueue } from './planactions';
+import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans } from './planactions';
 import { clearQueue } from './planactions';
-import { IPlanObject, EnvOps, QueueOps } from './queueserver';
+import { IPlanObject, EnvOps, QueueOps, IPlanAllowedObject } from './queueserver';
 import { getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from "react-router-dom";
 import { Grid } from '@material-ui/core';
@@ -21,6 +21,8 @@ import { PlanList } from './PlanList';
 import { CurrentPlan } from './CurrentPlan';
 import { AvailablePlans } from './AvailablePlans';
 import { PlanForm } from './PlanForm';
+import { Type } from 'typescript';
+import { TagFaces } from '@material-ui/icons';
 
 type RouteParams = { id: string, uid: string };
 
@@ -33,14 +35,16 @@ interface IProps extends RouteComponentProps {
     clearQueue: typeof clearQueue;
     getOverview: typeof getOverview;
     getQueuedPlans: typeof getQueuedPlans;
+    getAllowedPlans: typeof getAllowedPlans;
     loading: boolean;
     plan: IPlanObject;
     plans: IPlanObject[];
+    allowedPlans: IPlanAllowedObject[];
 }
 
 interface IState {
-    selectedPlan: string;
-    onPlanChange: (selectedPlan: string) => void;
+    selectedPlan: IPlanAllowedObject;
+    onPlanChange: (selectedPlan: IPlanAllowedObject) => void;
     planParam: number;
     onPlanParamChange: (planParam: number) => void;
     env: string;
@@ -70,10 +74,11 @@ class AcquirePage extends React.Component<IProps, IState> {
             <Box width="80vw" height="2vh"></Box>
             <Grid container spacing={5} direction="row" justify="center">
                 <Grid item justify="center" spacing={10} xs={3}>    
-                  <AvailablePlans selectedPlan={this.state.selectedPlan} handleSelect={this.handleSelectPlan} plans={['count', 'scan']}> </AvailablePlans>
+                  <AvailablePlans selectedPlan={this.state.selectedPlan} handleSelect={this.handleSelectPlan}
+                    allowedPlans={this.props.allowedPlans}> </AvailablePlans>
                 </Grid>
                 <Grid item justify="center" spacing={10} xs={5}> 
-                  <PlanForm submitPlan={this.props.submitPlan} name={this.state.selectedPlan}> </PlanForm>   
+                  <PlanForm submitPlan={this.props.submitPlan} name={this.state.selectedPlan.name}> </PlanForm>   
                 </Grid>   
                 <Grid item justify="center" spacing={10} xs={3}>
                   <PlanList clearQueue={this.props.clearQueue} plans={this.props.plans}></PlanList> 
@@ -83,7 +88,7 @@ class AcquirePage extends React.Component<IProps, IState> {
         )
     }
 
-    private handleSelectPlan = (selectedPlan: string) => {
+    private handleSelectPlan = (selectedPlan: IPlanAllowedObject) => {
         this.setState({ selectedPlan });
     };
 
@@ -132,10 +137,12 @@ class AcquirePage extends React.Component<IProps, IState> {
     private handleClearQueue = () => {
         this.props.clearQueue();
     }
+
     componentDidMount() {
         this.props.getOverview();
         this.props.getQueuedPlans();
         //this.props.submitPlan();
+        this.props.getAllowedPlans();
     }
 }
 
@@ -144,7 +151,8 @@ const mapStateToProps = (store: IApplicationState) => {
       loading: store.submitted.planLoading,
       plan: store.submitted.plan,
       loadingPlans: store.plans.plansLoading,
-      plans: store.plans.plans
+      plans: store.plans.plans,
+      availablePlans: store.plans.allowedPlans,
     };
 };
 
@@ -155,7 +163,8 @@ const mapDispatchToProps = (dispatch: any) => {
       submitPlan: (planId: number, param: number) => dispatch(submitPlan(planId, param)),
       clearQueue: () => dispatch(clearQueue()),
       getOverview: () => dispatch(getOverview()),
-      getQueuedPlans: () => dispatch(getQueuedPlans())
+      getQueuedPlans: () => dispatch(getQueuedPlans()),
+      getAllowedPlans: () => dispatch(getAllowedPlans())
     };
 };
 
