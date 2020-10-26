@@ -50,7 +50,7 @@ class App extends React.Component<IProps> {
           <Box width="80vw" height="2vh"></Box>
           <Grid container spacing={5} direction="row" justify="center">
             <Grid item justify="center" spacing={10} xs={3}>    
-              <PlanList clearQueue={this.props.clearQueue} plans={this.props.plans.slice(1,this.props.plans.length)}> </PlanList>
+              <PlanList clearQueue={this.props.clearQueue} plans={this.props.plans}> </PlanList>
             </Grid>
             <Grid item justify="center" spacing={10} xs={5}>
               <CurrentPlan plans={this.props.plans}></CurrentPlan> 
@@ -92,6 +92,7 @@ const mapStateToProps = (store: IApplicationState) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     getOverview: () => dispatch(getOverview()),
+    clearQueue: () => dispatch(clearQueue()),
     getQueuedPlans: () => dispatch(getQueuedPlans())
   };
 };
