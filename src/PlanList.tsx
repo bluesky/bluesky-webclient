@@ -12,82 +12,61 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import { IPlan, IPlanObject } from './queueserver';
 import { RouteComponentProps } from 'react-router-dom';
-import { Box, Card, CardContent, Container, Paper, Typography } from '@material-ui/core';
+import { Box, Card, CardActions, CardContent, Container, Paper, Typography } from '@material-ui/core';
+import { clearQueue } from './planactions';
 
 type Plans = {
   plans: IPlanObject[];
+  clearQueue: typeof clearQueue;
 }
-
-
-export class CurrentPlan_Old extends React.Component<Plans>{
-
-  handlePlay(uid: string) {
-    alert(uid)
-  }
-
-  handlePause(uid: string) {
-    alert(uid)
-  }
-
-  handleDelete(uid: string) {
-    alert(uid)
-  }
-
-  render() {
-    return (<List>
-                  <ListItem divider={true} button={true} key={this.props.plans[0].plan_uid}>
-                      <ListItemIcon>
-                        <AccountCircleIcon fontSize='large' />
-                      </ListItemIcon>
-                      <ListItemText
-                        primary={this.props.plans[0].name}
-                        secondary={this.props.plans[0].plan_uid.substr(0,8)}/>
-                      <ListItemSecondaryAction>
-                        <IconButton onClick={() => this.handlePlay(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
-                          <PlayCircleOutlineIcon />
-                        </IconButton>
-                        <IconButton onClick={() => this.handlePause(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
-                          <PauseCircleOutlineIcon />
-                        </IconButton>
-                        <IconButton onClick={() => this.handleDelete(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
-                          <DeleteForeverIcon />
-                        </IconButton>
-                      </ListItemSecondaryAction>
-                  </ListItem>
-          </List>
-         );}
-}
-
-
 
 export class PlanList extends React.Component<Plans>{
 
-  handleDelete(uid: string) {
-    alert(uid)
-  }
 
   handleMoveForward(uid: string) {
-    alert(uid)
+    alert(uid);
   }
 
   handleMoveBackward(uid: string) {
-    alert(uid)
+    alert(uid);
+  }
+
+  handlePlay(uid: string) {
+    alert(uid);
+  }
+
+  handlePause(uid: string) {
+    alert(uid);
+  }
+
+  handleDelete(uid: string){
+
   }
 
   render() {
     return (
           <Box> 
-            <Card>
+            <Card style={{height: "6vh"}} raised={true}>
               <CardContent>
                 <Typography align="center" variant="h5" component="h1" gutterBottom>
-                  Bluesky Queue
+                  Queue
+                  <IconButton onClick={() => this.handlePlay(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
+                    <PlayCircleOutlineIcon />
+                  </IconButton>
+                  <IconButton onClick={() => this.handlePause(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
+                    <PauseCircleOutlineIcon />
+                  </IconButton>
+                  <IconButton onClick={() => this.props.clearQueue()} edge="end" aria-label="comments">
+                    <DeleteForeverIcon />
+                  </IconButton>
                 </Typography>
               </CardContent>
             </Card>
             <Box height="2vh"></Box>
-            <Paper style={{width:"40vw", overflow: 'auto', margin: "auto"}}>
+            <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
               <List>
                 {this.props.plans.map((planObject: IPlanObject) => (
                     <ListItem divider={true} button={true} key={planObject.plan_uid}>

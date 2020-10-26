@@ -24,6 +24,7 @@ import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Box, Container, Paper } from '@material-ui/core';
+import { planObjectsReducer } from './planreducers';
 
 type Plans = {
   plans: IPlanObject[];
@@ -35,7 +36,7 @@ interface IState {
   expand: any;
   expandOpen: any;
   avatar: any;
-  expanded: boolean
+  expanded: boolean;
 }
 
 export class CurrentPlan extends React.Component<Plans, IState> {
@@ -52,9 +53,6 @@ export class CurrentPlan extends React.Component<Plans, IState> {
       expand: {
         transform: 'rotate(0deg)',
         marginLeft: 'auto',
-        //transition: theme.transitions.create('transform', {
-        //  duration: theme.transitions.duration.shortest,
-        //}),
       },
       expandOpen: {
         transform: 'rotate(180deg)',
@@ -66,37 +64,52 @@ export class CurrentPlan extends React.Component<Plans, IState> {
     }
 
   }
-  //const [expanded, setExpanded] = React.useState(false);
   
   handleExpandClick() {
-    alert("Expand")
+    alert("Expand");
     //setExpanded(!expanded);
   };
 
-  handlePlay(uid: string) {
-    alert(uid)
+  handlePlay() {
+    alert("Play");
   }
 
-  handlePause(uid: string) {
-    alert(uid)
+  handlePause() {
+    alert("Pause");
   }
 
   handleDelete(uid: string) {
-    alert(uid)
+    alert(uid);
   }
+
+  getName(plans: IPlanObject[]){
+    if (plans.length == 0) {
+      return "No plan currently executing";
+    } else {
+      return plans[0].name;
+    }
+  }
+
+  getUid(plans: IPlanObject[]){
+    if (plans.length == 0) {
+      return "";
+    } else {
+      return plans[0].plan_uid;
+    }
+  }
+
   render(){
     return (
       <Box>
-        <Card>
+        <Card style={{height: "6vh"}} raised={true}>
           <CardContent>
             <Typography align="center" variant="h5" component="h1" gutterBottom>
               Current Plan
             </Typography>
           </CardContent>
         </Card>
-        <Box height="2vh"></Box>
-        <Paper className={this.state.root} style={{maxWidth:"32vw", maxHeight:"60vw", overflow: 'auto', margin: "auto"}}>
-        <Card >
+      <Box height="2vh"></Box>
+        <Card raised={true} >
           <CardHeader
             avatar={
               <Avatar aria-label="recipe" className={this.state.avatar}>
@@ -109,8 +122,8 @@ export class CurrentPlan extends React.Component<Plans, IState> {
               </IconButton>
             }
             titleTypographyProps={{variant:'h6' }}
-            title={this.props.plans[0].name}
-            subheader={this.props.plans[0].plan_uid}
+            title={this.getName(this.props.plans)}
+            subheader={this.getUid(this.props.plans)}
           />
           <CardMedia
             className={this.state.media}
@@ -125,17 +138,14 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             <LinearProgress variant="determinate" value={50} />
           </CardContent>
           <CardActions disableSpacing>
-            <IconButton onClick={() => this.handlePlay(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
+            <IconButton onClick={() => this.handlePlay()} edge="end" aria-label="comments">
               <PlayCircleOutlineIcon />
             </IconButton>
-            <IconButton onClick={() => this.handlePause(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
+            <IconButton onClick={() => this.handlePause()} edge="end" aria-label="comments">
               <PauseCircleOutlineIcon />
             </IconButton>
-            <IconButton onClick={() => this.handleDelete(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
+            <IconButton onClick={() => this.handleDelete("temp_string_uid")} edge="end" aria-label="comments">
               <HighlightOffIcon />
-            </IconButton>
-            <IconButton>
-              <FavoriteIcon />
             </IconButton>
             <IconButton>
               <ShareIcon />
@@ -160,7 +170,6 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             </CardContent>
           </Collapse>
         </Card>
-      </Paper>
       </Box>
     );
   }
