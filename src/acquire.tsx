@@ -17,10 +17,10 @@ import { IPlanObject, EnvOps, QueueOps } from './queueserver';
 import { getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from "react-router-dom";
 import { Grid } from '@material-ui/core';
-import { PlanList } from './plan_list';
-import { CurrentPlan } from './current_plan';
-import { AvailablePlans } from './available_plans';
-import { PlanForm } from './plan_form';
+import { PlanList } from './PlanList';
+import { CurrentPlan } from './CurrentPlan';
+import { AvailablePlans } from './AvailablePlans';
+import { PlanForm } from './PlanForm';
 
 type RouteParams = { id: string, uid: string };
 
@@ -39,8 +39,8 @@ interface IProps extends RouteComponentProps {
 }
 
 interface IState {
-    selected_plan: string;
-    onPlanChange: (selected_plan: string) => void;
+    selectedPlan: string;
+    onPlanChange: (selectedPlan: string) => void;
     planParam: number;
     onPlanParamChange: (planParam: number) => void;
     env: string;
@@ -53,7 +53,7 @@ class AcquirePage extends React.Component<IProps, IState> {
     public constructor(props: IProps) {
         super(props);
         this.state = {
-          selected_plan: "",
+          selectedPlan: "",
           onPlanChange: this.handleSelectPlan,
           planParam: 10,
           onPlanParamChange: this.handlePlanParamChange,
@@ -70,10 +70,10 @@ class AcquirePage extends React.Component<IProps, IState> {
             <Box width="80vw" height="2vh"></Box>
             <Grid container spacing={5} direction="row" justify="center">
                 <Grid item justify="center" spacing={10} xs={3}>    
-                  <AvailablePlans selected_plan={this.state.selected_plan} handleSelect={this.handleSelectPlan} plans={['count', 'scan']}> </AvailablePlans>
+                  <AvailablePlans selectedPlan={this.state.selectedPlan} handleSelect={this.handleSelectPlan} plans={['count', 'scan']}> </AvailablePlans>
                 </Grid>
                 <Grid item justify="center" spacing={10} xs={5}> 
-                  <PlanForm submit_plan={this.props.submitPlan} name={this.state.selected_plan}> </PlanForm>   
+                  <PlanForm submitPlan={this.props.submitPlan} name={this.state.selectedPlan}> </PlanForm>   
                 </Grid>   
                 <Grid item justify="center" spacing={10} xs={3}>
                   <PlanList clear_queue={this.props.clearQueue} plans={this.props.plans}></PlanList> 
@@ -83,8 +83,8 @@ class AcquirePage extends React.Component<IProps, IState> {
         )
     }
 
-    private handleSelectPlan = (selected_plan: string) => {
-        this.setState({ selected_plan });
+    private handleSelectPlan = (selectedPlan: string) => {
+        this.setState({ selectedPlan });
     };
 
     private handleParamChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -104,7 +104,7 @@ class AcquirePage extends React.Component<IProps, IState> {
     };
 
     private handleSubmitClick = () => {
-        this.props.submitPlan(this.state.selected_plan, this.state.planParam);
+        this.props.submitPlan(this.state.selectedPlan, this.state.planParam);
     }
 
     private handleEnvClick = () => {

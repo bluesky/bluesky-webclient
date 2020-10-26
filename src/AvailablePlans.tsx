@@ -20,8 +20,8 @@ import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 
 type Plans = {
   plans: string[];
-  selected_plan: string;
-  handleSelect: (selected_plan: string) => void
+  selectedPlan: string;
+  handleSelect: (selectedPlan: string) => void
 }
 
 export class AvailablePlans extends React.Component<Plans>{
@@ -40,7 +40,7 @@ export class AvailablePlans extends React.Component<Plans>{
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
               <List>
                 {this.props.plans.map((planObject: string) => (
-                    <MenuItem selected={planObject == this.props.selected_plan} onClick={() => this.props.handleSelect(planObject)} divider={true} button={true} key={planObject}>
+                    <MenuItem selected={planObject == this.props.selectedPlan} onClick={() => this.props.handleSelect(planObject)} divider={true} button={true} key={planObject}>
                         <ListItemIcon>
                           <Avatar>
                             <Typography align="center" variant="body2" gutterBottom>

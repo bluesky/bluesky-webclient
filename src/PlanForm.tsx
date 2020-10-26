@@ -28,7 +28,7 @@ import SendIcon from '@material-ui/icons/Send';
 
 type PlanType = {
   name: string;
-  submit_plan: (selected_plan: string) => void
+  submitPlan: (selectedPlan: string) => void
 }
 
 interface IState {
@@ -91,7 +91,7 @@ export class PlanForm extends React.Component<PlanType, IState> {
             </Typography>
           </CardContent>
           <CardActions disableSpacing>
-            <IconButton onClick={() => this.props.submit_plan(this.props.name)} edge="end" aria-label="comments">
+            <IconButton onClick={() => this.props.submitPlan(this.props.name)} edge="end" aria-label="comments">
               <SendIcon />
             </IconButton>
           </CardActions>
