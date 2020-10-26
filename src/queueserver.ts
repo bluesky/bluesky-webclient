@@ -117,9 +117,9 @@ export interface IPlanSubmitState {
     readonly planLoading: boolean;
 }
 
-export const submitPlan = async(plan_name: string, param: number): Promise<IPlanObject> => {
+export const submitPlan = async(planName: string, param: number): Promise<IPlanObject> => {
     var planObj = {};
-    if (plan_name === "count") {
+    if (planName === "count") {
         planObj = {
             name: "count",
             args: [["det1", "det2"]],
