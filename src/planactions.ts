@@ -4,6 +4,7 @@ import { getOverview as getOverviewAPI,
     getQueuedPlans as getQueuedPlansAPI,
     submitPlan as submitPlanAPI,
     clearQueue as clearQueueAPI,
+    allowedPlans as allowedPlansAPI,
     modifyEnvironment as modifyEnvironmentAPI, EnvOps,
     modifyQueue as modifyQueueAPI, QueueOps, IPlanAllowedAction} from "./queueserver"
 import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, IPlanSubmitAction,
@@ -38,7 +39,7 @@ export const getQueuedPlans: ActionCreator<ThunkAction<Promise<AnyAction>, IPlan
 export const getAllowedPlans: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanObjectsState, null, IPlanAllowedAction>> = () => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
-        const plans = await getQueuedPlansAPI();
+        const plans = await allowedPlansAPI();
         return dispatch({
           plans,
           type: PlanActionTypes.ALLOWED

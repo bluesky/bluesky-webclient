@@ -57,7 +57,7 @@ class AcquirePage extends React.Component<IProps, IState> {
     public constructor(props: IProps) {
         super(props);
         this.state = {
-          selectedPlan: "",
+          selectedPlan: this.props.allowedPlans[0],
           onPlanChange: this.handleSelectPlan,
           planParam: 10,
           onPlanParamChange: this.handlePlanParamChange,
