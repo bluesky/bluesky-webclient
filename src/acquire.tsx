@@ -152,7 +152,7 @@ const mapStateToProps = (store: IApplicationState) => {
       plan: store.submitted.plan,
       loadingPlans: store.plans.plansLoading,
       plans: store.plans.plans,
-      availablePlans: store.plans.allowedPlans,
+      allowedPlans: store.plans.allowedPlans,
     };
 };
 
