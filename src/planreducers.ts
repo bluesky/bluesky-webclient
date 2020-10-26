@@ -1,6 +1,6 @@
 import { Reducer } from "redux";
 import { IPlanState, IPlanObjectsState, IPlanSubmitState, IPlanModifyState,
-    PlanActions, PlanActionTypes } from "./queueserver";
+    PlanActions, PlanActionTypes, IAllowedPlansState, AllowedPlansActions, AllowedPlansActionTypes } from "./queueserver";
 
 const initialPlanState: IPlanState = {
     plan: {
@@ -69,6 +69,42 @@ export const planObjectsReducer: Reducer<IPlanObjectsState, PlanActions> = (
         }
     }
 };
+
+/**********************************************/
+
+const initialAllowedPlansState: IAllowedPlansState = {
+    allowedPlans: {
+        success: false,
+        msg: "",
+        plans_allowed: {}
+    },
+    plansLoading: false
+};
+
+export const allowedPlansReducer: Reducer<IAllowedPlansState, AllowedPlansActions> = (
+    state = initialAllowedPlansState,
+    action
+) => {
+    switch (action.type) {
+        case AllowedPlansActionTypes.LOADING: {
+            return {
+                ...state,
+                plansLoading: true
+            };
+        }
+        case AllowedPlansActionTypes.GET: {
+            return {
+                ...state,
+                allowedPlans: action.allowedPlans,
+                plansLoading: false
+            };
+        }
+        default: {
+            return state;
+        }
+    }
+};
+/************************************************/
 
 const initialPlanSubmitState: IPlanSubmitState = {
     plan: {

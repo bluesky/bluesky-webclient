@@ -2,10 +2,11 @@ import { ActionCreator, AnyAction, Dispatch } from "redux"
 import { ThunkAction } from "redux-thunk"
 import { getOverview as getOverviewAPI,
     getQueuedPlans as getQueuedPlansAPI,
+    getAllowedPlans as getAllowedPlansAPI,
     submitPlan as submitPlanAPI,
     clearQueue as clearQueueAPI,
     modifyEnvironment as modifyEnvironmentAPI, EnvOps,
-    modifyQueue as modifyQueueAPI, QueueOps} from "./queueserver"
+    modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IAllowedPlansGetAction, AllowedPlansActionTypes} from "./queueserver"
 import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, IPlanSubmitAction,
     IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes} from "./queueserver"
 
@@ -34,6 +35,19 @@ export const getQueuedPlans: ActionCreator<ThunkAction<Promise<AnyAction>, IPlan
         });
     };
 };
+
+/*******************************************/
+export const getAllowedPlans: ActionCreator<ThunkAction<Promise<AnyAction>, IAllowedPlansState, null, IAllowedPlansGetAction>> = () => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const allowedPlans = await getAllowedPlansAPI();
+        return dispatch({
+          allowedPlans,
+          type: AllowedPlansActionTypes.GET
+        });
+    };
+};
+/*******************************************/
 
 export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (planId: string, param: number) => {
     return async (dispatch: Dispatch) => {
