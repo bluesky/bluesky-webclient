@@ -283,19 +283,22 @@ export interface IPlanSubmitState {
 
 export const submitPlan = async(planName: string, param: number): Promise<IPlanObject> => {
     var planObj = {};
-    if (planName === "count") {
+    if (planName == "count") {
         planObj = {
             name: "count",
             args: [["det1", "det2"]],
             kwargs: {"num": Number(param), "delay": 1}
         };
     }
-    else {
+    else if (planName == "scan") {
         planObj = {
             name: "scan",
             args: [["det1", "det2"], "motor", -1, 1, Number(param) ]
         };
+    } else {
+        alert("Only plans count and scan are enabled currently.")
     }
+
     const res = await axiosInstance.post('/queue/plan/add',
         {
             plan: planObj
