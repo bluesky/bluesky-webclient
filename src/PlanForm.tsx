@@ -57,46 +57,75 @@ export class PlanForm extends React.Component<PlanType, IState> {
 
   }
   render(){
-    return (
-      <Box>
-        <Card style={{height: "6vh"}} raised={true}>
-          <CardContent>
-            <Typography align="center" variant="h5" component="h1" gutterBottom>
-              Plan Form
-            </Typography>
-          </CardContent>
-        </Card>
-      <Box height="2vh"></Box>
-        <Card raised={true}>
-          <CardHeader
-            avatar={
-              <AccountCircleIcon fontSize='large' />
-            }
-            action={
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
+    if (this.props.name == ""){
+      return (
+        <Box>
+          <Card style={{height: "6vh"}} raised={true}>
+            <CardContent>
+              <Typography align="center" variant="h5" component="h1" gutterBottom>
+                Plan Form
+              </Typography>
+            </CardContent>
+          </Card>
+        <Box height="2vh"></Box>
+          <Card raised={true}>
+            <CardHeader
+              avatar={
+                <AccountCircleIcon fontSize='large' />
+              }
+              titleTypographyProps={{variant:'h6' }}
+              title={"Select a plan."}
+            />
+            <CardContent>
+              <Typography>
+                  Select a plan from the available plans list.
+              </Typography>
+            </CardContent>
+          </Card>
+        </Box>
+      );
+    } else {
+      return (
+        <Box>
+          <Card style={{height: "6vh"}} raised={true}>
+            <CardContent>
+              <Typography align="center" variant="h5" component="h1" gutterBottom>
+                Plan Form
+              </Typography>
+            </CardContent>
+          </Card>
+        <Box height="2vh"></Box>
+          <Card raised={true}>
+            <CardHeader
+              avatar={
+                <AccountCircleIcon fontSize='large' />
+              }
+              action={
+                <IconButton aria-label="settings">
+                  <MoreVertIcon />
+                </IconButton>
+              }
+              titleTypographyProps={{variant:'h6' }}
+              title={this.props.name}
+            />
+            <CardContent>
+              <Typography>
+                  Plan description.
+              </Typography>
+            </CardContent>
+            <CardContent>
+              <Typography variant="body2" color="textSecondary" component="p">
+                Enter the plan parameters!
+              </Typography>
+            </CardContent>
+            <CardActions disableSpacing>
+              <IconButton onClick={() => this.props.submitPlan(this.props.name)} edge="end" aria-label="comments">
+                <SendIcon />
               </IconButton>
-            }
-            titleTypographyProps={{variant:'h6' }}
-            title={this.props.name}
-          />
-          <CardContent>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Enter the plan parameters!
-            </Typography>
-          </CardContent>
-          <CardContent>
-            <Typography>
-                Plan description.
-            </Typography>
-          </CardContent>
-          <CardActions disableSpacing>
-            <IconButton onClick={() => this.props.submitPlan(this.props.name)} edge="end" aria-label="comments">
-              <SendIcon />
-            </IconButton>
-          </CardActions>
-        </Card>
-      </Box>
-    );
+            </CardActions>
+          </Card>
+        </Box>
+      );
+    }
   }
 }
