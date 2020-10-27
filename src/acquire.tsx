@@ -11,9 +11,9 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import { IApplicationState } from './store';
-import { submitPlan, modifyEnvironment, modifyQueue } from './planactions';
+import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans } from './planactions';
 import { clearQueue } from './planactions';
-import { IPlanObject, EnvOps, QueueOps } from './queueserver';
+import { IPlanObject, EnvOps, QueueOps, IAllowedPlans } from './queueserver';
 import { getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from "react-router-dom";
 import { Grid } from '@material-ui/core';
@@ -33,9 +33,11 @@ interface IProps extends RouteComponentProps {
     clearQueue: typeof clearQueue;
     getOverview: typeof getOverview;
     getQueuedPlans: typeof getQueuedPlans;
+    getAllowedPlans: typeof getAllowedPlans;
     loading: boolean;
     plan: IPlanObject;
     plans: IPlanObject[];
+    allowedPlans: IAllowedPlans;
 }
 
 interface IState {
@@ -70,7 +72,8 @@ class AcquirePage extends React.Component<IProps, IState> {
             <Box width="80vw" height="2vh"></Box>
             <Grid container spacing={5} direction="row" justify="center">
                 <Grid item justify="center" spacing={10} xs={3}>    
-                  <AvailablePlans selectedPlan={this.state.selectedPlan} handleSelect={this.handleSelectPlan} plans={['count', 'scan']}> </AvailablePlans>
+                  <AvailablePlans selectedPlan={this.state.selectedPlan} handleSelect={this.handleSelectPlan}
+                  plans={this.props.allowedPlans}> </AvailablePlans>
                 </Grid>
                 <Grid item justify="center" spacing={10} xs={5}> 
                   <PlanForm submitPlan={this.props.submitPlan} name={this.state.selectedPlan}> </PlanForm>   
@@ -136,6 +139,7 @@ class AcquirePage extends React.Component<IProps, IState> {
         this.props.getOverview();
         this.props.getQueuedPlans();
         //this.props.submitPlan();
+        this.props.getAllowedPlans();
     }
 }
 
@@ -144,7 +148,8 @@ const mapStateToProps = (store: IApplicationState) => {
       loading: store.submitted.planLoading,
       plan: store.submitted.plan,
       loadingPlans: store.plans.plansLoading,
-      plans: store.plans.plans
+      plans: store.plans.plans,
+      allowedPlans: store.allowedPlans.allowedPlans,
     };
 };
 
@@ -155,7 +160,8 @@ const mapDispatchToProps = (dispatch: any) => {
       submitPlan: (planId: number, param: number) => dispatch(submitPlan(planId, param)),
       clearQueue: () => dispatch(clearQueue()),
       getOverview: () => dispatch(getOverview()),
-      getQueuedPlans: () => dispatch(getQueuedPlans())
+      getQueuedPlans: () => dispatch(getQueuedPlans()),
+      getAllowedPlans: () => dispatch(getAllowedPlans()),
     };
 };
 

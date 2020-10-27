@@ -1,12 +1,13 @@
 import { applyMiddleware, combineReducers, createStore, Store } from "redux"
 import thunk from "redux-thunk"
 import { planObjectsReducer, planReducer, planSubmitReducer,
-    environmentModifyReducer, queueModifyReducer } from "./planreducers"
-import { IPlanState, IPlanObjectsState, IPlanSubmitState, IPlanModifyState } from "./queueserver"
+    environmentModifyReducer, queueModifyReducer, allowedPlansReducer } from "./planreducers"
+import { IPlanState, IPlanObjectsState, IPlanSubmitState, IPlanModifyState, IAllowedPlansState } from "./queueserver"
 
 export interface IApplicationState {
     plan: IPlanState;
     plans: IPlanObjectsState;
+    allowedPlans: IAllowedPlansState;
     submitted: IPlanSubmitState;
     environment: IPlanModifyState;
     queue: IPlanModifyState;
@@ -15,6 +16,7 @@ export interface IApplicationState {
 const rootReducer = combineReducers<IApplicationState>({
     plan: planReducer,
     plans: planObjectsReducer,
+    allowedPlans: allowedPlansReducer,
     submitted: planSubmitReducer,
     environment: environmentModifyReducer,
     queue: queueModifyReducer,

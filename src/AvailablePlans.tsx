@@ -13,13 +13,13 @@ import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { IPlan, IPlanObject } from './queueserver';
+import { IAllowedPlans, IPlan, IPlanObject } from './queueserver';
 import { RouteComponentProps } from 'react-router-dom';
 import { Avatar, Box, Card, CardActions, CardContent, Container, MenuItem, Paper, Typography } from '@material-ui/core';
 import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 
 type Plans = {
-  plans: string[];
+  plans: IAllowedPlans;
   selectedPlan: string;
   handleSelect: (selectedPlan: string) => void;
 }
@@ -39,7 +39,8 @@ export class AvailablePlans extends React.Component<Plans>{
             <Box height="2vh"></Box>
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
               <List>
-                {this.props.plans.map((planObject: string) => (
+                {Object.keys(this.props.plans.plans_allowed).map(
+                  (planObject: string) => (
                     <MenuItem selected={planObject == this.props.selectedPlan} onClick={() => this.props.handleSelect(planObject)} divider={true} button={true} key={planObject}>
                         <ListItemIcon>
                           <Avatar>
