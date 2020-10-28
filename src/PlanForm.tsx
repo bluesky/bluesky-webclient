@@ -39,7 +39,7 @@ interface IState {
   expanded: boolean
 }
 
-const widgetDict : Record<string, JSX.Element> = {'number': <TextField/>,
+const widgetDict : Record<string, JSX.Element> = {'number': <TextField variant="outlined"/>,
                                                   'boolean': <Switch/>,
                                                   'detector': <Select/>}
 
@@ -132,14 +132,17 @@ export class PlanForm extends React.Component<PlanType, IState> {
                     (parameterObject: IParameter) => (
                       <ListItem divider={true} button={true} key={parameterObject.name}>
                         <Grid container spacing={5} direction="row" justify="center">
-                          <Grid item justify="center" spacing={10} xs={5}>    
+                          <Grid item justify="center" spacing={10} xs={4}>    
                             <ListItemText
                               primary={parameterObject.name}
                               secondary={parameterObject.description ? parameterObject.description : "No parameter description found."}/>
                           </Grid>
-                          <Grid item justify="center" spacing={10} xs={5}>
-                            {widgetDict[parameterObject.type] ? widgetDict[parameterObject.type] : <TextField/>}
-                          </Grid>   
+                          <Grid item justify="center" spacing={10} xs={4}>
+                            {widgetDict[parameterObject.type] ? widgetDict[parameterObject.type] : <TextField variant="outlined"/>}
+                          </Grid>
+                          <Grid item justify="center" spacing={10} xs={2}>
+                            {parameterObject.kind.value == 2 ? <ListItemText primary="Required"></ListItemText> : <ListItemText primary="Optional"></ListItemText>}
+                          </Grid>
                         </Grid>  
                       </ListItem>
                   ))}
