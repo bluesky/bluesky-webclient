@@ -15,7 +15,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { IAllowedPlans, IParameter, IPlan, IPlanObject } from './queueserver';
+import { IAllowedPlans, IParameter, IPlan, IPlanObject, ISumbitPlanObject } from './queueserver';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -23,20 +23,22 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { Box, Container, Grid, List, ListItem, ListItemText, Paper, Select, Switch, TextField } from '@material-ui/core';
+import { Box, Container, Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Select, Switch, TextField } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
+import StarsIcon from '@material-ui/icons/Stars';
 
 type PlanType = {
   name: string;
   allowedPlans: IAllowedPlans;
-  submitPlan: (selectedPlan: string) => void;
+  submitPlan: (selectedPlan: ISumbitPlanObject) => void;
 }
 
 interface IState {
   root: any;
   media: any;
   avatar: any;
-  expanded: boolean
+  expanded: boolean;
+  plan: ISumbitPlanObject;
 }
 
 const widgetDict : Record<string, JSX.Element> = {'number': <TextField variant="outlined"/>,
@@ -59,6 +61,9 @@ export class PlanForm extends React.Component<PlanType, IState> {
         backgroundColor: red[500],
       },
       expanded: false,
+      plan: {name: this.props.name,
+            args: [],
+            kwargs: {}}
     }
 
   }
@@ -131,17 +136,19 @@ export class PlanForm extends React.Component<PlanType, IState> {
                   {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
                     (parameterObject: IParameter) => (
                       <ListItem divider={true} button={true} key={parameterObject.name}>
+                        {(parameterObject.kind.value==2) ? 
+                                              <ListItemIcon>
+                                                 <StarsIcon />
+                                              </ListItemIcon> : <ListItemIcon/>}
                         <Grid container spacing={5} direction="row" justify="center">
-                          <Grid item justify="center" spacing={10} xs={4}>    
+                          <Grid item justify="center" spacing={10} xs={5}>    
                             <ListItemText
                               primary={parameterObject.name}
                               secondary={parameterObject.description ? parameterObject.description : "No parameter description found."}/>
                           </Grid>
-                          <Grid item justify="center" spacing={10} xs={4}>
-                            {widgetDict[parameterObject.type] ? widgetDict[parameterObject.type] : <TextField variant="outlined"/>}
-                          </Grid>
-                          <Grid item justify="center" spacing={10} xs={2}>
-                            {parameterObject.kind.value == 2 ? <ListItemText primary="Required"></ListItemText> : <ListItemText primary="Optional"></ListItemText>}
+                          <Grid item justify="center" spacing={10} xs={5}>
+                            {widgetDict[parameterObject.type] ? widgetDict[parameterObject.type] : 
+                            <TextField color={(parameterObject.kind.value==2) ? "secondary" : "primary"} variant="outlined"/>}
                           </Grid>
                         </Grid>  
                       </ListItem>
@@ -149,7 +156,7 @@ export class PlanForm extends React.Component<PlanType, IState> {
               </List>
               </CardContent>
               <CardActions disableSpacing>
-                <IconButton onClick={() => this.props.submitPlan(this.props.name)} edge="end" aria-label="comments">
+                <IconButton onClick={() => this.props.submitPlan(this.state.plan)} edge="end" aria-label="comments">
                   <SendIcon />
                 </IconButton>
               </CardActions>

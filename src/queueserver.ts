@@ -301,6 +301,12 @@ export interface IPlanSubmitState {
     readonly planLoading: boolean;
 }
 
+export interface ISumbitPlanObject {
+    name: string;
+    args: (string|number|string[])[];
+    kwargs: {[name: string]: (string|number|string[])} 
+}
+
 export const submitPlan = async(planName: string, param: number): Promise<IPlanObject> => {
     var planObj = {};
     if (planName == "count") {
