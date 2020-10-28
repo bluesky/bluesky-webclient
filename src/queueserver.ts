@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IndexKind } from "typescript";
 
 var axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_API_PREFIX,
@@ -105,11 +106,32 @@ Out[52]:
  'returns': {'annotation': '',
   'annotation_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e'}}
 */
+export interface IKind {
+    name: string;
+    value: number;
+}
+
+export interface IParameter {
+    name: string;
+    description?: string;
+    annotation: string;
+    annotation_pickled?: string;
+    default: string;
+    default_pickled?: string;
+    kind: IKind;
+    type: string;
+}
+
+export interface IAllowedPlan {
+    name: string;
+    description?: string;
+    parameters?: IParameter[];
+}
+
 export interface IAllowedPlans {
     success: boolean;
     msg: string;
-    // TODO: convert it to something similar to IPlan...
-    plans_allowed: Map<string, Map<string, any>>;
+    plans_allowed: IAllowedPlan;
 }
 
 export interface IAllowedPlansState {
@@ -125,7 +147,6 @@ export const getAllowedPlans = async(): Promise<IAllowedPlans> => {
 }
 
 /*******************************************/
-
 
 export enum PlanActionTypes {
     GETOVERVIEW = "PLANS/GETOVERVIEWS",
