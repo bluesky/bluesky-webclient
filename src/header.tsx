@@ -37,7 +37,7 @@ const Header: React.SFC = () => {
                     <Link color="inherit" component={RouterLink} to="/">Home </Link>
                     <Link color="inherit" component={RouterLink} to="/acquire">Acquire</Link>
                 </Typography>
-                <Button color="inherit">Login</Button>
+                <Button color="inherit" component={RouterLink} to="/user">Login</Button>
             </Toolbar>
             </AppBar>
         </div>
