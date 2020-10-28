@@ -15,7 +15,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { IPlan, IPlanObject } from './queueserver';
+import { IAllowedPlans, IPlan, IPlanObject } from './queueserver';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -28,6 +28,7 @@ import SendIcon from '@material-ui/icons/Send';
 
 type PlanType = {
   name: string;
+  allowedPlans: IAllowedPlans;
   submitPlan: (selectedPlan: string) => void;
 }
 
@@ -109,8 +110,8 @@ export class PlanForm extends React.Component<PlanType, IState> {
               title={this.props.name}
             />
             <CardContent>
-              <Typography>
-                  Plan description.
+              <Typography > 
+                  {this.props.allowedPlans.plans_allowed.get(this.props.name)?.get("description")}
               </Typography>
             </CardContent>
             <CardContent>

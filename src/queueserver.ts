@@ -109,7 +109,7 @@ export interface IAllowedPlans {
     success: boolean;
     msg: string;
     // TODO: convert it to something similar to IPlan...
-    plans_allowed: Object;
+    plans_allowed: Map<string, Map<string, any>>;
 }
 
 export interface IAllowedPlansState {
