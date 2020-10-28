@@ -23,7 +23,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { Box, Container, List, ListItem, ListItemText, Paper } from '@material-ui/core';
+import { Box, Container, Grid, List, ListItem, ListItemText, Paper } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
 type PlanType = {
@@ -60,83 +60,96 @@ export class PlanForm extends React.Component<PlanType, IState> {
   render(){
     if (this.props.name == ""){
       return (
-        <Box>
-          <Card style={{height: "6vh"}} raised={true}>
-            <CardContent>
-              <Typography align="center" variant="h5" component="h1" gutterBottom>
-                Plan Form
-              </Typography>
-            </CardContent>
-          </Card>
-        <Box height="2vh"></Box>
-          <Card raised={true}>
-            <CardHeader
-              avatar={
-                <AccountCircleIcon fontSize='large' />
-              }
-              titleTypographyProps={{variant:'h6' }}
-              title={"Select a plan."}
-            />
-            <CardContent>
-              <Typography>
-                  Select a plan from the available plans list.
-              </Typography>
-            </CardContent>
-          </Card>
-        </Box>
+        <Paper style={{height: "83vh", overflow: 'auto', margin: "auto"}}>
+          <Box>
+            <Card style={{height: "6vh"}} raised={true}>
+              <CardContent>
+                <Typography align="center" variant="h5" component="h1" gutterBottom>
+                  Plan Form
+                </Typography>
+              </CardContent>
+            </Card>
+          <Box height="2vh"></Box>
+            <Card raised={true}>
+              <CardHeader
+                avatar={
+                  <AccountCircleIcon fontSize='large' />
+                }
+                titleTypographyProps={{variant:'h6' }}
+                title={"Select a plan."}
+              />
+              <CardContent>
+                <Typography>
+                    Select a plan from the available plans list.
+                </Typography>
+              </CardContent>
+            </Card>
+          </Box>
+        </Paper>
       );
     } else {
       return (
-        <Box>
-          <Card style={{height: "6vh"}} raised={true}>
-            <CardContent>
-              <Typography align="center" variant="h5" component="h1" gutterBottom>
-                Plan Form
-              </Typography>
-            </CardContent>
-          </Card>
-        <Box height="2vh"></Box>
-          <Card raised={true}>
-            <CardHeader
-              avatar={
-                <AccountCircleIcon fontSize='large' />
-              }
-              action={
-                <IconButton aria-label="settings">
-                  <MoreVertIcon />
+        <Paper style={{height: "83vh", overflow: 'auto', margin: "auto"}}>
+          <Box>
+            <Card style={{height: "6vh"}} raised={true}>
+              <CardContent>
+                <Typography align="center" variant="h5" component="h1" gutterBottom>
+                  Plan Form
+                </Typography>
+              </CardContent>
+            </Card>
+          <Box height="2vh"></Box>
+            <Card raised={true}>
+              <CardHeader
+                avatar={
+                  <AccountCircleIcon fontSize='large' />
+                }
+                action={
+                  <IconButton aria-label="settings">
+                    <MoreVertIcon />
+                  </IconButton>
+                }
+                titleTypographyProps={{variant:'h6' }}
+                title={this.props.name}
+              />
+              <CardContent>
+                <Typography > 
+                    {this.props.allowedPlans.plans_allowed[this.props.name]["description"] ? 
+                    this.props.allowedPlans.plans_allowed[this.props.name]["description"] : "No plan description found."}
+                </Typography>
+              </CardContent>
+              <CardContent>
+                <Typography variant="body2" color="textSecondary" component="p">
+                  Enter the plan parameters!
+                </Typography>
+                <List>
+                  {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
+                    (parameterObject: IParameter) => (
+                      <ListItem divider={true} button={true} key={parameterObject.name}>
+                        <Grid container spacing={5} direction="row" justify="center">
+                          <Grid item justify="center" spacing={10} xs={5}>    
+                            <ListItemText
+                              primary={parameterObject.name}
+                              secondary={parameterObject.description ? parameterObject.description : "No parameter description found."}/>
+                          </Grid>
+                          <Grid item justify="center" spacing={10} xs={5}> 
+                            <ListItemText
+                              primary={"Input widget"}
+                              secondary={"Input type"}/> 
+                          </Grid>   
+                        </Grid>  
+                      </ListItem>
+                  ))}
+              </List>
+              </CardContent>
+              <CardActions disableSpacing>
+                <IconButton onClick={() => this.props.submitPlan(this.props.name)} edge="end" aria-label="comments">
+                  <SendIcon />
                 </IconButton>
-              }
-              titleTypographyProps={{variant:'h6' }}
-              title={this.props.name}
-            />
-            <CardContent>
-              <Typography > 
-                  {this.props.allowedPlans.plans_allowed[this.props.name]["description"] ? 
-                   this.props.allowedPlans.plans_allowed[this.props.name]["description"] : "No plan description found :("}
-              </Typography>
-            </CardContent>
-            <CardContent>
-              <Typography variant="body2" color="textSecondary" component="p">
-                Enter the plan parameters!
-              </Typography>
-              <List>
-                {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
-                  (parameterObject: IParameter) => (
-                    <ListItem divider={true} button={true} key={parameterObject.name}>
-                        <ListItemText
-                          primary={parameterObject.name}
-                          secondary={parameterObject.name}/>
-                    </ListItem>
-                ))}
-            </List>
-            </CardContent>
-            <CardActions disableSpacing>
-              <IconButton onClick={() => this.props.submitPlan(this.props.name)} edge="end" aria-label="comments">
-                <SendIcon />
-              </IconButton>
-            </CardActions>
-          </Card>
-        </Box>
+              </CardActions>
+            </Card>
+          </Box>
+        </Paper>
       );
     }
   }
