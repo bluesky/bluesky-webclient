@@ -15,7 +15,7 @@ import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { IAllowedPlans, IPlan, IPlanObject } from './queueserver';
+import { IAllowedPlans, IParameter, IPlan, IPlanObject } from './queueserver';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
@@ -23,7 +23,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { Box, Container, Paper } from '@material-ui/core';
+import { Box, Container, List, ListItem, ListItemText, Paper } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
 type PlanType = {
@@ -111,13 +111,24 @@ export class PlanForm extends React.Component<PlanType, IState> {
             />
             <CardContent>
               <Typography > 
-                  {this.props.allowedPlans.plans_allowed.get(this.props.name)?.get("description")}
+                  {this.props.allowedPlans.plans_allowed[this.props.name]["description"] ? 
+                   this.props.allowedPlans.plans_allowed[this.props.name]["description"] : "No plan description found :("}
               </Typography>
             </CardContent>
             <CardContent>
               <Typography variant="body2" color="textSecondary" component="p">
                 Enter the plan parameters!
               </Typography>
+              <List>
+                {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
+                  (parameterObject: IParameter) => (
+                    <ListItem divider={true} button={true} key={parameterObject.name}>
+                        <ListItemText
+                          primary={parameterObject.name}
+                          secondary={parameterObject.name}/>
+                    </ListItem>
+                ))}
+            </List>
             </CardContent>
             <CardActions disableSpacing>
               <IconButton onClick={() => this.props.submitPlan(this.props.name)} edge="end" aria-label="comments">

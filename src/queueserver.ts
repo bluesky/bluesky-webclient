@@ -123,15 +123,14 @@ export interface IParameter {
 }
 
 export interface IAllowedPlan {
-    name: string;
     description?: string;
-    parameters?: IParameter[];
+    parameters: IParameter[];
 }
 
 export interface IAllowedPlans {
     success: boolean;
     msg: string;
-    plans_allowed: IAllowedPlan;
+    plans_allowed: { [name: string]: IAllowedPlan; } 
 }
 
 export interface IAllowedPlansState {
