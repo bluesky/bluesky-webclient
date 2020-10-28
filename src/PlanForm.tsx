@@ -23,7 +23,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { Box, Container, Grid, List, ListItem, ListItemText, Paper } from '@material-ui/core';
+import { Box, Container, Grid, List, ListItem, ListItemText, Paper, Select, Switch, TextField } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 
 type PlanType = {
@@ -38,6 +38,11 @@ interface IState {
   avatar: any;
   expanded: boolean
 }
+
+const widgetDict : Record<string, JSX.Element> = {'number': <TextField/>,
+                                                  'boolean': <Switch/>,
+                                                  'detector': <Select/>}
+
 
 export class PlanForm extends React.Component<PlanType, IState> {
   constructor(props: PlanType) {
@@ -132,10 +137,8 @@ export class PlanForm extends React.Component<PlanType, IState> {
                               primary={parameterObject.name}
                               secondary={parameterObject.description ? parameterObject.description : "No parameter description found."}/>
                           </Grid>
-                          <Grid item justify="center" spacing={10} xs={5}> 
-                            <ListItemText
-                              primary={"Input widget"}
-                              secondary={"Input type"}/> 
+                          <Grid item justify="center" spacing={10} xs={5}>
+                            {widgetDict[parameterObject.type] ? widgetDict[parameterObject.type] : <TextField/>}
                           </Grid>   
                         </Grid>  
                       </ListItem>
