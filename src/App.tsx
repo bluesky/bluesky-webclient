@@ -8,8 +8,10 @@ import { IApplicationState } from './store';
 import { getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
 import { IPlan, IPlanObject } from './queueserver';
-import { PlanList } from './plan_list';
-import { CurrentPlan } from './current_plan';
+import { PlanList } from './PlanList';
+import { HistoricalPlanList } from './HistoricalPlanList';
+import { CurrentPlan } from './CurrentPlan';
+import { clearQueue } from './planactions';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import List from '@material-ui/core/List';
@@ -34,6 +36,7 @@ function Copyright() {
 interface IProps extends RouteComponentProps {
   getOverview: typeof getOverview;
   getQueuedPlans: typeof getQueuedPlans;
+  clearQueue: typeof clearQueue;
   loadingPlan: boolean;
   plan: IPlan;
   loadingPlans: boolean;
@@ -44,13 +47,16 @@ class App extends React.Component<IProps> {
   render() {
       return (
         <Container maxWidth="xl">
-          <Box width="70vw" height="2vh"></Box>
-          <Grid container spacing={10} direction="row">
-            <Grid item justify="center" spacing={10}>
+          <Box width="80vw" height="2vh"></Box>
+          <Grid container spacing={5} direction="row" justify="center">
+            <Grid item justify="center" spacing={10} xs={3}>    
+              <PlanList clearQueue={this.props.clearQueue} plans={this.props.plans}> </PlanList>
+            </Grid>
+            <Grid item justify="center" spacing={10} xs={5}>
               <CurrentPlan plans={this.props.plans}></CurrentPlan> 
             </Grid>
-            <Grid item justify="center" spacing={10}>    
-              <PlanList plans={this.props.plans.slice(1,this.props.plans.length)}> </PlanList>
+            <Grid item justify="center" spacing={10} xs={3}>    
+              <HistoricalPlanList plans={this.props.plans.slice(1, this.props.plans.length)}> </HistoricalPlanList>
             </Grid>   
           </Grid>
           <Copyright/>
@@ -86,6 +92,7 @@ const mapStateToProps = (store: IApplicationState) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     getOverview: () => dispatch(getOverview()),
+    clearQueue: () => dispatch(clearQueue()),
     getQueuedPlans: () => dispatch(getQueuedPlans())
   };
 };

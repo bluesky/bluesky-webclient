@@ -11,12 +11,16 @@ import FormControl from '@material-ui/core/FormControl';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import { IApplicationState } from './store';
-import { submitPlan, modifyEnvironment, modifyQueue } from './planactions';
+import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans } from './planactions';
 import { clearQueue } from './planactions';
-import { IPlanObject, EnvOps, QueueOps } from './queueserver';
-import {
-    RouteComponentProps
-} from "react-router-dom";
+import { IPlanObject, EnvOps, QueueOps, IAllowedPlans } from './queueserver';
+import { getOverview, getQueuedPlans } from './planactions';
+import { RouteComponentProps } from "react-router-dom";
+import { Grid } from '@material-ui/core';
+import { PlanList } from './PlanList';
+import { CurrentPlan } from './CurrentPlan';
+import { AvailablePlans } from './AvailablePlans';
+import { PlanForm } from './PlanForm';
 
 type RouteParams = { id: string, uid: string };
 
@@ -27,13 +31,18 @@ interface IProps extends RouteComponentProps {
     modifyEnvironment: typeof modifyEnvironment;
     modifyQueue: typeof modifyQueue;
     clearQueue: typeof clearQueue;
+    getOverview: typeof getOverview;
+    getQueuedPlans: typeof getQueuedPlans;
+    getAllowedPlans: typeof getAllowedPlans;
     loading: boolean;
     plan: IPlanObject;
+    plans: IPlanObject[];
+    allowedPlans: IAllowedPlans;
 }
 
 interface IState {
-    planId: number;
-    onPlanChange: (planId: number) => void;
+    selectedPlan: string;
+    onPlanChange: (selectedPlan: string) => void;
     planParam: number;
     onPlanParamChange: (planParam: number) => void;
     env: string;
@@ -46,8 +55,8 @@ class AcquirePage extends React.Component<IProps, IState> {
     public constructor(props: IProps) {
         super(props);
         this.state = {
-          planId: -1,
-          onPlanChange: this.handlePlanChange,
+          selectedPlan: "",
+          onPlanChange: this.handleSelectPlan,
           planParam: 10,
           onPlanParamChange: this.handlePlanParamChange,
           env: "Open",
@@ -56,77 +65,29 @@ class AcquirePage extends React.Component<IProps, IState> {
           onQueueChange: this.handleQueueChange,
         };
       }
+
     render() {
         return (
-          <Container maxWidth="sm">
-          <Box my={4}>
-            <Typography variant="h4" component="h1" gutterBottom>
-              This is where we will acquire data...
-              <Tooltip title="Clear the queue of the queueserver">
-                <button onClick={this.handleClearQueue}>Clear Queue</button>
-              </Tooltip>
-            </Typography>
-              <Typography variant="h6" component="h1" gutterBottom>
-              <div>
-                  loading: {this.props.loading}.
-              </div>
-            </Typography>
-            <FormControl>
-                <InputLabel id="demo-simple-select-label">type</InputLabel>
-                <Select
-                    labelId="demo-simple-select-label"
-                    id="demo-simple-select"
-                    value={this.state.planId}
-                    onChange={this.handleChange}
-                >
-                    <MenuItem value={0}>count</MenuItem>
-                    <MenuItem value={1}>scan</MenuItem>
-                </Select>
-                {}
-                {(() => {
-                    switch (this.state.planId) {
-                        case 0:
-                            return <TextField
-                                id="filled-number"
-                                label="num"
-                                type="number"
-                                value={this.state.planParam}
-                                onChange={this.handleParamChange}
-                            />;
-                        case 1:
-                            return <TextField
-                                id="filled-number"
-                                label="step"
-                                type="number"
-                                value={this.state.planParam}
-                                onChange={this.handleParamChange}
-                            />;
-                        default:
-                            return <p>Make a choice!</p>;
-                    }
-                })()}
-            </FormControl>
-            <Tooltip title="Submit the plan to the queue">
-              <Button variant="contained" onClick={this.handleSubmitClick}>Submit</Button>
-            </Tooltip>
-            <div><pre>The pretty printed JSON:<br />
-                { JSON.stringify(this.props.plan, null, 2) }</pre></div>
-          </Box>
-          <Box my={4}>
-              <Button variant="contained" onClick={this.handleEnvClick}>{this.state.env} environment</Button>
-              <Button variant="contained" onClick={this.handleQueueClick}>{this.state.queue} queue</Button>
-
-          </Box>
-        </Container>
+          <Container maxWidth="xl">
+            <Box width="80vw" height="2vh"></Box>
+            <Grid container spacing={5} direction="row" justify="center">
+                <Grid item justify="center" spacing={10} xs={3}>    
+                  <AvailablePlans selectedPlan={this.state.selectedPlan} handleSelect={this.handleSelectPlan}
+                  plans={this.props.allowedPlans}> </AvailablePlans>
+                </Grid>
+                <Grid item justify="center" spacing={10} xs={5}> 
+                  <PlanForm submitPlan={this.props.submitPlan} name={this.state.selectedPlan}> </PlanForm>   
+                </Grid>   
+                <Grid item justify="center" spacing={10} xs={3}>
+                  <PlanList clearQueue={this.props.clearQueue} plans={this.props.plans}></PlanList> 
+                </Grid>
+            </Grid>
+          </Container>
         )
     }
 
-    private handleChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        this.state.onPlanChange(event.target.value as number);
-    };
-
-    private handlePlanChange = (planId: number) => {
-        this.setState({ planId });
+    private handleSelectPlan = (selectedPlan: string) => {
+        this.setState({ selectedPlan });
     };
 
     private handleParamChange = (event: React.ChangeEvent<{ value: unknown }>) => {
@@ -146,7 +107,7 @@ class AcquirePage extends React.Component<IProps, IState> {
     };
 
     private handleSubmitClick = () => {
-        this.props.submitPlan(this.state.planId, this.state.planParam);
+        this.props.submitPlan(this.state.selectedPlan, this.state.planParam);
     }
 
     private handleEnvClick = () => {
@@ -175,7 +136,10 @@ class AcquirePage extends React.Component<IProps, IState> {
         this.props.clearQueue();
     }
     componentDidMount() {
+        this.props.getOverview();
+        this.props.getQueuedPlans();
         //this.props.submitPlan();
+        this.props.getAllowedPlans();
     }
 }
 
@@ -183,6 +147,9 @@ const mapStateToProps = (store: IApplicationState) => {
     return {
       loading: store.submitted.planLoading,
       plan: store.submitted.plan,
+      loadingPlans: store.plans.plansLoading,
+      plans: store.plans.plans,
+      allowedPlans: store.allowedPlans.allowedPlans,
     };
 };
 
@@ -192,9 +159,13 @@ const mapDispatchToProps = (dispatch: any) => {
       modifyQueue: (opId: number) => dispatch(modifyQueue(opId)),
       submitPlan: (planId: number, param: number) => dispatch(submitPlan(planId, param)),
       clearQueue: () => dispatch(clearQueue()),
+      getOverview: () => dispatch(getOverview()),
+      getQueuedPlans: () => dispatch(getQueuedPlans()),
+      getAllowedPlans: () => dispatch(getAllowedPlans()),
     };
 };
 
+  
 export default connect(
     mapStateToProps,
     mapDispatchToProps
