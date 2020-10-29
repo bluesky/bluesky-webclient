@@ -67,6 +67,7 @@ export class PlanForm extends React.Component<IProps, IState> {
     const { name, id, value } = e.target;
     const new_plan = this.state.plan;
     new_plan.kwargs[name][Number(id)] = value;
+    alert(JSON.stringify(this.state.plan))
     this.setState({
         plan: new_plan
     });
@@ -81,38 +82,25 @@ export class PlanForm extends React.Component<IProps, IState> {
     this.props.submitPlan(this.state.plan)
   }
 
-  _get_widget_list(parameterObject: IParameter): JSX.Element[] {
-
-    //this.props.allowedPlans.plans_allowed[this.props.name].parameters
-
-    return this.state.plan.kwargs[parameterObject.name].map((value: string|number) => 
-    (<ListItem>
-     {this._get_widget(parameterObject)}
-    </ListItem>))
-
-    /*if (Array.isArray(this.state.plan.kwargs[parameterObject.name])){
-      const param_list: string[]|number[] = this.state.plan.kwargs[parameterObject.name]
-
-      
-    } else {*/
-    // return <ListItem>
-    //          {this._get_widget(parameterObject)}
-    //        </ListItem>
-    }
-  
+  _get_widget_list(parameterObject: IParameter): JSX.Element[]|JSX.Element {
+      return this.state.plan.kwargs[parameterObject.name].map((value: string|number) => 
+                                                              (<ListItem>
+                                                                {this._get_widget(parameterObject)}
+                                                              </ListItem>))
+  }
 
   _get_widget(parameterObject: IParameter): JSX.Element {
     const widgetDict : Record<string, JSX.Element> = {'number': <TextField variant="outlined"/>,
                                                       'boolean': <Switch/>,
                                                       'string': <TextField name={parameterObject.name}
-                                                                           id={String(this.state.plan.kwargs[parameterObject.name].length)}
+                                                                           id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
                                                                            defaultValue={parameterObject.default}
                                                                            onChange={this._onChange.bind(this)}
                                                                            variant="outlined"/>,
                                                       'detector': <Select/>,
                                                       'moveable': <Select/>,
                                                       'default': <TextField name={parameterObject.name}
-                                                                            id={String(this.state.plan.kwargs[parameterObject.name].length)}
+                                                                            id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
                                                                             defaultValue={parameterObject.default}
                                                                             onChange={this._onChange.bind(this)}
                                                                             variant="outlined"/>}
@@ -125,9 +113,9 @@ export class PlanForm extends React.Component<IProps, IState> {
       var i;
       for (i = 0; i < props.allowedPlans.plans_allowed[props.name].parameters.length; i++) {
         if (props.allowedPlans.plans_allowed[props.name].parameters[i].default){
-          temp_dict[props.allowedPlans.plans_allowed[props.name].parameters[i].name]= [props.allowedPlans.plans_allowed[props.name].parameters[i].default];
+          temp_dict[props.allowedPlans.plans_allowed[props.name].parameters[i].name] = [props.allowedPlans.plans_allowed[props.name].parameters[i].default];
         } else {
-          temp_dict[props.allowedPlans.plans_allowed[props.name].parameters[i].name]= [];
+          temp_dict[props.allowedPlans.plans_allowed[props.name].parameters[i].name] = [""];
         }
       }
       return {
