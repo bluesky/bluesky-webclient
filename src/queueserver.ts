@@ -303,12 +303,11 @@ export interface IPlanSubmitState {
 
 export interface ISumbitPlanObject {
     name: string;
-    args: (string|number|string[])[];
     kwargs: {[name: string]: (string|number|string[])} 
 }
 
-export const submitPlan = async(planName: string, param: number): Promise<IPlanObject> => {
-    var planObj = {};
+export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObject> => {
+    /*var planObj = {};
     if (planName == "count") {
         planObj = {
             name: "count",
@@ -324,10 +323,11 @@ export const submitPlan = async(planName: string, param: number): Promise<IPlanO
     } else {
         alert("Only plans count and scan are enabled currently.")
     }
-
+    */
+    alert(JSON.stringify(submitPlan));
     const res = await axiosInstance.post('/queue/plan/add',
         {
-            plan: planObj
+            plan: submitPlan
         });
     console.log(res);
     return res.data;

@@ -6,7 +6,7 @@ import { getOverview as getOverviewAPI,
     submitPlan as submitPlanAPI,
     clearQueue as clearQueueAPI,
     modifyEnvironment as modifyEnvironmentAPI, EnvOps,
-    modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IAllowedPlansGetAction, AllowedPlansActionTypes} from "./queueserver"
+    modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IAllowedPlansGetAction, AllowedPlansActionTypes, ISumbitPlanObject} from "./queueserver"
 import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, IPlanSubmitAction,
     IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes} from "./queueserver"
 
@@ -49,10 +49,10 @@ export const getAllowedPlans: ActionCreator<ThunkAction<Promise<AnyAction>, IAll
 };
 /*******************************************/
 
-export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (planId: string, param: number) => {
+export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (submitPlan: ISumbitPlanObject) => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
-        const plan = await submitPlanAPI(planId, param);
+        const plan = await submitPlanAPI(submitPlan);
         return dispatch({
           plan,
           type: PlanActionTypes.SUBMITPLAN

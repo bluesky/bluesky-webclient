@@ -23,7 +23,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { Box, Container, Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Select, Switch, TextField } from '@material-ui/core';
+import { Box, Button, Container, Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Select, Switch, TextField } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import StarsIcon from '@material-ui/icons/Stars';
 
@@ -43,7 +43,9 @@ interface IState {
 
 const widgetDict : Record<string, JSX.Element> = {'number': <TextField variant="outlined"/>,
                                                   'boolean': <Switch/>,
-                                                  'detector': <Select/>}
+                                                  'string': <TextField variant="outlined"/>,
+                                                  'detector': <Select/>,
+                                                  'moveable': <Select/>}
 
 
 export class PlanForm extends React.Component<PlanType, IState> {
@@ -62,11 +64,28 @@ export class PlanForm extends React.Component<PlanType, IState> {
       },
       expanded: false,
       plan: {name: this.props.name,
-            args: [],
-            kwargs: {}}
+             kwargs: {}}
     }
-
   }
+
+  _onChange(e: React.ChangeEvent<HTMLInputElement>) {
+    const { name, value } = e.target;
+    const new_plan = this.state.plan;
+    new_plan.kwargs[name] = value;
+    this.setState({
+        plan: new_plan
+    });
+  }
+
+  _submit(){
+    const new_plan = this.state.plan;
+    new_plan.name = this.props.name;
+    this.setState({
+        plan: new_plan
+    });
+    this.props.submitPlan(this.state.plan)
+  }
+
   render(){
     if (this.props.name == ""){
       return (
@@ -148,7 +167,10 @@ export class PlanForm extends React.Component<PlanType, IState> {
                           </Grid>
                           <Grid item justify="center" spacing={10} xs={5}>
                             {widgetDict[parameterObject.type] ? widgetDict[parameterObject.type] : 
-                            <TextField color={(parameterObject.kind.value==2) ? "secondary" : "primary"} variant="outlined"/>}
+                            <TextField name={parameterObject.name}
+                                       value={this.state.plan.kwargs[parameterObject.name]}
+                                       onChange={this._onChange.bind(this)}
+                                       variant="outlined"/>}
                           </Grid>
                         </Grid>  
                       </ListItem>
@@ -156,9 +178,9 @@ export class PlanForm extends React.Component<PlanType, IState> {
               </List>
               </CardContent>
               <CardActions disableSpacing>
-                <IconButton onClick={() => this.props.submitPlan(this.state.plan)} edge="end" aria-label="comments">
-                  <SendIcon />
-                </IconButton>
+                <Button onClick={() => this._submit()}  variant="contained" color="primary">
+                  submit
+                </Button>
               </CardActions>
             </Card>
           </Box>
