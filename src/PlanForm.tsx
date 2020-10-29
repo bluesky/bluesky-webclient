@@ -67,7 +67,16 @@ export class PlanForm extends React.Component<IProps, IState> {
     const { name, id, value } = e.target;
     const new_plan = this.state.plan;
     new_plan.kwargs[name][Number(id)] = value;
-    alert(JSON.stringify(this.state.plan))
+    //alert(JSON.stringify(this.state.plan))
+    this.setState({
+        plan: new_plan
+    });
+  }
+
+  _addParameter(name: string){
+    const new_plan = this.state.plan;
+    new_plan.kwargs[name].push("");
+    //alert(JSON.stringify(this.state.plan))
     this.setState({
         plan: new_plan
     });
@@ -213,7 +222,7 @@ export class PlanForm extends React.Component<IProps, IState> {
                           </Grid>
                         </Grid>
                         {!parameterObject.isList ?  <ListItemSecondaryAction>
-                                                      <IconButton>
+                                                      <IconButton onClick={() => this._addParameter(parameterObject.name)}>
                                                         <AddCircleOutlineIcon />
                                                       </IconButton>
                                                     </ListItemSecondaryAction>:<IconButton/>}
