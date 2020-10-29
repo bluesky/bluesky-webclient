@@ -168,6 +168,7 @@ export class PlanForm extends React.Component<PlanType, IState> {
                           <Grid item justify="center" spacing={10} xs={5}>
                             {widgetDict[parameterObject.type] ? widgetDict[parameterObject.type] : 
                             <TextField name={parameterObject.name}
+                                       defaultValue={parameterObject.default}
                                        value={this.state.plan.kwargs[parameterObject.name]}
                                        onChange={this._onChange.bind(this)}
                                        variant="outlined"/>}
