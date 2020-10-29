@@ -81,23 +81,23 @@ export class PlanForm extends React.Component<IProps, IState> {
     this.props.submitPlan(this.state.plan)
   }
 
-  _get_widget_list(parameterObject: IParameter): JSX.Element {
+  _get_widget_list(parameterObject: IParameter): JSX.Element[] {
 
     //this.props.allowedPlans.plans_allowed[this.props.name].parameters
 
-    //return this.state.plan.kwargs[parameterObject.name].map((value: string|number) => 
-    //(<ListItem>
-    // {this._get_widget(parameterObject)}
-    //</ListItem>))
+    return this.state.plan.kwargs[parameterObject.name].map((value: string|number) => 
+    (<ListItem>
+     {this._get_widget(parameterObject)}
+    </ListItem>))
 
     /*if (Array.isArray(this.state.plan.kwargs[parameterObject.name])){
       const param_list: string[]|number[] = this.state.plan.kwargs[parameterObject.name]
 
       
     } else {*/
-     return <ListItem>
-              {this._get_widget(parameterObject)}
-            </ListItem>
+    // return <ListItem>
+    //          {this._get_widget(parameterObject)}
+    //        </ListItem>
     }
   
 
@@ -122,14 +122,14 @@ export class PlanForm extends React.Component<IProps, IState> {
   static getDerivedStateFromProps(props : IProps, current_state: IState) {
     const temp_dict: Record<string, (string|number)[]> = {};
     if (current_state.plan.name !== props.name) {
-      for (const parameter in props.allowedPlans.plans_allowed[props.name].parameters) {
-        //temp_dict[parameter.name]= [];
+      var i;
+      for (i = 0; i < props.allowedPlans.plans_allowed[props.name].parameters.length; i++) {
+        if (props.allowedPlans.plans_allowed[props.name].parameters[i].default){
+          temp_dict[props.allowedPlans.plans_allowed[props.name].parameters[i].name]= [props.allowedPlans.plans_allowed[props.name].parameters[i].default];
+        } else {
+          temp_dict[props.allowedPlans.plans_allowed[props.name].parameters[i].name]= [];
+        }
       }
-      alert(JSON.stringify(props))
-      alert( JSON.stringify({
-        plan: {name: props.name,
-               kwargs: temp_dict}
-      }))
       return {
         plan: {name: props.name,
                kwargs: temp_dict}
