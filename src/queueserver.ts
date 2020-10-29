@@ -120,6 +120,7 @@ export interface IParameter {
     default_pickled?: string;
     kind: IKind;
     type: string;
+    isList?: boolean;
 }
 
 export interface IAllowedPlan {
@@ -303,7 +304,7 @@ export interface IPlanSubmitState {
 
 export interface ISumbitPlanObject {
     name: string;
-    kwargs: {[name: string]: (string|number|string[])} 
+    kwargs: {[name: string]: (string|number)[]} 
 }
 
 export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObject> => {

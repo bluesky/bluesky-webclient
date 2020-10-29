@@ -23,11 +23,13 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { Box, Button, Container, Grid, List, ListItem, ListItemIcon, ListItemText, Paper, Select, Switch, TextField } from '@material-ui/core';
+import { Box, Button, Container, Grid, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Paper, Select, Switch, TextField } from '@material-ui/core';
 import SendIcon from '@material-ui/icons/Send';
 import StarsIcon from '@material-ui/icons/Stars';
+import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import { JsxExpression } from 'typescript';
 
-type PlanType = {
+type IProps = {
   name: string;
   allowedPlans: IAllowedPlans;
   submitPlan: (selectedPlan: ISumbitPlanObject) => void;
@@ -41,15 +43,8 @@ interface IState {
   plan: ISumbitPlanObject;
 }
 
-const widgetDict : Record<string, JSX.Element> = {'number': <TextField variant="outlined"/>,
-                                                  'boolean': <Switch/>,
-                                                  'string': <TextField variant="outlined"/>,
-                                                  'detector': <Select/>,
-                                                  'moveable': <Select/>}
-
-
-export class PlanForm extends React.Component<PlanType, IState> {
-  constructor(props: PlanType) {
+export class PlanForm extends React.Component<IProps, IState> {
+  constructor(props: IProps) {
     super(props);
     this.state = {
       root: {
@@ -69,9 +64,9 @@ export class PlanForm extends React.Component<PlanType, IState> {
   }
 
   _onChange(e: React.ChangeEvent<HTMLInputElement>) {
-    const { name, value } = e.target;
+    const { name, id, value } = e.target;
     const new_plan = this.state.plan;
-    new_plan.kwargs[name] = value;
+    new_plan.kwargs[name][Number(id)] = value;
     this.setState({
         plan: new_plan
     });
@@ -84,6 +79,64 @@ export class PlanForm extends React.Component<PlanType, IState> {
         plan: new_plan
     });
     this.props.submitPlan(this.state.plan)
+  }
+
+  _get_widget_list(parameterObject: IParameter): JSX.Element {
+
+    //this.props.allowedPlans.plans_allowed[this.props.name].parameters
+
+    //return this.state.plan.kwargs[parameterObject.name].map((value: string|number) => 
+    //(<ListItem>
+    // {this._get_widget(parameterObject)}
+    //</ListItem>))
+
+    /*if (Array.isArray(this.state.plan.kwargs[parameterObject.name])){
+      const param_list: string[]|number[] = this.state.plan.kwargs[parameterObject.name]
+
+      
+    } else {*/
+     return <ListItem>
+              {this._get_widget(parameterObject)}
+            </ListItem>
+    }
+  
+
+  _get_widget(parameterObject: IParameter): JSX.Element {
+    const widgetDict : Record<string, JSX.Element> = {'number': <TextField variant="outlined"/>,
+                                                      'boolean': <Switch/>,
+                                                      'string': <TextField name={parameterObject.name}
+                                                                           id={String(this.state.plan.kwargs[parameterObject.name].length)}
+                                                                           defaultValue={parameterObject.default}
+                                                                           onChange={this._onChange.bind(this)}
+                                                                           variant="outlined"/>,
+                                                      'detector': <Select/>,
+                                                      'moveable': <Select/>,
+                                                      'default': <TextField name={parameterObject.name}
+                                                                            id={String(this.state.plan.kwargs[parameterObject.name].length)}
+                                                                            defaultValue={parameterObject.default}
+                                                                            onChange={this._onChange.bind(this)}
+                                                                            variant="outlined"/>}
+    return widgetDict[parameterObject.type] ? widgetDict[parameterObject.type] : widgetDict['default']
+  }
+
+  static getDerivedStateFromProps(props : IProps, current_state: IState) {
+    const temp_dict: Record<string, (string|number)[]> = {};
+    if (current_state.plan.name !== props.name) {
+      for (const parameter in props.allowedPlans.plans_allowed[props.name].parameters) {
+        //temp_dict[parameter.name]= [];
+      }
+      alert(JSON.stringify(props))
+      alert( JSON.stringify({
+        plan: {name: props.name,
+               kwargs: temp_dict}
+      }))
+      return {
+        plan: {name: props.name,
+               kwargs: temp_dict}
+      }
+    } else { 
+      return null;
+    }
   }
 
   render(){
@@ -165,18 +218,20 @@ export class PlanForm extends React.Component<PlanType, IState> {
                               primary={parameterObject.name}
                               secondary={parameterObject.description ? parameterObject.description : "No parameter description found."}/>
                           </Grid>
-                          <Grid item justify="center" spacing={10} xs={5}>
-                            {widgetDict[parameterObject.type] ? widgetDict[parameterObject.type] : 
-                            <TextField name={parameterObject.name}
-                                       defaultValue={parameterObject.default}
-                                       value={this.state.plan.kwargs[parameterObject.name]}
-                                       onChange={this._onChange.bind(this)}
-                                       variant="outlined"/>}
+                          <Grid item justify="center" spacing={1} xs={5}>
+                            <List>
+                              {this._get_widget_list(parameterObject)}    
+                            </List>
                           </Grid>
-                        </Grid>  
+                        </Grid>
+                        {!parameterObject.isList ?  <ListItemSecondaryAction>
+                                                      <IconButton>
+                                                        <AddCircleOutlineIcon />
+                                                      </IconButton>
+                                                    </ListItemSecondaryAction>:<IconButton/>}
                       </ListItem>
                   ))}
-              </List>
+                </List>
               </CardContent>
               <CardActions disableSpacing>
                 <Button onClick={() => this._submit()}  variant="contained" color="primary">
@@ -190,3 +245,4 @@ export class PlanForm extends React.Component<PlanType, IState> {
     }
   }
 }
+
