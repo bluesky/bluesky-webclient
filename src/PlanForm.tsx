@@ -52,7 +52,7 @@ export class PlanForm extends React.Component<IProps, IState> {
       },
       media: {
         height: 0,
-        paddingTop: '56.25%', // 16:9
+        paddingTop: '56.25%',
       },
       avatar: {
         backgroundColor: red[500],
@@ -93,25 +93,34 @@ export class PlanForm extends React.Component<IProps, IState> {
 
   _get_widget_list(parameterObject: IParameter): JSX.Element[]|JSX.Element {
       return this.state.plan.kwargs[parameterObject.name].map((value: string|number) => 
-                                                              (<ListItem>
+                                                              (<ListItem dense={true}>
                                                                 {this._get_widget(parameterObject)}
                                                               </ListItem>))
   }
 
   _get_widget(parameterObject: IParameter): JSX.Element {
-    const widgetDict : Record<string, JSX.Element> = {'number': <TextField variant="outlined"/>,
-                                                      'boolean': <Switch/>,
+    const widgetDict : Record<string, JSX.Element> = {'number': <TextField  name={parameterObject.name}
+                                                                            id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
+                                                                            defaultValue={parameterObject.default}
+                                                                            onChange={this._onChange.bind(this)}
+                                                                            variant="outlined"/>,
+                                                      'boolean': <Switch name={parameterObject.name}
+                                                                          id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
+                                                                          defaultValue={parameterObject.default}
+                                                                          onChange={this._onChange.bind(this)}/>,
                                                       'string': <TextField name={parameterObject.name}
                                                                            id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
                                                                            defaultValue={parameterObject.default}
                                                                            onChange={this._onChange.bind(this)}
                                                                            variant="outlined"/>,
-                                                      'detector': <Select/>,
-                                                      'moveable': <Select/>,
+                                                      'enum': <Select name={parameterObject.name}
+                                                                      id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
+                                                                      defaultValue={parameterObject.default}/>,
                                                       'default': <TextField name={parameterObject.name}
                                                                             id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
                                                                             defaultValue={parameterObject.default}
                                                                             onChange={this._onChange.bind(this)}
+                                                                            margin="dense"
                                                                             variant="outlined"/>}
     return widgetDict[parameterObject.type] ? widgetDict[parameterObject.type] : widgetDict['default']
   }
@@ -213,10 +222,10 @@ export class PlanForm extends React.Component<IProps, IState> {
                           <Grid item justify="center" spacing={10} xs={5}>    
                             <ListItemText
                               primary={parameterObject.name}
-                              secondary={parameterObject.description ? parameterObject.description : "No parameter description found."}/>
+                              secondary={parameterObject.description ? parameterObject.description : ""}/>
                           </Grid>
                           <Grid item justify="center" spacing={1} xs={5}>
-                            <List>
+                            <List dense={true}>
                               {this._get_widget_list(parameterObject)}    
                             </List>
                           </Grid>
