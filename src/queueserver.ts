@@ -118,9 +118,13 @@ export interface IParameter {
     annotation_pickled?: string;
     default: string;
     default_pickled?: string;
-    kind: IKind;
-    type: string;
-    isList?: boolean;
+    kind: IKind; // I would like to pass everything as a kwarg, which works, so I think this one can be skipped.
+    type: string; //number, string, enum, boolean.
+    enum?: string;  // Add the enum here if type is enum. (This may be similar to get devices?)
+    isList?: boolean; // True if parameter accepts a list of the type defined in 'type'.
+    min?: number; // Only present for number type.
+    max?: number; // Only present for number type.
+    step?: number; // Only present for number type.
 }
 
 export interface IAllowedPlan {
