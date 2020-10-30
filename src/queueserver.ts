@@ -113,14 +113,14 @@ export interface IKind {
 
 export interface IParameter {
     name: string;
-    description?: string;
+    description?: string; // Maybe we can make this required?
     annotation: string;
-    annotation_pickled?: string;
+    annotation_pickled?: string; // I don't think this is needed.
     default: string;
-    default_pickled?: string;
+    default_pickled?: string; // I don't think this is needed.
     kind: IKind; // I would like to pass everything as a kwarg, which works, so I think this one can be skipped.
     type: string; //number, string, enum, boolean.
-    enum?: string;  // Add the enum here if type is enum. (This may be similar to get devices?)
+    enum?: object;  // Add the enum here if type is enum. (This may be similar to get devices?)
     isList?: boolean; // True if parameter accepts a list of the type defined in 'type'.
     min?: number; // Only present for number type.
     max?: number; // Only present for number type.
