@@ -1,4 +1,5 @@
 import axios from "axios";
+import { IndexKind } from "typescript";
 
 var axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_QUEUE_API_PREFIX,
@@ -105,11 +106,36 @@ Out[52]:
  'returns': {'annotation': '',
   'annotation_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e'}}
 */
+export interface IKind {
+    name: string;
+    value: number;
+}
+
+export interface IParameter {
+    name: string;
+    description?: string; // Maybe we can make this required?
+    annotation: string;
+    annotation_pickled?: string; // I don't think this is needed.
+    default: string;
+    default_pickled?: string; // I don't think this is needed.
+    kind: IKind; // I would like to pass everything as a kwarg, which works, so I think this one can be skipped.
+    type: string; //number, string, enum, boolean.
+    enum?: object;  // Add the enum here if type is enum. (This may be similar to get devices?)
+    isList?: boolean; // True if parameter accepts a list of the type defined in 'type'.
+    min?: number; // Only present for number type.
+    max?: number; // Only present for number type.
+    step?: number; // Only present for number type.
+}
+
+export interface IAllowedPlan {
+    description?: string;
+    parameters: IParameter[];
+}
+
 export interface IAllowedPlans {
     success: boolean;
     msg: string;
-    // TODO: convert it to something similar to IPlan...
-    plans_allowed: Object;
+    plans_allowed: { [name: string]: IAllowedPlan; } 
 }
 
 export interface IAllowedPlansState {
@@ -125,7 +151,6 @@ export const getAllowedPlans = async(): Promise<IAllowedPlans> => {
 }
 
 /*******************************************/
-
 
 export enum PlanActionTypes {
     GETOVERVIEW = "PLANS/GETOVERVIEWS",
@@ -281,8 +306,13 @@ export interface IPlanSubmitState {
     readonly planLoading: boolean;
 }
 
-export const submitPlan = async(planName: string, param: number): Promise<IPlanObject> => {
-    var planObj = {};
+export interface ISumbitPlanObject {
+    name: string;
+    kwargs: {[name: string]: (string|number)[]} 
+}
+
+export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObject> => {
+    /*var planObj = {};
     if (planName == "count") {
         planObj = {
             name: "count",
@@ -298,10 +328,11 @@ export const submitPlan = async(planName: string, param: number): Promise<IPlanO
     } else {
         alert("Only plans count and scan are enabled currently.")
     }
-
+    */
+    alert(JSON.stringify(submitPlan));
     const res = await axiosInstance.post('/queue/plan/add',
         {
-            plan: planObj
+            plan: submitPlan
         });
     console.log(res);
     return res.data;

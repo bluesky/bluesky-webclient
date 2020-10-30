@@ -1,6 +1,6 @@
 import { Reducer } from "redux";
 import { IPlanState, IPlanObjectsState, IPlanSubmitState, IPlanModifyState,
-    PlanActions, PlanActionTypes, IAllowedPlansState, AllowedPlansActions, AllowedPlansActionTypes } from "./queueserver";
+    PlanActions, PlanActionTypes, IAllowedPlansState, AllowedPlansActions, AllowedPlansActionTypes, IAllowedPlans } from "./queueserver";
 
 const initialPlanState: IPlanState = {
     plan: {
@@ -71,6 +71,7 @@ export const planObjectsReducer: Reducer<IPlanObjectsState, PlanActions> = (
 };
 
 /**********************************************/
+declare const allowed: IAllowedPlans;
 
 const initialAllowedPlansState: IAllowedPlansState = {
     allowedPlans: {
