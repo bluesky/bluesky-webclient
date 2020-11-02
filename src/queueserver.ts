@@ -116,6 +116,7 @@ export interface IParameter {
     description?: string; // Maybe we can make this required?
     annotation: string;
     annotation_pickled?: string; // I don't think this is needed.
+    required?: boolean;
     default: string;
     default_pickled?: string; // I don't think this is needed.
     kind: IKind; // I would like to pass everything as a kwarg, which works, so I think this one can be skipped.
