@@ -75,7 +75,7 @@ class App extends React.Component<IProps> {
   
   componentDidMount() {
       this.props.getOverview();
-      this.props.getQueuedPlans();
+      setInterval(this.props.getQueuedPlans(), 1000);
   }
 
 }
