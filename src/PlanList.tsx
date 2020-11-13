@@ -11,7 +11,7 @@ import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { IPlanObject } from './queueserver';
+import { IPlanObject, modifyQueue, QueueOps } from './queueserver';
 import { Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
 import { clearQueue } from './planactions';
 
@@ -20,9 +20,8 @@ type Plans = {
   clearQueue: typeof clearQueue;
 }
 
+
 export class PlanList extends React.Component<Plans>{
-
-
   handleMoveForward(uid: string) {
     alert(uid);
   }
@@ -31,12 +30,12 @@ export class PlanList extends React.Component<Plans>{
     alert(uid);
   }
 
-  handlePlay(uid: string) {
-    alert(uid);
+  handlePlay() {
+    modifyQueue(QueueOps.start);
   }
 
-  handlePause(uid: string) {
-    alert(uid);
+  handlePause() {
+    modifyQueue(QueueOps.stop);
   }
 
   handleDelete(uid: string){
@@ -50,10 +49,10 @@ export class PlanList extends React.Component<Plans>{
               <CardContent>
                 <Typography align="center" variant="h5" component="h1" gutterBottom>
                   Queue
-                  <IconButton onClick={() => this.handlePlay(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
+                  <IconButton onClick={() => this.handlePlay()} edge="end" aria-label="comments">
                     <PlayCircleOutlineIcon />
                   </IconButton>
-                  <IconButton onClick={() => this.handlePause(this.props.plans[0].plan_uid)} edge="end" aria-label="comments">
+                  <IconButton onClick={() => this.handlePause()} edge="end" aria-label="comments">
                     <PauseCircleOutlineIcon />
                   </IconButton>
                   <IconButton onClick={() => this.props.clearQueue()} edge="end" aria-label="comments">
