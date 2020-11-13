@@ -1,5 +1,4 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
@@ -11,20 +10,16 @@ import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { IPlan, IPlanObject } from './queueserver';
+import { IPlanObject } from './queueserver';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import { Box, Container, Paper } from '@material-ui/core';
-import { planObjectsReducer } from './planreducers';
+import { Box } from '@material-ui/core';
 
 type Plans = {
   plans: IPlanObject[];
@@ -83,7 +78,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
   }
 
   getName(plans: IPlanObject[]){
-    if (plans.length == 0) {
+    if (plans.length === 0) {
       return "No plan currently executing";
     } else {
       return plans[0].name;
@@ -91,7 +86,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
   }
 
   getUid(plans: IPlanObject[]){
-    if (plans.length == 0) {
+    if (plans.length === 0) {
       return "";
     } else {
       return plans[0].plan_uid;

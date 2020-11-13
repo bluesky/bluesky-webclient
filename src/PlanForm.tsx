@@ -1,33 +1,17 @@
 import React from 'react';
-import { makeStyles } from '@material-ui/core/styles';
-import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import FavoriteIcon from '@material-ui/icons/Favorite';
-import ShareIcon from '@material-ui/icons/Share';
-import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { IAllowedPlans, IParameter, IPlan, IPlanObject, ISumbitPlanObject } from './queueserver';
-import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import { IAllowedPlans, IParameter, ISumbitPlanObject } from './queueserver';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import LinearProgress from '@material-ui/core/LinearProgress';
-import { Box, Button, Container, Grid, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Paper, Select, Switch, TextField } from '@material-ui/core';
-import SendIcon from '@material-ui/icons/Send';
+import { Box, Button, Grid, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Paper, Select, Switch, TextField } from '@material-ui/core';
 import StarsIcon from '@material-ui/icons/Stars';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import { JsxExpression } from 'typescript';
 
 type IProps = {
   name: string;
@@ -146,7 +130,7 @@ export class PlanForm extends React.Component<IProps, IState> {
   }
 
   render(){
-    if (this.props.name == ""){
+    if (this.props.name === ""){
       return (
         <Paper style={{height: "83vh", overflow: 'auto', margin: "auto"}}>
           <Box>
@@ -214,7 +198,7 @@ export class PlanForm extends React.Component<IProps, IState> {
                   {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
                     (parameterObject: IParameter) => (
                       <ListItem divider={true} button={true} key={parameterObject.name}>
-                        {(parameterObject.kind.value==2) ? 
+                        {(parameterObject.kind.value===2) ? 
                                               <ListItemIcon>
                                                  <StarsIcon />
                                               </ListItemIcon> : <ListItemIcon/>}
