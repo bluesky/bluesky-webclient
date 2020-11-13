@@ -12,12 +12,7 @@ import { PlanList } from './PlanList';
 import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
 import { clearQueue } from './planactions';
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
-import Paper from '@material-ui/core/Paper';
-import { Card, CardContent, Grid } from '@material-ui/core';
+import { Grid } from '@material-ui/core';
 
 
 function Copyright() {
@@ -75,7 +70,7 @@ class App extends React.Component<IProps> {
   
   componentDidMount() {
       this.props.getOverview();
-      setInterval(this.props.getQueuedPlans(), 1000);
+      setInterval(this.props.getQueuedPlans, 1000);
   }
 
 }

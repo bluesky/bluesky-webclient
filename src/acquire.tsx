@@ -1,15 +1,7 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import Box from '@material-ui/core/Box';
-import InputLabel from '@material-ui/core/InputLabel';
-import MenuItem from '@material-ui/core/MenuItem';
-import Tooltip from '@material-ui/core/Tooltip';
-import FormControl from '@material-ui/core/FormControl';
-import Select from '@material-ui/core/Select';
-import TextField from '@material-ui/core/TextField';
 import { IApplicationState } from './store';
 import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans } from './planactions';
 import { clearQueue } from './planactions';
@@ -18,7 +10,6 @@ import { getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from "react-router-dom";
 import { Grid } from '@material-ui/core';
 import { PlanList } from './PlanList';
-import { CurrentPlan } from './CurrentPlan';
 import { AvailablePlans } from './AvailablePlans';
 import { PlanForm } from './PlanForm';
 
