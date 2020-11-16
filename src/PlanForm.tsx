@@ -106,6 +106,7 @@ export class PlanForm extends React.Component<IProps, IState> {
                                                                             onChange={this._onChange.bind(this)}
                                                                             margin="dense"
                                                                             variant="outlined"/>}
+
     return widgetDict[parameterObject.type] ? widgetDict[parameterObject.type] : widgetDict['default']
   }
 
@@ -198,7 +199,7 @@ export class PlanForm extends React.Component<IProps, IState> {
                   {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
                     (parameterObject: IParameter) => (
                       <ListItem divider={true} button={true} key={parameterObject.name}>
-                        {(parameterObject.kind.value===2) ? 
+                        {(!parameterObject.default) ? 
                                               <ListItemIcon>
                                                  <StarsIcon />
                                               </ListItemIcon> : <ListItemIcon/>}
