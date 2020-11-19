@@ -75,11 +75,8 @@ export class PlanForm extends React.Component<IProps, IState> {
     this.props.submitPlan(this.state.plan)
   }
 
-  message(){
-    alert("TESTING")
-  }
   _get_widget_list(parameterObject: IParameter): JSX.Element[]|JSX.Element {
-      return this.state.plan.kwargs[parameterObject.name].map((value: string|number) => 
+      return this.state.plan.kwargs[parameterObject.name].map((value: string|number) =>
                                                               (<ListItem dense={true}>
                                                                 {this._get_widget(parameterObject)}
                                                               </ListItem>))
@@ -128,7 +125,7 @@ export class PlanForm extends React.Component<IProps, IState> {
         plan: {name: props.name,
                kwargs: temp_dict}
       }
-    } else { 
+    } else {
       return null;
     }
   }
@@ -189,8 +186,8 @@ export class PlanForm extends React.Component<IProps, IState> {
                 title={this.props.name}
               />
               <CardContent>
-                <Typography > 
-                    {this.props.allowedPlans.plans_allowed[this.props.name]["description"] ? 
+                <Typography >
+                    {this.props.allowedPlans.plans_allowed[this.props.name]["description"] ?
                     this.props.allowedPlans.plans_allowed[this.props.name]["description"] : "No plan description found."}
                 </Typography>
               </CardContent>
@@ -202,19 +199,19 @@ export class PlanForm extends React.Component<IProps, IState> {
                   {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
                     (parameterObject: IParameter) => (
                       <ListItem divider={true} button={true} key={parameterObject.name}>
-                        {(!parameterObject.default) ? 
+                        {(!parameterObject.default) ?
                                               <ListItemIcon>
                                                  <StarsIcon />
                                               </ListItemIcon> : <ListItemIcon/>}
                         <Grid container spacing={5} direction="row" justify="center">
-                          <Grid item justify="center" spacing={10} xs={5}>    
+                          <Grid item justify="center" spacing={10} xs={5}>
                             <ListItemText
                               primary={parameterObject.name}
                               secondary={parameterObject.description ? parameterObject.description : ""}/>
                           </Grid>
                           <Grid item justify="center" spacing={1} xs={5}>
                             <List dense={true}>
-                              {this._get_widget_list(parameterObject)}    
+                              {this._get_widget_list(parameterObject)}
                             </List>
                           </Grid>
                         </Grid>
