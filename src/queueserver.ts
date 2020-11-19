@@ -1,5 +1,4 @@
 import axios from "axios";
-import { isNumericLiteral } from "typescript";
 
 var axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_QUEUE_API_PREFIX,
