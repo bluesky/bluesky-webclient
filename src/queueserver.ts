@@ -311,24 +311,22 @@ export interface ISumbitPlanObject {
     kwargs: {[name: string]: (string|number)[]} 
 }
 
+export interface ISumbitPlanObjectFixed {
+    name: string;
+    kwargs: {[name: string]: string[]|number[]|string|number} 
+}
+
 export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObject> => {
-    /*var planObj = {};
-    if (planName == "count") {
-        planObj = {
-            name: "count",
-            args: [["det1", "det2"]],
-            kwargs: {"num": Number(param), "delay": 1}
-        };
+
+    var plan : ISumbitPlanObjectFixed = {name: submitPlan.name,
+                                         kwargs: {}};
+
+    for (const [key, value] of Object.entries(submitPlan.kwargs)) {
+      if (key != 'detectors'){
+        plan.kwargs[key] = value[0];
+      }
     }
-    else if (planName == "scan") {
-        planObj = {
-            name: "scan",
-            args: [["det1", "det2"], "motor", -1, 1, Number(param) ]
-        };
-    } else {
-        alert("Only plans count and scan are enabled currently.")
-    }
-    */
+    
     alert(JSON.stringify(submitPlan));
     const res = await axiosInstance.post('/queue/plan/add',
         {

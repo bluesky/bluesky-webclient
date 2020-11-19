@@ -75,6 +75,9 @@ export class PlanForm extends React.Component<IProps, IState> {
     this.props.submitPlan(this.state.plan)
   }
 
+  message(){
+    alert("TESTING")
+  }
   _get_widget_list(parameterObject: IParameter): JSX.Element[]|JSX.Element {
       return this.state.plan.kwargs[parameterObject.name].map((value: string|number) => 
                                                               (<ListItem dense={true}>
@@ -92,7 +95,7 @@ export class PlanForm extends React.Component<IProps, IState> {
                                                                           id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
                                                                           defaultValue={parameterObject.default}
                                                                           onChange={this._onChange.bind(this)}/>,
-                                                      'string': <TextField name={parameterObject.name}
+                                                      'str': <TextField name={parameterObject.name}
                                                                            id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
                                                                            defaultValue={parameterObject.default}
                                                                            onChange={this._onChange.bind(this)}
