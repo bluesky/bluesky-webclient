@@ -321,6 +321,10 @@ export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObj
     var plan : ISumbitPlanObjectFixed = {name: submitPlan.name,
                                          kwargs: {}};
 
+    // Make remove the square brackets from parameters that are not intended to be lists.
+    // For now we assume that only the detectors kwarg is a list.
+    // TODO: Update this, once the have the correct information from the 
+    // queueserver about which kwargs are list.
     for (const [key, value] of Object.entries(submitPlan.kwargs)) {
       if (key != 'detectors'){
         plan.kwargs[key] = value[0];
