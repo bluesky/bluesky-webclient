@@ -327,7 +327,16 @@ export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObj
     // queueserver about which kwargs are list.
     for (const [key, value] of Object.entries(submitPlan.kwargs)) {
       if (key != 'detectors'){
-        plan.kwargs[key] = value[0];
+        if (value[0] != "None"){
+            // Convert string to a number if possible.
+            // TODO: Use the type information from the server (once available), 
+            // and use a numeric input.
+            if (isNaN(Number(value[0]))){
+                plan.kwargs[key] = value[0];
+            } else {
+                plan.kwargs[key] = Number(value[0])
+            }
+        }
       } else {
         plan.kwargs[key] = value;
       }
@@ -336,7 +345,7 @@ export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObj
     alert(JSON.stringify(plan));
     const res = await axiosInstance.post('/queue/plan/add',
         {
-            plan: submitPlan
+            plan: plan
         });
     console.log(res);
     return res.data;
