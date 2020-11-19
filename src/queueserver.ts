@@ -313,7 +313,7 @@ export interface ISumbitPlanObject {
 
 export interface ISumbitPlanObjectFixed {
     name: string;
-    kwargs: {[name: string]: string[]|number[]|string|number} 
+    kwargs: {[name: string]: (string|number)[]|string|number} 
 }
 
 export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObject> => {
@@ -324,10 +324,12 @@ export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObj
     for (const [key, value] of Object.entries(submitPlan.kwargs)) {
       if (key != 'detectors'){
         plan.kwargs[key] = value[0];
+      } else {
+        plan.kwargs[key] = value;
       }
     }
     
-    alert(JSON.stringify(submitPlan));
+    alert(JSON.stringify(plan));
     const res = await axiosInstance.post('/queue/plan/add',
         {
             plan: submitPlan
