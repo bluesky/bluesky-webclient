@@ -311,25 +311,29 @@ export interface ISumbitPlanObject {
     kwargs: {[name: string]: (string|number)[]} 
 }
 
+export interface ISumbitPlanObjectFixed {
+    name: string;
+    kwargs: {[name: string]: (string|number)[]|string|number} 
+}
+
 export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObject> => {
-    /*var planObj = {};
-    if (planName == "count") {
-        planObj = {
-            name: "count",
-            args: [["det1", "det2"]],
-            kwargs: {"num": Number(param), "delay": 1}
-        };
+
+    var plan : ISumbitPlanObjectFixed = {name: submitPlan.name,
+                                         kwargs: {}};
+
+    // Remove the square brackets from parameters that are not intended to be lists.
+    // For now we assume that only the detectors kwarg is a list.
+    // TODO: Update this, once the have the correct information from the 
+    // queueserver about which kwargs are list.
+    for (const [key, value] of Object.entries(submitPlan.kwargs)) {
+      if (key != 'detectors'){
+        plan.kwargs[key] = value[0];
+      } else {
+        plan.kwargs[key] = value;
+      }
     }
-    else if (planName == "scan") {
-        planObj = {
-            name: "scan",
-            args: [["det1", "det2"], "motor", -1, 1, Number(param) ]
-        };
-    } else {
-        alert("Only plans count and scan are enabled currently.")
-    }
-    */
-    alert(JSON.stringify(submitPlan));
+    
+    alert(JSON.stringify(plan));
     const res = await axiosInstance.post('/queue/plan/add',
         {
             plan: submitPlan
