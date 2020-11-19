@@ -332,11 +332,23 @@ export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObj
         plan.kwargs[key] = value;
       }
     }
-    
+    if (plan.name == 'count'){
+      plan.kwargs['num'] = Number(plan.kwargs['num']);
+    }
+
+    delete plan.kwargs['kwargs'];
+    delete plan.kwargs['delay'];
+    delete plan.kwargs['per_shot'];
+    delete plan.kwargs['md'];
+
+    //if (submitPlan.name == 'xafs'){
+    //   
+    //}    
+
     alert(JSON.stringify(plan));
     const res = await axiosInstance.post('/queue/plan/add',
         {
-            plan: submitPlan
+            plan: plan
         });
     console.log(res);
     return res.data;
