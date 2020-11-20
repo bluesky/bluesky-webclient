@@ -11,7 +11,6 @@ import { RouteComponentProps } from "react-router-dom";
 import { Grid } from '@material-ui/core';
 import { PlanList } from './PlanList';
 import { AvailablePlans } from './AvailablePlans';
-import { PlanForm } from './GenericPlanForm';
 import { PlanFormContainer } from './PlanFormContainer';
 
 type RouteParams = { id: string, uid: string };

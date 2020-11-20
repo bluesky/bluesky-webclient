@@ -27,8 +27,9 @@ interface IState {
   plan: ISumbitPlanObject;
 }
 
-export class PlanForm extends React.Component<IProps, IState> {
+export class GenericPlanForm extends React.Component<IProps, IState> {
   constructor(props: IProps) {
+    //alert(JSON.stringify(props))
     super(props);
     this.state = {
       root: {
