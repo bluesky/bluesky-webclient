@@ -326,8 +326,8 @@ export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObj
     // TODO: Update this, once the have the correct information from the 
     // queueserver about which kwargs are list.
     for (const [key, value] of Object.entries(submitPlan.kwargs)) {
-      if (key != 'detectors'){
-        if (value[0] != "None"){
+      if (key !== 'detectors'){
+        if (value[0] !== "None"){
             // Convert string to a number if possible.
             // TODO: Use the type information from the server (once available), 
             // and use a numeric input.
