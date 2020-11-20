@@ -12,7 +12,6 @@ type IProps = {
 }
 
 interface IState {
-  root: any;
   media: any;
   avatar: any;
 }
@@ -22,9 +21,6 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      root: {
-        //maxWidth: 345,
-      },
       media: {
         height: 0,
         paddingTop: '56.25%',
@@ -35,27 +31,35 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
     }
   }
 
-  planFormDict : Record<string, JSX.Element> = {
-    'count': <GenericPlanForm submitPlan={this.props.submitPlan} 
-                        name={this.props.name} 
-                        allowedPlans={this.props.allowedPlans}/>,
-    'default': <GenericPlanForm submitPlan={this.props.submitPlan} 
-                        name={this.props.name} 
-                        allowedPlans={this.props.allowedPlans}/>,
-    '': <Card raised={true}>
-          <CardHeader
-            avatar={
-              <AccountCircleIcon fontSize='large' />
-            }
-            titleTypographyProps={{variant:'h6' }}
-            title={"Select a plan."}
-          />
-          <CardContent>
-            <Typography>
-                Select a plan from the available plans list.
-            </Typography>
-          </CardContent>
-        </Card>}
+  private getPlanForm() {
+   const planFormDict : Record<string, JSX.Element> = {
+                                'xafs': <GenericPlanForm submitPlan={this.props.submitPlan} 
+                                                    name={this.props.name} 
+                                                    allowedPlans={this.props.allowedPlans}/>,
+                                'default': <GenericPlanForm submitPlan={this.props.submitPlan} 
+                                                    name={this.props.name} 
+                                                    allowedPlans={this.props.allowedPlans}/>,
+                                '': <Card raised={true}>
+                                      <CardHeader
+                                        avatar={
+                                          <AccountCircleIcon fontSize='large' />
+                                        }
+                                        titleTypographyProps={{variant:'h6' }}
+                                        title={"Select a plan."}
+                                      />
+                                      <CardContent>
+                                        <Typography>
+                                            Select a plan from the available plans list.
+                                        </Typography>
+                                      </CardContent>
+                                    </Card>}
+      if (this.props.allowedPlans && this.props.name){
+        return planFormDict[this.props.name] ? planFormDict[this.props.name] : planFormDict['default']
+      } else {
+        return planFormDict[''];
+      }
+      
+    }
 
   render(){
     return (
@@ -69,7 +73,7 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
             </CardContent>
           </Card>
         <Box height="2vh"></Box>
-          {this.planFormDict[this.props.name] ? this.planFormDict[this.props.name] : this.planFormDict['default']} 
+          {this.getPlanForm()}
         </Box>
       </Paper>)
   }

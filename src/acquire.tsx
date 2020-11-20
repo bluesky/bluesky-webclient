@@ -126,9 +126,10 @@ class AcquirePage extends React.Component<IProps, IState> {
     private handleClearQueue = () => {
         this.props.clearQueue();
     }
+    
     componentDidMount() {
         this.props.getOverview();
-        setInterval(this.props.getQueuedPlans, 1000);
+        setInterval(this.props.getQueuedPlans, 500);
         //this.props.submitPlan();
         this.props.getAllowedPlans();
     }
