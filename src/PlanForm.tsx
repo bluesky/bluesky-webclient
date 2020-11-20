@@ -131,47 +131,7 @@ export class PlanForm extends React.Component<IProps, IState> {
   }
 
   render(){
-    if (this.props.name === ""){
       return (
-        <Paper style={{height: "83vh", overflow: 'auto', margin: "auto"}}>
-          <Box>
-            <Card style={{height: "6vh"}} raised={true}>
-              <CardContent>
-                <Typography align="center" variant="h5" component="h1" gutterBottom>
-                  Plan Form
-                </Typography>
-              </CardContent>
-            </Card>
-          <Box height="2vh"></Box>
-            <Card raised={true}>
-              <CardHeader
-                avatar={
-                  <AccountCircleIcon fontSize='large' />
-                }
-                titleTypographyProps={{variant:'h6' }}
-                title={"Select a plan."}
-              />
-              <CardContent>
-                <Typography>
-                    Select a plan from the available plans list.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Box>
-        </Paper>
-      );
-    } else {
-      return (
-        <Paper style={{height: "83vh", overflow: 'auto', margin: "auto"}}>
-          <Box>
-            <Card style={{height: "6vh"}} raised={true}>
-              <CardContent>
-                <Typography align="center" variant="h5" component="h1" gutterBottom>
-                  Plan Form
-                </Typography>
-              </CardContent>
-            </Card>
-          <Box height="2vh"></Box>
             <Card raised={true}>
               <CardHeader
                 avatar={
@@ -230,10 +190,7 @@ export class PlanForm extends React.Component<IProps, IState> {
                 </Button>
               </CardActions>
             </Card>
-          </Box>
-        </Paper>
       );
-    }
   }
 }
 

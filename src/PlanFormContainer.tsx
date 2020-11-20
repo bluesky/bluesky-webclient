@@ -2,6 +2,8 @@ import React from 'react';
 import { red } from '@material-ui/core/colors';
 import { IAllowedPlans, IParameter, ISumbitPlanObject } from './queueserver';
 import { PlanForm } from './PlanForm';
+import { Box, Card, CardContent, CardHeader, Paper, Typography } from '@material-ui/core';
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 type IProps = {
   name: string;
@@ -43,13 +45,40 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
                                                                             allowedPlans={this.props.allowedPlans}/>,
                                                         'default': <PlanForm submitPlan={this.props.submitPlan} 
                                                                             name={name} 
-                                                                            allowedPlans={this.props.allowedPlans}/>}
+                                                                            allowedPlans={this.props.allowedPlans}/>,
+                                                        '': <Card raised={true}>
+                                                              <CardHeader
+                                                                avatar={
+                                                                  <AccountCircleIcon fontSize='large' />
+                                                                }
+                                                                titleTypographyProps={{variant:'h6' }}
+                                                                title={"Select a plan."}
+                                                              />
+                                                              <CardContent>
+                                                                <Typography>
+                                                                    Select a plan from the available plans list.
+                                                                </Typography>
+                                                              </CardContent>
+                                                            </Card>}
 
     return planFormDict[name] ? planFormDict[name] : planFormDict['default']
   }
 
   render(){
-      return {this._get_planform(this.props.name)}
+    return (
+      <Paper style={{height: "83vh", overflow: 'auto', margin: "auto"}}>
+        <Box>
+          <Card style={{height: "6vh"}} raised={true}>
+            <CardContent>
+              <Typography align="center" variant="h5" component="h1" gutterBottom>
+                Plan Form
+              </Typography>
+            </CardContent>
+          </Card>
+        <Box height="2vh"></Box>
+          {this._get_planform(this.props.name)}
+        </Box>
+      </Paper>)
   }
 }
 
