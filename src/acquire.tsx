@@ -11,7 +11,8 @@ import { RouteComponentProps } from "react-router-dom";
 import { Grid } from '@material-ui/core';
 import { PlanList } from './PlanList';
 import { AvailablePlans } from './AvailablePlans';
-import { PlanForm } from './PlanForm';
+import { PlanForm } from './GenericPlanForm';
+import { PlanFormContainer } from './PlanFormContainer';
 
 type RouteParams = { id: string, uid: string };
 
@@ -67,7 +68,7 @@ class AcquirePage extends React.Component<IProps, IState> {
                   plans={this.props.allowedPlans}> </AvailablePlans>
                 </Grid>
                 <Grid item justify="center" spacing={10} xs={5}> 
-                  <PlanForm submitPlan={this.props.submitPlan} name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}> </PlanForm>   
+                  <PlanFormContainer submitPlan={this.props.submitPlan} name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}> </PlanFormContainer>   
                 </Grid>   
                 <Grid item justify="center" spacing={10} xs={3}>
                   <PlanList clearQueue={this.props.clearQueue} plans={this.props.plans}></PlanList> 

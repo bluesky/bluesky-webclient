@@ -1,7 +1,7 @@
 import React from 'react';
 import { red } from '@material-ui/core/colors';
 import { IAllowedPlans, IParameter, ISumbitPlanObject } from './queueserver';
-import { PlanForm } from './PlanForm';
+import { PlanForm } from './GenericPlanForm';
 import { Box, Card, CardContent, CardHeader, Paper, Typography } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
@@ -37,8 +37,10 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
       plan: {name: this.props.name,
              kwargs: {}}
     }
+    alert(this.props.name)
   }
 
+  
   _get_planform(name: string): JSX.Element {
     const planFormDict : Record<string, JSX.Element> = {'count': <PlanForm submitPlan={this.props.submitPlan} 
                                                                             name={name} 
@@ -64,6 +66,7 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
     return planFormDict[name] ? planFormDict[name] : planFormDict['default']
   }
 
+
   render(){
     return (
       <Paper style={{height: "83vh", overflow: 'auto', margin: "auto"}}>
@@ -76,9 +79,8 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
             </CardContent>
           </Card>
         <Box height="2vh"></Box>
-          {this._get_planform(this.props.name)}
+          {this._get_planform(this.props.name)} 
         </Box>
       </Paper>)
   }
 }
-
