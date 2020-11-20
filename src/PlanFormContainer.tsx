@@ -15,11 +15,10 @@ interface IState {
   root: any;
   media: any;
   avatar: any;
-  name: string;
-  form: JSX.Element;
 }
 
 export class PlanFormContainer extends React.Component<IProps, IState> {
+  
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -33,76 +32,30 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
       avatar: {
         backgroundColor: red[500],
       },
-      form: <Card raised={true}>
-              <CardHeader
-                avatar={
-                  <AccountCircleIcon fontSize='large' />
-                }
-                titleTypographyProps={{variant:'h6' }}
-                title={"Select a plan."}
-              />
-              <CardContent>
-                <Typography>
-                    Select a plan from the available plans list.
-                </Typography>
-              </CardContent>
-            </Card>,
-      name: ""
     }
   }
 
-/*
-  _get_planform(name: string): JSX.Element {
-    const planFormDict : Record<string, JSX.Element> = {
-                                                        'count': <GenericPlanForm submitPlan={this.props.submitPlan} 
-                                                                            name={name} 
-                                                                            allowedPlans={this.props.allowedPlans}/>,
-                                                        'default': <GenericPlanForm submitPlan={this.props.submitPlan} 
-                                                                            name={name} 
-                                                                            allowedPlans={this.props.allowedPlans}/>,
-                                                        '': <Card raised={true}>
-                                                              <CardHeader
-                                                                avatar={
-                                                                  <AccountCircleIcon fontSize='large' />
-                                                                }
-                                                                titleTypographyProps={{variant:'h6' }}
-                                                                title={"Select a plan."}
-                                                              />
-                                                              <CardContent>
-                                                                <Typography>
-                                                                    Select a plan from the available plans list.
-                                                                </Typography>
-                                                              </CardContent>
-                                                            </Card>}
-    return planFormDict[name] ? planFormDict[name] : planFormDict['']
-  }
-*/
-
-  static getDerivedStateFromProps(props : IProps, current_state: IState) {
-    if (current_state.name !== props.name) {
-      const planFormDict : Record<string, JSX.Element> = {'count': <GenericPlanForm submitPlan={props.submitPlan} 
-                                                                              name={props.name} 
-                                                                              allowedPlans={props.allowedPlans}/>,
-                                                          'default': <GenericPlanForm submitPlan={props.submitPlan} 
-                                                                              name={props.name} 
-                                                                              allowedPlans={props.allowedPlans}/>,
-                                                          '': <Card raised={true}>
-                                                                <CardHeader
-                                                                  avatar={
-                                                                    <AccountCircleIcon fontSize='large' />
-                                                                  }
-                                                                  titleTypographyProps={{variant:'h6' }}
-                                                                  title={"Select a plan."}
-                                                                />
-                                                                <CardContent>
-                                                                  <Typography>
-                                                                      Select a plan from the available plans list.
-                                                                  </Typography>
-                                                                </CardContent>
-                                                              </Card>}
-      return {form: planFormDict[props.name] ? planFormDict[props.name] : planFormDict['default']}
-    }
-  }
+  planFormDict : Record<string, JSX.Element> = {
+    'count': <GenericPlanForm submitPlan={this.props.submitPlan} 
+                        name={this.props.name} 
+                        allowedPlans={this.props.allowedPlans}/>,
+    'default': <GenericPlanForm submitPlan={this.props.submitPlan} 
+                        name={this.props.name} 
+                        allowedPlans={this.props.allowedPlans}/>,
+    '': <Card raised={true}>
+          <CardHeader
+            avatar={
+              <AccountCircleIcon fontSize='large' />
+            }
+            titleTypographyProps={{variant:'h6' }}
+            title={"Select a plan."}
+          />
+          <CardContent>
+            <Typography>
+                Select a plan from the available plans list.
+            </Typography>
+          </CardContent>
+        </Card>}
 
   render(){
     return (
@@ -116,7 +69,7 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
             </CardContent>
           </Card>
         <Box height="2vh"></Box>
-          {this.state.form} 
+          {this.planFormDict[this.props.name] ? this.planFormDict[this.props.name] : this.planFormDict['default']} 
         </Box>
       </Paper>)
   }
