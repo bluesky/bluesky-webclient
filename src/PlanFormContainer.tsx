@@ -17,19 +17,6 @@ interface IState {
 }
 
 export class PlanFormContainer extends React.Component<IProps, IState> {
-  
-  constructor(props: IProps) {
-    super(props);
-    this.state = {
-      media: {
-        height: 0,
-        paddingTop: '56.25%',
-      },
-      avatar: {
-        backgroundColor: red[500],
-      },
-    }
-  }
 
   private getPlanForm() {
    const planFormDict : Record<string, JSX.Element> = {
