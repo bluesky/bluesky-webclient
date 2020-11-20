@@ -3,11 +3,14 @@ import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
+import Radio from '@material-ui/core/Radio';
+import RadioGroup from '@material-ui/core/RadioGroup';
 import Box from '@material-ui/core/Box';
 import InputLabel from '@material-ui/core/InputLabel';
 import MenuItem from '@material-ui/core/MenuItem';
 import Tooltip from '@material-ui/core/Tooltip';
 import FormControl from '@material-ui/core/FormControl';
+import FormLabel from '@material-ui/core/FormLabel';
 import Select from '@material-ui/core/Select';
 import TextField from '@material-ui/core/TextField';
 import { IApplicationState } from './store';
@@ -16,7 +19,7 @@ import { clearQueue } from './planactions';
 import { IPlanObject, EnvOps, QueueOps, IAllowedPlans } from './queueserver';
 import { getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from "react-router-dom";
-import { Grid } from '@material-ui/core';
+import { FormControlLabel, Grid } from '@material-ui/core';
 import { PlanList } from './PlanList';
 import { CurrentPlan } from './CurrentPlan';
 import { AvailablePlans } from './AvailablePlans';
@@ -81,24 +84,27 @@ class BmmPlansPage extends React.Component<IProps, IState> {
                             <TextField required id="element" label="Element" defaultValue="Au" /> &nbsp;
                             <TextField required id="edge" label="Edge" defaultValue="K" />
                         </div>
-                        <div>
-                            <TextField required id="sample" label="Sample" /> &nbsp;
+                        <FormControl fullWidth>
+                            <TextField required id="sample" label="Sample" />
+                        </FormControl>
+                        <FormControl fullWidth>
                             <TextField id="prop" label="Preparation" />
-                        </div>
-                        <div>
-                            <TextField id="comment" label="Comment" />
-                        </div>
+                        </FormControl>
+                        <FormControl fullWidth>
+                            <TextField id="comment" label="Comment" multiline rows={4} />
+                        </FormControl>
                         <div>
                             <TextField required id="nscans" label="Number of scans" type="number" defaultValue="3" /> &nbsp;
                             <TextField required id="start" label="Start" type="number" defaultValue="1" />
                         </div>
-                        <div>
-                            <TextField select required id="mode" label="Mode" defaultValue="transmission">
-                                <MenuItem key="transmission" value="transmission">Transmission</MenuItem>
-                                <MenuItem key="fluorescence" value="fluorescence">Fluorescence</MenuItem>
-                                <MenuItem key="both" value="both">Both</MenuItem>
-                            </TextField>
-                        </div>
+                        <FormControl>
+                            <FormLabel component="legend">Mode</FormLabel>
+                            <RadioGroup row id="mode" aria-label="Mode" defaultValue="transmission">
+                                <FormControlLabel value="transmission" control={<Radio />} label="Transmission" />
+                                <FormControlLabel value="fluorescence" control={<Radio />} label="Fluorescence" />
+                                <FormControlLabel value="both" control={<Radio />} label="Both" />
+                            </RadioGroup>
+                        </FormControl>
                     </form>
                 </Grid>   
                 <Grid item justify="center" spacing={10} xs={3}>
