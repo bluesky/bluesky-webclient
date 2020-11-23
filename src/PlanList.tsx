@@ -10,18 +10,34 @@ import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
 import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
+import Tooltip from '@material-ui/core/Tooltip';
+import LoopIcon from '@material-ui/icons/Loop';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { IPlanObject, modifyQueue, QueueOps } from './queueserver';
+import { IPlanObject, QueueOps, EnvOps } from './queueserver';
 import { Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
-import { clearQueue } from './planactions';
+import { clearQueue, modifyQueue, modifyEnvironment } from './planactions';
 
 type Plans = {
   plans: IPlanObject[];
   clearQueue: typeof clearQueue;
+  modifyEnvironment: typeof modifyEnvironment;
+  modifyQueue: typeof modifyQueue;
 }
 
+interface IState {
+  env: string;
+  onEnvChange: (env: string) => void;
+}
 
-export class PlanList extends React.Component<Plans>{
+export class PlanList extends React.Component<Plans, IState>{
+  public constructor(props: Plans) {
+    super(props);
+    this.state = {
+      env: "Open",
+      onEnvChange: this.handleEnvChange,
+    };
+  }
+
   handleMoveForward(uid: string) {
     alert(uid);
   }
@@ -30,12 +46,27 @@ export class PlanList extends React.Component<Plans>{
     alert(uid);
   }
 
+  private handleEnvChange = (env: string) => {
+    this.setState({ env });
+  };
+
+  private handleEnvClick = () => {
+    if (this.state.env === "Open") {
+        this.props.modifyEnvironment(EnvOps.open);
+        this.state.onEnvChange("Close");
+    }
+    else {
+        this.props.modifyEnvironment(EnvOps.close);
+        this.state.onEnvChange("Open");
+    }
+  }
+
   handlePlay() {
-    modifyQueue(QueueOps.start);
+    this.props.modifyQueue(QueueOps.start);
   }
 
   handlePause() {
-    modifyQueue(QueueOps.stop);
+    this.props.modifyQueue(QueueOps.stop);
   }
 
   handleDelete(uid: string){
@@ -49,6 +80,11 @@ export class PlanList extends React.Component<Plans>{
               <CardContent>
                 <Typography align="center" variant="h5" component="h1" gutterBottom>
                   Queue
+                  <Tooltip title={`${this.state.env} RE environment`}>
+                    <IconButton onClick={() => this.handleEnvClick()} edge="end" aria-label="comments">
+                      <LoopIcon />
+                    </IconButton>
+                  </Tooltip>
                   <IconButton onClick={() => this.handlePlay()} edge="end" aria-label="comments">
                     <PlayCircleOutlineIcon />
                   </IconButton>
