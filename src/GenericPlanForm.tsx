@@ -75,7 +75,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
 
   _get_widget_list(parameterObject: IParameter): JSX.Element[]|JSX.Element {
       if (this.state.plan.kwargs[parameterObject.name] === undefined){
-        return <Card/>
+        return <Card />
       } else {
         return this.state.plan.kwargs[parameterObject.name].map((value: string|number) =>
         (<ListItem dense={true}>
@@ -195,4 +195,3 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
       );
   }
 }
-
