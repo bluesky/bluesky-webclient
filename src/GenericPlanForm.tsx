@@ -27,7 +27,7 @@ interface IState {
   plan: ISumbitPlanObject;
 }
 
-export class PlanForm extends React.Component<IProps, IState> {
+export class GenericPlanForm extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -51,7 +51,6 @@ export class PlanForm extends React.Component<IProps, IState> {
     const { name, id, value } = e.target;
     const new_plan = this.state.plan;
     new_plan.kwargs[name][Number(id)] = value;
-    //alert(JSON.stringify(this.state.plan))
     this.setState({
         plan: new_plan
     });
@@ -60,7 +59,6 @@ export class PlanForm extends React.Component<IProps, IState> {
   _addParameter(name: string){
     const new_plan = this.state.plan;
     new_plan.kwargs[name].push("");
-    //alert(JSON.stringify(this.state.plan))
     this.setState({
         plan: new_plan
     });
@@ -76,10 +74,14 @@ export class PlanForm extends React.Component<IProps, IState> {
   }
 
   _get_widget_list(parameterObject: IParameter): JSX.Element[]|JSX.Element {
-      return this.state.plan.kwargs[parameterObject.name].map((value: string|number) =>
-                                                              (<ListItem dense={true}>
-                                                                {this._get_widget(parameterObject)}
-                                                              </ListItem>))
+      if (this.state.plan.kwargs[parameterObject.name] === undefined){
+        return <Card />
+      } else {
+        return this.state.plan.kwargs[parameterObject.name].map((value: string|number) =>
+        (<ListItem dense={true}>
+          {this._get_widget(parameterObject)}
+        </ListItem>))
+      }                                            
   }
 
   _get_widget(parameterObject: IParameter): JSX.Element {
@@ -131,47 +133,7 @@ export class PlanForm extends React.Component<IProps, IState> {
   }
 
   render(){
-    if (this.props.name === ""){
       return (
-        <Paper style={{height: "83vh", overflow: 'auto', margin: "auto"}}>
-          <Box>
-            <Card style={{height: "6vh"}} raised={true}>
-              <CardContent>
-                <Typography align="center" variant="h5" component="h1" gutterBottom>
-                  Plan Form
-                </Typography>
-              </CardContent>
-            </Card>
-          <Box height="2vh"></Box>
-            <Card raised={true}>
-              <CardHeader
-                avatar={
-                  <AccountCircleIcon fontSize='large' />
-                }
-                titleTypographyProps={{variant:'h6' }}
-                title={"Select a plan."}
-              />
-              <CardContent>
-                <Typography>
-                    Select a plan from the available plans list.
-                </Typography>
-              </CardContent>
-            </Card>
-          </Box>
-        </Paper>
-      );
-    } else {
-      return (
-        <Paper style={{height: "83vh", overflow: 'auto', margin: "auto"}}>
-          <Box>
-            <Card style={{height: "6vh"}} raised={true}>
-              <CardContent>
-                <Typography align="center" variant="h5" component="h1" gutterBottom>
-                  Plan Form
-                </Typography>
-              </CardContent>
-            </Card>
-          <Box height="2vh"></Box>
             <Card raised={true}>
               <CardHeader
                 avatar={
@@ -230,10 +192,6 @@ export class PlanForm extends React.Component<IProps, IState> {
                 </Button>
               </CardActions>
             </Card>
-          </Box>
-        </Paper>
       );
-    }
   }
 }
-
