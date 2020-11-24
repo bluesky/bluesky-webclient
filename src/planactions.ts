@@ -48,6 +48,16 @@ export const getAllowedPlans: ActionCreator<ThunkAction<Promise<AnyAction>, IAll
     };
 };
 /*******************************************/
+export const getHistoricalPlans: ActionCreator<ThunkAction<Promise<AnyAction>, IAllowedPlansState, null, IAllowedPlansGetAction>> = () => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const allowedPlans = await getHistoricalPlansAPI();
+        return dispatch({
+          allowedPlans,
+          type: AllowedPlansActionTypes.GET
+        });
+    };
+};
 
 export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (submitPlan: ISumbitPlanObject) => {
     return async (dispatch: Dispatch) => {
