@@ -150,6 +150,42 @@ export const getAllowedPlans = async(): Promise<IAllowedPlans> => {
     return res.data;
 }
 
+/*
+{"name":"count",
+"args":[["det1","det2"]],
+"kwargs":{"num":10,"delay":1},
+"plan_uid":"6f52eb6d-b62c-4bac-9935-03ec4c59af8e",
+"user":"John Doe",
+"user_group":"admin",
+"exit_status":"completed"}
+*/
+
+export interface IHistoricalPlan {
+    name: string;
+    args: string | number | boolean | (string|number|boolean)[]; 
+    kwargs: { [name: string]: string | number | boolean | (string|number|boolean)[]; }
+    plan_uid: string;
+    user: string;
+    user_group: string;
+    exit_status: string;
+}
+
+export interface IHistoricalPlans {
+    history: IHistoricalPlan[]; 
+}
+
+export interface IHistoricalPlansState {
+    readonly allowedPlans: IAllowedPlans;
+    readonly plansLoading: boolean;
+}
+
+export const getHistoricalPlans = async(): Promise<IAllowedPlans> => {
+    const res = await axiosInstance.get('/history/get',
+        {});
+    console.log(res);
+    return res.data;
+}
+
 /*******************************************/
 
 export enum PlanActionTypes {
