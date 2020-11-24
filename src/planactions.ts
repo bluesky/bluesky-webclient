@@ -7,7 +7,7 @@ import { getOverview as getOverviewAPI,
     submitPlan as submitPlanAPI,
     clearQueue as clearQueueAPI,
     modifyEnvironment as modifyEnvironmentAPI, EnvOps,
-    modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, AllowedPlansActionTypes, ISumbitPlanObject} from "./queueserver"
+    modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, AllowedPlansActionTypes, HistoricalPlansActionTypes, ISumbitPlanObject} from "./queueserver"
 import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, IPlanSubmitAction,
     IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes } from "./queueserver"
 
@@ -56,7 +56,7 @@ export const getHistoricalPlans: ActionCreator<ThunkAction<Promise<AnyAction>, I
         const historicalPlans = await getHistoricalPlansAPI();
         return dispatch({
           historicalPlans,
-          type: AllowedPlansActionTypes.GET
+          type: HistoricalPlansActionTypes.GET
         });
     };
 };

@@ -6,15 +6,15 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { IPlanObject } from './queueserver';
+import { IHistoricalPlan } from './queueserver';
 import { Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-type Plans = {
-  plans: IPlanObject[];
+type HistoricalPlans = {
+  plans: IHistoricalPlan[];
 }
 
-export class HistoricalPlanList extends React.Component<Plans>{
+export class HistoricalPlanList extends React.Component<HistoricalPlans>{
 
   handleExpand(uid: string) {
     alert(uid);
@@ -33,7 +33,7 @@ export class HistoricalPlanList extends React.Component<Plans>{
             <Box height="2vh"></Box>
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
               <List>
-                {this.props.plans.map((planObject: IPlanObject) => (
+                {this.props.plans.map((planObject: IHistoricalPlan) => (
                     <ListItem divider={true} button={true} key={planObject.plan_uid}>
                         <ListItemIcon>
                           <AccountCircleIcon fontSize='large' />

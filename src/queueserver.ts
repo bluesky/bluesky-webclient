@@ -174,7 +174,7 @@ export interface IHistoricalPlansLoadingAction {
 
 export interface IHistoricalPlansGetAction {
     type: HistoricalPlansActionTypes.GET,
-    allowedPlans: IHistoricalPlans
+    historicalPlans: IHistoricalPlans
 }
 
 export interface IHistoricalPlan {
