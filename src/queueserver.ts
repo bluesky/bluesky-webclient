@@ -175,11 +175,11 @@ export interface IHistoricalPlans {
 }
 
 export interface IHistoricalPlansState {
-    readonly allowedPlans: IAllowedPlans;
+    readonly historicalPlans: IHistoricalPlans;
     readonly plansLoading: boolean;
 }
 
-export const getHistoricalPlans = async(): Promise<IAllowedPlans> => {
+export const getHistoricalPlans = async(): Promise<IHistoricalPlans> => {
     const res = await axiosInstance.get('/history/get',
         {});
     console.log(res);
@@ -192,6 +192,7 @@ export enum PlanActionTypes {
     GETOVERVIEW = "PLANS/GETOVERVIEWS",
     LOADING = "PLANS/LOADING",
     GETPLANLIST = "PLANS/GETPLANLIST",
+    GETHISTORICAL = "PLANS/GETHISORICAL",
     SUBMITPLAN = "PLANS/SUBMITPLAN",
     CLEARQUEUE = "PLANS/CLEARQUEUE",
     MODIFYENVIRONMENT = "PLANS/MODIFYENVIRONMENT",

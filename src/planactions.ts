@@ -3,11 +3,11 @@ import { ThunkAction } from "redux-thunk"
 import { getOverview as getOverviewAPI,
     getQueuedPlans as getQueuedPlansAPI,
     getAllowedPlans as getAllowedPlansAPI,
-    getHistoricalPlans as getAllowedPlansAPI,
+    getHistoricalPlans as getHistoricalPlansAPI,
     submitPlan as submitPlanAPI,
     clearQueue as clearQueueAPI,
     modifyEnvironment as modifyEnvironmentAPI, EnvOps,
-    modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansState, AllowedPlansActionTypes, ISumbitPlanObject} from "./queueserver"
+    modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlan AllowedPlansActionTypes, ISumbitPlanObject} from "./queueserver"
 import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, IPlanSubmitAction,
     IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes } from "./queueserver"
 

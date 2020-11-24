@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import { IApplicationState } from './store';
-import { getOverview, getQueuedPlans } from './planactions';
+import { getOverview, getQueuedPlans, getHistoricalPlans } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
 import { IPlan, IPlanObject } from './queueserver';
 import { PlanList } from './PlanList';
@@ -31,6 +31,7 @@ function Copyright() {
 interface IProps extends RouteComponentProps {
   getOverview: typeof getOverview;
   getQueuedPlans: typeof getQueuedPlans;
+  getHistoricalPlans: typeof getHistoricalPlans;
   clearQueue: typeof clearQueue;
   modifyEnvironment: typeof modifyEnvironment;
   modifyQueue: typeof modifyQueue;
@@ -61,19 +62,12 @@ class App extends React.Component<IProps> {
         </Container>
       )
   }
-/*
-<Card>
-  <CardContent>
-    <Typography align="center" variant="h5" component="h1" gutterBottom>
-      This is the future of all your Bluesky acquisition dreams on the web!
-    </Typography>
-  </CardContent>
-</Card>
-*/
+
   
   componentDidMount() {
       this.props.getOverview();
       setInterval(this.props.getQueuedPlans, 1000);
+      setInterval(this.props.getHistoricalPlans, 1000);
   }
 
 }
@@ -83,7 +77,8 @@ const mapStateToProps = (store: IApplicationState) => {
     loadingPlan: store.plan.planLoading,
     plan: store.plan.plan,
     loadingPlans: store.plans.plansLoading,
-    plans: store.plans.plans
+    plans: store.plans.plans,
+    historicalPlans: store.plans.historical
   };
 };
 
@@ -91,7 +86,8 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     getOverview: () => dispatch(getOverview()),
     clearQueue: () => dispatch(clearQueue()),
-    getQueuedPlans: () => dispatch(getQueuedPlans())
+    getQueuedPlans: () => dispatch(getQueuedPlans()),
+    getHistoricalPlans: () => dispatch(getHistoricalPlans())
   };
 };
 
