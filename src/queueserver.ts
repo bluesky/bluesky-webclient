@@ -174,7 +174,7 @@ export interface IHistoricalPlansLoadingAction {
 
 export interface IHistoricalPlansGetAction {
     type: HistoricalPlansActionTypes.GET,
-    historicalPlans: IHistoricalPlans
+    historicalPlans: IHistoricalPlan[]
 }
 
 export interface IHistoricalPlan {
@@ -192,11 +192,11 @@ export interface IHistoricalPlans {
 }
 
 export interface IHistoricalPlansState {
-    readonly historicalPlans: IHistoricalPlans;
+    readonly historicalPlans: IHistoricalPlan[];
     readonly plansLoading: boolean;
 }
 
-export const getHistoricalPlans = async(): Promise<IHistoricalPlans> => {
+export const getHistoricalPlans = async(): Promise<IHistoricalPlan[]> => {
     const res = await axiosInstance.get('/history/get',
         {});
     console.log(res);

@@ -114,7 +114,7 @@ export const allowedPlansReducer: Reducer<IAllowedPlansState, AllowedPlansAction
 declare const historical: IHistoricalPlans;
 
 const initialHistoricalPlansState: IHistoricalPlansState = {
-    historicalPlans: {history: []},
+    historicalPlans: [],
     plansLoading: false
 };
 

@@ -14,7 +14,6 @@ import { CurrentPlan } from './CurrentPlan';
 import { clearQueue, modifyEnvironment, modifyQueue } from './planactions';
 import { Grid } from '@material-ui/core';
 
-
 function Copyright() {
   return (
     <Typography variant="body2" color="textSecondary" align="center">
@@ -39,6 +38,7 @@ interface IProps extends RouteComponentProps {
   plan: IPlan;
   loadingPlans: boolean;
   plans: IPlanObject[];
+  loadingHistoricalPlans: boolean;
   historicalPlans: IHistoricalPlan[];
 }
 
@@ -64,7 +64,6 @@ class App extends React.Component<IProps> {
       )
   }
 
-  
   componentDidMount() {
       this.props.getOverview();
       setInterval(this.props.getQueuedPlans, 1000);
@@ -79,7 +78,8 @@ const mapStateToProps = (store: IApplicationState) => {
     plan: store.plan.plan,
     loadingPlans: store.plans.plansLoading,
     plans: store.plans.plans,
-    historicalPlans: store.historicalPlans
+    loadingHistoricalPlans: store.historicalPlans.plansLoading,
+    historicalPlans: store.historicalPlans.historicalPlans
   };
 };
 

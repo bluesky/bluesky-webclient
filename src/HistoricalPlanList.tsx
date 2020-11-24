@@ -6,7 +6,7 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { IHistoricalPlan } from './queueserver';
+import { IHistoricalPlan} from './queueserver';
 import { Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -53,3 +53,13 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans>{
           </Box>
          );}
 }
+
+/*
+    name: string;
+    args: string | number | boolean | (string|number|boolean)[]; 
+    kwargs: { [name: string]: string | number | boolean | (string|number|boolean)[]; }
+    plan_uid: string;
+    user: string;
+    user_group: string;
+    exit_status: string;
+  */
