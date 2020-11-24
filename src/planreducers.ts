@@ -114,29 +114,25 @@ export const allowedPlansReducer: Reducer<IAllowedPlansState, AllowedPlansAction
 declare const historical: IHistoricalPlans;
 
 const initialHistoricalPlansState: IHistoricalPlansState = {
-    allowedPlans: {
-        success: false,
-        msg: "",
-        plans_allowed: {}
-    },
+    historicalPlans: {history: []},
     plansLoading: false
 };
 
-export const historicalPlansReducer: Reducer<IAllowedPlansState, AllowedPlansActions> = (
+export const historicalPlansReducer: Reducer<IHistoricalPlansState, HistoricalPlansActions> = (
     state = initialHistoricalPlansState,
     action
 ) => {
     switch (action.type) {
-        case historicalPlansActionTypes.LOADING: {
+        case HistoricalPlansActionTypes.LOADING: {
             return {
                 ...state,
                 plansLoading: true
             };
         }
-        case historicalPlansActionTypes.GET: {
+        case HistoricalPlansActionTypes.GET: {
             return {
                 ...state,
-                allowedPlans: action.historicalPlans,
+                historicalPlans: action.historicalPlans,
                 plansLoading: false
             };
         }
@@ -146,6 +142,7 @@ export const historicalPlansReducer: Reducer<IAllowedPlansState, AllowedPlansAct
     }
 };
 
+/************************************************/
 
 const initialPlanSubmitState: IPlanSubmitState = {
     plan: {
@@ -155,6 +152,7 @@ const initialPlanSubmitState: IPlanSubmitState = {
     },
     planLoading: false
 };
+
 
 export const planSubmitReducer: Reducer<IPlanSubmitState, PlanActions> = (
     state = initialPlanSubmitState,

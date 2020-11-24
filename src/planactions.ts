@@ -7,7 +7,7 @@ import { getOverview as getOverviewAPI,
     submitPlan as submitPlanAPI,
     clearQueue as clearQueueAPI,
     modifyEnvironment as modifyEnvironmentAPI, EnvOps,
-    modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlan AllowedPlansActionTypes, ISumbitPlanObject} from "./queueserver"
+    modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, AllowedPlansActionTypes, ISumbitPlanObject} from "./queueserver"
 import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, IPlanSubmitAction,
     IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes } from "./queueserver"
 
@@ -48,18 +48,20 @@ export const getAllowedPlans: ActionCreator<ThunkAction<Promise<AnyAction>, IAll
         });
     };
 };
+
 /*******************************************/
 export const getHistoricalPlans: ActionCreator<ThunkAction<Promise<AnyAction>, IHistoricalPlansState, null, IHistoricalPlansGetAction>> = () => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
-        const allowedPlans = await getHistoricalPlansAPI();
+        const historicalPlans = await getHistoricalPlansAPI();
         return dispatch({
-          allowedPlans,
+          historicalPlans,
           type: AllowedPlansActionTypes.GET
         });
     };
 };
 
+/*******************************************/
 export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (submitPlan: ISumbitPlanObject) => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());

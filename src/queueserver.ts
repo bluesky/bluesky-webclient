@@ -159,6 +159,23 @@ export const getAllowedPlans = async(): Promise<IAllowedPlans> => {
 "user_group":"admin",
 "exit_status":"completed"}
 */
+export enum HistoricalPlansActionTypes {
+    LOADING = "HISTORICALPLANS/LOADING",
+    GET = "HISTORICALPLANS/GET"
+}
+
+export type HistoricalPlansActions =
+  | IHistoricalPlansLoadingAction
+  | IHistoricalPlansGetAction
+
+export interface IHistoricalPlansLoadingAction {
+    type: HistoricalPlansActionTypes.LOADING
+}
+
+export interface IHistoricalPlansGetAction {
+    type: HistoricalPlansActionTypes.GET,
+    allowedPlans: IHistoricalPlans
+}
 
 export interface IHistoricalPlan {
     name: string;

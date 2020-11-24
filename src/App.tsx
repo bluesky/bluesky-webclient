@@ -7,7 +7,7 @@ import Link from '@material-ui/core/Link';
 import { IApplicationState } from './store';
 import { getOverview, getQueuedPlans, getHistoricalPlans } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
-import { IPlan, IPlanObject } from './queueserver';
+import { IPlan, IPlanObject, IHistoricalPlan } from './queueserver';
 import { PlanList } from './PlanList';
 import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
@@ -39,6 +39,7 @@ interface IProps extends RouteComponentProps {
   plan: IPlan;
   loadingPlans: boolean;
   plans: IPlanObject[];
+  historicalPlans: IHistoricalPlan[];
 }
 
 class App extends React.Component<IProps> {
@@ -55,7 +56,7 @@ class App extends React.Component<IProps> {
               <CurrentPlan plans={this.props.plans}></CurrentPlan> 
             </Grid>
             <Grid item justify="center" spacing={10} xs={3}>    
-              <HistoricalPlanList plans={this.props.plans.slice(1, this.props.plans.length)}> </HistoricalPlanList>
+              <HistoricalPlanList plans={this.props.historicalPlans}> </HistoricalPlanList>
             </Grid>   
           </Grid>
           <Copyright/>
@@ -78,7 +79,7 @@ const mapStateToProps = (store: IApplicationState) => {
     plan: store.plan.plan,
     loadingPlans: store.plans.plansLoading,
     plans: store.plans.plans,
-    historicalPlans: store.plans.historical
+    historicalPlans: store.historicalPlans
   };
 };
 
