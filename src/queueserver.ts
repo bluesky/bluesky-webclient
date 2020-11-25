@@ -208,6 +208,7 @@ export enum PlanActionTypes {
     GETHISTORICAL = "PLANS/GETHISORICAL",
     SUBMITPLAN = "PLANS/SUBMITPLAN",
     CLEARQUEUE = "PLANS/CLEARQUEUE",
+    DELETEPLAN = "PLAN/DELETEPLAN",
     MODIFYENVIRONMENT = "PLANS/MODIFYENVIRONMENT",
     MODIFYQUEUE = "PLANS/MODIFYQUEUE",
 }
@@ -404,6 +405,16 @@ export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObj
 export const clearQueue = async(): Promise<IPlan> => {
     const res = await axiosInstance.post('/queue/clear',
         {});
+    console.log(res);
+    return res.data;
+}
+
+// http POST http://localhost:60610/queue/plan/remove uid:='<uid>'
+export const deletePlan = async(plan_uid: string): Promise<IPlan> => {
+    const res = await axiosInstance.post('/queue/plan/remove',
+        {
+            uid: plan_uid
+        });
     console.log(res);
     return res.data;
 }

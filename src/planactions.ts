@@ -6,6 +6,7 @@ import { getOverview as getOverviewAPI,
     getHistoricalPlans as getHistoricalPlansAPI,
     submitPlan as submitPlanAPI,
     clearQueue as clearQueueAPI,
+    deletePlan as deletePlanAPI,
     modifyEnvironment as modifyEnvironmentAPI, EnvOps,
     modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, AllowedPlansActionTypes, HistoricalPlansActionTypes, ISumbitPlanObject} from "./queueserver"
 import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, IPlanSubmitAction,
@@ -102,6 +103,17 @@ export const clearQueue: ActionCreator<ThunkAction<Promise<AnyAction>, null, nul
         return dispatch({
             queueState,
             type: PlanActionTypes.CLEARQUEUE
+        });
+    };
+};
+
+export const deletePlan: ActionCreator<ThunkAction<Promise<AnyAction>, null, null, any>> = (plan_uid: string) => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const queueState = await deletePlanAPI(plan_uid);
+        return dispatch({
+            queueState,
+            type: PlanActionTypes.DELETEPLAN
         });
     };
 };

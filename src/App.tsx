@@ -11,7 +11,7 @@ import { IPlan, IPlanObject, IHistoricalPlan } from './queueserver';
 import { PlanList } from './PlanList';
 import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
-import { clearQueue, modifyEnvironment, modifyQueue } from './planactions';
+import { clearQueue, deletePlan, modifyEnvironment, modifyQueue } from './planactions';
 import { Grid } from '@material-ui/core';
 
 function Copyright() {
@@ -32,6 +32,7 @@ interface IProps extends RouteComponentProps {
   getQueuedPlans: typeof getQueuedPlans;
   getHistoricalPlans: typeof getHistoricalPlans;
   clearQueue: typeof clearQueue;
+  deletePlan: typeof deletePlan;
   modifyEnvironment: typeof modifyEnvironment;
   modifyQueue: typeof modifyQueue;
   loadingPlan: boolean;
@@ -49,7 +50,7 @@ class App extends React.Component<IProps> {
           <Box width="80vw" height="2vh"></Box>
           <Grid container spacing={5} direction="row" justify="center">
             <Grid item justify="center" spacing={10} xs={3}>    
-              <PlanList clearQueue={this.props.clearQueue} plans={this.props.plans}
+              <PlanList deletePlan={this.props.deletePlan} clearQueue={this.props.clearQueue} plans={this.props.plans}
               modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}> </PlanList>
             </Grid>
             <Grid item justify="center" spacing={10} xs={5}>
@@ -87,6 +88,7 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     getOverview: () => dispatch(getOverview()),
     clearQueue: () => dispatch(clearQueue()),
+    deletePlan: () => dispatch(deletePlan()),
     modifyEnvironment: () => dispatch(modifyEnvironment()),
     modifyQueue: () => dispatch(modifyQueue()),
     getQueuedPlans: () => dispatch(getQueuedPlans()),

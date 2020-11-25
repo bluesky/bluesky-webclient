@@ -4,7 +4,7 @@ import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import { IApplicationState } from './store';
 import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans } from './planactions';
-import { clearQueue } from './planactions';
+import { clearQueue, deletePlan } from './planactions';
 import { IPlanObject, EnvOps, QueueOps, IAllowedPlans } from './queueserver';
 import { getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from "react-router-dom";
@@ -22,6 +22,7 @@ interface IProps extends RouteComponentProps {
     modifyEnvironment: typeof modifyEnvironment;
     modifyQueue: typeof modifyQueue;
     clearQueue: typeof clearQueue;
+    deletePlan: typeof deletePlan;
     getOverview: typeof getOverview;
     getQueuedPlans: typeof getQueuedPlans;
     getAllowedPlans: typeof getAllowedPlans;
@@ -70,7 +71,7 @@ class AcquirePage extends React.Component<IProps, IState> {
                   <PlanFormContainer submitPlan={this.props.submitPlan} name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}> </PlanFormContainer>   
                 </Grid>   
                 <Grid item justify="center" spacing={10} xs={3}>
-                  <PlanList clearQueue={this.props.clearQueue} plans={this.props.plans}
+                  <PlanList deletePlan={this.props.deletePlan} clearQueue={this.props.clearQueue} plans={this.props.plans}
                   modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}></PlanList>
                 </Grid>
             </Grid>
@@ -123,10 +124,6 @@ class AcquirePage extends React.Component<IProps, IState> {
             this.state.onQueueChange("Start");
         }
     }
-
-    private handleClearQueue = () => {
-        this.props.clearQueue();
-    }
     
     componentDidMount() {
         this.props.getOverview();
@@ -152,6 +149,7 @@ const mapDispatchToProps = (dispatch: any) => {
       modifyQueue: (opId: number) => dispatch(modifyQueue(opId)),
       submitPlan: (planId: number, param: number) => dispatch(submitPlan(planId, param)),
       clearQueue: () => dispatch(clearQueue()),
+      deletePlan: () => dispatch(deletePlan()),
       getOverview: () => dispatch(getOverview()),
       getQueuedPlans: () => dispatch(getQueuedPlans()),
       getAllowedPlans: () => dispatch(getAllowedPlans()),
