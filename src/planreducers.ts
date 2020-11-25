@@ -5,7 +5,7 @@ import { IPlanState, IPlanObjectsState,
          IAllowedPlansState, AllowedPlansActions, 
          AllowedPlansActionTypes, IAllowedPlans,
          IHistoricalPlansState, HistoricalPlansActions, 
-         HistoricalPlansActionTypes, IHistoricalPlans } from "./queueserver";
+         HistoricalPlansActionTypes, IHistoricalPlan } from "./queueserver";
 
 const initialPlanState: IPlanState = {
     plan: {
@@ -111,8 +111,6 @@ export const allowedPlansReducer: Reducer<IAllowedPlansState, AllowedPlansAction
     }
 };
 /************************************************/
-declare const historical: IHistoricalPlans;
-
 const initialHistoricalPlansState: IHistoricalPlansState = {
     historicalPlans: [],
     plansLoading: false

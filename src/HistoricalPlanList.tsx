@@ -6,12 +6,12 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { IHistoricalPlan} from './queueserver';
+import { IHistoricalPlan } from './queueserver';
 import { Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 type HistoricalPlans = {
-  plans: IHistoricalPlan[];
+  history: IHistoricalPlan[];
 }
 
 export class HistoricalPlanList extends React.Component<HistoricalPlans>{
@@ -33,7 +33,8 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans>{
             <Box height="2vh"></Box>
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
               <List>
-                {this.props.plans.map((planObject: IHistoricalPlan) => (
+                {this.props.history.map(
+                  (planObject: IHistoricalPlan) => (
                     <ListItem divider={true} button={true} key={planObject.plan_uid}>
                         <ListItemIcon>
                           <AccountCircleIcon fontSize='large' />

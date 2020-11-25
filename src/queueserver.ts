@@ -150,7 +150,7 @@ export const getAllowedPlans = async(): Promise<IAllowedPlans> => {
     return res.data;
 }
 
-/*
+/* Historical Plan
 {"name":"count",
 "args":[["det1","det2"]],
 "kwargs":{"num":10,"delay":1},
@@ -187,10 +187,6 @@ export interface IHistoricalPlan {
     exit_status: string;
 }
 
-export interface IHistoricalPlans {
-    history: IHistoricalPlan[]; 
-}
-
 export interface IHistoricalPlansState {
     readonly historicalPlans: IHistoricalPlan[];
     readonly plansLoading: boolean;
@@ -200,7 +196,7 @@ export const getHistoricalPlans = async(): Promise<IHistoricalPlan[]> => {
     const res = await axiosInstance.get('/history/get',
         {});
     console.log(res);
-    return res.data;
+    return res.data.history;
 }
 
 /*******************************************/
