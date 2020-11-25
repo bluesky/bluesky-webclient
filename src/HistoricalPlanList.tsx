@@ -43,7 +43,10 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                 {this.props.history.map(
                     (planObject: IHistoricalPlan) => (
                     <Accordion>
-                      <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+                      <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreIcon />}>
+                        <ListItemIcon>
+                          <AccountCircleIcon fontSize='large' />
+                        </ListItemIcon>
                         <ListItemText
                             primary={planObject.name}
                             secondary={planObject.plan_uid.substr(0,8)}/>
