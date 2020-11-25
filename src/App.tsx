@@ -87,6 +87,8 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     getOverview: () => dispatch(getOverview()),
     clearQueue: () => dispatch(clearQueue()),
+    modifyEnvironment: () => dispatch(modifyEnvironment()),
+    modifyQueue: () => dispatch(modifyQueue()),
     getQueuedPlans: () => dispatch(getQueuedPlans()),
     getHistoricalPlans: () => dispatch(getHistoricalPlans())
   };

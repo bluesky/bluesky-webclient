@@ -7,17 +7,31 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IHistoricalPlan } from './queueserver';
-import { Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 type HistoricalPlans = {
   history: IHistoricalPlan[];
 }
 
-export class HistoricalPlanList extends React.Component<HistoricalPlans>{
+type HistoricalPlansState = {
+  expanded: string;
+}
 
-  handleExpand(uid: string) {
-    alert(uid);
+export class HistoricalPlanList extends React.Component<HistoricalPlans, HistoricalPlansState>{
+  public constructor(props: HistoricalPlans) {
+    super(props);
+    this.state = {
+      expanded: "",
+    };
+  }
+
+  private handleChange(e: React.ChangeEvent<{}>, expanded: boolean) {
+    alert(JSON.stringify(e.target))
+    //const { id } = e.target;
+    //this.setState({
+    //    expanded: id
+    //});
   }
 
   render() {
@@ -35,25 +49,38 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans>{
               <List>
                 {this.props.history.map(
                   (planObject: IHistoricalPlan) => (
-                    <ListItem divider={true} button={true} key={planObject.plan_uid}>
-                        <ListItemIcon>
-                          <AccountCircleIcon fontSize='large' />
-                        </ListItemIcon>
-                        <ListItemText
-                          primary={planObject.name}
-                          secondary={planObject.plan_uid.substr(0,8)}/>
-                        <ListItemSecondaryAction>
-                          <IconButton onClick={() => this.handleExpand(planObject.plan_uid)} edge="end" aria-label="comments">
-                            <ExpandMoreIcon />
-                          </IconButton>
-                        </ListItemSecondaryAction>
-                    </ListItem>
+                    <Accordion square id={planObject.plan_uid} expanded={this.state.expanded === planObject.plan_uid} onChange={this.handleChange.bind(this)}>
+                    <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+                      <Typography>{planObject.name}</Typography>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                      <Typography>
+                        uid: {planObject.plan_uid}
+                      </Typography>
+                      <Typography>
+                        args: {planObject.args}
+                      </Typography>
+                      <Typography>
+                        kwargs: {planObject.kwargs}
+                      </Typography>
+                      <Typography>
+                        user: {planObject.user}
+                      </Typography>
+                      <Typography>
+                        user_group: {planObject.user_group}
+                      </Typography>
+                      <Typography>
+                        exit_status: {planObject.exit_status}
+                      </Typography>
+                    </AccordionDetails>
+                  </Accordion>
                 ))}
             </List>
             </Paper>
           </Box>
          );}
 }
+
 
 /*
     name: string;
