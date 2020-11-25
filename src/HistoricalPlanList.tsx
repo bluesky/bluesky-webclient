@@ -7,7 +7,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IHistoricalPlan } from './queueserver';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardContent, makeStyles, Paper, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 type HistoricalPlans = {
@@ -19,19 +19,12 @@ type HistoricalPlansState = {
 }
 
 export class HistoricalPlanList extends React.Component<HistoricalPlans, HistoricalPlansState>{
+
   public constructor(props: HistoricalPlans) {
     super(props);
     this.state = {
       expanded: "",
     };
-  }
-
-  private handleChange(e: React.ChangeEvent<{}>, expanded: boolean) {
-    alert(JSON.stringify(e.target))
-    //const { id } = e.target;
-    //this.setState({
-    //    expanded: id
-    //});
   }
 
   render() {
@@ -46,36 +39,27 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
             </Card>
             <Box height="2vh"></Box>
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
-              <List>
+            <div>
                 {this.props.history.map(
-                  (planObject: IHistoricalPlan) => (
-                    <Accordion square id={planObject.plan_uid} expanded={this.state.expanded === planObject.plan_uid} onChange={this.handleChange.bind(this)}>
-                    <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                      <Typography>{planObject.name}</Typography>
-                    </AccordionSummary>
-                    <AccordionDetails>
-                      <Typography>
-                        uid: {planObject.plan_uid}
-                      </Typography>
-                      <Typography>
-                        args: {planObject.args}
-                      </Typography>
-                      <Typography>
-                        kwargs: {planObject.kwargs}
-                      </Typography>
-                      <Typography>
-                        user: {planObject.user}
-                      </Typography>
-                      <Typography>
-                        user_group: {planObject.user_group}
-                      </Typography>
-                      <Typography>
-                        exit_status: {planObject.exit_status}
-                      </Typography>
-                    </AccordionDetails>
-                  </Accordion>
-                ))}
-            </List>
+                    (planObject: IHistoricalPlan) => (
+                    <Accordion>
+                      <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
+                        <Typography>{planObject.name}</Typography>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <List>
+                          {Object.entries(planObject).map(
+                            (key, value) => (
+                              <Typography>
+                                {key} : {JSON.stringify(value)}
+                              </Typography>
+                            )
+                          )}
+                        </List>
+                      </AccordionDetails>
+                    </Accordion>
+                  ))}
+              </div>
             </Paper>
           </Box>
          );}
