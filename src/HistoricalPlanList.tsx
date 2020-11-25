@@ -7,7 +7,7 @@ import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IHistoricalPlan } from './queueserver';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardContent, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardContent, makeStyles, Paper, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 type HistoricalPlans = {
@@ -44,18 +44,31 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                     (planObject: IHistoricalPlan) => (
                     <Accordion>
                       <AccordionSummary aria-controls="panel1d-content" id="panel1d-header">
-                        <Typography>{planObject.name}</Typography>
+                        <ListItemText
+                            primary={planObject.name}
+                            secondary={planObject.plan_uid.substr(0,8)}/>
                       </AccordionSummary>
                       <AccordionDetails>
-                        <List>
-                          {Object.entries(planObject).map(
-                            (key, value) => (
-                              <Typography>
-                                {key} : {JSON.stringify(value)}
-                              </Typography>
-                            )
-                          )}
-                        </List>
+                        <div>
+                          <Typography>
+                            uid: {planObject.plan_uid}
+                          </Typography>
+                          <Typography>
+                            args: {JSON.stringify(planObject.args)}
+                          </Typography>
+                          <Typography>
+                            kwargs: {JSON.stringify(planObject.kwargs)}
+                          </Typography>
+                          <Typography>
+                            user: {planObject.user}
+                          </Typography>
+                          <Typography>
+                            user_group: {planObject.user_group}
+                          </Typography>
+                          <Typography>
+                            exit_status: {planObject.exit_status}
+                          </Typography>
+                        </div>
                       </AccordionDetails>
                     </Accordion>
                   ))}
