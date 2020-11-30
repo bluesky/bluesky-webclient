@@ -12,7 +12,7 @@ const initialPlanState: IPlanState = {
         manager_state: "undefined",
         msg: "",
         plans_in_queue: 0,
-        running_plan_uid: "",
+        running_item_uid: "",
         worker_environment_exists: false
     },
     planLoading: false
@@ -46,7 +46,7 @@ const initialPlanObjectsState: IPlanObjectsState = {
     plans: [{
         args: [],
         name: "",
-        plan_uid: ""
+        item_uid: ""
     }],
     plansLoading: false
 };
@@ -146,7 +146,7 @@ const initialPlanSubmitState: IPlanSubmitState = {
     plan: {
         args: [],
         name: "",
-        plan_uid: ""
+        item_uid: ""
     },
     planLoading: false
 };

@@ -98,21 +98,21 @@ export class PlanList extends React.Component<Plans, IState>{
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
               <List>
                 {this.props.plans.map((planObject: IPlanObject) => (
-                    <ListItem divider={true} button={true} key={planObject.plan_uid}>
+                    <ListItem divider={true} button={true} key={planObject.item_uid}>
                         <ListItemIcon>
                           <AccountCircleIcon fontSize='large' />
                         </ListItemIcon>
                         <ListItemText
                           primary={planObject.name}
-                          secondary={planObject.plan_uid.substr(0,8)}/>
+                          secondary={planObject.item_uid.substr(0,8)}/>
                         <ListItemSecondaryAction>
-                          <IconButton onClick={() => this.handleMoveForward(planObject.plan_uid)} edge="end" aria-label="comments">
+                          <IconButton onClick={() => this.handleMoveForward(planObject.item_uid)} edge="end" aria-label="comments">
                             <KeyboardArrowUpIcon />
                           </IconButton>
-                          <IconButton onClick={() => this.handleMoveBackward(planObject.plan_uid)} edge="end" aria-label="comments">
+                          <IconButton onClick={() => this.handleMoveBackward(planObject.item_uid)} edge="end" aria-label="comments">
                             <KeyboardArrowDownIcon />
                           </IconButton>
-                          <IconButton onClick={() => this.props.deletePlan(planObject.plan_uid)} edge="end" aria-label="comments">
+                          <IconButton onClick={() => this.props.deletePlan(planObject.item_uid)} edge="end" aria-label="comments">
                             <DeleteForeverIcon />
                           </IconButton>
                         </ListItemSecondaryAction>

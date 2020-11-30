@@ -49,12 +49,12 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                         </ListItemIcon>
                         <ListItemText
                             primary={planObject.name}
-                            secondary={planObject.plan_uid.substr(0,8)}/>
+                            secondary={planObject.item_uid.substr(0,8)}/>
                       </AccordionSummary>
                       <AccordionDetails>
                         <div>
                           <Typography>
-                            uid: {planObject.plan_uid}
+                            uid: {planObject.item_uid}
                           </Typography>
                           <Typography>
                             args: {JSON.stringify(planObject.args)}
@@ -86,7 +86,7 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
     name: string;
     args: string | number | boolean | (string|number|boolean)[]; 
     kwargs: { [name: string]: string | number | boolean | (string|number|boolean)[]; }
-    plan_uid: string;
+    item_uid: string;
     user: string;
     user_group: string;
     exit_status: string;
