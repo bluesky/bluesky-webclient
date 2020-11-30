@@ -15,11 +15,12 @@ import LoopIcon from '@material-ui/icons/Loop';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IPlanObject, QueueOps, EnvOps } from './queueserver';
 import { Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
-import { clearQueue, modifyQueue, modifyEnvironment } from './planactions';
+import { clearQueue, deletePlan, modifyQueue, modifyEnvironment } from './planactions';
 
 type Plans = {
   plans: IPlanObject[];
   clearQueue: typeof clearQueue;
+  deletePlan: typeof deletePlan;
   modifyEnvironment: typeof modifyEnvironment;
   modifyQueue: typeof modifyQueue;
 }
@@ -69,10 +70,6 @@ export class PlanList extends React.Component<Plans, IState>{
     this.props.modifyQueue(QueueOps.stop);
   }
 
-  private handleDelete(uid: string){
-    alert("Delete plan");
-  }
-
   render() {
     return (
           <Box> 
@@ -115,7 +112,7 @@ export class PlanList extends React.Component<Plans, IState>{
                           <IconButton onClick={() => this.handleMoveBackward(planObject.plan_uid)} edge="end" aria-label="comments">
                             <KeyboardArrowDownIcon />
                           </IconButton>
-                          <IconButton onClick={() => this.handleDelete(planObject.plan_uid)} edge="end" aria-label="comments">
+                          <IconButton onClick={() => this.props.deletePlan(planObject.plan_uid)} edge="end" aria-label="comments">
                             <DeleteForeverIcon />
                           </IconButton>
                         </ListItemSecondaryAction>
