@@ -154,7 +154,7 @@ export const getAllowedPlans = async(): Promise<IAllowedPlans> => {
 {"name":"count",
 "args":[["det1","det2"]],
 "kwargs":{"num":10,"delay":1},
-"plan_uid":"6f52eb6d-b62c-4bac-9935-03ec4c59af8e",
+"item_uid":"6f52eb6d-b62c-4bac-9935-03ec4c59af8e",
 "user":"John Doe",
 "user_group":"admin",
 "exit_status":"completed"}
@@ -181,7 +181,7 @@ export interface IHistoricalPlan {
     name: string;
     args: string | number | boolean | (string|number|boolean)[]; 
     kwargs: { [name: string]: string | number | boolean | (string|number|boolean)[]; }
-    plan_uid: string;
+    item_uid: string;
     user: string;
     user_group: string;
     exit_status: string;
@@ -220,7 +220,7 @@ export enum PlanActionTypes {
 {'msg': 'RE Manager',
  'plans_in_queue': 4,
  'plans_in_history': 1,
- 'running_plan_uid': None,
+ 'running_item_uid': None,
  'manager_state': 'idle',
  'queue_stop_pending': False,
  'worker_environment_exists': False}
@@ -229,7 +229,7 @@ export interface IPlan {
     manager_state: string,
     msg: string,
     plans_in_queue: number,
-    running_plan_uid: string,
+    running_item_uid: string,
     worker_environment_exists: boolean
 }
 
@@ -253,22 +253,22 @@ export interface IPlanLoadingAction {
 {'queue': [{'name': 'count',
    'args': [['det1', 'det2']],
    'kwargs': {'num': None, 'delay': 1},
-   'plan_uid': '0f43ab26-1ce5-4216-8cb2-a705833488d6',
+   'item_uid': '0f43ab26-1ce5-4216-8cb2-a705833488d6',
    'user': 'John Doe',
    'user_group': 'admin'},
   {'name': 'scan',
    'args': [['det1', 'det2'], 'motor', -1, 1, None],
-   'plan_uid': 'ff00456a-c20d-4e04-8b3d-9f9038100be0',
+   'item_uid': 'ff00456a-c20d-4e04-8b3d-9f9038100be0',
    'user': 'John Doe',
    'user_group': 'admin'},
   {'name': 'scan',
    'args': [['det1', 'det2'], 'motor', -1, 1, None],
-   'plan_uid': '519306e6-9eae-4de4-83a4-6dfce7027d6c',
+   'item_uid': '519306e6-9eae-4de4-83a4-6dfce7027d6c',
    'user': 'John Doe',
    'user_group': 'admin'},
   {'name': 'scan',
    'args': [['det1', 'det2'], 'motor', -1, 1, None],
-   'plan_uid': '6674b9a9-e148-407d-98d6-a75be1773ea0',
+   'item_uid': '6674b9a9-e148-407d-98d6-a75be1773ea0',
    'user': 'John Doe',
    'user_group': 'admin'}],
  'running_plan': {}}
@@ -276,7 +276,7 @@ export interface IPlanLoadingAction {
 export interface IPlanObject {
     args: (string|number|string[])[],
     name: string,
-    plan_uid: string
+    item_uid: string
 }
 
 export interface IPlanObjectsAction {
@@ -394,7 +394,7 @@ export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObj
     }
     
     alert(JSON.stringify(plan));
-    const res = await axiosInstance.post('/queue/plan/add',
+    const res = await axiosInstance.post('/queue/item/add',
         {
             plan: plan
         });
@@ -410,10 +410,10 @@ export const clearQueue = async(): Promise<IPlan> => {
 }
 
 // http POST http://localhost:60610/queue/plan/remove uid:='<uid>'
-export const deletePlan = async(plan_uid: string): Promise<IPlan> => {
-    const res = await axiosInstance.post('/queue/plan/remove',
+export const deletePlan = async(item_uid: string): Promise<IPlan> => {
+    const res = await axiosInstance.post('/queue/item/remove',
         {
-            uid: plan_uid
+            uid: item_uid
         });
     console.log(res);
     return res.data;

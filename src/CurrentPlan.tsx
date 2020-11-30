@@ -89,7 +89,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
     if (plans.length === 0) {
       return "";
     } else {
-      return plans[0].plan_uid;
+      return plans[0].item_uid;
     }
   }
 
