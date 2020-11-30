@@ -394,7 +394,7 @@ export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObj
     }
     
     alert(JSON.stringify(plan));
-    const res = await axiosInstance.post('/queue/plan/add',
+    const res = await axiosInstance.post('/queue/item/add',
         {
             plan: plan
         });
@@ -411,7 +411,7 @@ export const clearQueue = async(): Promise<IPlan> => {
 
 // http POST http://localhost:60610/queue/plan/remove uid:='<uid>'
 export const deletePlan = async(plan_uid: string): Promise<IPlan> => {
-    const res = await axiosInstance.post('/queue/plan/remove',
+    const res = await axiosInstance.post('/queue/item/remove',
         {
             uid: plan_uid
         });
