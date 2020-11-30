@@ -104,7 +104,7 @@ export class PlanList extends React.Component<Plans, IState>{
                         </ListItemIcon>
                         <ListItemText
                           primary={planObject.name}
-                          secondary={planObject.item_uid.substr(0,8)}/>
+                          secondary={planObject.item_uid}/>
                         <ListItemSecondaryAction>
                           <IconButton onClick={() => this.handleMoveForward(planObject.item_uid)} edge="end" aria-label="comments">
                             <KeyboardArrowUpIcon />
