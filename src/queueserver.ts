@@ -150,12 +150,62 @@ export const getAllowedPlans = async(): Promise<IAllowedPlans> => {
     return res.data;
 }
 
+/* Historical Plan
+{"name":"count",
+"args":[["det1","det2"]],
+"kwargs":{"num":10,"delay":1},
+"plan_uid":"6f52eb6d-b62c-4bac-9935-03ec4c59af8e",
+"user":"John Doe",
+"user_group":"admin",
+"exit_status":"completed"}
+*/
+export enum HistoricalPlansActionTypes {
+    LOADING = "HISTORICALPLANS/LOADING",
+    GET = "HISTORICALPLANS/GET"
+}
+
+export type HistoricalPlansActions =
+  | IHistoricalPlansLoadingAction
+  | IHistoricalPlansGetAction
+
+export interface IHistoricalPlansLoadingAction {
+    type: HistoricalPlansActionTypes.LOADING
+}
+
+export interface IHistoricalPlansGetAction {
+    type: HistoricalPlansActionTypes.GET,
+    historicalPlans: IHistoricalPlan[]
+}
+
+export interface IHistoricalPlan {
+    name: string;
+    args: string | number | boolean | (string|number|boolean)[]; 
+    kwargs: { [name: string]: string | number | boolean | (string|number|boolean)[]; }
+    plan_uid: string;
+    user: string;
+    user_group: string;
+    exit_status: string;
+}
+
+export interface IHistoricalPlansState {
+    readonly historicalPlans: IHistoricalPlan[];
+    readonly plansLoading: boolean;
+}
+
+export const getHistoricalPlans = async(): Promise<IHistoricalPlan[]> => {
+    const res = await axiosInstance.get('/history/get',
+        {});
+    console.log(res);
+    return res.data.history;
+}
+
 /*******************************************/
 
 export enum PlanActionTypes {
     GETOVERVIEW = "PLANS/GETOVERVIEWS",
     LOADING = "PLANS/LOADING",
     GETPLANLIST = "PLANS/GETPLANLIST",
+    GETHISTORICAL = "PLANS/GETHISORICAL",
     SUBMITPLAN = "PLANS/SUBMITPLAN",
     CLEARQUEUE = "PLANS/CLEARQUEUE",
     MODIFYENVIRONMENT = "PLANS/MODIFYENVIRONMENT",

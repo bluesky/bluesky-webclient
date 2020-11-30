@@ -1,6 +1,11 @@
 import { Reducer } from "redux";
-import { IPlanState, IPlanObjectsState, IPlanSubmitState, IPlanModifyState,
-    PlanActions, PlanActionTypes, IAllowedPlansState, AllowedPlansActions, AllowedPlansActionTypes, IAllowedPlans } from "./queueserver";
+import { IPlanState, IPlanObjectsState, 
+         IPlanSubmitState, IPlanModifyState,
+         PlanActions, PlanActionTypes, 
+         IAllowedPlansState, AllowedPlansActions, 
+         AllowedPlansActionTypes, IAllowedPlans,
+         IHistoricalPlansState, HistoricalPlansActions, 
+         HistoricalPlansActionTypes, IHistoricalPlan } from "./queueserver";
 
 const initialPlanState: IPlanState = {
     plan: {
@@ -106,6 +111,36 @@ export const allowedPlansReducer: Reducer<IAllowedPlansState, AllowedPlansAction
     }
 };
 /************************************************/
+const initialHistoricalPlansState: IHistoricalPlansState = {
+    historicalPlans: [],
+    plansLoading: false
+};
+
+export const historicalPlansReducer: Reducer<IHistoricalPlansState, HistoricalPlansActions> = (
+    state = initialHistoricalPlansState,
+    action
+) => {
+    switch (action.type) {
+        case HistoricalPlansActionTypes.LOADING: {
+            return {
+                ...state,
+                plansLoading: true
+            };
+        }
+        case HistoricalPlansActionTypes.GET: {
+            return {
+                ...state,
+                historicalPlans: action.historicalPlans,
+                plansLoading: false
+            };
+        }
+        default: {
+            return state;
+        }
+    }
+};
+
+/************************************************/
 
 const initialPlanSubmitState: IPlanSubmitState = {
     plan: {
@@ -115,6 +150,7 @@ const initialPlanSubmitState: IPlanSubmitState = {
     },
     planLoading: false
 };
+
 
 export const planSubmitReducer: Reducer<IPlanSubmitState, PlanActions> = (
     state = initialPlanSubmitState,

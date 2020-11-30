@@ -3,12 +3,13 @@ import { ThunkAction } from "redux-thunk"
 import { getOverview as getOverviewAPI,
     getQueuedPlans as getQueuedPlansAPI,
     getAllowedPlans as getAllowedPlansAPI,
+    getHistoricalPlans as getHistoricalPlansAPI,
     submitPlan as submitPlanAPI,
     clearQueue as clearQueueAPI,
     modifyEnvironment as modifyEnvironmentAPI, EnvOps,
-    modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IAllowedPlansGetAction, AllowedPlansActionTypes, ISumbitPlanObject} from "./queueserver"
+    modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, AllowedPlansActionTypes, HistoricalPlansActionTypes, ISumbitPlanObject} from "./queueserver"
 import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, IPlanSubmitAction,
-    IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes} from "./queueserver"
+    IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes } from "./queueserver"
 
 const loading: ActionCreator<IPlanLoadingAction> = () => ({
     type: PlanActionTypes.LOADING
@@ -47,8 +48,20 @@ export const getAllowedPlans: ActionCreator<ThunkAction<Promise<AnyAction>, IAll
         });
     };
 };
-/*******************************************/
 
+/*******************************************/
+export const getHistoricalPlans: ActionCreator<ThunkAction<Promise<AnyAction>, IHistoricalPlansState, null, IHistoricalPlansGetAction>> = () => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const historicalPlans = await getHistoricalPlansAPI();
+        return dispatch({
+          historicalPlans,
+          type: HistoricalPlansActionTypes.GET
+        });
+    };
+};
+
+/*******************************************/
 export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (submitPlan: ISumbitPlanObject) => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());

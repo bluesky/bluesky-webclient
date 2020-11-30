@@ -61,16 +61,16 @@ export class PlanList extends React.Component<Plans, IState>{
     }
   }
 
-  handlePlay() {
+  private handlePlay() {
     this.props.modifyQueue(QueueOps.start);
   }
 
-  handlePause() {
+  private handlePause() {
     this.props.modifyQueue(QueueOps.stop);
   }
 
-  handleDelete(uid: string){
-
+  private handleDelete(uid: string){
+    alert("Delete plan");
   }
 
   render() {

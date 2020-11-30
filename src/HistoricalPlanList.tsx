@@ -6,18 +6,25 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { IPlanObject } from './queueserver';
-import { Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
+import { IHistoricalPlan } from './queueserver';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardContent, makeStyles, Paper, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
-type Plans = {
-  plans: IPlanObject[];
+type HistoricalPlans = {
+  history: IHistoricalPlan[];
 }
 
-export class HistoricalPlanList extends React.Component<Plans>{
+type HistoricalPlansState = {
+  expanded: string;
+}
 
-  handleExpand(uid: string) {
-    alert(uid);
+export class HistoricalPlanList extends React.Component<HistoricalPlans, HistoricalPlansState>{
+
+  public constructor(props: HistoricalPlans) {
+    super(props);
+    this.state = {
+      expanded: "",
+    };
   }
 
   render() {
@@ -32,24 +39,55 @@ export class HistoricalPlanList extends React.Component<Plans>{
             </Card>
             <Box height="2vh"></Box>
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
-              <List>
-                {this.props.plans.map((planObject: IPlanObject) => (
-                    <ListItem divider={true} button={true} key={planObject.plan_uid}>
+            <div>
+                {this.props.history.map(
+                    (planObject: IHistoricalPlan) => (
+                    <Accordion>
+                      <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreIcon />}>
                         <ListItemIcon>
                           <AccountCircleIcon fontSize='large' />
                         </ListItemIcon>
                         <ListItemText
-                          primary={planObject.name}
-                          secondary={planObject.plan_uid.substr(0,8)}/>
-                        <ListItemSecondaryAction>
-                          <IconButton onClick={() => this.handleExpand(planObject.plan_uid)} edge="end" aria-label="comments">
-                            <ExpandMoreIcon />
-                          </IconButton>
-                        </ListItemSecondaryAction>
-                    </ListItem>
-                ))}
-            </List>
+                            primary={planObject.name}
+                            secondary={planObject.plan_uid.substr(0,8)}/>
+                      </AccordionSummary>
+                      <AccordionDetails>
+                        <div>
+                          <Typography>
+                            uid: {planObject.plan_uid}
+                          </Typography>
+                          <Typography>
+                            args: {JSON.stringify(planObject.args)}
+                          </Typography>
+                          <Typography>
+                            kwargs: {JSON.stringify(planObject.kwargs)}
+                          </Typography>
+                          <Typography>
+                            user: {planObject.user}
+                          </Typography>
+                          <Typography>
+                            user_group: {planObject.user_group}
+                          </Typography>
+                          <Typography>
+                            exit_status: {planObject.exit_status}
+                          </Typography>
+                        </div>
+                      </AccordionDetails>
+                    </Accordion>
+                  ))}
+              </div>
             </Paper>
           </Box>
          );}
 }
+
+
+/*
+    name: string;
+    args: string | number | boolean | (string|number|boolean)[]; 
+    kwargs: { [name: string]: string | number | boolean | (string|number|boolean)[]; }
+    plan_uid: string;
+    user: string;
+    user_group: string;
+    exit_status: string;
+  */

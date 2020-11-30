@@ -5,15 +5,14 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import { IApplicationState } from './store';
-import { getOverview, getQueuedPlans } from './planactions';
+import { getOverview, getQueuedPlans, getHistoricalPlans } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
-import { IPlan, IPlanObject } from './queueserver';
+import { IPlan, IPlanObject, IHistoricalPlan } from './queueserver';
 import { PlanList } from './PlanList';
 import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
 import { clearQueue, modifyEnvironment, modifyQueue } from './planactions';
 import { Grid } from '@material-ui/core';
-
 
 function Copyright() {
   return (
@@ -31,6 +30,7 @@ function Copyright() {
 interface IProps extends RouteComponentProps {
   getOverview: typeof getOverview;
   getQueuedPlans: typeof getQueuedPlans;
+  getHistoricalPlans: typeof getHistoricalPlans;
   clearQueue: typeof clearQueue;
   modifyEnvironment: typeof modifyEnvironment;
   modifyQueue: typeof modifyQueue;
@@ -38,6 +38,8 @@ interface IProps extends RouteComponentProps {
   plan: IPlan;
   loadingPlans: boolean;
   plans: IPlanObject[];
+  loadingHistoricalPlans: boolean;
+  historicalPlans: IHistoricalPlan[];
 }
 
 class App extends React.Component<IProps> {
@@ -54,26 +56,18 @@ class App extends React.Component<IProps> {
               <CurrentPlan plans={this.props.plans}></CurrentPlan> 
             </Grid>
             <Grid item justify="center" spacing={10} xs={3}>    
-              <HistoricalPlanList plans={this.props.plans.slice(1, this.props.plans.length)}> </HistoricalPlanList>
+              <HistoricalPlanList history={this.props.historicalPlans}> </HistoricalPlanList>
             </Grid>   
           </Grid>
           <Copyright/>
         </Container>
       )
   }
-/*
-<Card>
-  <CardContent>
-    <Typography align="center" variant="h5" component="h1" gutterBottom>
-      This is the future of all your Bluesky acquisition dreams on the web!
-    </Typography>
-  </CardContent>
-</Card>
-*/
-  
+
   componentDidMount() {
       this.props.getOverview();
       setInterval(this.props.getQueuedPlans, 1000);
+      setInterval(this.props.getHistoricalPlans, 1000);
   }
 
 }
@@ -83,7 +77,9 @@ const mapStateToProps = (store: IApplicationState) => {
     loadingPlan: store.plan.planLoading,
     plan: store.plan.plan,
     loadingPlans: store.plans.plansLoading,
-    plans: store.plans.plans
+    plans: store.plans.plans,
+    loadingHistoricalPlans: store.historicalPlans.plansLoading,
+    historicalPlans: store.historicalPlans.historicalPlans
   };
 };
 
@@ -91,7 +87,10 @@ const mapDispatchToProps = (dispatch: any) => {
   return {
     getOverview: () => dispatch(getOverview()),
     clearQueue: () => dispatch(clearQueue()),
-    getQueuedPlans: () => dispatch(getQueuedPlans())
+    modifyEnvironment: () => dispatch(modifyEnvironment()),
+    modifyQueue: () => dispatch(modifyQueue()),
+    getQueuedPlans: () => dispatch(getQueuedPlans()),
+    getHistoricalPlans: () => dispatch(getHistoricalPlans())
   };
 };
 
