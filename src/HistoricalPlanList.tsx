@@ -49,7 +49,7 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                         </ListItemIcon>
                         <ListItemText
                             primary={planObject.name}
-                            secondary={planObject.item_uid}/>
+                            secondary={planObject.item_uid.substr(0,8)}/>
                       </AccordionSummary>
                       <AccordionDetails>
                         <div>
