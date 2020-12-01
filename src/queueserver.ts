@@ -450,3 +450,23 @@ export const modifyQueue = async(op: QueueOps): Promise<IPlanModify> => {
     console.log(res);
     return res.data;
 }
+
+export const incrementPosition = async(position: number): Promise<IPlanModify> => {
+    const res = await axiosInstance.post(`/queue/move`,
+        {
+            pos: position,
+            pos_dest: position + 1
+        });
+    console.log(res);
+    return res.data;
+}
+
+export const decrementPosition = async(position: number): Promise<IPlanModify> => {
+    const res = await axiosInstance.post(`/queue/move`,
+        {
+            pos: position,
+            pos_dest: position - 1
+        });
+    console.log(res);
+    return res.data;
+}
