@@ -36,7 +36,7 @@ export class AvailablePlans extends React.Component<Plans>{
                     </Avatar>
                   </ListItemIcon>
                   <ListItemText
-                    primary="divider"
+                    primary="pause"
                     secondary="pauses the queue"/>
                   <ListItemSecondaryAction>
                     <Button onClick={() => addQueueStop()} variant="contained" color="primary">

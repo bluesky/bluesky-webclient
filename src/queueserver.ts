@@ -473,7 +473,7 @@ export const decrementPosition = async(uid: string, after_uid: string): Promise<
 }
 
 export const addQueueStop = async(): Promise<IPlanModify> => {
-    const res = await axiosInstance.post(`/queue/item/add`,
+    const res = await axiosInstance.post('/queue/item/add',
         {
             instruction: {action: "queue_stop"}
         });
