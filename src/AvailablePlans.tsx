@@ -3,7 +3,7 @@ import List from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { IAllowedPlans } from './queueserver';
-import { Avatar, Box, Card, CardContent, ListItem, MenuItem, Paper, Typography } from '@material-ui/core';
+import { Avatar, Box, Button, Card, CardContent, IconButton, ListItem, ListItemSecondaryAction, MenuItem, Paper, Typography } from '@material-ui/core';
 import { Star } from '@material-ui/icons';
 
 type Plans = {
@@ -33,8 +33,8 @@ export class AvailablePlans extends React.Component<Plans>{
             <Box height="2vh"></Box>
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
               <List>
-                <ListItem onClick={() => this.queue_stop()} divider={true}>
-                  <ListItemIcon>
+                <ListItem divider={true}>
+                  <ListItemIcon color="secondary">
                     <Avatar>
                       <Star />
                     </Avatar>
@@ -42,6 +42,11 @@ export class AvailablePlans extends React.Component<Plans>{
                   <ListItemText
                     primary="divider"
                     secondary="pauses the queue."/>
+                  <ListItemSecondaryAction>
+                    <Button onClick={() => this.queue_stop()} variant="contained" color="primary">
+                      Add
+                    </Button>
+                  </ListItemSecondaryAction>
                 </ListItem>
                 {Object.keys(this.props.plans.plans_allowed).map(
                   (planObject: string) => (
