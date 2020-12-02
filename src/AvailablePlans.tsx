@@ -12,7 +12,10 @@ type Plans = {
   handleSelect: (selectedPlan: string) => void;
 }
 
+<<<<<<< HEAD
 
+=======
+>>>>>>> make the plan form bigger
 export class AvailablePlans extends React.Component<Plans>{
 
   render() {
