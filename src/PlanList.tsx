@@ -40,7 +40,7 @@ export class PlanList extends React.Component<Plans, IState>{
   }
 
   handleIncrement(index: number) {
-    if (index == this.props.plans.length - 1){
+    if (index === this.props.plans.length - 1){
       return
     } else {
       incrementPosition(this.props.plans[index].item_uid, this.props.plans[index+1].item_uid);
@@ -48,7 +48,7 @@ export class PlanList extends React.Component<Plans, IState>{
   }
 
   handleDecrement(index: number) {
-    if (index == 0){
+    if (index === 0){
       return
     } else {
       decrementPosition(this.props.plans[index].item_uid, this.props.plans[index-1].item_uid);
@@ -117,7 +117,7 @@ export class PlanList extends React.Component<Plans, IState>{
                           {(index !== 0) && <IconButton onClick={() => this.handleDecrement(index)} edge="end" aria-label="comments">
                               <KeyboardArrowUpIcon />
                             </IconButton>}
-                          {(index != this.props.plans.length -1) && <IconButton onClick={() => this.handleIncrement(index)} edge="end" aria-label="comments">
+                          {(index !== this.props.plans.length -1) && <IconButton onClick={() => this.handleIncrement(index)} edge="end" aria-label="comments">
                               <KeyboardArrowDownIcon />
                             </IconButton>}
                           <IconButton onClick={() => this.props.deletePlan(planObject.item_uid)} edge="end" aria-label="comments">
