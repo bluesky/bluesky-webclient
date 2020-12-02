@@ -452,7 +452,7 @@ export const modifyQueue = async(op: QueueOps): Promise<IPlanModify> => {
 }
 
 export const incrementPosition = async(item1_uid: string, item2_uid: string): Promise<IPlanModify> => {
-    const res = await axiosInstance.post(`/queue/item/move`,
+    const res = await axiosInstance.post('/queue/item/move',
         {
             uid: item1_uid,
             after_uid: item2_uid
@@ -463,7 +463,7 @@ export const incrementPosition = async(item1_uid: string, item2_uid: string): Pr
 }
 
 export const decrementPosition = async(item1_uid: string, item2_uid: string): Promise<IPlanModify> => {
-    const res = await axiosInstance.post(`/queue/item/move`,
+    const res = await axiosInstance.post('/queue/item/move',
         {
             uid: item1_uid,
             before_uid: item2_uid
