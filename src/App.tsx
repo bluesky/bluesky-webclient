@@ -49,14 +49,14 @@ class App extends React.Component<IProps> {
         <Container maxWidth="xl">
           <Box width="80vw" height="2vh"></Box>
           <Grid container spacing={5} direction="row" justify="center">
-            <Grid item justify="center" spacing={10} xs={3}>    
+            <Grid item justify="center" spacing={10} xs={2}>    
               <PlanList deletePlan={this.props.deletePlan} clearQueue={this.props.clearQueue} plans={this.props.plans}
               modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}> </PlanList>
             </Grid>
-            <Grid item justify="center" spacing={10} xs={5}>
+            <Grid item justify="center" spacing={10} xs={6}>
               <CurrentPlan plans={this.props.plans}></CurrentPlan> 
             </Grid>
-            <Grid item justify="center" spacing={10} xs={3}>    
+            <Grid item justify="center" spacing={10} xs={2}>    
               <HistoricalPlanList history={this.props.historicalPlans}> </HistoricalPlanList>
             </Grid>   
           </Grid>
