@@ -40,11 +40,19 @@ export class PlanList extends React.Component<Plans, IState>{
   }
 
   handleIncrement(index: number) {
-    incrementPosition(index);
+    if (index == this.props.plans.length - 1){
+      return
+    } else {
+      incrementPosition(this.props.plans[index].item_uid, this.props.plans[index+1].item_uid);
+    }
   }
 
   handleDecrement(index: number) {
-    decrementPosition(index);
+    if (index == 0){
+      return
+    } else {
+      decrementPosition(this.props.plans[index].item_uid, this.props.plans[index-1].item_uid);
+    }
   }
 
   private handleEnvChange = (env: string) => {
