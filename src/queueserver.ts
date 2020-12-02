@@ -451,22 +451,22 @@ export const modifyQueue = async(op: QueueOps): Promise<IPlanModify> => {
     return res.data;
 }
 
-export const incrementPosition = async(item1: string, item2: string): Promise<IPlanModify> => {
+export const incrementPosition = async(item1_uid: string, item2_uid: string): Promise<IPlanModify> => {
     const res = await axiosInstance.post(`/queue/item/move`,
         {
-            uid: item1,
-            after_uid: item2
+            uid: item1_uid,
+            after_uid: item2_uid
 
         });
     console.log(res);
     return res.data;
 }
 
-export const decrementPosition = async(item1: string, item2: string): Promise<IPlanModify> => {
+export const decrementPosition = async(item1_uid: string, item2_uid: string): Promise<IPlanModify> => {
     const res = await axiosInstance.post(`/queue/item/move`,
         {
-            uid: item1,
-            before_uid: item2
+            uid: item1_uid,
+            before_uid: item2_uid
         });
     console.log(res);
     return res.data;
