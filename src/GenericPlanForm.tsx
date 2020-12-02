@@ -179,7 +179,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                   {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
                     (parameterObject: IParameter) => (
                       <GridListTile>
-                        <ListItem button={true} key={parameterObject.name}>
+                        <ListItem button={true} divider={true} key={parameterObject.name}>
                           {(!parameterObject.default) ?
                                                 <ListItemIcon>
                                                   <StarsIcon />
