@@ -2,7 +2,7 @@ import React from 'react';
 import List from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { IAllowedPlans } from './queueserver';
+import { IAllowedPlans, addQueueStop } from './queueserver';
 import { Avatar, Box, Button, Card, CardContent, IconButton, ListItem, ListItemSecondaryAction, MenuItem, Paper, Typography } from '@material-ui/core';
 import { Star } from '@material-ui/icons';
 
@@ -15,10 +15,6 @@ type Plans = {
 
 
 export class AvailablePlans extends React.Component<Plans>{
-
-  queue_stop(){
-    alert("queue_stop")
-  }
 
   render() {
     return (
@@ -43,7 +39,7 @@ export class AvailablePlans extends React.Component<Plans>{
                     primary="divider"
                     secondary="pauses the queue"/>
                   <ListItemSecondaryAction>
-                    <Button onClick={() => this.queue_stop()} variant="contained" color="primary">
+                    <Button onClick={() => addQueueStop()} variant="contained" color="primary">
                       Add
                     </Button>
                   </ListItemSecondaryAction>
