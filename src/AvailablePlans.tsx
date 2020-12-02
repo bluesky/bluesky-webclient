@@ -3,7 +3,8 @@ import List from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { IAllowedPlans } from './queueserver';
-import { Avatar, Box, Card, CardContent, MenuItem, Paper, Typography } from '@material-ui/core';
+import { Avatar, Box, Card, CardContent, ListItem, MenuItem, Paper, Typography } from '@material-ui/core';
+import { Star } from '@material-ui/icons';
 
 type Plans = {
   plans: IAllowedPlans;
@@ -11,7 +12,13 @@ type Plans = {
   handleSelect: (selectedPlan: string) => void;
 }
 
+
+
 export class AvailablePlans extends React.Component<Plans>{
+
+  queue_stop(){
+    alert("queue_stop")
+  }
 
   render() {
     return (
@@ -26,6 +33,16 @@ export class AvailablePlans extends React.Component<Plans>{
             <Box height="2vh"></Box>
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
               <List>
+                <ListItem onClick={() => this.queue_stop()} divider={true}>
+                  <ListItemIcon>
+                    <Avatar>
+                      <Star />
+                    </Avatar>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="divider"
+                    secondary="pauses the queue."/>
+                </ListItem>
                 {Object.keys(this.props.plans.plans_allowed).map(
                   (planObject: string) => (
                     <MenuItem selected={planObject === this.props.selectedPlan} onClick={() => this.props.handleSelect(planObject)} divider={true} button={true} key={planObject}>
