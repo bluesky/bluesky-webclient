@@ -114,12 +114,12 @@ export class PlanList extends React.Component<Plans, IState>{
                           primary={planObject.name}
                           secondary={planObject.item_uid.substr(0,8)}/>
                         <ListItemSecondaryAction>
-                          <IconButton onClick={() => this.handleDecrement(index)} edge="end" aria-label="comments">
-                            <KeyboardArrowUpIcon />
-                          </IconButton>
-                          <IconButton onClick={() => this.handleIncrement(index)} edge="end" aria-label="comments">
+                          {(index != 0) && <IconButton onClick={() => this.handleDecrement(index)} edge="end" aria-label="comments">
+                                <KeyboardArrowUpIcon />
+                              </IconButton>}
+                          {(index != this.props.plans.length -1) && <IconButton onClick={() => this.handleIncrement(index)} edge="end" aria-label="comments">
                             <KeyboardArrowDownIcon />
-                          </IconButton>
+                          </IconButton>}
                           <IconButton onClick={() => this.props.deletePlan(planObject.item_uid)} edge="end" aria-label="comments">
                             <DeleteForeverIcon />
                           </IconButton>
