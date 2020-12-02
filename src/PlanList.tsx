@@ -13,7 +13,7 @@ import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Tooltip from '@material-ui/core/Tooltip';
 import LoopIcon from '@material-ui/icons/Loop';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { IPlanObject, QueueOps, EnvOps } from './queueserver';
+import { IPlanObject, QueueOps, EnvOps, incrementPosition, decrementPosition } from './queueserver';
 import { Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
 import { clearQueue, deletePlan, modifyQueue, modifyEnvironment } from './planactions';
 
@@ -39,12 +39,20 @@ export class PlanList extends React.Component<Plans, IState>{
     };
   }
 
-  handleMoveForward(uid: string) {
-    alert(uid);
+  handleIncrement(index: number) {
+    if (index === this.props.plans.length - 1){
+      return
+    } else {
+      incrementPosition(this.props.plans[index].item_uid, this.props.plans[index+1].item_uid);
+    }
   }
 
-  handleMoveBackward(uid: string) {
-    alert(uid);
+  handleDecrement(index: number) {
+    if (index === 0){
+      return
+    } else {
+      decrementPosition(this.props.plans[index].item_uid, this.props.plans[index-1].item_uid);
+    }
   }
 
   private handleEnvChange = (env: string) => {
@@ -97,7 +105,7 @@ export class PlanList extends React.Component<Plans, IState>{
             <Box height="2vh"></Box>
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
               <List>
-                {this.props.plans.map((planObject: IPlanObject) => (
+                {this.props.plans.map((planObject: IPlanObject, index) => (
                     <ListItem divider={true} button={true} key={planObject.item_uid}>
                         <ListItemIcon>
                           <AccountCircleIcon fontSize='large' />
@@ -106,12 +114,12 @@ export class PlanList extends React.Component<Plans, IState>{
                           primary={planObject.name}
                           secondary={planObject.item_uid.substr(0,8)}/>
                         <ListItemSecondaryAction>
-                          <IconButton onClick={() => this.handleMoveForward(planObject.item_uid)} edge="end" aria-label="comments">
-                            <KeyboardArrowUpIcon />
-                          </IconButton>
-                          <IconButton onClick={() => this.handleMoveBackward(planObject.item_uid)} edge="end" aria-label="comments">
-                            <KeyboardArrowDownIcon />
-                          </IconButton>
+                          {(index !== 0) && <IconButton onClick={() => this.handleDecrement(index)} edge="end" aria-label="comments">
+                              <KeyboardArrowUpIcon />
+                            </IconButton>}
+                          {(index !== this.props.plans.length -1) && <IconButton onClick={() => this.handleIncrement(index)} edge="end" aria-label="comments">
+                              <KeyboardArrowDownIcon />
+                            </IconButton>}
                           <IconButton onClick={() => this.props.deletePlan(planObject.item_uid)} edge="end" aria-label="comments">
                             <DeleteForeverIcon />
                           </IconButton>

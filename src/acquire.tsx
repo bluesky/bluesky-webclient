@@ -63,14 +63,14 @@ class AcquirePage extends React.Component<IProps, IState> {
           <Container maxWidth="xl">
             <Box width="80vw" height="2vh"></Box>
             <Grid container spacing={5} direction="row" justify="center">
-                <Grid item justify="center" spacing={10} xs={3}>    
+                <Grid item justify="center" spacing={1} xs={2}>    
                   <AvailablePlans selectedPlan={this.state.selectedPlan} handleSelect={this.handleSelectPlan}
                   plans={this.props.allowedPlans}> </AvailablePlans>
                 </Grid>
-                <Grid item justify="center" spacing={10} xs={5}> 
+                <Grid item justify="center" spacing={1} xs={6}> 
                   <PlanFormContainer submitPlan={this.props.submitPlan} name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}> </PlanFormContainer>   
                 </Grid>   
-                <Grid item justify="center" spacing={10} xs={3}>
+                <Grid item justify="center" spacing={1} xs={2}>
                   <PlanList deletePlan={this.props.deletePlan} clearQueue={this.props.clearQueue} plans={this.props.plans}
                   modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}></PlanList>
                 </Grid>
