@@ -471,3 +471,12 @@ export const decrementPosition = async(uid: string, after_uid: string): Promise<
     console.log(res);
     return res.data;
 }
+
+export const addQueueStop = async(): Promise<IPlanModify> => {
+    const res = await axiosInstance.post(`/queue/item/add`,
+        {
+            instruction: {action: "queue_stop"}
+        });
+    console.log(res);
+    return res.data;
+}
