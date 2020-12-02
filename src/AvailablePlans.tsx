@@ -26,7 +26,7 @@ export class AvailablePlans extends React.Component<Plans>{
             <Card style={{height: "6vh"}} raised={true}>
               <CardContent>
                 <Typography align="center" variant="h5" component="h1" gutterBottom>
-                  Available Plans
+                  Queue Items
                 </Typography>
               </CardContent>
             </Card>
@@ -41,7 +41,7 @@ export class AvailablePlans extends React.Component<Plans>{
                   </ListItemIcon>
                   <ListItemText
                     primary="divider"
-                    secondary="pauses the queue."/>
+                    secondary="pauses the queue"/>
                   <ListItemSecondaryAction>
                     <Button onClick={() => this.queue_stop()} variant="contained" color="primary">
                       Add
