@@ -13,7 +13,6 @@ type Plans = {
 }
 
 
-
 export class AvailablePlans extends React.Component<Plans>{
 
   render() {
