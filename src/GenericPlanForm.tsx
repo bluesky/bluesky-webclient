@@ -139,7 +139,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
           <Card raised={true}>
             <CardContent>
               <div>
-                <GridList>
+                <GridList spacing={3}>
                   <GridListTile key="Subheader" cols={2} style={{ color: "black", border:5, height: 'auto'}}>
                     <Box borderBottom={3}>
                       <Typography align="center" variant="h5" component="h1" >
@@ -154,18 +154,18 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                   {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
                     (parameterObject: IParameter) => (
                       <GridListTile style={{ height: 'auto' }}>
-                        <Grid container spacing={5} direction="row" justify="center"  alignItems="center">
-                          <Grid item justify="center" spacing={5} xs={5}>
+                        <Grid container spacing={0} direction="row" justify="space-evenly"  alignItems="center" wrap="nowrap">
+                          <Grid item justify="flex-start" spacing={1} xs={6}>
                             <ListItemText
                               primary={parameterObject.name}
                               secondary={parameterObject.description ? parameterObject.description : ""}/>
                           </Grid>
-                          <Grid item justify="center" spacing={5} xs={5}>
+                          <Grid item justify="space-evenly" spacing={1} xs={6}>
                             <List dense={true}>
                               {this._get_widget_list(parameterObject)}
                             </List>
                           </Grid>
-                          <Grid item justify="center" xs={2}>
+                          <Grid item justify="flex-end" xs={2}>
                             {parameterObject.name.slice(-1) === 's' ?  <IconButton onClick={() => this._addParameter(parameterObject.name)}>
                                                           <AddCircleOutlineIcon />
                                                         </IconButton>
