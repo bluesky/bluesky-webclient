@@ -18,10 +18,6 @@ type IProps = {
 }
 
 interface IState {
-  root: any;
-  media: any;
-  avatar: any;
-  expanded: boolean;
   plan: ISumbitPlanObject;
 }
 
@@ -29,21 +25,6 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      root: {
-        display: 'flex',
-        flexWrap: 'wrap',
-        justifyContent: 'space-around',
-        overflow: 'hidden',
-        backgroundColor: theme.palette.background.paper,
-      },
-      media: {
-        height: 0,
-        paddingTop: '56.25%',
-      },
-      avatar: {
-        backgroundColor: red[500],
-      },
-      expanded: false,
       plan: {name: this.props.name,
              kwargs: {}}
     }
