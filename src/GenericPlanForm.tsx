@@ -1,15 +1,12 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { IAllowedPlans, IParameter, ISumbitPlanObject } from './queueserver';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { Box, Button, Grid, GridList, GridListTile, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, makeStyles, Paper, Select, Switch, TextField } from '@material-ui/core';
+import { Box, Button, Grid, GridList, GridListTile, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, makeStyles, PropTypes, Select, Switch, TextField } from '@material-ui/core';
 import StarsIcon from '@material-ui/icons/Stars';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import theme from './theme';
@@ -28,10 +25,13 @@ interface IState {
   plan: ISumbitPlanObject;
 }
 
-/*
 const useStyles = makeStyles((theme) => ({
   root: {
-
+    display: 'flex',
+    flexWrap: 'wrap',
+    justifyContent: 'space-around',
+    overflow: 'hidden',
+    backgroundColor: theme.palette.background.paper,
   },
   gridList: {
     width: 500,
@@ -41,7 +41,6 @@ const useStyles = makeStyles((theme) => ({
     color: 'rgba(255, 255, 255, 0.54)',
   },
 }));
-*/
 
 export class GenericPlanForm extends React.Component<IProps, IState> {
   constructor(props: IProps) {
@@ -97,7 +96,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
       if (this.state.plan.kwargs[parameterObject.name] === undefined){
         return <Card />
       } else {
-        return this.state.plan.kwargs[parameterObject.name].map((value: string|number) =>
+        return this.state.plan.kwargs[parameterObject.name].map(() =>
         (<ListItem dense={true}>
           {this._get_widget(parameterObject)}
         </ListItem>))
@@ -153,69 +152,59 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
   }
 
   render(){
-      return (
-            <Card raised={true}>
-              <CardHeader
-                avatar={
-                  <AccountCircleIcon fontSize='large' />
-                }
-                action={
-                  <IconButton aria-label="settings">
-                    <MoreVertIcon />
-                  </IconButton>
-                }
-                titleTypographyProps={{variant:'h6' }}
-                title={this.props.name}
-              />
-              <CardContent>
-                <Typography >
-                    {this.props.allowedPlans.plans_allowed[this.props.name]["description"] ?
-                    this.props.allowedPlans.plans_allowed[this.props.name]["description"] : "No plan description found."}
-                </Typography>
-              </CardContent>
-              <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Enter the plan parameters!
-                </Typography>
-                <div className={this.state.root}>
-                  <GridList>
-                    {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
-                      (parameterObject: IParameter) => (
-                        <GridListTile style={{ height: 'auto' }}>
-                            {(!parameterObject.default) ?
-                                                  <ListItemIcon>
-                                                    <StarsIcon />
-                                                  </ListItemIcon> : <ListItemIcon/>}
-                            <Grid container spacing={5} direction="row" justify="center">
-                              <Grid item justify="center" spacing={10} xs={5}>
-                                <ListItemText
-                                  primary={parameterObject.name}
-                                  secondary={parameterObject.description ? parameterObject.description : ""}/>
-                              </Grid>
-                              <Grid item justify="center" spacing={1} xs={5}>
-                                <List dense={true}>
-                                  {this._get_widget_list(parameterObject)}
-                                </List>
-                              </Grid>
+    return (
+          <Card raised={true}>
+            <CardContent>
+              <div>
+                <GridList style={{border:5, borderColor: "primary.main"}}>
+                  <GridListTile key="Subheader" cols={2} style={{ color: "black", border:5, height: 'auto'}}>
+                    <Box borderBottom={2}>
+                      <Typography align="center" variant="h5" component="h1" >
+                        {this.props.name}
+                      </Typography>
+                      <Typography align="center" gutterBottom>
+                        {this.props.allowedPlans.plans_allowed[this.props.name]["description"] ?
+                          this.props.allowedPlans.plans_allowed[this.props.name]["description"] : "No plan description found."}
+                      </Typography>
+                    </Box>
+                  </GridListTile>
+                  {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
+                    (parameterObject: IParameter) => (
+                      <GridListTile style={{ height: 'auto', border: 5, borderColor: "primary.main"}}>
+                          {(!parameterObject.default) ?
+                                                <ListItemIcon>
+                                                  <StarsIcon />
+                                                </ListItemIcon> : <ListItemIcon/>}
+                          <Grid container spacing={5} direction="row" justify="center">
+                            <Grid item justify="center" spacing={10} xs={5}>
+                              <ListItemText
+                                primary={parameterObject.name}
+                                secondary={parameterObject.description ? parameterObject.description : ""}/>
                             </Grid>
-                            {!parameterObject.isList ?  <ListItemSecondaryAction>
-                                                          <IconButton onClick={() => this._addParameter(parameterObject.name)}>
-                                                            <AddCircleOutlineIcon />
-                                                          </IconButton>
-                                                        </ListItemSecondaryAction>:<IconButton/>}
-                        </GridListTile>
+                            <Grid item justify="center" spacing={1} xs={5}>
+                              <List dense={true}>
+                                {this._get_widget_list(parameterObject)}
+                              </List>
+                            </Grid>
+                          </Grid>
+                          {!parameterObject.isList ?  <ListItemSecondaryAction>
+                                                        <IconButton onClick={() => this._addParameter(parameterObject.name)}>
+                                                          <AddCircleOutlineIcon />
+                                                        </IconButton>
+                                                      </ListItemSecondaryAction>:<IconButton/>}
+                      </GridListTile>
 
-                    ))}
-                  </GridList>
-                </div>
-                
-              </CardContent>
-              <CardActions disableSpacing>
-                <Button onClick={() => this._submit()}  variant="contained" color="primary">
-                  submit
-                </Button>
-              </CardActions>
-            </Card>
-      );
+                  ))}
+                </GridList>
+              </div>
+              
+            </CardContent>
+            <CardActions disableSpacing>
+              <Button onClick={() => this._submit()}  variant="contained" color="primary">
+                submit
+              </Button>
+            </CardActions>
+          </Card>
+    );
   }
 }
