@@ -6,7 +6,7 @@ import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import { IAllowedPlans, IParameter, ISumbitPlanObject } from './queueserver';
-import { Box, Button, Grid, GridList, GridListTile, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, makeStyles, PropTypes, Select, Switch, TextField } from '@material-ui/core';
+import { Box, Button, Grid, GridList, GridListTile, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, makeStyles, PropTypes, Select, Switch, TextField, Tooltip } from '@material-ui/core';
 import StarsIcon from '@material-ui/icons/Stars';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import theme from './theme';
@@ -139,7 +139,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
           <Card raised={true}>
             <CardContent>
               <div>
-                <GridList spacing={3}>
+                <GridList spacing={3} cellHeight="auto">
                   <GridListTile key="Subheader" cols={2} style={{ color: "black", border:5, height: 'auto'}}>
                     <Box borderBottom={3}>
                       <Typography align="center" variant="h5" component="h1" >
@@ -156,9 +156,10 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                       <GridListTile style={{ height: 'auto' }}>
                         <Grid container spacing={0} direction="row" justify="space-evenly"  alignItems="center" wrap="nowrap">
                           <Grid item justify="flex-start" spacing={1} xs={6}>
-                            <ListItemText
-                              primary={parameterObject.name}
-                              secondary={parameterObject.description ? parameterObject.description : ""}/>
+                            {parameterObject.description ?
+                            <Tooltip title={parameterObject.description} arrow={true}>
+                              <ListItemText primary={parameterObject.name} />
+                            </Tooltip> : <ListItemText primary={parameterObject.name} />}
                           </Grid>
                           <Grid item justify="space-evenly" spacing={1} xs={6}>
                             <List dense={true}>
