@@ -139,9 +139,9 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
           <Card raised={true}>
             <CardContent>
               <div>
-                <GridList style={{border:5, borderColor: "primary.main"}}>
+                <GridList>
                   <GridListTile key="Subheader" cols={2} style={{ color: "black", border:5, height: 'auto'}}>
-                    <Box borderBottom={2}>
+                    <Box borderBottom={3}>
                       <Typography align="center" variant="h5" component="h1" >
                         {this.props.name}
                       </Typography>
@@ -153,28 +153,28 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                   </GridListTile>
                   {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
                     (parameterObject: IParameter) => (
-                      <GridListTile style={{ height: 'auto', border: 5, borderColor: "primary.main"}}>
-                          {(!parameterObject.default) ?
-                                                <ListItemIcon>
-                                                  <StarsIcon />
-                                                </ListItemIcon> : <ListItemIcon/>}
+                      <GridListTile>
+                        <Card>
                           <Grid container spacing={5} direction="row" justify="center">
-                            <Grid item justify="center" spacing={10} xs={5}>
+                            <Grid item justify="center" spacing={5} xs={5}>
                               <ListItemText
                                 primary={parameterObject.name}
                                 secondary={parameterObject.description ? parameterObject.description : ""}/>
                             </Grid>
-                            <Grid item justify="center" spacing={1} xs={5}>
+                            <Grid item justify="center" spacing={5} xs={5}>
                               <List dense={true}>
                                 {this._get_widget_list(parameterObject)}
                               </List>
                             </Grid>
+                            <Grid item justify="center">
+                              {parameterObject.name.slice(-1) === 's' ?  <IconButton onClick={() => this._addParameter(parameterObject.name)}>
+                                                            <AddCircleOutlineIcon />
+                                                          </IconButton>
+                                                          :<IconButton/>}
+                            </Grid>
+
                           </Grid>
-                          {!parameterObject.isList ?  <ListItemSecondaryAction>
-                                                        <IconButton onClick={() => this._addParameter(parameterObject.name)}>
-                                                          <AddCircleOutlineIcon />
-                                                        </IconButton>
-                                                      </ListItemSecondaryAction>:<IconButton/>}
+                        </Card>
                       </GridListTile>
 
                   ))}
