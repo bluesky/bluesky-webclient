@@ -12,6 +12,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { Box, Button, Grid, GridList, GridListTile, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, makeStyles, Paper, Select, Switch, TextField } from '@material-ui/core';
 import StarsIcon from '@material-ui/icons/Stars';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import theme from './theme';
 
 type IProps = {
   name: string;
@@ -27,13 +28,10 @@ interface IState {
   plan: ISumbitPlanObject;
 }
 
+/*
 const useStyles = makeStyles((theme) => ({
   root: {
-    display: 'flex',
-    flexWrap: 'wrap',
-    justifyContent: 'space-around',
-    overflow: 'hidden',
-    backgroundColor: theme.palette.background.paper,
+
   },
   gridList: {
     width: 500,
@@ -43,14 +41,18 @@ const useStyles = makeStyles((theme) => ({
     color: 'rgba(255, 255, 255, 0.54)',
   },
 }));
-
+*/
 
 export class GenericPlanForm extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
       root: {
-        //maxWidth: 345,
+        display: 'flex',
+        flexWrap: 'wrap',
+        justifyContent: 'space-around',
+        overflow: 'hidden',
+        backgroundColor: theme.palette.background.paper,
       },
       media: {
         height: 0,
@@ -175,37 +177,38 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                 <Typography variant="body2" color="textSecondary" component="p">
                   Enter the plan parameters!
                 </Typography>
-                <GridList>
-                  {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
-                    (parameterObject: IParameter) => (
-                      <GridListTile>
-                        <ListItem button={true} divider={true} key={parameterObject.name}>
-                          {(!parameterObject.default) ?
-                                                <ListItemIcon>
-                                                  <StarsIcon />
-                                                </ListItemIcon> : <ListItemIcon/>}
-                          <Grid container spacing={5} direction="row" justify="center">
-                            <Grid item justify="center" spacing={10} xs={5}>
-                              <ListItemText
-                                primary={parameterObject.name}
-                                secondary={parameterObject.description ? parameterObject.description : ""}/>
+                <div className={this.state.root}>
+                  <GridList>
+                    {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
+                      (parameterObject: IParameter) => (
+                        <GridListTile style={{ height: 'auto' }}>
+                            {(!parameterObject.default) ?
+                                                  <ListItemIcon>
+                                                    <StarsIcon />
+                                                  </ListItemIcon> : <ListItemIcon/>}
+                            <Grid container spacing={5} direction="row" justify="center">
+                              <Grid item justify="center" spacing={10} xs={5}>
+                                <ListItemText
+                                  primary={parameterObject.name}
+                                  secondary={parameterObject.description ? parameterObject.description : ""}/>
+                              </Grid>
+                              <Grid item justify="center" spacing={1} xs={5}>
+                                <List dense={true}>
+                                  {this._get_widget_list(parameterObject)}
+                                </List>
+                              </Grid>
                             </Grid>
-                            <Grid item justify="center" spacing={1} xs={5}>
-                              <List dense={true}>
-                                {this._get_widget_list(parameterObject)}
-                              </List>
-                            </Grid>
-                          </Grid>
-                          {!parameterObject.isList ?  <ListItemSecondaryAction>
-                                                        <IconButton onClick={() => this._addParameter(parameterObject.name)}>
-                                                          <AddCircleOutlineIcon />
-                                                        </IconButton>
-                                                      </ListItemSecondaryAction>:<IconButton/>}
-                        </ListItem>
-                      </GridListTile>
+                            {!parameterObject.isList ?  <ListItemSecondaryAction>
+                                                          <IconButton onClick={() => this._addParameter(parameterObject.name)}>
+                                                            <AddCircleOutlineIcon />
+                                                          </IconButton>
+                                                        </ListItemSecondaryAction>:<IconButton/>}
+                        </GridListTile>
 
-                  ))}
-                </GridList>
+                    ))}
+                  </GridList>
+                </div>
+                
               </CardContent>
               <CardActions disableSpacing>
                 <Button onClick={() => this._submit()}  variant="contained" color="primary">
