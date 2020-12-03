@@ -4,12 +4,9 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
 import { IAllowedPlans, IParameter, ISumbitPlanObject } from './queueserver';
-import { Box, Button, Grid, GridList, GridListTile, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, makeStyles, PropTypes, Select, Switch, TextField, Tooltip } from '@material-ui/core';
-import StarsIcon from '@material-ui/icons/Stars';
+import { Box, Button, Grid, GridList, GridListTile, List, ListItem, ListItemText, Select, Switch, TextField, Tooltip } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
-import theme from './theme';
 
 type IProps = {
   name: string;
