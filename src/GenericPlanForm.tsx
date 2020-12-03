@@ -153,28 +153,26 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                   </GridListTile>
                   {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
                     (parameterObject: IParameter) => (
-                      <GridListTile>
-                        <Card>
-                          <Grid container spacing={5} direction="row" justify="center">
-                            <Grid item justify="center" spacing={5} xs={5}>
-                              <ListItemText
-                                primary={parameterObject.name}
-                                secondary={parameterObject.description ? parameterObject.description : ""}/>
-                            </Grid>
-                            <Grid item justify="center" spacing={5} xs={5}>
-                              <List dense={true}>
-                                {this._get_widget_list(parameterObject)}
-                              </List>
-                            </Grid>
-                            <Grid item justify="center">
-                              {parameterObject.name.slice(-1) === 's' ?  <IconButton onClick={() => this._addParameter(parameterObject.name)}>
-                                                            <AddCircleOutlineIcon />
-                                                          </IconButton>
-                                                          :<IconButton/>}
-                            </Grid>
-
+                      <GridListTile style={{ height: 'auto' }}>
+                        <Grid container spacing={5} direction="row" justify="center"  alignItems="center">
+                          <Grid item justify="center" spacing={5} xs={5}>
+                            <ListItemText
+                              primary={parameterObject.name}
+                              secondary={parameterObject.description ? parameterObject.description : ""}/>
                           </Grid>
-                        </Card>
+                          <Grid item justify="center" spacing={5} xs={5}>
+                            <List dense={true}>
+                              {this._get_widget_list(parameterObject)}
+                            </List>
+                          </Grid>
+                          <Grid item justify="center" xs={2}>
+                            {parameterObject.name.slice(-1) === 's' ?  <IconButton onClick={() => this._addParameter(parameterObject.name)}>
+                                                          <AddCircleOutlineIcon />
+                                                        </IconButton>
+                                                        :<IconButton/>}
+                          </Grid>
+
+                        </Grid>
                       </GridListTile>
 
                   ))}
