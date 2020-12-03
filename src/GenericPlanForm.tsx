@@ -154,8 +154,8 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                   {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
                     (parameterObject: IParameter) => (
                       <GridListTile style={{ height: 'auto' }}>
-                        <Grid container spacing={0} direction="row" justify="space-evenly"  alignItems="center" wrap="nowrap">
-                          <Grid item justify="flex-start" spacing={1} xs={6}>
+                        <Grid container spacing={0} direction="row" justify="center" alignItems="center" wrap="nowrap">
+                          <Grid item justify="center" spacing={1} xs={4}>
                             {parameterObject.description ?
                             <Tooltip title={parameterObject.description} arrow={true}>
                               <ListItemText primary={parameterObject.name} />
@@ -166,16 +166,14 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                               {this._get_widget_list(parameterObject)}
                             </List>
                           </Grid>
-                          <Grid item justify="flex-end" xs={2}>
+                          <Grid item justify="flex-end" xs={3}>
                             {parameterObject.name.slice(-1) === 's' ?  <IconButton onClick={() => this._addParameter(parameterObject.name)}>
                                                           <AddCircleOutlineIcon />
                                                         </IconButton>
                                                         :<IconButton/>}
                           </Grid>
-
                         </Grid>
                       </GridListTile>
-
                   ))}
                 </GridList>
               </div>
