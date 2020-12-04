@@ -8,6 +8,7 @@ import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
+import logo from './assets/bluesky-logo.svg'
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -37,6 +38,11 @@ const Header: React.SFC = () => {
                     <Link color="inherit" component={RouterLink} to="/">Home </Link>
                     <Link color="inherit" component={RouterLink} to="/acquire">Acquire</Link>
                 </Typography>
+                <img src={logo} alt="logo" style={{position: 'absolute', 
+                                                    height: '100%',
+                                                    left: '50%', 
+                                                    top: '50%', 
+                                                    transform: 'translate(-50%, -50%)'}}/>
                 <Button color="inherit" component={RouterLink} to="/user">Login</Button>
             </Toolbar>
             </AppBar>
