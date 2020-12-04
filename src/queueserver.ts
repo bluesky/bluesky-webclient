@@ -485,3 +485,9 @@ export const addQueueStop = async(): Promise<IPlanModify> => {
     console.log(res);
     return res.data;
 }
+
+export const clearHistory = async(): Promise<IPlanModify> => {
+    const res = await axiosInstance.post('/history/clear', {});
+    console.log(res);
+    return res.data;
+}

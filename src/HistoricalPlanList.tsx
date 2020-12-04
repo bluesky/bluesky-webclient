@@ -2,7 +2,7 @@ import React from 'react';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { IHistoricalPlan } from './queueserver';
+import { IHistoricalPlan, clearHistory } from './queueserver';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardActions, CardContent, Grid, Paper, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
@@ -23,10 +23,6 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
     };
   }
 
-  private clearHistory(){
-    alert("Clear")
-  }
-
   render() {
     return (
           <Box> 
@@ -40,7 +36,7 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                     </Typography>
                   </Grid>
                   <Grid item>
-                    <Button onClick={() => this.clearHistory()} variant="contained" color="primary">
+                    <Button onClick={() => clearHistory()} variant="contained" color="primary">
                       clear
                     </Button>
                   </Grid>
