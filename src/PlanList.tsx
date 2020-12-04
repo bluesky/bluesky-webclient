@@ -124,6 +124,7 @@ export class PlanList extends React.Component<Plans, IState>{
                         <IconButton onClick={() => this.props.deletePlan(planObject.item_uid)} edge="end" aria-label="comments">
                           <DeleteForeverIcon />
                         </IconButton>
+                        <IconButton />
                       </ListItemSecondaryAction>
                     </AccordionSummary>
                     <AccordionDetails>
