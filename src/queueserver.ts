@@ -274,9 +274,13 @@ export interface IPlanLoadingAction {
  'running_plan': {}}
 */
 export interface IPlanObject {
-    args: (string|number|string[])[],
     name: string,
+    args: (string|number|string[])[],
+    kwargs: { [name: string]: string | number | boolean | (string|number|boolean)[]; }
     item_uid: string
+    item_type: string,
+    user: string,
+    user_group: string,
 }
 
 export interface IPlanObjectsAction {

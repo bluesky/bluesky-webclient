@@ -4,8 +4,6 @@ import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Tooltip from '@material-ui/core/Tooltip';
@@ -134,6 +132,18 @@ export class PlanList extends React.Component<Plans, IState>{
                           </Typography>
                           <Typography>
                             args: {JSON.stringify(planObject.args)}
+                          </Typography>
+                          <Typography>
+                            kwargs: {JSON.stringify(planObject.kwargs)}
+                          </Typography>
+                          <Typography>
+                            user: {planObject.user}
+                          </Typography>
+                          <Typography>
+                            user_group: {planObject.user_group}
+                          </Typography>
+                          <Typography>
+                            item_type: {planObject.item_type}
                           </Typography>
                         </div>
                       </AccordionDetails>
