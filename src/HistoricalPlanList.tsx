@@ -39,7 +39,6 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
             </Card>
             <Box height="2vh"></Box>
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
-            <div>
                 {this.props.history.map(
                     (planObject: IHistoricalPlan) => (
                     <Accordion>
@@ -75,7 +74,6 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                       </AccordionDetails>
                     </Accordion>
                   ))}
-              </div>
             </Paper>
           </Box>
          );}
