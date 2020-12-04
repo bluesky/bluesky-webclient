@@ -15,6 +15,7 @@ import { clearQueue, deletePlan, modifyQueue, modifyEnvironment } from './planac
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import StopIcon from '@material-ui/icons/Stop';
 
 type Plans = {
   plans: IPlanObject[];
@@ -106,9 +107,13 @@ export class PlanList extends React.Component<Plans, IState>{
                 {this.props.plans.map((planObject: IPlanObject, index) => (
                   <Accordion>
                     <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreIcon />}>
-                      <ListItemIcon>
-                        <AccountCircleIcon fontSize='large' />
-                      </ListItemIcon>
+                      {(planObject.action === "queue_stop") ?
+                        <ListItemIcon>
+                          <StopIcon fontSize='large' />
+                        </ListItemIcon> :
+                        <ListItemIcon>
+                          <AccountCircleIcon fontSize='large' />
+                        </ListItemIcon>}
                       {(planObject.item_type === "instruction") ?
                         <Typography component="div" color="primary">
                           <Box textAlign="justify" m={1} fontWeight="fontWeightMedium">
