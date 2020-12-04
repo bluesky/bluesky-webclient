@@ -1,13 +1,9 @@
 import React from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
-import IconButton from '@material-ui/core/IconButton';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IHistoricalPlan } from './queueserver';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardContent, makeStyles, Paper, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 
 type HistoricalPlans = {
@@ -39,7 +35,6 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
             </Card>
             <Box height="2vh"></Box>
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
-            <div>
                 {this.props.history.map(
                     (planObject: IHistoricalPlan) => (
                     <Accordion>
@@ -75,7 +70,6 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                       </AccordionDetails>
                     </Accordion>
                   ))}
-              </div>
             </Paper>
           </Box>
          );}

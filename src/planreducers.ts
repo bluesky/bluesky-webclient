@@ -46,7 +46,12 @@ const initialPlanObjectsState: IPlanObjectsState = {
     plans: [{
         args: [],
         name: "",
-        item_uid: ""
+        item_uid: "",
+        kwargs: {},
+        item_type: "",
+        user: "",
+        user_group: "",
+        action: ""
     }],
     plansLoading: false
 };
@@ -146,10 +151,17 @@ const initialPlanSubmitState: IPlanSubmitState = {
     plan: {
         args: [],
         name: "",
-        item_uid: ""
+        item_uid: "",
+        kwargs: {},
+        item_type: "",
+        user: "",
+        user_group: "",
+        action: ""
     },
     planLoading: false
 };
+
+
 
 
 export const planSubmitReducer: Reducer<IPlanSubmitState, PlanActions> = (

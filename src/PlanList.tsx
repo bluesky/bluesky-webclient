@@ -1,21 +1,21 @@
 import React from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
 import IconButton from '@material-ui/core/IconButton';
 import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
-import KeyboardArrowUpIcon from '@material-ui/icons/KeyboardArrowUp';
-import KeyboardArrowDownIcon from '@material-ui/icons/KeyboardArrowDown';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Tooltip from '@material-ui/core/Tooltip';
 import LoopIcon from '@material-ui/icons/Loop';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IPlanObject, QueueOps, EnvOps, incrementPosition, decrementPosition } from './queueserver';
-import { Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
 import { clearQueue, deletePlan, modifyQueue, modifyEnvironment } from './planactions';
+import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
+import StopIcon from '@material-ui/icons/Stop';
 
 type Plans = {
   plans: IPlanObject[];
@@ -104,29 +104,69 @@ export class PlanList extends React.Component<Plans, IState>{
             </Card>
             <Box height="2vh"></Box>
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
-              <List>
                 {this.props.plans.map((planObject: IPlanObject, index) => (
-                    <ListItem divider={true} button={true} key={planObject.item_uid}>
+                  <Accordion>
+                    <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreIcon />}>
+                      {(planObject.action === "queue_stop") ?
+                        <ListItemIcon>
+                          <StopIcon fontSize='large' color="primary" />
+                        </ListItemIcon> :
                         <ListItemIcon>
                           <AccountCircleIcon fontSize='large' />
-                        </ListItemIcon>
+                        </ListItemIcon>}
+                      {(planObject.item_type === "instruction") ?
+                        <Typography component="div" color="primary">
+                          <Box textAlign="justify" m={1} fontWeight="fontWeightMedium">
+                            {planObject.action}
+                          </Box> 
+                        </Typography> :
                         <ListItemText
                           primary={planObject.name}
-                          secondary={planObject.item_uid.substr(0,8)}/>
-                        <ListItemSecondaryAction>
-                          {(index !== 0) && <IconButton onClick={() => this.handleDecrement(index)} edge="end" aria-label="comments">
-                              <KeyboardArrowUpIcon />
-                            </IconButton>}
-                          {(index !== this.props.plans.length -1) && <IconButton onClick={() => this.handleIncrement(index)} edge="end" aria-label="comments">
-                              <KeyboardArrowDownIcon />
-                            </IconButton>}
-                          <IconButton onClick={() => this.props.deletePlan(planObject.item_uid)} edge="end" aria-label="comments">
-                            <DeleteForeverIcon />
-                          </IconButton>
-                        </ListItemSecondaryAction>
-                    </ListItem>
+                          secondary={planObject.item_uid.substr(0,8)}/>}
+                      <ListItemSecondaryAction>
+                        {(index !== 0) && <IconButton onClick={() => this.handleDecrement(index)} edge="end" aria-label="comments">
+                            <ArrowUpwardIcon />
+                          </IconButton>}
+                        {(index !== this.props.plans.length -1) && <IconButton onClick={() => this.handleIncrement(index)} edge="end" aria-label="comments">
+                            <ArrowDownwardIcon/>
+                          </IconButton>}
+                        <IconButton onClick={() => this.props.deletePlan(planObject.item_uid)} edge="end" aria-label="comments">
+                          <DeleteForeverIcon />
+                        </IconButton>
+                        <IconButton />
+                      </ListItemSecondaryAction>
+                    </AccordionSummary>
+                    <AccordionDetails>
+                        <div>
+                          <Typography>
+                            uid: {planObject.item_uid}
+                          </Typography>
+                          {planObject.args ?
+                            <Typography>
+                              args: {JSON.stringify(planObject.args)}
+                            </Typography> : null }
+                          {planObject.kwargs ?
+                            <Typography>
+                              kwargs: {JSON.stringify(planObject.kwargs)}
+                            </Typography> : null
+                           } 
+                          <Typography>
+                            user: {planObject.user}
+                          </Typography>
+                          <Typography>
+                            user_group: {planObject.user_group}
+                          </Typography>
+                          <Typography>
+                            item_type: {planObject.item_type}
+                          </Typography>
+                          {planObject.action ?
+                            <Typography>
+                              action: {planObject.action}
+                            </Typography> : null}
+                        </div>
+                      </AccordionDetails>
+                  </Accordion>
                 ))}
-            </List>
             </Paper>
           </Box>
          );}
