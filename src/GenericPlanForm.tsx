@@ -28,7 +28,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
     }
   }
 
-  _onChange(e: React.ChangeEvent<HTMLInputElement>) {
+  private onChange(e: React.ChangeEvent<HTMLInputElement>) {
     const { name, id, value } = e.target;
     const new_plan = this.state.plan;
     new_plan.kwargs[name][Number(id)] = value;
@@ -37,7 +37,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
     });
   }
 
-  _addParameter(name: string){
+  private addParameter(name: string){
     const new_plan = this.state.plan;
     new_plan.kwargs[name].push("");
     this.setState({
@@ -45,7 +45,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
     });
   }
 
-  _removeParameter(name: string){
+  private removeParameter(name: string){
     if (this.state.plan.kwargs[name].length > 1){
       const new_plan = this.state.plan;
       new_plan.kwargs[name].pop();
@@ -55,7 +55,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
     }
   }
 
-  _submit(){
+  private submit(){
     const new_plan = this.state.plan;
     new_plan.name = this.props.name;
     this.setState({
@@ -64,31 +64,31 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
     this.props.submitPlan(this.state.plan)
   }
 
-  _get_widget_list(parameterObject: IParameter): JSX.Element[]|JSX.Element {
+  private getWidgetList(parameterObject: IParameter): JSX.Element[]|JSX.Element {
       if (this.state.plan.kwargs[parameterObject.name] === undefined){
         return <Card />
       } else {
         return this.state.plan.kwargs[parameterObject.name].map(() =>
         (<ListItem dense={true}>
-          {this._get_widget(parameterObject)}
+          {this.getWidget(parameterObject)}
         </ListItem>))
       }                                            
   }
 
-  _get_widget(parameterObject: IParameter): JSX.Element {
+  private getWidget(parameterObject: IParameter): JSX.Element {
     const widgetDict : Record<string, JSX.Element> = {'number': <TextField  name={parameterObject.name}
                                                                             id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
                                                                             defaultValue={parameterObject.default}
-                                                                            onChange={this._onChange.bind(this)}
+                                                                            onChange={this.onChange.bind(this)}
                                                                             variant="outlined"/>,
                                                       'boolean': <Switch name={parameterObject.name}
                                                                           id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
                                                                           defaultValue={parameterObject.default}
-                                                                          onChange={this._onChange.bind(this)}/>,
+                                                                          onChange={this.onChange.bind(this)}/>,
                                                       'str': <TextField name={parameterObject.name}
                                                                            id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
                                                                            defaultValue={parameterObject.default}
-                                                                           onChange={this._onChange.bind(this)}
+                                                                           onChange={this.onChange.bind(this)}
                                                                            variant="outlined"/>,
                                                       'enum': <Select name={parameterObject.name}
                                                                       id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
@@ -96,7 +96,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                                                       'default': <TextField name={parameterObject.name}
                                                                             id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
                                                                             defaultValue={parameterObject.default}
-                                                                            onChange={this._onChange.bind(this)}
+                                                                            onChange={this.onChange.bind(this)}
                                                                             margin="dense"
                                                                             variant="outlined"/>}
 
@@ -152,20 +152,20 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                           </Grid>
                           <Grid item justify="space-evenly" spacing={1} xs={6}>
                             <List dense={true}>
-                              {this._get_widget_list(parameterObject)}
+                              {this.getWidgetList(parameterObject)}
                             </List>
                           </Grid>
                             {parameterObject.name.slice(-1) === 's' ?
-                                  <Grid item justify="flex-end" xs={3}>
-                                    <IconButton size="small" onClick={() => this._addParameter(parameterObject.name)}>
-                                      <AddCircleOutlineIcon />
-                                    </IconButton>
-                                    {(this.state.plan.kwargs[parameterObject.name] && this.state.plan.kwargs[parameterObject.name].length > 1) ?
-                                      <IconButton size="small" onClick={() => this._removeParameter(parameterObject.name)}>
-                                        <RemoveCircleOutlineIcon />
-                                      </IconButton> : null
-                                    }
-                                  </Grid> : <Grid item justify="flex-end" xs={3} />}
+                              <Grid item justify="flex-end" xs={3}>
+                                <IconButton size="small" onClick={() => this.addParameter(parameterObject.name)}>
+                                  <AddCircleOutlineIcon />
+                                </IconButton>
+                                {(this.state.plan.kwargs[parameterObject.name] && this.state.plan.kwargs[parameterObject.name].length > 1) ?
+                                  <IconButton size="small" onClick={() => this.removeParameter(parameterObject.name)}>
+                                    <RemoveCircleOutlineIcon />
+                                  </IconButton> : null
+                                }
+                              </Grid> : <Grid item justify="flex-end" xs={3} />}
                         </Grid>
                       </GridListTile>
                   ))}
@@ -174,8 +174,8 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
               
             </CardContent>
             <CardActions disableSpacing style={{ width: '100%', justifyContent: 'flex-end' }}>
-              <Button onClick={() => this._submit()}  variant="contained" color="primary">
-                submit
+              <Button onClick={() => this.submit()}  variant="contained" color="primary">
+                submit plan
               </Button>
             </CardActions>
           </Card>
