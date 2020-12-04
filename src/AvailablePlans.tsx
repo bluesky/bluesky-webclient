@@ -3,7 +3,7 @@ import List from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import { IAllowedPlans, addQueueStop } from './queueserver';
-import { Avatar, Box, Button, Card, CardContent, IconButton, ListItem, ListItemSecondaryAction, MenuItem, Paper, Typography } from '@material-ui/core';
+import { Avatar, Box, Button, Card, CardContent, ListItem, ListItemSecondaryAction, MenuItem, Paper, Typography } from '@material-ui/core';
 import { Star } from '@material-ui/icons';
 
 type Plans = {
