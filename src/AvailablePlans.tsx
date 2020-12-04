@@ -12,7 +12,6 @@ type Plans = {
   handleSelect: (selectedPlan: string) => void;
 }
 
-
 export class AvailablePlans extends React.Component<Plans>{
 
   render() {

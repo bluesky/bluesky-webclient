@@ -1,16 +1,11 @@
 import React from 'react';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { red } from '@material-ui/core/colors';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { IAllowedPlans, IParameter, ISumbitPlanObject } from './queueserver';
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { Box, Button, Grid, List, ListItem, ListItemIcon, ListItemSecondaryAction, ListItemText, Paper, Select, Switch, TextField } from '@material-ui/core';
-import StarsIcon from '@material-ui/icons/Stars';
+import { Box, Button, Grid, GridList, GridListTile, List, ListItem, ListItemText, Select, Switch, TextField, Tooltip } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 
 type IProps = {
@@ -20,10 +15,6 @@ type IProps = {
 }
 
 interface IState {
-  root: any;
-  media: any;
-  avatar: any;
-  expanded: boolean;
   plan: ISumbitPlanObject;
 }
 
@@ -31,17 +22,6 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
-      root: {
-        //maxWidth: 345,
-      },
-      media: {
-        height: 0,
-        paddingTop: '56.25%',
-      },
-      avatar: {
-        backgroundColor: red[500],
-      },
-      expanded: false,
       plan: {name: this.props.name,
              kwargs: {}}
     }
@@ -77,7 +57,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
       if (this.state.plan.kwargs[parameterObject.name] === undefined){
         return <Card />
       } else {
-        return this.state.plan.kwargs[parameterObject.name].map((value: string|number) =>
+        return this.state.plan.kwargs[parameterObject.name].map(() =>
         (<ListItem dense={true}>
           {this._get_widget(parameterObject)}
         </ListItem>))
@@ -133,65 +113,56 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
   }
 
   render(){
-      return (
-            <Card raised={true}>
-              <CardHeader
-                avatar={
-                  <AccountCircleIcon fontSize='large' />
-                }
-                action={
-                  <IconButton aria-label="settings">
-                    <MoreVertIcon />
-                  </IconButton>
-                }
-                titleTypographyProps={{variant:'h6' }}
-                title={this.props.name}
-              />
-              <CardContent>
-                <Typography >
-                    {this.props.allowedPlans.plans_allowed[this.props.name]["description"] ?
-                    this.props.allowedPlans.plans_allowed[this.props.name]["description"] : "No plan description found."}
-                </Typography>
-              </CardContent>
-              <CardContent>
-                <Typography variant="body2" color="textSecondary" component="p">
-                  Enter the plan parameters!
-                </Typography>
-                <List>
+    return (
+          <Card raised={true}>
+            <CardContent>
+              <div>
+                <GridList spacing={3} cellHeight="auto">
+                  <GridListTile key="Subheader" cols={2} style={{ color: "black", border:5, height: 'auto'}}>
+                    <Box borderBottom={3}>
+                      <Typography align="center" variant="h5" component="h1" >
+                        {this.props.name}
+                      </Typography>
+                      <Typography align="center" gutterBottom>
+                        {this.props.allowedPlans.plans_allowed[this.props.name]["description"] ?
+                          this.props.allowedPlans.plans_allowed[this.props.name]["description"] : "No plan description found."}
+                      </Typography>
+                    </Box>
+                  </GridListTile>
                   {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
                     (parameterObject: IParameter) => (
-                      <ListItem divider={true} button={true} key={parameterObject.name}>
-                        {(!parameterObject.default) ?
-                                              <ListItemIcon>
-                                                 <StarsIcon />
-                                              </ListItemIcon> : <ListItemIcon/>}
-                        <Grid container spacing={5} direction="row" justify="center">
-                          <Grid item justify="center" spacing={10} xs={5}>
-                            <ListItemText
-                              primary={parameterObject.name}
-                              secondary={parameterObject.description ? parameterObject.description : ""}/>
+                      <GridListTile style={{ height: 'auto' }}>
+                        <Grid container spacing={0} direction="row" justify="center" alignItems="center" wrap="nowrap">
+                          <Grid item justify="center" spacing={1} xs={4}>
+                            {parameterObject.description ?
+                            <Tooltip title={parameterObject.description} arrow={true}>
+                              <ListItemText primary={parameterObject.name} />
+                            </Tooltip> : <ListItemText primary={parameterObject.name} />}
                           </Grid>
-                          <Grid item justify="center" spacing={1} xs={5}>
+                          <Grid item justify="space-evenly" spacing={1} xs={6}>
                             <List dense={true}>
                               {this._get_widget_list(parameterObject)}
                             </List>
                           </Grid>
+                          <Grid item justify="flex-end" xs={3}>
+                            {parameterObject.name.slice(-1) === 's' ?  <IconButton onClick={() => this._addParameter(parameterObject.name)}>
+                                                          <AddCircleOutlineIcon />
+                                                        </IconButton>
+                                                        :<IconButton/>}
+                          </Grid>
                         </Grid>
-                        {!parameterObject.isList ?  <ListItemSecondaryAction>
-                                                      <IconButton onClick={() => this._addParameter(parameterObject.name)}>
-                                                        <AddCircleOutlineIcon />
-                                                      </IconButton>
-                                                    </ListItemSecondaryAction>:<IconButton/>}
-                      </ListItem>
+                      </GridListTile>
                   ))}
-                </List>
-              </CardContent>
-              <CardActions disableSpacing>
-                <Button onClick={() => this._submit()}  variant="contained" color="primary">
-                  submit
-                </Button>
-              </CardActions>
-            </Card>
-      );
+                </GridList>
+              </div>
+              
+            </CardContent>
+            <CardActions disableSpacing style={{ width: '100%', justifyContent: 'flex-end' }}>
+              <Button onClick={() => this._submit()}  variant="contained" color="primary">
+                submit
+              </Button>
+            </CardActions>
+          </Card>
+    );
   }
 }

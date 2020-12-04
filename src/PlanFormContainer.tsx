@@ -51,17 +51,7 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
   render(){
     return (
       <Paper style={{height: "83vh", overflow: 'auto', margin: "auto"}}>
-        <Box>
-          <Card style={{height: "6vh"}} raised={true}>
-            <CardContent>
-              <Typography align="center" variant="h5" component="h1" gutterBottom>
-                Plan Form
-              </Typography>
-            </CardContent>
-          </Card>
-        <Box height="2vh"></Box>
           {this.getPlanForm()}
-        </Box>
       </Paper>)
   }
 }
