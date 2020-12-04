@@ -109,7 +109,7 @@ export class PlanList extends React.Component<Plans, IState>{
                     <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreIcon />}>
                       {(planObject.action === "queue_stop") ?
                         <ListItemIcon>
-                          <StopIcon fontSize='large' />
+                          <StopIcon fontSize='large' color="primary" />
                         </ListItemIcon> :
                         <ListItemIcon>
                           <AccountCircleIcon fontSize='large' />
