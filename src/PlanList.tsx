@@ -130,12 +130,15 @@ export class PlanList extends React.Component<Plans, IState>{
                           <Typography>
                             uid: {planObject.item_uid}
                           </Typography>
-                          <Typography>
-                            args: {JSON.stringify(planObject.args)}
-                          </Typography>
-                          <Typography>
-                            kwargs: {JSON.stringify(planObject.kwargs)}
-                          </Typography>
+                          {planObject.args ?
+                            <Typography>
+                              args: {JSON.stringify(planObject.args)}
+                            </Typography> : null }
+                          {planObject.kwargs ?
+                            <Typography>
+                              kwargs: {JSON.stringify(planObject.kwargs)}
+                            </Typography> : null
+                           } 
                           <Typography>
                             user: {planObject.user}
                           </Typography>
@@ -145,6 +148,10 @@ export class PlanList extends React.Component<Plans, IState>{
                           <Typography>
                             item_type: {planObject.item_type}
                           </Typography>
+                          {planObject.action ?
+                            <Typography>
+                              action: {planObject.action}
+                            </Typography> : null}
                         </div>
                       </AccordionDetails>
                   </Accordion>

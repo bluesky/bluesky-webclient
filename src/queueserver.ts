@@ -281,6 +281,7 @@ export interface IPlanObject {
     item_type: string,
     user: string,
     user_group: string,
+    action: string,
 }
 
 export interface IPlanObjectsAction {

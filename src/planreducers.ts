@@ -51,6 +51,7 @@ const initialPlanObjectsState: IPlanObjectsState = {
         item_type: "",
         user: "",
         user_group: "",
+        action: ""
     }],
     plansLoading: false
 };
@@ -155,6 +156,7 @@ const initialPlanSubmitState: IPlanSubmitState = {
         item_type: "",
         user: "",
         user_group: "",
+        action: ""
     },
     planLoading: false
 };
