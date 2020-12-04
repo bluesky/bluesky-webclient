@@ -5,7 +5,7 @@ import { IPlanState, IPlanObjectsState,
          IAllowedPlansState, AllowedPlansActions, 
          AllowedPlansActionTypes, IAllowedPlans,
          IHistoricalPlansState, HistoricalPlansActions, 
-         HistoricalPlansActionTypes, IHistoricalPlan } from "./queueserver";
+         HistoricalPlansActionTypes } from "./queueserver";
 
 const initialPlanState: IPlanState = {
     plan: {

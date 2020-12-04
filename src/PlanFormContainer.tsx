@@ -1,9 +1,8 @@
 import React from 'react';
 import { IAllowedPlans, ISumbitPlanObject } from './queueserver';
 import { GenericPlanForm } from './GenericPlanForm';
-import { Box, Card, CardContent, CardHeader, Paper, Typography } from '@material-ui/core';
+import { Card, CardContent, CardHeader, Paper, Typography } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
-import { red } from '@material-ui/core/colors';
 
 type IProps = {
   name: string;
