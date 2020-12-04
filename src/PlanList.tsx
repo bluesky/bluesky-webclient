@@ -109,9 +109,15 @@ export class PlanList extends React.Component<Plans, IState>{
                       <ListItemIcon>
                         <AccountCircleIcon fontSize='large' />
                       </ListItemIcon>
-                      <ListItemText
-                        primary={planObject.action ? planObject.action : planObject.name}
-                        secondary={planObject.item_uid.substr(0,8)}/>
+                      {(planObject.item_type === "instruction") ?
+                        <Typography component="div" color="primary">
+                          <Box textAlign="justify" m={1} fontWeight="fontWeightMedium">
+                            {planObject.action}
+                          </Box> 
+                        </Typography> :
+                        <ListItemText
+                          primary={planObject.name}
+                          secondary={planObject.item_uid.substr(0,8)}/>}
                       <ListItemSecondaryAction>
                         {(index !== 0) && <IconButton onClick={() => this.handleDecrement(index)} edge="end" aria-label="comments">
                             <ArrowUpwardIcon />
