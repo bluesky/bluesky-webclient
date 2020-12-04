@@ -110,7 +110,7 @@ export class PlanList extends React.Component<Plans, IState>{
                         <AccountCircleIcon fontSize='large' />
                       </ListItemIcon>
                       <ListItemText
-                        primary={planObject.name}
+                        primary={planObject.action ? planObject.action : planObject.name}
                         secondary={planObject.item_uid.substr(0,8)}/>
                       <ListItemSecondaryAction>
                         {(index !== 0) && <IconButton onClick={() => this.handleDecrement(index)} edge="end" aria-label="comments">
