@@ -7,6 +7,7 @@ import Typography from '@material-ui/core/Typography';
 import { IAllowedPlans, IParameter, ISumbitPlanObject } from './queueserver';
 import { Box, Button, Grid, GridList, GridListTile, List, ListItem, ListItemText, Select, Switch, TextField, Tooltip } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
+import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
 type IProps = {
   name: string;
@@ -42,6 +43,16 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
     this.setState({
         plan: new_plan
     });
+  }
+
+  _removeParameter(name: string){
+    if (this.state.plan.kwargs[name].length > 1){
+      const new_plan = this.state.plan;
+      new_plan.kwargs[name].pop();
+      this.setState({
+          plan: new_plan
+      });
+    }
   }
 
   _submit(){
@@ -144,12 +155,17 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                               {this._get_widget_list(parameterObject)}
                             </List>
                           </Grid>
-                          <Grid item justify="flex-end" xs={3}>
-                            {parameterObject.name.slice(-1) === 's' ?  <IconButton onClick={() => this._addParameter(parameterObject.name)}>
-                                                          <AddCircleOutlineIcon />
-                                                        </IconButton>
-                                                        :<IconButton/>}
-                          </Grid>
+                            {parameterObject.name.slice(-1) === 's' ?
+                                  <Grid item justify="flex-end" xs={3}>
+                                    <IconButton size="small" onClick={() => this._addParameter(parameterObject.name)}>
+                                      <AddCircleOutlineIcon />
+                                    </IconButton>
+                                    {(this.state.plan.kwargs[parameterObject.name] && this.state.plan.kwargs[parameterObject.name].length > 1) ?
+                                      <IconButton size="small" onClick={() => this._removeParameter(parameterObject.name)}>
+                                        <RemoveCircleOutlineIcon />
+                                      </IconButton> : null
+                                    }
+                                  </Grid> : <Grid item justify="flex-end" xs={3} />}
                         </Grid>
                       </GridListTile>
                   ))}
