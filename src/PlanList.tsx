@@ -1,6 +1,4 @@
 import React from 'react';
-import List from '@material-ui/core/List';
-import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import ListItemSecondaryAction from '@material-ui/core/ListItemSecondaryAction';
@@ -17,6 +15,8 @@ import { IPlanObject, QueueOps, EnvOps, incrementPosition, decrementPosition } f
 import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
 import { clearQueue, deletePlan, modifyQueue, modifyEnvironment } from './planactions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
+import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 
 type Plans = {
   plans: IPlanObject[];
@@ -116,10 +116,10 @@ export class PlanList extends React.Component<Plans, IState>{
                         secondary={planObject.item_uid.substr(0,8)}/>
                       <ListItemSecondaryAction>
                         {(index !== 0) && <IconButton onClick={() => this.handleDecrement(index)} edge="end" aria-label="comments">
-                            <KeyboardArrowUpIcon />
+                            <ArrowUpwardIcon />
                           </IconButton>}
                         {(index !== this.props.plans.length -1) && <IconButton onClick={() => this.handleIncrement(index)} edge="end" aria-label="comments">
-                            <KeyboardArrowDownIcon />
+                            <ArrowDownwardIcon/>
                           </IconButton>}
                         <IconButton onClick={() => this.props.deletePlan(planObject.item_uid)} edge="end" aria-label="comments">
                           <DeleteForeverIcon />
