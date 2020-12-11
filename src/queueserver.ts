@@ -4,6 +4,9 @@ var axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_QUEUE_API_PREFIX,
 });
 
+var axiosPreviewInstance = axios.create({
+    baseURL: process.env.REACT_APP_PREVIEW_API_PREFIX,
+});
 /*******************************************/
 
 export enum AllowedPlansActionTypes {
@@ -143,6 +146,10 @@ export interface IAllowedPlansState {
     readonly plansLoading: boolean;
 }
 
+export interface IPreviewsState {
+    readonly previews: { [run_uid: string]: string[]; } ;
+}
+
 export const getAllowedPlans = async(): Promise<IAllowedPlans> => {
     const res = await axiosInstance.get('/plans/allowed',
         {});
@@ -216,6 +223,7 @@ export enum PlanActionTypes {
     DELETEPLAN = "PLAN/DELETEPLAN",
     MODIFYENVIRONMENT = "PLANS/MODIFYENVIRONMENT",
     MODIFYQUEUE = "PLANS/MODIFYQUEUE",
+    GETPREVIEWS = "PREVIEWS/GETPREVIEWS",
 }
 
 
@@ -325,6 +333,11 @@ export interface IPlanModifyQueueLoadingAction {
     type: PlanActionTypes.LOADING
 }
 
+export interface IPlanGetPreviewsAction {
+    type: PlanActionTypes.GETPREVIEWS,
+    previews: string[]
+}
+
 export type PlanActions =
   | IPlanGetOverviewAction
   | IPlanLoadingAction
@@ -336,6 +349,7 @@ export type PlanActions =
   | IPlanModifyEnvironmentLoadingAction
   | IPlanModifyQueueAction
   | IPlanModifyQueueLoadingAction
+  | IPlanGetPreviewsAction
 
 
 export interface IPlanState {
@@ -497,8 +511,8 @@ export const clearHistory = async(): Promise<IPlanModify> => {
     return res.data;
 }
 
-export const getPreviews = async(plan_uid: string): Promise<IPlanModify> => {
-    const res = await axiosInstance.post(`/${plan_uid}`, {});
+export const getPreviews = async(run_uid: string): Promise<IPlanModify> => {
+    const res = await axiosPreviewInstance.post(`/${run_uid}`, {});
     console.log(res);
     return res.data;
 }

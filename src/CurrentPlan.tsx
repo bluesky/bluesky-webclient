@@ -121,7 +121,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             subheader={this.getUid(this.props.plans)}
           />
           <CardContent>
-            <Previews run_uid={"eb4f9df4-3dfd-4b99-bf65-227573796fc3"} enabled={true} />
+            <Previews run_uid={"eb4f9df4-3dfd-4b99-bf65-227573796fc3"} enabled={true} live={true}/>
             <Typography variant="body2" color="textSecondary" component="p">
               Something interesting is happening!
             </Typography>

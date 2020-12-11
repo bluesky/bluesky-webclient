@@ -35,6 +35,7 @@ function TabPanel(props: TabPanelProps) {
 type PreviewsProps = {
   run_uid: string;
   enabled: boolean;
+  live: boolean;
 }
   
 type PreviewsState = {
@@ -48,7 +49,7 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
     super(props);
     this.state = {
       value: 0,
-      previews: []
+      previews: ["det v motor.png"]
     };
   }
 
