@@ -20,9 +20,12 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Box } from '@material-ui/core';
 import { Previews } from './Previews';
+import { getPreviews } from './planactions';
 
 type Plans = {
   plans: IPlanObject[];
+  previews: {[uid: string]: string[]} 
+  getPreviews: typeof getPreviews;
 }
 
 interface IState {
@@ -121,7 +124,8 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             subheader={this.getUid(this.props.plans)}
           />
           <CardContent>
-            <Previews run_uid={"eb4f9df4-3dfd-4b99-bf65-227573796fc3"} enabled={true} live={true}/>
+            <Previews previews={this.props.previews} getPreviews={this.props.getPreviews} 
+                      runUid={"eb4f9df4-3dfd-4b99-bf65-227573796fc3"} enabled={true} live={true}/>
             <Typography variant="body2" color="textSecondary" component="p">
               Something interesting is happening!
             </Typography>

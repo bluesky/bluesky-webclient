@@ -6,9 +6,12 @@ import { IHistoricalPlan, clearHistory } from './queueserver';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardContent, Grid, Paper, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Previews } from './Previews';
+import { getPreviews } from './planactions';
 
 type HistoricalPlans = {
   history: IHistoricalPlan[];
+  previews: {[uid: string]: string[]};
+  getPreviews: typeof getPreviews;
 }
 
 type HistoricalPlansState = {
@@ -79,7 +82,8 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                           <Typography>
                             run_uids: {JSON.stringify(planObject.result.run_uids)}
                           </Typography>
-                          <Previews run_uid={planObject.result.run_uids[0]} enabled={true} live={false}/>
+                          <Previews previews={this.props.previews} getPreviews={this.props.getPreviews} 
+                                    runUid={planObject.result.run_uids[0]} enabled={true} live={false}/>
                         </div>
                       </AccordionDetails>
                     </Accordion>

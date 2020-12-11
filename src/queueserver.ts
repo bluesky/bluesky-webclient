@@ -138,7 +138,7 @@ export interface IAllowedPlan {
 export interface IAllowedPlans {
     success: boolean;
     msg: string;
-    plans_allowed: { [name: string]: IAllowedPlan; } 
+    plans_allowed: { [name: string]: IAllowedPlan; }; 
 }
 
 export interface IAllowedPlansState {
@@ -147,7 +147,7 @@ export interface IAllowedPlansState {
 }
 
 export interface IPreviewsState {
-    readonly previews: { [run_uid: string]: string[]; } ;
+    readonly previews: { [uid: string]: string[]; };
 }
 
 export const getAllowedPlans = async(): Promise<IAllowedPlans> => {
@@ -383,7 +383,7 @@ export interface IPlanSubmitState {
 
 export interface ISumbitPlanObject {
     name: string;
-    kwargs: {[name: string]: (string|number)[]} 
+    kwargs: {[name: string]: (string|number)[]};
 }
 
 export interface ISumbitPlanObjectFixed {
@@ -511,8 +511,14 @@ export const clearHistory = async(): Promise<IPlanModify> => {
     return res.data;
 }
 
-export const getPreviews = async(run_uid: string): Promise<IPlanModify> => {
-    const res = await axiosPreviewInstance.post(`/${run_uid}`, {});
+
+export interface IGetPreviews {
+    previews: string[];
+    success: boolean;
+}
+
+export const getPreviews = async(uid: string): Promise<IGetPreviews> => {
+    const res = await axiosPreviewInstance.post(`/${uid}`, {});
     console.log(res);
     return res.data;
 }

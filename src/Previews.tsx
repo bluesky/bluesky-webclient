@@ -1,10 +1,10 @@
 import React from 'react';
-import { makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
+import { getPreviews } from './planactions';
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -33,14 +33,15 @@ function TabPanel(props: TabPanelProps) {
 }
 
 type PreviewsProps = {
-  run_uid: string;
+  getPreviews: typeof getPreviews;
+  runUid: string;
+  previews: {[uid: string]: string[]} 
   enabled: boolean;
   live: boolean;
 }
   
 type PreviewsState = {
   value: number;
-  previews: string[];
 }
 
 export class Previews extends React.Component<PreviewsProps, PreviewsState> {
@@ -49,7 +50,6 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
     super(props);
     this.state = {
       value: 0,
-      previews: ["det v motor.png"]
     };
   }
 
@@ -57,8 +57,26 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
     this.setState({value: newValue});
   };
 
+  private getPreviewsInternal(){
+      if (this.props.enabled){
+        if (this.props.live){
+          alert(JSON.stringify(this.props.previews))
+          this.props.getPreviews()
+        } else {
+          if (this.props.previews[this.props.runUid].length === 0){
+            alert("ENABLED")
+            this.props.getPreviews()
+          }
+        }
+      }
+  }
+
+  componentDidMount() {
+    setInterval(this.getPreviewsInternal, 5000);
+  }
+
   render(){ 
-    if (this.state.previews.length > 0){
+    if (this.props.previews[this.props.runUid].length > 0){
       return (
         <div>
           <AppBar position="static" color="default">
@@ -71,16 +89,16 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
               scrollButtons="auto"
               aria-label="scrollable auto tabs example"
             >
-                {this.state.previews.map(
+                {this.props.previews[this.props.runUid].map(
                 (preview: string) => (
                     <Tab label={preview} />
                 ))}
             </Tabs>
           </AppBar>
-          {this.state.previews.map(
+          {this.props.previews[this.props.runUid].map(
                 (preview: string, index: number) => (
                   <TabPanel value={this.state.value} index={index}>
-                    <img src={`http://localhost:8000/${this.props.run_uid}/${preview}`} width="100%" />
+                    <img src={`http://localhost:8000/${this.props.runUid}/${preview}`} width="100%" />
                   </TabPanel>
                 ))}
         </div>

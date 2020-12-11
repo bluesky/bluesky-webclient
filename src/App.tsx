@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import { IApplicationState } from './store';
-import { getOverview, getQueuedPlans, getHistoricalPlans } from './planactions';
+import { getOverview, getQueuedPlans, getHistoricalPlans, getPreviews } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
 import { IPlan, IPlanObject, IHistoricalPlan } from './queueserver';
 import { PlanList } from './PlanList';
@@ -35,12 +35,14 @@ interface IProps extends RouteComponentProps {
   deletePlan: typeof deletePlan;
   modifyEnvironment: typeof modifyEnvironment;
   modifyQueue: typeof modifyQueue;
+  getPreviews: typeof getPreviews;
   loadingPlan: boolean;
   plan: IPlan;
   loadingPlans: boolean;
   plans: IPlanObject[];
   loadingHistoricalPlans: boolean;
   historicalPlans: IHistoricalPlan[];
+  previews: {[uid: string]: string[];};
 }
 
 class App extends React.Component<IProps> {
@@ -54,10 +56,12 @@ class App extends React.Component<IProps> {
               modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}> </PlanList>
             </Grid>
             <Grid item justify="center" spacing={10} xs={5}>
-              <CurrentPlan plans={this.props.plans}></CurrentPlan> 
+              <CurrentPlan previews={this.props.previews} getPreviews={this.props.getPreviews} 
+                           plans={this.props.plans}></CurrentPlan> 
             </Grid>
             <Grid item justify="center" spacing={10} xs={3}>    
-              <HistoricalPlanList history={this.props.historicalPlans}> </HistoricalPlanList>
+              <HistoricalPlanList previews={this.props.previews} getPreviews={this.props.getPreviews}
+                                  history={this.props.historicalPlans}> </HistoricalPlanList>
             </Grid>   
           </Grid>
           <Copyright/>
@@ -80,7 +84,8 @@ const mapStateToProps = (store: IApplicationState) => {
     loadingPlans: store.plans.plansLoading,
     plans: store.plans.plans,
     loadingHistoricalPlans: store.historicalPlans.plansLoading,
-    historicalPlans: store.historicalPlans.historicalPlans
+    historicalPlans: store.historicalPlans.historicalPlans,
+    previews: store.previews.previews
   };
 };
 
@@ -92,7 +97,8 @@ const mapDispatchToProps = (dispatch: any) => {
     modifyEnvironment: () => dispatch(modifyEnvironment()),
     modifyQueue: () => dispatch(modifyQueue()),
     getQueuedPlans: () => dispatch(getQueuedPlans()),
-    getHistoricalPlans: () => dispatch(getHistoricalPlans())
+    getHistoricalPlans: () => dispatch(getHistoricalPlans()),
+    getPreviews: () => dispatch(getPreviews())
   };
 };
 
