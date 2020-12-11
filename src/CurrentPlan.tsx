@@ -16,7 +16,6 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { IPlanObject } from './queueserver';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Box } from '@material-ui/core';
@@ -122,7 +121,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             subheader={this.getUid(this.props.plans)}
           />
           <CardContent>
-            <Previews run_uid={"eb4f9df4-3dfd-4b99-bf65-227573796fc3"} previews={["det v motor.png", "det v motor.png"]} />
+            <Previews run_uid={"eb4f9df4-3dfd-4b99-bf65-227573796fc3"} enabled={true} />
             <Typography variant="body2" color="textSecondary" component="p">
               Something interesting is happening!
             </Typography>

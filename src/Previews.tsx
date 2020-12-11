@@ -34,11 +34,12 @@ function TabPanel(props: TabPanelProps) {
 
 type PreviewsProps = {
   run_uid: string;
-  previews: string[];
+  enabled: boolean;
 }
   
 type PreviewsState = {
   value: number;
+  previews: string[];
 }
 
 export class Previews extends React.Component<PreviewsProps, PreviewsState> {
@@ -47,6 +48,7 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
     super(props);
     this.state = {
       value: 0,
+      previews: []
     };
   }
 
@@ -55,30 +57,35 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
   };
 
   render(){ 
+    if (this.state.previews.length > 0){
       return (
-    <div>
-      <AppBar position="static" color="default">
-        <Tabs
-          value={this.state.value}
-          onChange={this.handleChange}
-          indicatorColor="primary"
-          textColor="primary"
-          variant="scrollable"
-          scrollButtons="auto"
-          aria-label="scrollable auto tabs example"
-        >
-            {this.props.previews.map(
-            (preview: string) => (
-                <Tab label={preview} />
-            ))}
-        </Tabs>
-      </AppBar>
-      {this.props.previews.map(
-            (preview: string, index: number) => (
-              <TabPanel value={this.state.value} index={index}>
-                <img src={`http://localhost:8000/${this.props.run_uid}/${preview}`} width="100%" />
-              </TabPanel>
-            ))}
-    </div>
-  );}
+        <div>
+          <AppBar position="static" color="default">
+            <Tabs
+              value={this.state.value}
+              onChange={this.handleChange}
+              indicatorColor="primary"
+              textColor="primary"
+              variant="scrollable"
+              scrollButtons="auto"
+              aria-label="scrollable auto tabs example"
+            >
+                {this.state.previews.map(
+                (preview: string) => (
+                    <Tab label={preview} />
+                ))}
+            </Tabs>
+          </AppBar>
+          {this.state.previews.map(
+                (preview: string, index: number) => (
+                  <TabPanel value={this.state.value} index={index}>
+                    <img src={`http://localhost:8000/${this.props.run_uid}/${preview}`} width="100%" />
+                  </TabPanel>
+                ))}
+        </div>
+      );
+    } else {
+      return null;
+    }
+      }
 }

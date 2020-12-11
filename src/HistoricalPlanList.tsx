@@ -12,7 +12,7 @@ type HistoricalPlans = {
 }
 
 type HistoricalPlansState = {
-  expanded: string;
+  expanded: boolean;
 }
 
 export class HistoricalPlanList extends React.Component<HistoricalPlans, HistoricalPlansState>{
@@ -20,7 +20,7 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
   public constructor(props: HistoricalPlans) {
     super(props);
     this.state = {
-      expanded: "",
+      expanded: false,
     };
   }
 
@@ -79,7 +79,7 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                           <Typography>
                             run_uids: {JSON.stringify(planObject.result.run_uids)}
                           </Typography>
-                          <Previews run_uid={planObject.result.run_uids[0]} previews={["det v motor.png", "det v motor.png"]} />
+                          <Previews run_uid={planObject.result.run_uids[0]} enabled={true}/>
                         </div>
                       </AccordionDetails>
                     </Accordion>

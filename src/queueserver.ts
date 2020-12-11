@@ -497,7 +497,7 @@ export const clearHistory = async(): Promise<IPlanModify> => {
     return res.data;
 }
 
-export const getRuns = async(plan_uid: string): Promise<IPlanModify> => {
+export const getPreviews = async(plan_uid: string): Promise<IPlanModify> => {
     const res = await axiosInstance.post(`/${plan_uid}`, {});
     console.log(res);
     return res.data;
