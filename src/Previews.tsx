@@ -50,11 +50,9 @@ type PreviewsState = {
 }
 
 export class Previews extends React.Component<PreviewsProps, PreviewsState> {
-  classes: any;
 
   public constructor(props: PreviewsProps) {
     super(props);
-    const classes = useStyles();
     this.state = {
       value: 0,
     };
@@ -66,7 +64,7 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
 
   render(){ 
       return (
-    <div className={this.classes.root}>
+    <div>
       <AppBar position="static" color="default">
         <Tabs
           value={this.state.value}
