@@ -58,24 +58,30 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
   };
 
   private getPreviewsInternal(){
+    console.log(JSON.stringify(this.props.previews));
+    if ((this.props.previews === undefined) || (this.props.runUid === undefined)){
+      return;
+    } else {
       if (this.props.enabled){
         if (this.props.live){
-          alert(JSON.stringify(this.props.previews))
           this.props.getPreviews()
         } else {
-          if (this.props.previews[this.props.runUid].length === 0){
-            alert("ENABLED")
+          if (this.props.previews[this.props.runUid] === undefined){
             this.props.getPreviews()
           }
         }
       }
+    }
   }
 
   componentDidMount() {
-    setInterval(this.getPreviewsInternal, 5000);
+    setInterval(this.getPreviewsInternal.bind(this), 5000);
   }
 
   render(){ 
+    if ((this.props.previews === undefined) || (this.props.runUid === undefined) || (this.props.previews[this.props.runUid] === undefined)){
+      return null;
+    }
     if (this.props.previews[this.props.runUid].length > 0){
       return (
         <div>
