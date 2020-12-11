@@ -20,6 +20,7 @@ import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Box } from '@material-ui/core';
+import { Previews } from './Previews';
 
 type Plans = {
   plans: IPlanObject[];
@@ -120,13 +121,8 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             title={this.getName(this.props.plans)}
             subheader={this.getUid(this.props.plans)}
           />
-          <CardMedia
-            className={this.state.media}
-            image={Thumb}
-            title="Thumbnail Image"
-            component="img"
-          />
           <CardContent>
+            <Previews run_uid={"eb4f9df4-3dfd-4b99-bf65-227573796fc3"} previews={["det v motor.png", "det v motor.png"]} />
             <Typography variant="body2" color="textSecondary" component="p">
               Something interesting is happening!
             </Typography>

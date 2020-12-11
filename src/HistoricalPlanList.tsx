@@ -28,7 +28,6 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
     return (
           <Box> 
             <Card style={{height: "6vh"}} raised={true}>
-
               <CardContent>
                 <Grid container spacing={5} direction="row" justify="space-evenly" alignContent="center">
                   <Grid item>
@@ -80,7 +79,7 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                           <Typography>
                             run_uids: {JSON.stringify(planObject.result.run_uids)}
                           </Typography>
-                          <Previews run_uid="27221219-8b16-4cd6-8b7c-9d8d38b701d4" previews={["det v motor.png", "det v motor.png"]} />
+                          <Previews run_uid={planObject.result.run_uids[0]} previews={["det v motor.png", "det v motor.png"]} />
                         </div>
                       </AccordionDetails>
                     </Accordion>
@@ -89,14 +88,3 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
           </Box>
          );}
 }
-
-
-/*
-    name: string;
-    args: string | number | boolean | (string|number|boolean)[]; 
-    kwargs: { [name: string]: string | number | boolean | (string|number|boolean)[]; }
-    item_uid: string;
-    user: string;
-    user_group: string;
-    exit_status: string;
-  */
