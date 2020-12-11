@@ -518,7 +518,7 @@ export interface IGetPreviews {
 }
 
 export const getPreviews = async(uid: string): Promise<IGetPreviews> => {
-    const res = await axiosPreviewInstance.post(`/${uid}`, {});
+    const res = await axiosPreviewInstance.get(`/${uid}`, {});
     console.log(res);
     return res.data;
 }
