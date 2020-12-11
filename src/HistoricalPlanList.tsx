@@ -5,6 +5,7 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IHistoricalPlan, clearHistory } from './queueserver';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardActions, CardContent, Grid, Paper, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import ScrollableTabsButtonAuto from './ScrollableTabs';
 
 type HistoricalPlans = {
   history: IHistoricalPlan[];
@@ -74,8 +75,12 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                             user_group: {planObject.user_group}
                           </Typography>
                           <Typography>
-                            exit_status: {planObject.exit_status}
+                            exit_status: {planObject.result.exit_status}
                           </Typography>
+                          <Typography>
+                            run_uids: {JSON.stringify(planObject.result.run_uids)}
+                          </Typography>
+                            <img src={`http://localhost:8000/27221219-8b16-4cd6-8b7c-9d8d38b701d4/det v motor.png`} width="100%" />
                         </div>
                       </AccordionDetails>
                     </Accordion>

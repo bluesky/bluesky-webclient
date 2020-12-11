@@ -177,6 +177,11 @@ export interface IHistoricalPlansGetAction {
     historicalPlans: IHistoricalPlan[]
 }
 
+export interface IResult{
+    exit_status: string;
+    run_uids: string[]
+}
+
 export interface IHistoricalPlan {
     name: string;
     args: string | number | boolean | (string|number|boolean)[]; 
@@ -184,7 +189,7 @@ export interface IHistoricalPlan {
     item_uid: string;
     user: string;
     user_group: string;
-    exit_status: string;
+    result: IResult;
 }
 
 export interface IHistoricalPlansState {
@@ -488,6 +493,12 @@ export const addQueueStop = async(): Promise<IPlanModify> => {
 
 export const clearHistory = async(): Promise<IPlanModify> => {
     const res = await axiosInstance.post('/history/clear', {});
+    console.log(res);
+    return res.data;
+}
+
+export const getRuns = async(plan_uid: string): Promise<IPlanModify> => {
+    const res = await axiosInstance.post(`/${plan_uid}`, {});
     console.log(res);
     return res.data;
 }

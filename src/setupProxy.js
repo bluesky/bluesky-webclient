@@ -21,4 +21,14 @@ module.exports = function(app) {
       },
     })
   );
+  app.use(
+    '/preview',
+    createProxyMiddleware({
+      target: 'http://localhost:8000',
+      changeOrigin: true,
+      pathRewrite: {
+        "^/preview": "",
+      },
+    })
+  );
 };
