@@ -5,13 +5,13 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import { IApplicationState } from './store';
-import { getOverview, getQueuedPlans, getHistoricalPlans, getPreviews } from './planactions';
+import { getOverview, getQueuedPlans, getHistoricalPlans, getPreviewsAction,
+         clearQueue, deletePlan, modifyEnvironment, modifyQueue } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
 import { IPlan, IPlanObject, IHistoricalPlan } from './queueserver';
 import { PlanList } from './PlanList';
 import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
-import { clearQueue, deletePlan, modifyEnvironment, modifyQueue } from './planactions';
 import { Grid } from '@material-ui/core';
 
 function Copyright() {
@@ -35,7 +35,7 @@ interface IProps extends RouteComponentProps {
   deletePlan: typeof deletePlan;
   modifyEnvironment: typeof modifyEnvironment;
   modifyQueue: typeof modifyQueue;
-  getPreviews: typeof getPreviews;
+  getPreviewsAction: typeof getPreviewsAction;
   loadingPlan: boolean;
   plan: IPlan;
   loadingPlans: boolean;
@@ -56,11 +56,11 @@ class App extends React.Component<IProps> {
               modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}> </PlanList>
             </Grid>
             <Grid item justify="center" spacing={10} xs={5}>
-              <CurrentPlan previews={this.props.previews} getPreviews={this.props.getPreviews} 
+              <CurrentPlan previews={this.props.previews} getPreviewsAction={this.props.getPreviewsAction} 
                            plans={this.props.plans}></CurrentPlan> 
             </Grid>
             <Grid item justify="center" spacing={10} xs={3}>    
-              <HistoricalPlanList previews={this.props.previews} getPreviews={this.props.getPreviews}
+              <HistoricalPlanList previews={this.props.previews} getPreviewsAction={this.props.getPreviewsAction}
                                   history={this.props.historicalPlans}> </HistoricalPlanList>
             </Grid>   
           </Grid>
@@ -98,7 +98,7 @@ const mapDispatchToProps = (dispatch: any) => {
     modifyQueue: () => dispatch(modifyQueue()),
     getQueuedPlans: () => dispatch(getQueuedPlans()),
     getHistoricalPlans: () => dispatch(getHistoricalPlans()),
-    getPreviews: () => dispatch(getPreviews())
+    getPreviews: () => dispatch(getPreviewsAction())
   };
 };
 

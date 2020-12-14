@@ -116,10 +116,14 @@ export const deletePlan: ActionCreator<ThunkAction<Promise<AnyAction>, null, nul
     };
 };
 
-export const getPreviews: ActionCreator<ThunkAction<Promise<AnyAction>, string[], null, IPlanGetPreviewsAction>> = (run_uid: string) => {
+export const getPreviewsAction: ActionCreator<ThunkAction<Promise<AnyAction>, IPreviewsState, null, any>> = (runUid: string) => {
     return async (dispatch: Dispatch) => {
-        dispatch(loading());
-        const previewState = await getPreviewsAPI(run_uid);
+        if (runUid === undefined){
+            console.log('undefined')
+        } else {
+            console.log('defined')
+        }
+        const previewState = await getPreviewsAPI(runUid);
         return dispatch({
             previewState,
             type: PlanActionTypes.GETPREVIEWS

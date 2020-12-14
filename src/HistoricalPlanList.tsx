@@ -6,12 +6,12 @@ import { IHistoricalPlan, clearHistory } from './queueserver';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardContent, Grid, Paper, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Previews } from './Previews';
-import { getPreviews } from './planactions';
+import { getPreviewsAction } from './planactions';
 
 type HistoricalPlans = {
   history: IHistoricalPlan[];
   previews: {[uid: string]: string[]};
-  getPreviews: typeof getPreviews;
+  getPreviewsAction: typeof getPreviewsAction;
 }
 
 type HistoricalPlansState = {
@@ -49,8 +49,8 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
             <Box height="2vh"></Box>
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
                 {this.props.history.map(
-                    (planObject: IHistoricalPlan) => (
-                    <Accordion>
+                    (planObject: IHistoricalPlan, index: number) => (
+                    <Accordion key={index}>
                       <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreIcon />}>
                         <ListItemIcon>
                           <AccountCircleIcon fontSize='large' />
@@ -82,8 +82,8 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                           <Typography>
                             run_uids: {JSON.stringify(planObject.result.run_uids)}
                           </Typography>
-                          <Previews previews={this.props.previews} getPreviews={this.props.getPreviews} 
-                                    runUid={'feb081a9-3445-471f-be12-0329f6ae3061'} enabled={true} live={true}/>
+                          <Previews previews={this.props.previews} getPreviewsAction={this.props.getPreviewsAction} 
+                                    runUid={'95ada7de-1eae-4166-8e0a-2c23e514a0a0'} enabled={true} live={true}/>
                         </div>
                       </AccordionDetails>
                     </Accordion>

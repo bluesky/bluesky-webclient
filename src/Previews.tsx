@@ -4,7 +4,8 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { getPreviews } from './planactions';
+import { getPreviewsAction } from './planactions';
+import { getPreviews } from './queueserver'
 
 interface TabPanelProps {
   children?: React.ReactNode;
@@ -33,7 +34,7 @@ function TabPanel(props: TabPanelProps) {
 }
 
 type PreviewsProps = {
-  getPreviews: typeof getPreviews;
+  getPreviewsAction: typeof getPreviewsAction;
   runUid: string;
   previews: {[uid: string]: string[]} 
   enabled: boolean;
@@ -51,7 +52,6 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
     this.state = {
       value: 0,
     };
-    setInterval(this.getPreviewsInternal.bind(this), 5000);
   }
 
   private handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
@@ -59,8 +59,9 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
   };
 
   private getPreviewsInternal(){
+    console.log(this.props.runUid)
     if (this.props.runUid !== undefined){
-      this.props.getPreviews(this.props.runUid);
+      getPreviews(this.props.runUid)
     }
     
     /*
@@ -82,7 +83,7 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
   }
 
   componentDidMount(){
-
+    setInterval(this.getPreviewsInternal.bind(this), 5000); 
   }
 
   render(){ 

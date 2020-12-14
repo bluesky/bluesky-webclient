@@ -511,14 +511,19 @@ export const clearHistory = async(): Promise<IPlanModify> => {
     return res.data;
 }
 
-
 export interface IGetPreviews {
     previews: string[];
     success: boolean;
 }
 
-export const getPreviews = async(uid: string): Promise<IGetPreviews> => {
-    const res = await axiosPreviewInstance.get(`/${uid}`, {});
-    console.log(res);
-    return res.data;
+export const getPreviews = async(runUid: string): Promise<IGetPreviews> => {
+    if (runUid !== undefined){
+        const res = await axiosPreviewInstance.get(`/${runUid}`);
+        console.log(res);
+        console.log("DEFINED")
+        return res.data;
+    } else {
+        console.log("UNDEFINED")
+        return {previews: [], success: false};
+    }
 }
