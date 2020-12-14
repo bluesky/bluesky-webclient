@@ -51,15 +51,18 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
     this.state = {
       value: 0,
     };
-    setInterval(this.props.getPreviews(this.props.runUid), 5000);
+    setInterval(this.getPreviewsInternal.bind(this), 5000);
   }
 
   private handleChange = (event: React.ChangeEvent<{}>, newValue: number) => {
     this.setState({value: newValue});
   };
 
-  private getPreviewsInternal(uid: string){
-    this.props.getPreviews(uid);
+  private getPreviewsInternal(){
+    if (this.props.runUid !== undefined){
+      this.props.getPreviews(this.props.runUid);
+    }
+    
     /*
     if ((this.props.previews === undefined) || (this.props.runUid === undefined)){
       return;
