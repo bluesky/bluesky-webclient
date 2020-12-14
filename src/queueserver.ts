@@ -516,7 +516,7 @@ export interface IGetPreviews {
     success: boolean;
 }
 
-export const getPreviews = async(runUid: string): Promise<IGetPreviews> => {
+export const getPreviews = async(runUid: string): Promise<string[]> => {
     if (runUid !== undefined){
         const res = await axiosPreviewInstance.get(`/${runUid}`);
         console.log(res);
@@ -524,6 +524,6 @@ export const getPreviews = async(runUid: string): Promise<IGetPreviews> => {
         return res.data;
     } else {
         console.log("UNDEFINED")
-        return {previews: [], success: false};
+        return [];
     }
 }

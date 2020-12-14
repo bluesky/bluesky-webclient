@@ -43,6 +43,7 @@ type PreviewsProps = {
   
 type PreviewsState = {
   value: number;
+  previews: string[];
 }
 
 export class Previews extends React.Component<PreviewsProps, PreviewsState> {
@@ -51,6 +52,7 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
     super(props);
     this.state = {
       value: 0,
+      previews: [],
     };
   }
 
@@ -59,9 +61,11 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
   };
 
   private getPreviewsInternal(){
-    console.log(this.props.runUid)
     if (this.props.runUid !== undefined){
-      getPreviews(this.props.runUid)
+      getPreviews(this.props.runUid).then((result) => {
+        this.setState({previews: result})
+        console.log(JSON.stringify(this.state.previews))
+      })
     }
     
     /*
@@ -87,10 +91,10 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
   }
 
   render(){ 
-    if ((this.props.previews === undefined) || (this.props.runUid === undefined) || (this.props.previews[this.props.runUid] === undefined)){
+    if ((this.state.previews === undefined) || (this.props.runUid === undefined)) {
       return null;
     }
-    if (this.props.previews[this.props.runUid].length > 0){
+    if (this.state.previews.length > 0){
       return (
         <div>
           <AppBar position="static" color="default">
@@ -103,13 +107,13 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
               scrollButtons="auto"
               aria-label="scrollable auto tabs example"
             >
-                {this.props.previews[this.props.runUid].map(
+                {this.state.previews.map(
                 (preview: string) => (
                     <Tab label={preview} />
                 ))}
             </Tabs>
           </AppBar>
-          {this.props.previews[this.props.runUid].map(
+          {this.state.previews.map(
                 (preview: string, index: number) => (
                   <TabPanel value={this.state.value} index={index}>
                     <img src={`http://localhost:8000/${this.props.runUid}/${preview}`} width="100%" />
