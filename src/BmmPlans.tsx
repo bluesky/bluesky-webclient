@@ -96,7 +96,7 @@ class BmmPlansPage extends React.Component<IProps, IState> {
                         <div>
                             <TextField required id="nscans" label="Number of scans" type="number" defaultValue="3" /> &nbsp;
                             <TextField required id="start" label="Start" type="number" defaultValue="1" />
-                        </div>
+                        </div><br />
                         <FormControl>
                             <FormLabel component="legend">Mode</FormLabel>
                             <RadioGroup row id="mode" aria-label="Mode" defaultValue="transmission">
@@ -104,7 +104,33 @@ class BmmPlansPage extends React.Component<IProps, IState> {
                                 <FormControlLabel value="fluorescence" control={<Radio />} label="Fluorescence" />
                                 <FormControlLabel value="both" control={<Radio />} label="Both" />
                             </RadioGroup>
-                        </FormControl>
+                        </FormControl><br />
+                        <FormControl>
+                            <FormLabel component="legend">Regions:</FormLabel>
+                        </FormControl><br />
+                        <div>
+                            <FormLabel component="legend">Bounds:</FormLabel>
+                            <TextField required id="b0" style={{width: 60}} defaultValue="-200" />&nbsp;
+                            <TextField required id="b1" style={{width: 60}} defaultValue="-30" />&nbsp;
+                            <TextField required id="b2" style={{width: 60}} defaultValue="-10" />&nbsp;
+                            <TextField required id="b3" style={{width: 60}} defaultValue="15.5" />&nbsp;
+                            <TextField required id="b4" style={{width: 60}} defaultValue="15k" />
+                        </div>
+                        <div>
+                            <FormLabel component="legend">Steps:</FormLabel>
+                            <TextField required id="b0" style={{width: 60}} defaultValue="10" />&nbsp;
+                            <TextField required id="b1" style={{width: 60}} defaultValue="2.0" />&nbsp;
+                            <TextField required id="b2" style={{width: 60}} defaultValue="0.3" />&nbsp;
+                            <TextField required id="b4" style={{width: 60}} defaultValue="0.05k" />
+                        </div>
+                        <div>
+                            <FormLabel component="legend">Times:</FormLabel>
+                            <TextField required id="b0" style={{width: 60}} defaultValue="0.5" />&nbsp;
+                            <TextField required id="b1" style={{width: 60}} defaultValue="0.5" />&nbsp;
+                            <TextField required id="b2" style={{width: 60}} defaultValue="0.5" />&nbsp;
+                            <TextField required id="b4" style={{width: 60}} defaultValue="0.25k" />
+                        </div><br />
+                        <Button variant="contained">Submit</Button>
                     </form>
                 </Grid>   
                 <Grid item justify="center" spacing={10} xs={3}>
