@@ -7,6 +7,41 @@ npm install
 npm start
 ```
 
+To use the preview server for displaying live plots and thumbnails:
+
+### Start kafka (mac instructions)
+```sh
+brew install kafka
+brew services start kafka
+brew services start zookeeper
+```
+
+### Start the queueserver re-manager with kafka.
+```sh
+start-re-manager --kafka_server 127.0.0.1:9092 --kafka_topic widgets_test.bluesky.documents
+```
+
+### Set environment variable for preview directory.
+```sh
+export THUMBNAIL_DIRECTORY=${TMPDIR}bluesky_widgets_example
+```
+
+### Start the kafka-consumer that generates the previews.
+```sh
+git clone https://github.com/bluesky/bluesky-widgets
+cd bluesky-widgets
+pip install -e .
+python bluesky-widgets/bluesky_widgets/examples/kafka_figures.py
+```
+
+### Copy this file.
+https://gist.github.com/gwbischof/26aedaec7cf997bde2b1cd0def757612
+
+### Start the preview server to serve the produced images.
+```sh
+uvicorn BlueskyPreviewServer:app
+```
+
 The client proxies to the server on port 60610, if it is running on a different
 port you will need to change that in the `package.json` (or just switch the
 server port to match using --port 60610 when launching it).

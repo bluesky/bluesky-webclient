@@ -34,7 +34,6 @@ function TabPanel(props: TabPanelProps) {
 
 type PreviewsProps = {
   runUid: string;
-  enabled: boolean;
 }
   
 type PreviewsState = {
@@ -59,17 +58,15 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
   };
 
   private getPreviewsInternal(){
-    if (this.props.enabled){
       if (this.props.runUid){
         getPreviews(this.props.runUid).then((result) => {
           this.setState({previews: result})
         })
       }
-    }
   }
 
   componentDidMount(){
-    this.setState({intervalId: setInterval(this.getPreviewsInternal.bind(this), 1000)});
+    this.setState({intervalId: setInterval(this.getPreviewsInternal.bind(this), 500)});
   }
 
   componentWillUnmount(){

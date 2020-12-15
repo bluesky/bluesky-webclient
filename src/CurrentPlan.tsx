@@ -119,7 +119,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             subheader={this.getUid(this.props.plans)}
           />
           <CardContent>
-            <Previews runUid={this.getUid(this.props.plans)} enabled={false}/>
+            <Previews runUid={this.getUid(this.props.plans)}/>
             <Typography variant="body2" color="textSecondary" component="p">
               Something interesting is happening!
             </Typography>
