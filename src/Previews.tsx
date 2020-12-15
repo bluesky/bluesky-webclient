@@ -63,7 +63,6 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
       if (this.props.runUid){
         getPreviews(this.props.runUid).then((result) => {
           this.setState({previews: result})
-          console.log(JSON.stringify(this.state.previews))
         })
       }
     }

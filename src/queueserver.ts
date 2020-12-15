@@ -510,10 +510,8 @@ export const getPreviews = async(runUid: string): Promise<string[]> => {
     if (runUid !== undefined){
         const res = await axiosPreviewInstance.get(`/${runUid}`);
         console.log(res);
-        console.log("DEFINED")
         return res.data;
     } else {
-        console.log("UNDEFINED")
         return [];
     }
 }
