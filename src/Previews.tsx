@@ -91,14 +91,14 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
               aria-label="scrollable auto tabs example"
             >
                 {this.state.previews.map(
-                (preview: string) => (
-                    <Tab label={preview} />
+                (preview: string, index: number) => (
+                    <Tab label={preview} key={index} />
                 ))}
             </Tabs>
           </AppBar>
           {this.state.previews.map(
                 (preview: string, index: number) => (
-                  <TabPanel value={this.state.value} index={index}>
+                  <TabPanel value={this.state.value} index={index} key={index}>
                     <img src={`http://localhost:8000/${this.props.runUid}/${preview}`} width="100%" />
                   </TabPanel>
                 ))}
