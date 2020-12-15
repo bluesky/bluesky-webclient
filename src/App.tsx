@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import { IApplicationState } from './store';
-import { getOverview, getQueuedPlans, getHistoricalPlans, getPreviewsAction,
+import { getOverview, getQueuedPlans, getHistoricalPlans,
          clearQueue, deletePlan, modifyEnvironment, modifyQueue } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
 import { IPlan, IPlanObject, IHistoricalPlan } from './queueserver';
@@ -35,7 +35,6 @@ interface IProps extends RouteComponentProps {
   deletePlan: typeof deletePlan;
   modifyEnvironment: typeof modifyEnvironment;
   modifyQueue: typeof modifyQueue;
-  getPreviewsAction: typeof getPreviewsAction;
   loadingPlan: boolean;
   plan: IPlan;
   loadingPlans: boolean;
@@ -56,12 +55,10 @@ class App extends React.Component<IProps> {
               modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}> </PlanList>
             </Grid>
             <Grid item justify="center" spacing={10} xs={5}>
-              <CurrentPlan previews={this.props.previews} getPreviewsAction={this.props.getPreviewsAction} 
-                           plans={this.props.plans}></CurrentPlan> 
+              <CurrentPlan previews={this.props.previews} plans={this.props.plans}></CurrentPlan> 
             </Grid>
             <Grid item justify="center" spacing={10} xs={3}>    
-              <HistoricalPlanList previews={this.props.previews} getPreviewsAction={this.props.getPreviewsAction}
-                                  history={this.props.historicalPlans}> </HistoricalPlanList>
+              <HistoricalPlanList previews={this.props.previews} history={this.props.historicalPlans}> </HistoricalPlanList>
             </Grid>   
           </Grid>
           <Copyright/>
@@ -98,7 +95,6 @@ const mapDispatchToProps = (dispatch: any) => {
     modifyQueue: () => dispatch(modifyQueue()),
     getQueuedPlans: () => dispatch(getQueuedPlans()),
     getHistoricalPlans: () => dispatch(getHistoricalPlans()),
-    getPreviews: () => dispatch(getPreviewsAction())
   };
 };
 
