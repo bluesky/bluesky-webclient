@@ -21,8 +21,7 @@ import { Box } from '@material-ui/core';
 import { Previews } from './Previews';
 
 type Plans = {
-  plans: IPlanObject[];
-  previews: {[uid: string]: string[]} 
+  plans: IPlanObject[]; 
 }
 
 interface IState {
@@ -120,8 +119,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             subheader={this.getUid(this.props.plans)}
           />
           <CardContent>
-            <Previews previews={this.props.previews} runUid={this.getUid(this.props.plans)} 
-                      enabled={true} live={true}/>
+            <Previews runUid={this.getUid(this.props.plans)} enabled={false}/>
             <Typography variant="body2" color="textSecondary" component="p">
               Something interesting is happening!
             </Typography>

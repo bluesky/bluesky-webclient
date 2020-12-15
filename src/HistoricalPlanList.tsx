@@ -9,7 +9,6 @@ import { Previews } from './Previews';
 
 type HistoricalPlans = {
   history: IHistoricalPlan[];
-  previews: {[uid: string]: string[]};
 }
 
 type HistoricalPlansState = {
@@ -48,7 +47,7 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
                 {this.props.history.map(
                     (planObject: IHistoricalPlan, index: number) => (
-                    <Accordion key={index}>
+                    <Accordion key={index} TransitionProps={{ unmountOnExit: true }}>
                       <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreIcon />}>
                         <ListItemIcon>
                           <AccountCircleIcon fontSize='large' />
@@ -80,8 +79,7 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                           <Typography>
                             run_uids: {JSON.stringify(planObject.result.run_uids)}
                           </Typography>
-                          <Previews previews={this.props.previews} runUid={planObject.result.run_uids[0]}
-                                    enabled={true} live={true}/>
+                          <Previews runUid={planObject.result.run_uids[0]} enabled={true}/>
                         </div>
                       </AccordionDetails>
                     </Accordion>

@@ -55,10 +55,10 @@ class App extends React.Component<IProps> {
               modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}> </PlanList>
             </Grid>
             <Grid item justify="center" spacing={10} xs={5}>
-              <CurrentPlan previews={this.props.previews} plans={this.props.plans}></CurrentPlan> 
+              <CurrentPlan plans={this.props.plans}></CurrentPlan> 
             </Grid>
             <Grid item justify="center" spacing={10} xs={3}>    
-              <HistoricalPlanList previews={this.props.previews} history={this.props.historicalPlans}> </HistoricalPlanList>
+              <HistoricalPlanList history={this.props.historicalPlans}> </HistoricalPlanList>
             </Grid>   
           </Grid>
           <Copyright/>

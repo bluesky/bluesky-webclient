@@ -34,14 +34,13 @@ function TabPanel(props: TabPanelProps) {
 
 type PreviewsProps = {
   runUid: string;
-  previews: {[uid: string]: string[]} 
   enabled: boolean;
-  live: boolean;
 }
   
 type PreviewsState = {
   value: number;
   previews: string[];
+  intervalId: any;
 }
 
 export class Previews extends React.Component<PreviewsProps, PreviewsState> {
@@ -51,6 +50,7 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
     this.state = {
       value: 0,
       previews: [],
+      intervalId: 0
     };
   }
 
@@ -59,39 +59,25 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
   };
 
   private getPreviewsInternal(){
-    if (this.props.runUid !== undefined){
-      getPreviews(this.props.runUid).then((result) => {
-        this.setState({previews: result})
-        console.log(JSON.stringify(this.state.previews))
-      })
-    }
-    
-    /*
-    if ((this.props.previews === undefined) || (this.props.runUid === undefined)){
-      return;
-    } else {
-      if (this.props.enabled){
-        if (this.props.live){
-          alert(this.props.runUid)
-          this.props.getPreviews(this.props.runUid)
-        } else {
-          if (this.props.previews[this.props.runUid] === undefined){
-            this.props.getPreviews(this.props.runUid)
-          }
-        }
+    if (this.props.enabled){
+      if (this.props.runUid){
+        getPreviews(this.props.runUid).then((result) => {
+          this.setState({previews: result})
+          console.log(JSON.stringify(this.state.previews))
+        })
       }
     }
-    */
   }
 
   componentDidMount(){
-    setInterval(this.getPreviewsInternal.bind(this), 5000); 
+    this.setState({intervalId: setInterval(this.getPreviewsInternal.bind(this), 1000)});
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.state.intervalId);
   }
 
   render(){ 
-    if ((this.state.previews === undefined) || (this.props.runUid === undefined)) {
-      return null;
-    }
     if (this.state.previews.length > 0){
       return (
         <div>
