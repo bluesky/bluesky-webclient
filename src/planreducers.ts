@@ -5,7 +5,7 @@ import { IPlanState, IPlanObjectsState,
          IAllowedPlansState, AllowedPlansActions, 
          AllowedPlansActionTypes, IAllowedPlans,
          IHistoricalPlansState, HistoricalPlansActions, 
-         HistoricalPlansActionTypes, IPreviewsState } from "./queueserver";
+         HistoricalPlansActionTypes } from "./queueserver";
 
 const initialPlanState: IPlanState = {
     plan: {
@@ -108,35 +108,6 @@ export const allowedPlansReducer: Reducer<IAllowedPlansState, AllowedPlansAction
                 ...state,
                 allowedPlans: action.allowedPlans,
                 plansLoading: false
-            };
-        }
-        default: {
-            return state;
-        }
-    }
-};
-
-const initialPreviewsState: IPreviewsState = {
-    previews: {},
-};
-
-export const previewsReducer: Reducer<IPreviewsState, PlanActions> = (
-    state = initialPreviewsState,
-    action
-) => {
-    switch (action.type) {
-        case PlanActionTypes.LOADING: {
-            return {
-                ...state,
-            };
-        }
-        case PlanActionTypes.GETPREVIEWS: {
-            return {
-                ...state,
-                previews: {
-                    ...state.previews,
-                    runUid : action.previews
-                }
             };
         }
         default: {

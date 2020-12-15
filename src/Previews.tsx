@@ -4,7 +4,6 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import { getPreviewsAction } from './planactions';
 import { getPreviews } from './queueserver'
 
 interface TabPanelProps {
@@ -34,7 +33,6 @@ function TabPanel(props: TabPanelProps) {
 }
 
 type PreviewsProps = {
-  getPreviewsAction: typeof getPreviewsAction;
   runUid: string;
   previews: {[uid: string]: string[]} 
   enabled: boolean;

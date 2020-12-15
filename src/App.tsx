@@ -82,7 +82,6 @@ const mapStateToProps = (store: IApplicationState) => {
     plans: store.plans.plans,
     loadingHistoricalPlans: store.historicalPlans.plansLoading,
     historicalPlans: store.historicalPlans.historicalPlans,
-    previews: store.previews.previews
   };
 };
 

@@ -19,12 +19,10 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Box } from '@material-ui/core';
 import { Previews } from './Previews';
-import { getPreviewsAction } from './planactions';
 
 type Plans = {
   plans: IPlanObject[];
   previews: {[uid: string]: string[]} 
-  getPreviewsAction: typeof getPreviewsAction;
 }
 
 interface IState {
@@ -64,7 +62,6 @@ export class CurrentPlan extends React.Component<Plans, IState> {
   
   handleExpandClick() {
     alert("Expand");
-    //setExpanded(!expanded);
   };
 
   handlePlay() {
@@ -123,8 +120,8 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             subheader={this.getUid(this.props.plans)}
           />
           <CardContent>
-            <Previews previews={this.props.previews} getPreviewsAction={this.props.getPreviewsAction} 
-                      runUid={this.getUid(this.props.plans)} enabled={true} live={true}/>
+            <Previews previews={this.props.previews} runUid={this.getUid(this.props.plans)} 
+                      enabled={true} live={true}/>
             <Typography variant="body2" color="textSecondary" component="p">
               Something interesting is happening!
             </Typography>

@@ -6,12 +6,10 @@ import { IHistoricalPlan, clearHistory } from './queueserver';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardContent, Grid, Paper, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Previews } from './Previews';
-import { getPreviewsAction } from './planactions';
 
 type HistoricalPlans = {
   history: IHistoricalPlan[];
   previews: {[uid: string]: string[]};
-  getPreviewsAction: typeof getPreviewsAction;
 }
 
 type HistoricalPlansState = {

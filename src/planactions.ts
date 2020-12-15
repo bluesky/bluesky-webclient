@@ -7,9 +7,8 @@ import { getOverview as getOverviewAPI,
          submitPlan as submitPlanAPI,
          clearQueue as clearQueueAPI,
          deletePlan as deletePlanAPI,
-         getPreviews as getPreviewsAPI,
          modifyEnvironment as modifyEnvironmentAPI, EnvOps,
-         modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, AllowedPlansActionTypes, HistoricalPlansActionTypes, ISumbitPlanObject, IPreviewsState, IPlanGetPreviewsAction} from "./queueserver"
+         modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, AllowedPlansActionTypes, HistoricalPlansActionTypes, ISumbitPlanObject } from "./queueserver"
 import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, IPlanSubmitAction,
          IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes } from "./queueserver"
 
@@ -112,21 +111,6 @@ export const deletePlan: ActionCreator<ThunkAction<Promise<AnyAction>, null, nul
         return dispatch({
             queueState,
             type: PlanActionTypes.DELETEPLAN
-        });
-    };
-};
-
-export const getPreviewsAction: ActionCreator<ThunkAction<Promise<AnyAction>, IPreviewsState, null, any>> = (runUid: string) => {
-    return async (dispatch: Dispatch) => {
-        if (runUid === undefined){
-            console.log('undefined')
-        } else {
-            console.log('defined')
-        }
-        const previewState = await getPreviewsAPI(runUid);
-        return dispatch({
-            previewState,
-            type: PlanActionTypes.GETPREVIEWS
         });
     };
 };

@@ -146,10 +146,6 @@ export interface IAllowedPlansState {
     readonly plansLoading: boolean;
 }
 
-export interface IPreviewsState {
-    readonly previews: { [uid: string]: string[]; };
-}
-
 export const getAllowedPlans = async(): Promise<IAllowedPlans> => {
     const res = await axiosInstance.get('/plans/allowed',
         {});
@@ -223,7 +219,6 @@ export enum PlanActionTypes {
     DELETEPLAN = "PLAN/DELETEPLAN",
     MODIFYENVIRONMENT = "PLANS/MODIFYENVIRONMENT",
     MODIFYQUEUE = "PLANS/MODIFYQUEUE",
-    GETPREVIEWS = "PREVIEWS/GETPREVIEWS",
 }
 
 
@@ -333,10 +328,6 @@ export interface IPlanModifyQueueLoadingAction {
     type: PlanActionTypes.LOADING
 }
 
-export interface IPlanGetPreviewsAction {
-    type: PlanActionTypes.GETPREVIEWS,
-    previews: string[]
-}
 
 export type PlanActions =
   | IPlanGetOverviewAction
@@ -349,7 +340,6 @@ export type PlanActions =
   | IPlanModifyEnvironmentLoadingAction
   | IPlanModifyQueueAction
   | IPlanModifyQueueLoadingAction
-  | IPlanGetPreviewsAction
 
 
 export interface IPlanState {
