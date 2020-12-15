@@ -31,10 +31,10 @@ export THUMBNAIL_DIRECTORY=${TMPDIR}bluesky_widgets_example
 git clone https://github.com/bluesky/bluesky-widgets
 cd bluesky-widgets
 pip install -e .
-python bluesky-widgets/bluesky_widgets/examples/kafka_figures.py
+python /bluesky_widgets/examples/kafka_figures.py
 ```
 
-### Copy this file.
+### Copy this file locally.
 https://gist.github.com/gwbischof/26aedaec7cf997bde2b1cd0def757612
 
 ### Start the preview server to serve the produced images.
