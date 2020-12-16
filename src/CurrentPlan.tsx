@@ -21,7 +21,7 @@ import { Box } from '@material-ui/core';
 import { Previews } from './Previews';
 
 type Plans = {
-  plans: IPlanObject[]; 
+  plans: IPlanObject[];
 }
 
 interface IState {
