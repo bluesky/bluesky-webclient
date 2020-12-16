@@ -24,7 +24,7 @@ start-re-manager --kafka_server 127.0.0.1:9092 --kafka_topic widgets_test.bluesk
 
 ### Set environment variable for preview directory.
 ```sh
-export THUMBNAIL_DIRECTORY=${TMPDIR}bluesky_widgets_example
+export THUMBNAIL_DIRECTORY=${TMPDIR}/bluesky_widgets_example
 ```
 
 ### Start the kafka-consumer that generates the previews.
