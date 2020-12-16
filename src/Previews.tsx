@@ -66,6 +66,7 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
   }
 
   componentDidMount(){
+    this.getPreviewsInternal.bind(this)
     this.setState({intervalId: setInterval(this.getPreviewsInternal.bind(this), 500)});
   }
 
