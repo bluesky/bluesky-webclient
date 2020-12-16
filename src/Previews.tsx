@@ -9,7 +9,7 @@ import { getPreviews } from './queueserver'
 interface TabPanelProps {
   children?: React.ReactNode;
   index: any;
-  value: any;
+  value: any;  // Used to keep track of which panel is active.
 }
 
 function TabPanel(props: TabPanelProps) {
