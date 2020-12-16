@@ -97,7 +97,7 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
           {this.state.previews.map(
                 (preview: string, index: number) => (
                   <TabPanel value={this.state.value} index={index} key={index}>
-                    <img src={`http://localhost:8000/${this.props.runUid}/${preview}`} width="100%" />
+                    <img src={`http://localhost:8000/${this.props.runUid}/${preview}`} alt={"preview"} width="100%" />
                   </TabPanel>
                 ))}
         </div>
