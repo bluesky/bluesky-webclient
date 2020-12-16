@@ -7,7 +7,7 @@ npm install
 npm start
 ```
 
-To use the preview server for displaying live plots and thumbnails:
+To use the Preview server for displaying live plots and thumbnails:
 
 ### Start kafka (mac instructions)
 ```sh
