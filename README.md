@@ -14,6 +14,7 @@ To use the Preview server for displaying live plots and thumbnails:
 brew install kafka
 brew services start kafka
 brew services start zookeeper
+brew services list  # to make sure both services have been started
 ```
 
 ### Start the queueserver re-manager with kafka.
