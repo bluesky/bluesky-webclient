@@ -2,7 +2,6 @@ import React from 'react';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
 import CardHeader from '@material-ui/core/CardHeader';
-import CardMedia from '@material-ui/core/CardMedia';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
@@ -16,10 +15,10 @@ import MoreVertIcon from '@material-ui/icons/MoreVert';
 import { IPlanObject } from './queueserver';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-import Thumb from './assets/nsls-ii-diffraction-image-hr.jpg';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Box } from '@material-ui/core';
+import { Previews } from './Previews';
 
 type Plans = {
   plans: IPlanObject[];
@@ -62,7 +61,6 @@ export class CurrentPlan extends React.Component<Plans, IState> {
   
   handleExpandClick() {
     alert("Expand");
-    //setExpanded(!expanded);
   };
 
   handlePlay() {
@@ -120,13 +118,8 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             title={this.getName(this.props.plans)}
             subheader={this.getUid(this.props.plans)}
           />
-          <CardMedia
-            className={this.state.media}
-            image={Thumb}
-            title="Thumbnail Image"
-            component="img"
-          />
           <CardContent>
+            <Previews runUid={this.getUid(this.props.plans)}/>
             <Typography variant="body2" color="textSecondary" component="p">
               Something interesting is happening!
             </Typography>

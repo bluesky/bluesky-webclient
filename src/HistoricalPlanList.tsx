@@ -3,15 +3,16 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IHistoricalPlan, clearHistory } from './queueserver';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardActions, CardContent, Grid, Paper, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardContent, Grid, Paper, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
+import { Previews } from './Previews';
 
 type HistoricalPlans = {
   history: IHistoricalPlan[];
 }
 
 type HistoricalPlansState = {
-  expanded: string;
+  expanded: boolean;
 }
 
 export class HistoricalPlanList extends React.Component<HistoricalPlans, HistoricalPlansState>{
@@ -19,7 +20,7 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
   public constructor(props: HistoricalPlans) {
     super(props);
     this.state = {
-      expanded: "",
+      expanded: false,
     };
   }
 
@@ -27,7 +28,6 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
     return (
           <Box> 
             <Card style={{height: "6vh"}} raised={true}>
-
               <CardContent>
                 <Grid container spacing={5} direction="row" justify="space-evenly" alignContent="center">
                   <Grid item>
@@ -46,8 +46,8 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
             <Box height="2vh"></Box>
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
                 {this.props.history.map(
-                    (planObject: IHistoricalPlan) => (
-                    <Accordion>
+                    (planObject: IHistoricalPlan, index: number) => (
+                    <Accordion key={index} TransitionProps={{ unmountOnExit: true }}>
                       <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreIcon />}>
                         <ListItemIcon>
                           <AccountCircleIcon fontSize='large' />
@@ -74,8 +74,12 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                             user_group: {planObject.user_group}
                           </Typography>
                           <Typography>
-                            exit_status: {planObject.exit_status}
+                            exit_status: {planObject.result.exit_status}
                           </Typography>
+                          <Typography>
+                            run_uids: {JSON.stringify(planObject.result.run_uids)}
+                          </Typography>
+                          <Previews runUid={planObject.result.run_uids[0]}/>
                         </div>
                       </AccordionDetails>
                     </Accordion>
@@ -84,14 +88,3 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
           </Box>
          );}
 }
-
-
-/*
-    name: string;
-    args: string | number | boolean | (string|number|boolean)[]; 
-    kwargs: { [name: string]: string | number | boolean | (string|number|boolean)[]; }
-    item_uid: string;
-    user: string;
-    user_group: string;
-    exit_status: string;
-  */

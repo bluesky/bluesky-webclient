@@ -105,7 +105,7 @@ export class PlanList extends React.Component<Plans, IState>{
             <Box height="2vh"></Box>
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
                 {this.props.plans.map((planObject: IPlanObject, index) => (
-                  <Accordion>
+                  <Accordion key={index}>
                     <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreIcon />}>
                       {(planObject.action === "queue_stop") ?
                         <ListItemIcon>

@@ -4,6 +4,9 @@ var axiosInstance = axios.create({
     baseURL: process.env.REACT_APP_QUEUE_API_PREFIX,
 });
 
+var axiosPreviewInstance = axios.create({
+    baseURL: process.env.REACT_APP_PREVIEW_API_PREFIX,
+});
 /*******************************************/
 
 export enum AllowedPlansActionTypes {
@@ -135,7 +138,7 @@ export interface IAllowedPlan {
 export interface IAllowedPlans {
     success: boolean;
     msg: string;
-    plans_allowed: { [name: string]: IAllowedPlan; } 
+    plans_allowed: { [name: string]: IAllowedPlan; }; 
 }
 
 export interface IAllowedPlansState {
@@ -177,6 +180,11 @@ export interface IHistoricalPlansGetAction {
     historicalPlans: IHistoricalPlan[]
 }
 
+export interface IResult{
+    exit_status: string;
+    run_uids: string[]
+}
+
 export interface IHistoricalPlan {
     name: string;
     args: string | number | boolean | (string|number|boolean)[]; 
@@ -184,7 +192,7 @@ export interface IHistoricalPlan {
     item_uid: string;
     user: string;
     user_group: string;
-    exit_status: string;
+    result: IResult;
 }
 
 export interface IHistoricalPlansState {
@@ -320,6 +328,7 @@ export interface IPlanModifyQueueLoadingAction {
     type: PlanActionTypes.LOADING
 }
 
+
 export type PlanActions =
   | IPlanGetOverviewAction
   | IPlanLoadingAction
@@ -364,7 +373,7 @@ export interface IPlanSubmitState {
 
 export interface ISumbitPlanObject {
     name: string;
-    kwargs: {[name: string]: (string|number)[]} 
+    kwargs: {[name: string]: (string|number)[]};
 }
 
 export interface ISumbitPlanObjectFixed {
@@ -490,4 +499,19 @@ export const clearHistory = async(): Promise<IPlanModify> => {
     const res = await axiosInstance.post('/history/clear', {});
     console.log(res);
     return res.data;
+}
+
+export interface IGetPreviews {
+    previews: string[];
+    success: boolean;
+}
+
+export const getPreviews = async(runUid: string): Promise<string[]> => {
+    if (runUid !== undefined){
+        const res = await axiosPreviewInstance.get(`/${runUid}`);
+        console.log(res);
+        return res.data;
+    } else {
+        return [];
+    }
 }

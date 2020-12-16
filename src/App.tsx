@@ -5,13 +5,13 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import { IApplicationState } from './store';
-import { getOverview, getQueuedPlans, getHistoricalPlans } from './planactions';
+import { getOverview, getQueuedPlans, getHistoricalPlans,
+         clearQueue, deletePlan, modifyEnvironment, modifyQueue } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
 import { IPlan, IPlanObject, IHistoricalPlan } from './queueserver';
 import { PlanList } from './PlanList';
 import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
-import { clearQueue, deletePlan, modifyEnvironment, modifyQueue } from './planactions';
 import { Grid } from '@material-ui/core';
 
 function Copyright() {
@@ -41,6 +41,7 @@ interface IProps extends RouteComponentProps {
   plans: IPlanObject[];
   loadingHistoricalPlans: boolean;
   historicalPlans: IHistoricalPlan[];
+  previews: {[uid: string]: string[];};
 }
 
 class App extends React.Component<IProps> {
@@ -80,7 +81,7 @@ const mapStateToProps = (store: IApplicationState) => {
     loadingPlans: store.plans.plansLoading,
     plans: store.plans.plans,
     loadingHistoricalPlans: store.historicalPlans.plansLoading,
-    historicalPlans: store.historicalPlans.historicalPlans
+    historicalPlans: store.historicalPlans.historicalPlans,
   };
 };
 
@@ -92,7 +93,7 @@ const mapDispatchToProps = (dispatch: any) => {
     modifyEnvironment: () => dispatch(modifyEnvironment()),
     modifyQueue: () => dispatch(modifyQueue()),
     getQueuedPlans: () => dispatch(getQueuedPlans()),
-    getHistoricalPlans: () => dispatch(getHistoricalPlans())
+    getHistoricalPlans: () => dispatch(getHistoricalPlans()),
   };
 };
 

@@ -115,6 +115,7 @@ export const allowedPlansReducer: Reducer<IAllowedPlansState, AllowedPlansAction
         }
     }
 };
+
 /************************************************/
 const initialHistoricalPlansState: IHistoricalPlansState = {
     historicalPlans: [],
@@ -160,9 +161,6 @@ const initialPlanSubmitState: IPlanSubmitState = {
     },
     planLoading: false
 };
-
-
-
 
 export const planSubmitReducer: Reducer<IPlanSubmitState, PlanActions> = (
     state = initialPlanSubmitState,

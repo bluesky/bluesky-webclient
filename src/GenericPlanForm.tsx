@@ -141,8 +141,8 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                     </Box>
                   </GridListTile>
                   {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
-                    (parameterObject: IParameter) => (
-                      <GridListTile style={{ height: 'auto' }}>
+                    (parameterObject: IParameter, index) => (
+                      <GridListTile style={{ height: 'auto' }} key={index}>
                         <Grid container spacing={0} direction="row" justify="center" alignItems="center" wrap="nowrap">
                           <Grid item justify="center" spacing={1} xs={4}>
                             {parameterObject.description ?
