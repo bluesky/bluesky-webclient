@@ -1,9 +1,15 @@
 # TypeScript React app using Material UI for a Bluesky queueserver client.
 
+Install `nodejs`/`npm` from https://nodejs.org/en/download/current/ for your
+platform. The LTS version is known to cause issue with `package-lock.json` in
+this repo, therefore it is recommended to use the newer versions of the node
+package.
+
 Install it and run:
 
 ```sh
 npm install
+npm audit fix  # an optional step to fix potential issues
 npm start
 ```
 
