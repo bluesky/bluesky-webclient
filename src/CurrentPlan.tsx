@@ -19,6 +19,7 @@ import HighlightOffIcon from '@material-ui/icons/HighlightOff';
 import LinearProgress from '@material-ui/core/LinearProgress';
 import { Box } from '@material-ui/core';
 import { Previews } from './Previews';
+import { getActiveRuns } from './queueserver'
 
 type Plans = {
   plans: IPlanObject[];
@@ -31,6 +32,8 @@ interface IState {
   expandOpen: any;
   avatar: any;
   expanded: boolean;
+  activeRuns: string[];
+  activeRunsId: any;
 }
 
 export class CurrentPlan extends React.Component<Plans, IState> {
@@ -55,6 +58,8 @@ export class CurrentPlan extends React.Component<Plans, IState> {
         backgroundColor: red[500],
       },
       expanded: false,
+      activeRuns: [],
+      activeRunsId: 0,
     }
 
   }
@@ -81,6 +86,21 @@ export class CurrentPlan extends React.Component<Plans, IState> {
     } else {
       return plans[0].name;
     }
+  }
+
+  getActiveUids(){
+    getActiveRuns().then((result) => {
+      this.setState({activeRuns: result})
+    })
+  }
+
+  componentDidMount(){
+    this.getActiveUids.bind(this)
+    this.setState({activeRunsId: setInterval(this.getActiveUids.bind(this), 1000)});
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.state.activeRunsId);
   }
 
   getUid(plans: IPlanObject[]){
@@ -119,7 +139,9 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             subheader={this.getUid(this.props.plans)}
           />
           <CardContent>
-            <Previews runUid={this.getUid(this.props.plans)}/>
+            { this.state.activeRuns ?
+                <Previews runUid={this.state.activeRuns[0]}/> :
+                null }            
             <Typography variant="body2" color="textSecondary" component="p">
               Something interesting is happening!
             </Typography>

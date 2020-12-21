@@ -506,6 +506,12 @@ export interface IGetPreviews {
     success: boolean;
 }
 
+export const getActiveRuns = async(): Promise<string[]> => {
+        const res = await axiosPreviewInstance.get(`/re/runs/active`);
+        console.log(res);
+        return res.data;
+}
+
 export const getPreviews = async(runUid: string): Promise<string[]> => {
     if (runUid !== undefined){
         const res = await axiosPreviewInstance.get(`/${runUid}`);
