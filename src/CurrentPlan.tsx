@@ -90,7 +90,9 @@ export class CurrentPlan extends React.Component<Plans, IState> {
 
   getActiveUids(){
     getActiveRuns().then((result) => {
-      this.setState({activeRun: result[0].uid})
+      if (result[0] !== undefined){
+        this.setState({activeRun: result[0].uid})
+      } 
     })
   }
 
