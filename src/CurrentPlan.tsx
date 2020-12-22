@@ -143,7 +143,6 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             <Typography variant="body2" color="textSecondary" component="p">
               Something interesting is happening!
             </Typography>
-            <LinearProgress variant="determinate" value={50} />
           </CardContent>
           <CardActions disableSpacing>
             <IconButton onClick={() => this.handlePlay()} edge="end" aria-label="comments">
