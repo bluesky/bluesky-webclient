@@ -12,7 +12,7 @@ import { red } from '@material-ui/core/colors';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { IPlanObject } from './queueserver';
+import { IPlanObject, IActiveRun } from './queueserver';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
@@ -32,7 +32,7 @@ interface IState {
   expandOpen: any;
   avatar: any;
   expanded: boolean;
-  activeRuns: string[];
+  activeRun: string;
   activeRunsId: any;
 }
 
@@ -58,7 +58,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
         backgroundColor: red[500],
       },
       expanded: false,
-      activeRuns: [],
+      activeRun: "",
       activeRunsId: 0,
     }
 
@@ -90,7 +90,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
 
   getActiveUids(){
     getActiveRuns().then((result) => {
-      this.setState({activeRuns: result})
+      this.setState({activeRun: result[0].uid})
     })
   }
 
@@ -136,12 +136,10 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             }
             titleTypographyProps={{variant:'h6' }}
             title={this.getName(this.props.plans)}
-            subheader={this.getUid(this.props.plans)}
+            subheader={this.state.activeRun}
           />
           <CardContent>
-            { this.state.activeRuns ?
-                <Previews runUid={this.state.activeRuns[0]}/> :
-                null }            
+            { this.state.activeRun ? <Previews runUid={this.state.activeRun}/> : null }            
             <Typography variant="body2" color="textSecondary" component="p">
               Something interesting is happening!
             </Typography>

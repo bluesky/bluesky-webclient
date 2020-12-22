@@ -506,10 +506,17 @@ export interface IGetPreviews {
     success: boolean;
 }
 
-export const getActiveRuns = async(): Promise<string[]> => {
-        const res = await axiosPreviewInstance.get(`/re/runs/active`);
+export interface IActiveRun {
+    uid: string;
+    is_open: boolean;
+    exit_status: string;
+}
+
+export const getActiveRuns = async(): Promise<IActiveRun[]> => {
+        const res = await axiosInstance.get(`/re/runs/active`);
         console.log(res);
-        return res.data;
+        console.log(res.data.run_list);
+        return res.data.run_list;
 }
 
 export const getPreviews = async(runUid: string): Promise<string[]> => {
