@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { IAllowedPlans, ISumbitPlanObject } from './queueserver';
 import { Box, Button, FormControl, FormControlLabel, FormLabel, GridList, GridListTile, Radio, RadioGroup, Slider, TextField } from '@material-ui/core';
 
-const defaultBounds = [-200, -30, -10, 15.5];
+const defaultBounds = [-200, -30, -10, 15.5, 1500];
 const defaultSteps = [10, 2, 0.3, 0.05];
 const defaultTimes = [0.5, 0.5, 0.5, 0.25];
 const defaultElement = "Au";
@@ -63,7 +63,7 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
   private changeRegions(event: object, value: any) {
     const new_plan = this.state.plan;
     if (value < this.state.numRegions){
-      new_plan.kwargs.bounds = new_plan.kwargs.bounds.slice(0, value)
+      new_plan.kwargs.bounds = new_plan.kwargs.bounds.slice(0, value + 1)
       new_plan.kwargs.steps = new_plan.kwargs.steps.slice(0, value)
       new_plan.kwargs.times = new_plan.kwargs.times.slice(0, value)
     }
@@ -150,7 +150,7 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
                         />
                       <div>
                           <FormLabel component="legend">Bounds:</FormLabel>
-                          {Array.from(Array(this.state.numRegions).keys()).map((value: number, index) => (
+                          {Array.from(Array(this.state.numRegions+1).keys()).map((value: number, index) => (
                               <TextField onChange={this.onChange.bind(this)} required 
                                           name="bounds" id={String(index)} style={{width: 60}} defaultValue={this.state.plan.kwargs.bounds[index]} />
                           ))}
