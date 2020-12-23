@@ -14,9 +14,7 @@ const defaultEdge = "K";
 const defaultStart = 1;
 const defaultNscans = 3;
 const defaultMode = "transmission";
-
 const defaultRegions = 4;
-
 
 type IProps = {
   name: string;
