@@ -109,25 +109,33 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
                     <GridListTile style={{ height: 'auto' }}>
                       <form noValidate autoComplete="off">
                         <div>
-                            <TextField onChange={this.onChange.bind(this)} required name="element" id="element" label="Element" defaultValue="Au" /> &nbsp;
-                            <TextField onChange={this.onChange.bind(this)} required name="edge" id="edge" label="Edge" defaultValue="K" />
+                            <TextField onChange={this.onChange.bind(this)} required 
+                                       name="element" id="0" label="Element" defaultValue="Au" /> &nbsp;
+                            <TextField onChange={this.onChange.bind(this)} required 
+                                       name="edge" id="0" label="Edge" defaultValue="K" />
                         </div>
                         <FormControl fullWidth>
-                            <TextField onChange={this.onChange.bind(this)} required name="sample" id="sample" label="Sample" />
+                            <TextField onChange={this.onChange.bind(this)} required 
+                                       name="sample" id="0" label="Sample" />
                         </FormControl>
                         <FormControl fullWidth>
-                            <TextField onChange={this.onChange.bind(this)} name="prop" id="prop" label="Preparation" />
+                            <TextField onChange={this.onChange.bind(this)} 
+                                       name="prop" id="0" label="Preparation" />
                         </FormControl>
                         <FormControl fullWidth>
-                            <TextField onChange={this.onChange.bind(this)} name="comment" id="comment" label="Comment" multiline rows={4} />
+                            <TextField onChange={this.onChange.bind(this)} 
+                                       name="comment" id="0" label="Comment" multiline rows={4} />
                         </FormControl>
                         <div>
-                            <TextField onChange={this.onChange.bind(this)} required name="nscans" id="nscans" label="Number of scans" type="number" defaultValue="3" /> &nbsp;
-                            <TextField onChange={this.onChange.bind(this)} required name="start" id="start" label="Start" type="number" defaultValue="1" />
+                            <TextField onChange={this.onChange.bind(this)} required 
+                                       name="nscans" id="0" label="Number of scans" type="number" defaultValue="3" /> &nbsp;
+                            <TextField onChange={this.onChange.bind(this)} required 
+                                       name="start" id="0" label="Start" type="number" defaultValue="1" />
                         </div><br />
                         <FormControl>
                             <FormLabel component="legend">Mode</FormLabel>
-                            <RadioGroup onChange={this.onChange.bind(this)} row name="mode" id="mode" aria-label="Mode" defaultValue="transmission">
+                            <RadioGroup onChange={this.onChange.bind(this)} row 
+                                        name="mode" id="mode" aria-label="Mode" defaultValue="transmission">
                                 <FormControlLabel value="transmission" control={<Radio />} label="Transmission" />
                                 <FormControlLabel value="fluorescence" control={<Radio />} label="Fluorescence" />
                                 <FormControlLabel value="both" control={<Radio />} label="Both" />
@@ -139,19 +147,22 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
                         <div>
                             <FormLabel component="legend">Bounds:</FormLabel>
                             {defaultBounds.map((value: number, index) => (
-                                <TextField required name="bounds" id={String(index)} style={{width: 60}} defaultValue={value} />
+                                <TextField onChange={this.onChange.bind(this)} required 
+                                           name="bounds" id={String(index)} style={{width: 60}} defaultValue={value} />
                             ))}
                         </div>
                         <div>
                             <FormLabel component="legend">Steps:</FormLabel>
                             {defaultSteps.map((value: number, index) => (
-                                <TextField required name="steps" id={String(index)} style={{width: 60}} defaultValue={value} />
+                                <TextField onChange={this.onChange.bind(this)} required 
+                                           name="steps" id={String(index)} style={{width: 60}} defaultValue={value} />
                             ))}
                         </div>
                         <div>
                             <FormLabel component="legend">Times:</FormLabel>
                             {defaultTimes.map((value: number, index) => (
-                                <TextField required name="times" id={String(index)} style={{width: 60}} defaultValue={value} />
+                                <TextField onChange={this.onChange.bind(this)} required 
+                                           name="times" id={String(index)} style={{width: 60}} defaultValue={value} />
                             ))}
                         </div><br />
                         <Button variant="contained">Submit</Button>
