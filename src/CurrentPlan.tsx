@@ -16,7 +16,6 @@ import { IPlanObject, IActiveRun } from './queueserver';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import { Box } from '@material-ui/core';
 import { Previews } from './Previews';
 import { getActiveRuns } from './queueserver'
@@ -82,7 +81,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
 
   getName(plans: IPlanObject[]){
     if (plans.length === 0) {
-      return "No plan currently executing";
+      return "Current Plan";
     } else {
       return plans[0].name;
     }
@@ -142,9 +141,6 @@ export class CurrentPlan extends React.Component<Plans, IState> {
           />
           <CardContent>
             { this.state.activeRun ? <Previews runUid={this.state.activeRun}/> : null }            
-            <Typography variant="body2" color="textSecondary" component="p">
-              Something interesting is happening!
-            </Typography>
           </CardContent>
           <CardActions disableSpacing>
             <IconButton onClick={() => this.handlePlay()} edge="end" aria-label="comments">
