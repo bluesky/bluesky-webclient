@@ -9,6 +9,10 @@ import { Box, Button, FormControl, FormControlLabel, FormLabel, Grid, GridList, 
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
+const defaultBounds = [-200, -30, -10, 15.5, 15000];
+const defaultSteps = [10, 2, 0.3, 0.05];
+const defaultTimes = [0.5, 0.5, 0.5, 0.25];
+
 type IProps = {
   name: string;
   allowedPlans: IAllowedPlans;
@@ -134,19 +138,19 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
                         </FormControl><br />
                         <div>
                             <FormLabel component="legend">Bounds:</FormLabel>
-                            {[-200, -30, -10, 15.5, 15000].map((value: number, index) => (
+                            {defaultBounds.map((value: number, index) => (
                                 <TextField required name="bounds" id={String(index)} style={{width: 60}} defaultValue={value} />
                             ))}
                         </div>
                         <div>
                             <FormLabel component="legend">Steps:</FormLabel>
-                            {[10, 2, 0.3, 0.05].map((value: number, index) => (
+                            {defaultSteps.map((value: number, index) => (
                                 <TextField required name="steps" id={String(index)} style={{width: 60}} defaultValue={value} />
                             ))}
                         </div>
                         <div>
                             <FormLabel component="legend">Times:</FormLabel>
-                            {[0.5, 0.5, 0.5, 0.25].map((value: number, index) => (
+                            {defaultTimes.map((value: number, index) => (
                                 <TextField required name="times" id={String(index)} style={{width: 60}} defaultValue={value} />
                             ))}
                         </div><br />
