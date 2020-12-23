@@ -131,28 +131,28 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
                         <FormLabel component="legend">Regions:</FormLabel>
                         <Slider onChange={this.changeRegions.bind(this)} 
                           defaultValue={4} aria-labelledby="discrete-slider"
-                          valueLabelDisplay="auto" step={1} marks min={0} max={10}
-                          style={{height: "auto", width: '200'}}
+                          valueLabelDisplay="auto" step={1} marks min={1} max={8}
+                          style={{height: "auto", width: '100'}}
                         />
                       <div>
                           <FormLabel component="legend">Bounds:</FormLabel>
-                          {defaultBounds.map((value: number, index) => (
+                          {Array.from(Array(this.state.numRegions).keys()).map((value: number, index) => (
                               <TextField onChange={this.onChange.bind(this)} required 
-                                          name="bounds" id={String(index)} style={{width: 60}} defaultValue={value} />
+                                          name="bounds" id={String(index)} style={{width: 60}} defaultValue={defaultBounds[index]} />
                           ))}
                       </div>
                       <div>
                           <FormLabel component="legend">Steps:</FormLabel>
-                          {defaultSteps.map((value: number, index) => (
+                          {Array.from(Array(this.state.numRegions).keys()).map((value: number, index) => (
                               <TextField onChange={this.onChange.bind(this)} required 
-                                          name="steps" id={String(index)} style={{width: 60}} defaultValue={value} />
+                                          name="steps" id={String(index)} style={{width: 60}} defaultValue={defaultSteps[index]} />
                           ))}
                       </div>
                       <div>
                           <FormLabel component="legend">Times:</FormLabel>
-                          {defaultTimes.map((value: number, index) => (
+                          {Array.from(Array(this.state.numRegions).keys()).map((value: number, index) => (
                               <TextField onChange={this.onChange.bind(this)} required 
-                                          name="times" id={String(index)} style={{width: 60}} defaultValue={value} />
+                                          name="times" id={String(index)} style={{width: 60}} defaultValue={defaultTimes[index]} />
                           ))}
                       </div><br />
                     </form>
