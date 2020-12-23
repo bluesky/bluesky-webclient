@@ -9,7 +9,14 @@ import { Box, Button, FormControl, FormControlLabel, FormLabel, GridList, GridLi
 const defaultBounds = [-200, -30, -10, 15.5];
 const defaultSteps = [10, 2, 0.3, 0.05];
 const defaultTimes = [0.5, 0.5, 0.5, 0.25];
+const defaultElement = "Au";
+const defaultEdge = "K";
+const defaultStart = 1;
+const defaultNscans = 3;
+const defaultMode = "transmission";
+
 const defaultRegions = 4;
+
 
 type IProps = {
   name: string;
@@ -30,17 +37,17 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
     this.state = {
       plan: {name: this.props.name,
              kwargs: {
-              "element": [],
-              "edge": [],
-              "sample": [],
-              "prop": [],
-              "comment": [],
-              "nscans": [], 
-              "start": [],
-              "mode": [],
-              "bounds": defaultBounds,
-              "steps": defaultSteps,
-              "times": defaultTimes,
+              element: [defaultElement],
+              edge: [defaultEdge],
+              sample: [""],
+              prop: [""],
+              comment: [""],
+              nscans: [defaultNscans], 
+              start: [defaultStart],
+              mode: [defaultMode],
+              bounds: defaultBounds,
+              steps: defaultSteps,
+              times: defaultTimes,
              }},
       numRegions: defaultRegions
     }
@@ -85,26 +92,6 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
     this.props.submitPlan(this.state.plan)
   }
 
-  static getDerivedStateFromProps(props : IProps, current_state: IState) {
-    const temp_dict: Record<string, (string|number)[]> = {};
-    if (current_state.plan.name !== props.name) {
-      var i;
-      for (i = 0; i < props.allowedPlans.plans_allowed[props.name].parameters.length; i++) {
-        if (props.allowedPlans.plans_allowed[props.name].parameters[i].default){
-          temp_dict[props.allowedPlans.plans_allowed[props.name].parameters[i].name] = [props.allowedPlans.plans_allowed[props.name].parameters[i].default];
-        } else {
-          temp_dict[props.allowedPlans.plans_allowed[props.name].parameters[i].name] = [""];
-        }
-      }
-      return {
-        plan: {name: props.name,
-               kwargs: temp_dict}
-      }
-    } else {
-      return null;
-    }
-  }
-
   render(){
     return (
           <Card raised={true}>
@@ -126,9 +113,9 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
                     <form noValidate autoComplete="off">
                       <div>
                         <TextField onChange={this.onChange.bind(this)} required 
-                                    name="element" id="0" label="Element" defaultValue="Au" /> &nbsp;
+                                    name="element" id="0" label="Element" defaultValue={this.state.plan.kwargs.element[0]} /> &nbsp;
                         <TextField onChange={this.onChange.bind(this)} required 
-                                    name="edge" id="0" label="Edge" defaultValue="K" />
+                                    name="edge" id="0" label="Edge" defaultValue={this.state.plan.kwargs.edge[0]} />
                       </div>
                       <FormControl fullWidth>
                         <TextField onChange={this.onChange.bind(this)} required 
@@ -144,9 +131,9 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
                       </FormControl>
                       <div>
                         <TextField onChange={this.onChange.bind(this)} required 
-                                    name="nscans" id="0" label="Number of scans" type="number" defaultValue="3" /> &nbsp;
+                                    name="nscans" id="0" label="Number of scans" type="number" defaultValue={this.state.plan.kwargs.nscans[0]} /> &nbsp;
                         <TextField onChange={this.onChange.bind(this)} required 
-                                    name="start" id="0" label="Start" type="number" defaultValue="1" />
+                                    name="start" id="0" label="Start" type="number" defaultValue={this.state.plan.kwargs.start[0]} />
                       </div><br />
                       <FormControl>
                         <FormLabel component="legend">Mode</FormLabel>
