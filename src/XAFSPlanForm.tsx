@@ -6,7 +6,7 @@ import Typography from '@material-ui/core/Typography';
 import { IAllowedPlans, ISumbitPlanObject } from './queueserver';
 import { Box, Button, FormControl, FormControlLabel, FormLabel, GridList, GridListTile, Radio, RadioGroup, Slider, TextField } from '@material-ui/core';
 
-const defaultBounds = [-200, -30, -10, 15.5, 15000];
+const defaultBounds = [-200, -30, -10, 15.5];
 const defaultSteps = [10, 2, 0.3, 0.05];
 const defaultTimes = [0.5, 0.5, 0.5, 0.25];
 const defaultRegions = 4;
@@ -19,15 +19,29 @@ type IProps = {
 
 interface IState {
   plan: ISumbitPlanObject;
-  numRegions: number | number[];
+  numRegions: number;
 }
 
 export class XAFSPlanForm extends React.Component<IProps, IState> {
+  // All of the kwargs are lists, if the kwarg only has one item when it is submitted, 
+  // then it is reduced to a single value.
   constructor(props: IProps) {
     super(props);
     this.state = {
       plan: {name: this.props.name,
-             kwargs: {}},
+             kwargs: {
+              "element": [],
+              "edge": [],
+              "sample": [],
+              "prop": [],
+              "comment": [],
+              "nscans": [], 
+              "start": [],
+              "mode": [],
+              "bounds": defaultBounds,
+              "steps": defaultSteps,
+              "times": defaultTimes,
+             }},
       numRegions: defaultRegions
     }
   }
@@ -41,8 +55,23 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
     });
   }
   
-  private changeRegions(event: object, value: number | number[]) {
+  private changeRegions(event: object, value: any) {
+    const new_plan = this.state.plan;
+    if (value < this.state.numRegions){
+      new_plan.kwargs.bounds = new_plan.kwargs.bounds.slice(0, value)
+      new_plan.kwargs.steps = new_plan.kwargs.steps.slice(0, value)
+      new_plan.kwargs.times = new_plan.kwargs.times.slice(0, value)
+    }
+    if (value > this.state.numRegions){
+      var i;
+      for (i = 0; i <= (value - this.state.numRegions); i++){
+        new_plan.kwargs.bounds.push(0)
+        new_plan.kwargs.steps.push(0)
+        new_plan.kwargs.times.push(0)
+      }
+    }
     this.setState({
+        plan: new_plan,
         numRegions: value
     });
   }
@@ -129,7 +158,7 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
                         </RadioGroup>
                       </FormControl><br />
                         <FormLabel component="legend">Regions:</FormLabel>
-                        <Slider onChange={this.changeRegions.bind(this)} 
+                        <Slider onChangeCommitted={this.changeRegions.bind(this)} 
                           defaultValue={4} aria-labelledby="discrete-slider"
                           valueLabelDisplay="auto" step={1} marks min={1} max={8}
                           style={{height: "auto", width: '100'}}
@@ -138,21 +167,21 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
                           <FormLabel component="legend">Bounds:</FormLabel>
                           {Array.from(Array(this.state.numRegions).keys()).map((value: number, index) => (
                               <TextField onChange={this.onChange.bind(this)} required 
-                                          name="bounds" id={String(index)} style={{width: 60}} defaultValue={defaultBounds[index]} />
+                                          name="bounds" id={String(index)} style={{width: 60}} defaultValue={this.state.plan.kwargs.bounds[index]} />
                           ))}
                       </div>
                       <div>
                           <FormLabel component="legend">Steps:</FormLabel>
                           {Array.from(Array(this.state.numRegions).keys()).map((value: number, index) => (
                               <TextField onChange={this.onChange.bind(this)} required 
-                                          name="steps" id={String(index)} style={{width: 60}} defaultValue={defaultSteps[index]} />
+                                          name="steps" id={String(index)} style={{width: 60}} defaultValue={this.state.plan.kwargs.steps[index]} />
                           ))}
                       </div>
                       <div>
                           <FormLabel component="legend">Times:</FormLabel>
                           {Array.from(Array(this.state.numRegions).keys()).map((value: number, index) => (
                               <TextField onChange={this.onChange.bind(this)} required 
-                                          name="times" id={String(index)} style={{width: 60}} defaultValue={defaultTimes[index]} />
+                                          name="times" id={String(index)} style={{width: 60}} defaultValue={this.state.plan.kwargs.times[index]} />
                           ))}
                       </div><br />
                     </form>
