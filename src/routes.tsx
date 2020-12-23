@@ -3,7 +3,6 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import App from './App'
 import AcquirePage from './acquire'
-import BmmPlansPage from './XAFSPlanForm'
 import UserPage from './user'
 import Header from './header';
 

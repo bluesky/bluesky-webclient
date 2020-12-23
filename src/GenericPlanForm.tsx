@@ -171,7 +171,6 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                   ))}
                 </GridList>
               </div>
-              
             </CardContent>
             <CardActions disableSpacing style={{ width: '100%', justifyContent: 'flex-end' }}>
               <Button onClick={() => this.submit()}  variant="contained" color="primary">
