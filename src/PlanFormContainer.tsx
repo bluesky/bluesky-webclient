@@ -1,6 +1,7 @@
 import React from 'react';
 import { IAllowedPlans, ISumbitPlanObject } from './queueserver';
 import { GenericPlanForm } from './GenericPlanForm';
+import { XAFSPlanForm } from './XAFSPlanForm'
 import { Card, CardContent, CardHeader, Paper, Typography } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
@@ -19,7 +20,7 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
 
   private getPlanForm() {
    const planFormDict : Record<string, JSX.Element> = {
-                                'xafs': <GenericPlanForm submitPlan={this.props.submitPlan} 
+                                'xafs': <XAFSPlanForm submitPlan={this.props.submitPlan} 
                                                     name={this.props.name} 
                                                     allowedPlans={this.props.allowedPlans}/>,
                                 'default': <GenericPlanForm submitPlan={this.props.submitPlan} 
