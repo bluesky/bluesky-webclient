@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import App from './App'
 import AcquirePage from './acquire'
-import BmmPlansPage from './BmmPlans'
+import BmmPlansPage from './XAFSPlanForm'
 import UserPage from './user'
 import Header from './header';
 
@@ -14,7 +14,6 @@ const Routes: React.FunctionComponent = () => {
                 <Header />
                 <Route exact path="/" component={App} />
                 <Route exact path="/acquire" component={AcquirePage} />
-                <Route exact path="/bmm" component={BmmPlansPage} />
                 <Route exact path="/user" component={UserPage} />
             </div>
         </Router>
