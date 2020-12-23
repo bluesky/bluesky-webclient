@@ -109,25 +109,25 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
                     <GridListTile style={{ height: 'auto' }}>
                       <form noValidate autoComplete="off">
                         <div>
-                            <TextField onChange={this.onChange.bind(this)} required id="element" label="Element" defaultValue="Au" /> &nbsp;
-                            <TextField onChange={this.onChange.bind(this)} required id="edge" label="Edge" defaultValue="K" />
+                            <TextField onChange={this.onChange.bind(this)} required name="element" id="element" label="Element" defaultValue="Au" /> &nbsp;
+                            <TextField onChange={this.onChange.bind(this)} required name="edge" id="edge" label="Edge" defaultValue="K" />
                         </div>
                         <FormControl fullWidth>
-                            <TextField onChange={this.onChange.bind(this)} required id="sample" label="Sample" />
+                            <TextField onChange={this.onChange.bind(this)} required name="sample" id="sample" label="Sample" />
                         </FormControl>
                         <FormControl fullWidth>
-                            <TextField onChange={this.onChange.bind(this)} id="prop" label="Preparation" />
+                            <TextField onChange={this.onChange.bind(this)} name="prop" id="prop" label="Preparation" />
                         </FormControl>
                         <FormControl fullWidth>
-                            <TextField onChange={this.onChange.bind(this)} id="comment" label="Comment" multiline rows={4} />
+                            <TextField onChange={this.onChange.bind(this)} name="comment" id="comment" label="Comment" multiline rows={4} />
                         </FormControl>
                         <div>
-                            <TextField onChange={this.onChange.bind(this)} required id="nscans" label="Number of scans" type="number" defaultValue="3" /> &nbsp;
-                            <TextField onChange={this.onChange.bind(this)} required id="start" label="Start" type="number" defaultValue="1" />
+                            <TextField onChange={this.onChange.bind(this)} required name="nscans" id="nscans" label="Number of scans" type="number" defaultValue="3" /> &nbsp;
+                            <TextField onChange={this.onChange.bind(this)} required name="start" id="start" label="Start" type="number" defaultValue="1" />
                         </div><br />
                         <FormControl>
                             <FormLabel component="legend">Mode</FormLabel>
-                            <RadioGroup onChange={this.onChange.bind(this)} row id="mode" aria-label="Mode" defaultValue="transmission">
+                            <RadioGroup onChange={this.onChange.bind(this)} row name="mode" id="mode" aria-label="Mode" defaultValue="transmission">
                                 <FormControlLabel value="transmission" control={<Radio />} label="Transmission" />
                                 <FormControlLabel value="fluorescence" control={<Radio />} label="Fluorescence" />
                                 <FormControlLabel value="both" control={<Radio />} label="Both" />
