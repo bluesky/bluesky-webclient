@@ -387,7 +387,7 @@ export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObj
                                          kwargs: {}};
 
     // Remove the square brackets from parameters that are not intended to be lists.
-    // For now we assume that kwargs the end with the letter 's' are lists.
+    // For now we assume that kwargs ending with the letter 's' are lists.
     // TODO: Update this, once the have the correct information from the 
     // queueserver about which kwargs are list.
     for (const [key, value] of Object.entries(submitPlan.kwargs)) {
