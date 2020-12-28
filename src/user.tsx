@@ -10,6 +10,7 @@ import { IUser, IUserGetAction } from './facility';
 import {
     RouteComponentProps
 } from "react-router-dom";
+import { Login } from './login';
 
 export type UserActions = 
 | IUserGetAction
@@ -33,15 +34,7 @@ class UserPage extends React.Component<IProps, IState> {
         return (
           <Container maxWidth="sm">
           <Box my={4}>
-            <Typography variant="h4" component="h1" gutterBottom>
-              Page to display Login or Logout/User information
-            </Typography>
-            <Tooltip title="Local username">
-              <Typography variant="h5">User: {this.props.user.username}</Typography>
-              </Tooltip>
-	      <Typography variant="h6">User info - email: {this.props.user.email}
-        <p>ORCiD: {this.props.user.orcid}</p></Typography>
-            <div><pre>More information about the user here...</pre></div>
+            <Login />
           </Box>
         </Container>
         )

@@ -2,7 +2,8 @@
 
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { Form, Button, Alert } from 'react-bootstrap';
+import { Button } from '@material-ui/core';
+import { Alert } from '@material-ui/lab'
 import auth from './auth';
 
 export const Login = () => {
@@ -47,7 +48,7 @@ export const Login = () => {
   return (
     <>
       <h2>Login</h2>
-      <Form onSubmit={callSubmit}>
+      <Box>
         <Form.Group controlId="formLoginEmail">
           <Form.Label>Email</Form.Label>
           <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.currentTarget.value)} />
@@ -62,7 +63,8 @@ export const Login = () => {
         <Button variant="primary" type="submit" block>
           Log In
         </Button>
-      </Form>
+        <Button onClick={callSubmit} />
+      </Box>
     </>
   );
 };
