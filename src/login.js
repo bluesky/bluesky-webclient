@@ -2,8 +2,7 @@
 
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
-import { Button } from '@material-ui/core';
-import { Alert } from '@material-ui/lab'
+import { Button, FormControl, FormControlLabel, Box, TextField } from '@material-ui/core';
 import auth from './auth';
 
 export const Login = () => {
@@ -46,25 +45,19 @@ export const Login = () => {
   };
 
   return (
-    <>
-      <h2>Login</h2>
       <Box>
-        <Form.Group controlId="formLoginEmail">
-          <Form.Label>Email</Form.Label>
-          <Form.Control type="email" placeholder="Enter email" value={email} onChange={(e) => setEmail(e.currentTarget.value)} />
-        </Form.Group>
-        <Form.Group controlId="formLoginPassword">
-          <Form.Label>Password</Form.Label>
-          <Form.Control type="password" placeholder="Enter password" value={password} onChange={(p) => setPassword(p.currentTarget.value)}/>
-        </Form.Group>
-        <Alert variant='danger' style={ error!=='' ? {display:"block"} : {display:"none"}}>
-          {error}
-        </Alert>
+        <FormControl>
+            <FormControlLabel value="email" /> 
+            <TextField onChange={(e) => setEmail(e.currentTarget.value)} />
+        </FormControl>
+        <FormControl>
+            <FormControlLabel value="password" />
+            <TextField onChange={(p) => setPassword(p.currentTarget.value)} />
+        </FormControl>
         <Button variant="primary" type="submit" block>
           Log In
         </Button>
         <Button onClick={callSubmit} />
       </Box>
-    </>
   );
 };
