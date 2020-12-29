@@ -79,7 +79,6 @@ export class Login extends React.Component<IProps, IState>{
           </List>
         </Box>
       </Box>
-
     );
   }
 

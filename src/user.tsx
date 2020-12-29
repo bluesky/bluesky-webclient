@@ -11,6 +11,7 @@ import {
     RouteComponentProps
 } from "react-router-dom";
 import { Login } from './Login';
+import { Register } from './Register';
 
 export type UserActions = 
 | IUserGetAction
@@ -35,6 +36,8 @@ class UserPage extends React.Component<IProps, IState> {
           <Container maxWidth="sm">
           <Box my={4}>
             <Login />
+            <Box width="80vw" height="2vh"></Box>
+            <Register />
           </Box>
         </Container>
         )
