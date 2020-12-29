@@ -1,5 +1,5 @@
 import { Box, ListItem, Typography, List, TextField, Button, InputAdornment, IconButton, Input, FormControl, InputLabel, FilledInput, OutlinedInput } from '@material-ui/core';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { Visibility, VisibilityOff, Widgets } from '@material-ui/icons';
 import React, { useState } from 'react';
 import { useHistory } from 'react-router';
 import auth from './auth';
@@ -84,16 +84,19 @@ export class Register extends React.Component<IProps, IState>{
         <Box border={1}>
           <List>
             <ListItem style={{justifyContent:'center'}}>
-              <TextField label="first name" variant="outlined" onChange={(e) => this.setState({firstName: e.currentTarget.value})} />
+              <TextField style = {{width: '50%'}} label="first name" variant="outlined" 
+                         onChange={(e) => this.setState({firstName: e.currentTarget.value})} />
             </ListItem>
             <ListItem style={{justifyContent:'center'}}>
-              <TextField label="last name" variant="outlined" onChange={(p) => this.setState({lastName: p.currentTarget.value})} />
+              <TextField style = {{width: '50%'}} label="last name" variant="outlined" 
+                         onChange={(p) => this.setState({lastName: p.currentTarget.value})} />
             </ListItem>
             <ListItem style={{justifyContent:'center'}}>
-              <TextField label="email" variant="outlined" onChange={(p) => this.setState({email: p.currentTarget.value})} />
+              <TextField style = {{width: '50%'}} label="email" variant="outlined" 
+                         onChange={(p) => this.setState({email: p.currentTarget.value})} />
             </ListItem>
             <ListItem style={{justifyContent:'center'}}>
-              <TextField label="password" variant="outlined" onChange={(p) => this.setState({password: p.currentTarget.value})}
+              <TextField style = {{width: '50%'}} label="password" variant="outlined" onChange={(p) => this.setState({password: p.currentTarget.value})}
                         InputProps={{
                           endAdornment: <InputAdornment position="end">
                           <IconButton
@@ -106,7 +109,7 @@ export class Register extends React.Component<IProps, IState>{
                         }}/>
             </ListItem>
             <ListItem style={{justifyContent:'center'}}>
-              <TextField label="confirm password" variant="outlined" onChange={(p) => this.setState({passwordConfirmation: p.currentTarget.value})}
+              <TextField style = {{width: '50%'}} label="confirm password" variant="outlined" onChange={(p) => this.setState({passwordConfirmation: p.currentTarget.value})}
                         InputProps={{
                           endAdornment: <InputAdornment position="end">
                           <IconButton
