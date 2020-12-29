@@ -1,8 +1,6 @@
-// Source: https://github.com/ankushjain2001/fastapi-react-mongodb/blob/master/frontend/src/auth/login.js
-
 import React from 'react';
 import { useHistory } from 'react-router';
-import { Button, FormControl, FormControlLabel, Box, TextField, FormLabel } from '@material-ui/core';
+import { Button, Box, TextField, FormLabel, ListItem, List, Typography } from '@material-ui/core';
 import auth from './auth';
 
 type IProps = {};
@@ -14,7 +12,7 @@ interface IState {
 };
 
 export class Login extends React.Component<IProps, IState>{
-  
+
   constructor(props: IProps) {
     super(props);
     this.state = {
@@ -24,9 +22,10 @@ export class Login extends React.Component<IProps, IState>{
     };
   }
 
-  async callSubmit(e: any){
 
-    let history = useHistory();
+  async callSubmit(e: any){
+    // Source: https://github.com/ankushjain2001/fastapi-react-mongodb/blob/master/frontend/src/auth/login.js
+    //let history = useHistory();
 
     // Prevents page reload on wrongs creds
     e.preventDefault();
@@ -36,7 +35,7 @@ export class Login extends React.Component<IProps, IState>{
       // Executes only when there are no 400 and 500 errors, else they are thrown as errors
       // Callbacks can be added here
       if (data) {
-        history.push('/');
+        //history.push('/');
       }
     } 
     catch (err) {
@@ -56,27 +55,31 @@ export class Login extends React.Component<IProps, IState>{
     }
   };
 
-  
   render(){
     return (
       <Box>
-        <FormControl>
-          <FormLabel component="legend">
-            email  
-          </FormLabel>
-          <TextField onChange={(e) => this.setState({email: e.currentTarget.value})} />
-        </FormControl>
-        <FormControl>
-          <FormLabel component="legend">
-            password
-          </FormLabel>
-          <TextField onChange={(p) => this.setState({password: p.currentTarget.value})} />
-        </FormControl>
-        <Button variant="contained">
-          Log In
-        </Button>
-        <Button onClick={this.callSubmit} />
+        <ListItem style={{justifyContent:'center'}}>
+          <Typography variant="h5">
+            Login
+          </Typography>
+        </ListItem>
+        <Box border={1}>
+          <List>
+            <ListItem style={{justifyContent:'center'}}>
+              <TextField label="email" variant="outlined" onChange={(e) => this.setState({email: e.currentTarget.value})} />
+            </ListItem>
+            <ListItem style={{justifyContent:'center'}}>
+              <TextField label="password" variant="outlined" onChange={(p) => this.setState({password: p.currentTarget.value})} />
+            </ListItem>
+            <ListItem style={{justifyContent:'center'}}>
+              <Button variant="contained" onClick={this.callSubmit.bind(this)}>
+                Log In
+              </Button>
+            </ListItem>
+          </List>
+        </Box>
       </Box>
+
     );
   }
 
