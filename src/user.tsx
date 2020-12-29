@@ -10,7 +10,7 @@ import { IUser, IUserGetAction } from './facility';
 import {
     RouteComponentProps
 } from "react-router-dom";
-import { Login } from './login';
+import { Login } from './Login';
 
 export type UserActions = 
 | IUserGetAction
