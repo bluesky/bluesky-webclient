@@ -96,7 +96,7 @@ export class Register extends React.Component<IProps, IState>{
                          onChange={(p) => this.setState({email: p.currentTarget.value})} />
             </ListItem>
             <ListItem style={{justifyContent:'center'}}>
-              <TextField style = {{width: '50%'}} label="password" variant="outlined" onChange={(p) => this.setState({password: p.currentTarget.value})}
+              <TextField type={this.state.showPassword ? 'text' : 'password'} style = {{width: '50%'}} label="password" variant="outlined" onChange={(p) => this.setState({password: p.currentTarget.value})}
                         InputProps={{
                           endAdornment: <InputAdornment position="end">
                           <IconButton
@@ -109,7 +109,7 @@ export class Register extends React.Component<IProps, IState>{
                         }}/>
             </ListItem>
             <ListItem style={{justifyContent:'center'}}>
-              <TextField style = {{width: '50%'}} label="confirm password" variant="outlined" onChange={(p) => this.setState({passwordConfirmation: p.currentTarget.value})}
+              <TextField type={this.state.showPassword ? 'text' : 'password'} style = {{width: '50%'}} label="confirm password" variant="outlined" onChange={(p) => this.setState({passwordConfirmation: p.currentTarget.value})}
                         InputProps={{
                           endAdornment: <InputAdornment position="end">
                           <IconButton

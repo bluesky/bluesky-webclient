@@ -1,7 +1,8 @@
 import React from 'react';
 import { useHistory } from 'react-router';
-import { Button, Box, TextField, FormLabel, ListItem, List, Typography } from '@material-ui/core';
+import { Button, Box, TextField, FormLabel, ListItem, List, Typography, IconButton, InputAdornment } from '@material-ui/core';
 import auth from './auth';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 type IProps = {};
   
@@ -9,6 +10,7 @@ interface IState {
   email: string,
   password: string,
   error: any,
+  showPassword: boolean
 };
 
 export class Login extends React.Component<IProps, IState>{
@@ -19,9 +21,17 @@ export class Login extends React.Component<IProps, IState>{
       email: "",
       password: "",
       error: "",
+      showPassword: false,
     };
   }
 
+  showPassword(){
+    this.setState({ showPassword: !this.state.showPassword });
+  };
+
+  handleMouseDownPassword(event: React.MouseEvent<HTMLButtonElement>){
+    event.preventDefault();
+  };
 
   async callSubmit(e: any){
     // Source: https://github.com/ankushjain2001/fastapi-react-mongodb/blob/master/frontend/src/auth/login.js
@@ -66,10 +76,21 @@ export class Login extends React.Component<IProps, IState>{
         <Box border={1}>
           <List>
             <ListItem style={{justifyContent:'center'}}>
-              <TextField label="email" variant="outlined" onChange={(e) => this.setState({email: e.currentTarget.value})} />
+              <TextField style = {{width: '50%'}} label="email" variant="outlined" 
+                         onChange={(e) => this.setState({email: e.currentTarget.value})} />
             </ListItem>
             <ListItem style={{justifyContent:'center'}}>
-              <TextField label="password" variant="outlined" onChange={(p) => this.setState({password: p.currentTarget.value})} />
+              <TextField type={this.state.showPassword ? 'text' : 'password'} style = {{width: '50%'}} label="password" variant="outlined" onChange={(p) => this.setState({password: p.currentTarget.value})}
+                        InputProps={{
+                          endAdornment: <InputAdornment position="end">
+                          <IconButton
+                            aria-label="toggle password visibility"
+                            onClick={this.showPassword.bind(this)}
+                            onMouseDown={this.handleMouseDownPassword.bind(this)}>
+                            {this.state.showPassword ? <Visibility /> : <VisibilityOff />}
+                          </IconButton>
+                        </InputAdornment>,
+                        }}/>
             </ListItem>
             <ListItem style={{justifyContent:'center'}}>
               <Button variant="contained" onClick={this.callSubmit.bind(this)}>
