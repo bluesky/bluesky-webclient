@@ -387,11 +387,11 @@ export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObj
                                          kwargs: {}};
 
     // Remove the square brackets from parameters that are not intended to be lists.
-    // For now we assume that only the detectors kwarg is a list.
+    // For now we assume that kwargs ending with the letter 's' are lists.
     // TODO: Update this, once the have the correct information from the 
     // queueserver about which kwargs are list.
     for (const [key, value] of Object.entries(submitPlan.kwargs)) {
-      if (key !== 'detectors'){
+      if (key.slice(-1) !== 's'){
         if (value[0] !== "None"){
             // Convert string to a number if possible.
             // TODO: Use the type information from the server (once available), 
