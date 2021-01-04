@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Box, TextField, ListItem, List, Typography, IconButton, InputAdornment } from '@material-ui/core';
-import auth from './userapi';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+import decodeJwt from 'jwt-decode';
 
 type IProps = {};
   
@@ -32,6 +32,48 @@ export class LoginComponent extends React.Component<IProps, IState>{
     event.preventDefault();
   };
 
+  login(){
+    if (!(this.state.email.length > 0)) {
+      throw new Error('Email was not provided');
+    }
+
+    if (!(this.state.password.length > 0)) {
+      throw new Error('Password was not provided');
+    }
+
+    // Create request
+    const request = new Request('http://localhost:9000/auth/login', {
+      method: 'POST',
+      body: { email: this.state.email,
+              password: this.state.password },
+    });
+
+    // Fetch request
+    const response = await fetch(request);
+    // 500 error handling
+    if (response.status === 500) {
+      throw new Error('Internal server error');
+    }
+    // Extracting response data
+    const data = await response.json();
+    // 400 error handling
+    if (response.status >= 400 && response.status < 500) {
+      if (data.detail) {
+        throw data.detail;
+      }
+      throw data;
+    }
+  // Successful login handling
+  if ('access_token' in data) {
+    // eslint-disable-next-line
+    const decodedToken = decodeJwt(data['access_token']);
+    // console.log(decodedToken)
+    localStorage.setItem('token', data['access_token']);
+    localStorage.setItem('permissions', 'user');
+  }
+    return data
+  };
+
   async callSubmit(e: any){
     // Source: https://github.com/ankushjain2001/fastapi-react-mongodb/blob/master/frontend/src/auth/login.js
     //let history = useHistory();
@@ -40,7 +82,7 @@ export class LoginComponent extends React.Component<IProps, IState>{
     e.preventDefault();
     this.setState({error: ""})
     try {
-      const data = await auth.login(this.state.email, this.state.password);
+      const data = await this.login(this.state.email, this.state.password);
       // Executes only when there are no 400 and 500 errors, else they are thrown as errors
       // Callbacks can be added here
       if (data) {

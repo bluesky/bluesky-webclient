@@ -1,53 +1,52 @@
-// Source: https://github.com/ankushjain2001/fastapi-react-mongodb/blob/master/frontend/src/auth/auth.js
-
 import decodeJwt from 'jwt-decode';
+import axios from "axios";
 
-class Auth {
-  
-  login = async (email, password) => {
-    // Assert email is not empty
-    if (!(email.length > 0)) {
-      throw new Error('Email was not provided');
-    }
-    // Assert password is not empty
-    if (!(password.length > 0)) {
-      throw new Error('Password was not provided');
-    }
-    // Create data JSON
-    const formData = new FormData();
-    formData.append('username', email);
-    formData.append('password', password);
-    // Create request
-    const request = new Request('http://localhost:9000/auth/login', {
-      method: 'POST',
-      body: formData,
-    });
-    // Fetch request
-    const response = await fetch(request);
-    // 500 error handling
-    if (response.status === 500) {
-      throw new Error('Internal server error');
-    }
-    // Extracting response data
-    const data = await response.json();
-    // 400 error handling
-    if (response.status >= 400 && response.status < 500) {
-      if (data.detail) {
-        throw data.detail;
-      }
-      throw data;
-    }
-  // Successful login handling
-  if ('access_token' in data) {
-    // eslint-disable-next-line
-    const decodedToken = decodeJwt(data['access_token']);
-    // console.log(decodedToken)
-    localStorage.setItem('token', data['access_token']);
-    localStorage.setItem('permissions', 'user');
+var axiosUserInstance = axios.create({
+  baseURL: process.env.REACT_APP_USER_API_PREFIX,
+});
+
+export const login = async(email: string, password: string): Promise<Object> => {
+  const res = await axiosUserInstance.post('auth/login',
+      {
+          email: email,
+          password: password,
+      });
+  console.log(res);
+  return res.data;
+}
+
+/*
+login = async (email, password) => {
+  const request = new Request('http://localhost:9000/auth/login', {
+    method: 'POST',
+    body: formData,
+  });
+  // Fetch request
+  const response = await fetch(request);
+  // 500 error handling
+  if (response.status === 500) {
+    throw new Error('Internal server error');
   }
-    return data
-  };
-
+  // Extracting response data
+  const data = await response.json();
+  // 400 error handling
+  if (response.status >= 400 && response.status < 500) {
+    if (data.detail) {
+      throw data.detail;
+    }
+    throw data;
+  }
+// Successful login handling
+if ('access_token' in data) {
+  // eslint-disable-next-line
+  const decodedToken = decodeJwt(data['access_token']);
+  // console.log(decodedToken)
+  localStorage.setItem('token', data['access_token']);
+  localStorage.setItem('permissions', 'user');
+}
+  return data
+};
+*/
   register = async (firstName, lastName, email, password, passwordConfirmation) => {
     // Assert firstName, lastName and phone not empty
     if (!((firstName.length) > 0)) {

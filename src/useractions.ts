@@ -18,3 +18,14 @@ export const getUser: ActionCreator<ThunkAction<Promise<AnyAction>, IUserState, 
         });
     };
 };
+
+export const loginAction: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (email: string, password: string) => {
+  return async (dispatch: Dispatch) => {
+      dispatch(loading());
+      const queue = await modifyQueueAPI(opId);
+      return dispatch({
+        queue,
+        type: PlanActionTypes.MODIFYQUEUE
+      });
+  };
+};
