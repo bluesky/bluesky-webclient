@@ -1,7 +1,7 @@
 import { Reducer } from "redux";
 import { IUserState, UserActionTypes } from "./facility";
 
-import {UserActions} from "./user";
+import {UserActions} from "./LoginPage";
 
 const initialUserState: IUserState = {
     user: {

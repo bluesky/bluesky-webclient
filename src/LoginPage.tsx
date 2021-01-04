@@ -10,8 +10,8 @@ import { IUser, IUserGetAction } from './facility';
 import {
     RouteComponentProps
 } from "react-router-dom";
-import { Login } from './Login';
-import { Register } from './Register';
+import { LoginComponent } from './LoginComponent';
+import { RegisterComponent } from './RegisterComponent';
 
 export type UserActions = 
 | IUserGetAction
@@ -27,7 +27,7 @@ interface IProps extends RouteComponentProps {
 interface IState {
   userId: number;
 }
-class UserPage extends React.Component<IProps, IState> {
+class LoginPage extends React.Component<IProps, IState> {
     public constructor(props: IProps) {
         super(props);
       }
@@ -35,9 +35,9 @@ class UserPage extends React.Component<IProps, IState> {
         return (
           <Container maxWidth="sm">
           <Box my={4}>
-            <Login />
+            <LoginComponent />
             <Box width="80vw" height="2vh"></Box>
-            <Register />
+            <RegisterComponent />
           </Box>
         </Container>
         )
@@ -63,4 +63,4 @@ const mapDispatchToProps = (dispatch: any) => {
 export default connect(
     mapStateToProps,
     mapDispatchToProps
-)(UserPage);
+)(LoginPage);

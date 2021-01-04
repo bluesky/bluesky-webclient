@@ -3,7 +3,7 @@ import { BrowserRouter as Router, Route } from 'react-router-dom';
 
 import App from './App'
 import AcquirePage from './acquire'
-import UserPage from './user'
+import UserPage from './LoginPage'
 import Header from './header';
 
 const Routes: React.FunctionComponent = () => {

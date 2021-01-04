@@ -1,8 +1,7 @@
 import { Box, ListItem, Typography, List, TextField, Button, InputAdornment, IconButton, Input, FormControl, InputLabel, FilledInput, OutlinedInput } from '@material-ui/core';
-import { Visibility, VisibilityOff, Widgets } from '@material-ui/icons';
-import React, { useState } from 'react';
-import { useHistory } from 'react-router';
-import auth from './auth';
+import { Visibility, VisibilityOff } from '@material-ui/icons';
+import React from 'react';
+import auth from './userapi';
 
 type IProps = {};
   
@@ -16,7 +15,7 @@ interface IState {
   showPassword: boolean,
 };
 
-export class Register extends React.Component<IProps, IState>{
+export class RegisterComponent extends React.Component<IProps, IState>{
 
   constructor(props: IProps) {
     super(props);

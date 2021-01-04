@@ -1,7 +1,6 @@
 import React from 'react';
-import { useHistory } from 'react-router';
-import { Button, Box, TextField, FormLabel, ListItem, List, Typography, IconButton, InputAdornment } from '@material-ui/core';
-import auth from './auth';
+import { Button, Box, TextField, ListItem, List, Typography, IconButton, InputAdornment } from '@material-ui/core';
+import auth from './userapi';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 
 type IProps = {};
@@ -13,7 +12,7 @@ interface IState {
   showPassword: boolean
 };
 
-export class Login extends React.Component<IProps, IState>{
+export class LoginComponent extends React.Component<IProps, IState>{
 
   constructor(props: IProps) {
     super(props);
