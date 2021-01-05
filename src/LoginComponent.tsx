@@ -1,7 +1,7 @@
 import React from 'react';
 import { Button, Box, TextField, ListItem, List, Typography, IconButton, InputAdornment } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import { loginAction } from './userapi'
+import { loginAction } from './useractions'
 import decodeJwt from 'jwt-decode';
 
 type IProps = {};
@@ -37,75 +37,10 @@ export class LoginComponent extends React.Component<IProps, IState>{
     if (!(this.state.email.length > 0)) {
       throw new Error('Email was not provided');
     }
-
     if (!(this.state.password.length > 0)) {
       throw new Error('Password was not provided');
     }
-
-    
-    // Create request
-    const request = new Request('http://localhost:9000/auth/login', {
-      method: 'POST',
-      body: { email: this.state.email,
-              password: this.state.password },
-    });
-
-    // Fetch request
-    const response = await fetch(request);
-    // 500 error handling
-    if (response.status === 500) {
-      throw new Error('Internal server error');
-    }
-    // Extracting response data
-    const data = await response.json();
-    // 400 error handling
-    if (response.status >= 400 && response.status < 500) {
-      if (data.detail) {
-        throw data.detail;
-      }
-      throw data;
-    }
-  // Successful login handling
-  if ('access_token' in data) {
-    // eslint-disable-next-line
-    const decodedToken = decodeJwt(data['access_token']);
-    // console.log(decodedToken)
-    localStorage.setItem('token', data['access_token']);
-    localStorage.setItem('permissions', 'user');
-  }
-    return data
-  };
-
-  async callSubmit(e: any){
-    // Source: https://github.com/ankushjain2001/fastapi-react-mongodb/blob/master/frontend/src/auth/login.js
-    //let history = useHistory();
-
-    // Prevents page reload on wrongs creds
-    e.preventDefault();
-    this.setState({error: ""})
-    try {
-      const data = await this.login(this.state.email, this.state.password);
-      // Executes only when there are no 400 and 500 errors, else they are thrown as errors
-      // Callbacks can be added here
-      if (data) {
-        //history.push('/');
-      }
-    } 
-    catch (err) {
-      if (err instanceof Error) {
-        // Handle errors thrown from frontend
-        this.setState({error: err.message})
-      } 
-      else {
-        // Handle errors thrown from backend
-        if (err === 'LOGIN_BAD_CREDENTIALS') {
-          this.setState({error: 'Incorrect credentials'})
-        }
-        else {
-          this.setState({error: 'Error occured in the API.'})
-        }
-      }
-    }
+    loginAction(this.state.email, this.state.password);
   };
 
   render(){
@@ -136,7 +71,7 @@ export class LoginComponent extends React.Component<IProps, IState>{
                         }}/>
             </ListItem>
             <ListItem style={{justifyContent:'center'}}>
-              <Button variant="contained" onClick={this.callSubmit.bind(this)}>
+              <Button variant="contained" onClick={this.login.bind(this)}>
                 Log In
               </Button>
             </ListItem>

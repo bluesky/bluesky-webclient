@@ -16,6 +16,7 @@ import { RegisterComponent } from './RegisterComponent';
 export type UserActions = 
 | IUserGetAction
 
+
 type RouteParams = { id: string, uid: string };
 
 interface IProps extends RouteComponentProps {

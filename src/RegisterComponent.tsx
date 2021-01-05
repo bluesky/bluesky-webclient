@@ -1,7 +1,6 @@
 import { Box, ListItem, Typography, List, TextField, Button, InputAdornment, IconButton, Input, FormControl, InputLabel, FilledInput, OutlinedInput } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
 import React from 'react';
-import auth from './userapi';
 
 type IProps = {};
   

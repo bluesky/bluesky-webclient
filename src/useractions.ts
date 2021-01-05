@@ -27,7 +27,7 @@ export const loginAction: ActionCreator<ThunkAction<Promise<AnyAction>, any, nul
       const result = await loginAPI(email, password);
       return dispatch({
         result,
-        type: UserActionTypes.LOGIN
+        type: UserActionTypes.LOGIN,
       });
   };
 };

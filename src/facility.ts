@@ -38,11 +38,11 @@ export interface IExperiment {
 export interface IUserGetAction {
     type: UserActionTypes.GETINFO,
     user: IUser
-  }
+}
   
-  export interface IUserLoadingAction {
-    type: UserActionTypes.LOADING
-  }
+export interface IUserLoadingAction {
+type: UserActionTypes.LOADING
+}
 
 export type UserInfo =
   |  IUser | IProposal | IExperiment
