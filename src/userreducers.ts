@@ -49,3 +49,23 @@ export const loginReducer: Reducer<IUserState, ILoginAction> = (state=initialUse
         }
     }
 };
+
+export interface IRegisterAction {
+    type: UserActionTypes.REGISTER,
+    token: any,
+}
+
+export const registerReducer: Reducer<IUserState, ILoginAction> = (state=initialUserState, action) => {
+    switch (action.type) {
+        case UserActionTypes.LOGIN: {
+            return {
+                ...state,
+                token: action.token,
+                permissions: "user"
+            };
+        }
+        default: {
+            return state;
+        }
+    }
+};

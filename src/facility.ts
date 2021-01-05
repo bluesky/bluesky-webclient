@@ -8,6 +8,7 @@ export enum UserActionTypes {
     GETINFO = "USER/GETACTION",
     LOADING = "USER/LOADING",
     LOGIN = "USER/LOGIN",
+    REGISTER = "USER/REGISTER"
 }
 
 export interface IUser {

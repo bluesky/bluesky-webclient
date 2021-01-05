@@ -1,6 +1,7 @@
-import { Box, ListItem, Typography, List, TextField, Button, InputAdornment, IconButton, Input, FormControl, InputLabel, FilledInput, OutlinedInput } from '@material-ui/core';
-import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { Box, ListItem, Typography, List, TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
+import { FirstPageRounded, Visibility, VisibilityOff } from '@material-ui/icons';
 import React from 'react';
+import { registerAction } from './useractions'
 
 type IProps = {};
   
@@ -37,39 +38,34 @@ export class RegisterComponent extends React.Component<IProps, IState>{
     event.preventDefault();
   };
 
-  // Source: https://github.com/ankushjain2001/fastapi-react-mongodb/blob/master/frontend/src/auth/register.js
-  async callSubmit(e: any){
+  register(){
+        // Assert firstName, lastName and phone not empty
+        if (!((this.state.firstName.length) > 0)) {
+          throw new Error('First Name was not provided');
+        }
+        // Assert firstName, lastName and phone not empty
+        if (!((this.state.lastName.length) > 0)) {
+          throw new Error('Last Name was not provided');
+        }
+        // Assert email is not empty
+        if (!(this.state.email.length > 0)) {
+          throw new Error('Email was not provided');
+        }
+        // Assert password is not empty
+        if (!(this.state.password.length > 0)) {
+          throw new Error('Password was not provided');
+        }
+        // Assert password confirmation is not empty
+        if (!(this.state.passwordConfirmation.length > 0)) {
+          throw new Error('Password confirmation was not provided');
+        }
+        // Assert email or password or password confirmation is not empty
+        if (this.state.password !== this.state.passwordConfirmation) {
+          throw new Error('Passwords do not match')
+        }
 
-    // Prevents page reload on wrongs creds
-    e.preventDefault();
-    this.setState({error: ''})
-    try {
-      const data = await auth.register(this.state.firstName, this.state.lastName, 
-                                       this.state.email, this.state.password, this.state.passwordConfirmation);
-      // Executes only when there are no 400 and 500 errors, else they are thrown as errors
-      // Callbacks can be added here
-      if (data) {
-        await auth.login(this.state.email, this.state.password);
-        alert('Registration Successful!');
-        //history.push('/');
-      }
-    }
-    catch (err) {
-      if (err instanceof Error) {
-        // Handle errors thrown from frontend
-        this.setState({error: err.message});
-      } 
-      else {
-        // Handle errors thrown from backend
-        if (err === 'REGISTER_USER_ALREADY_EXISTS') {
-          this.setState({error: 'Email ID is already registered. Please use your credentials to login.'});
-        }
-        else {
-          this.setState({error: 'Error occured in the API.'});
-        }
-      }
-    }
-  };
+        registerAction(this.state.firstName, this.state.lastName, this.state.email, this.state.password)
+  }
 
   render(){
     return (
@@ -120,7 +116,7 @@ export class RegisterComponent extends React.Component<IProps, IState>{
                         }}/>
             </ListItem>
             <ListItem style={{justifyContent:'center'}}>
-              <Button variant="contained" onClick={this.callSubmit.bind(this)}>
+              <Button variant="contained" onClick={this.register.bind(this)}>
                 Register
               </Button>
             </ListItem>
