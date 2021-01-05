@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Box, TextField, ListItem, List, Typography, IconButton, InputAdornment } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
+import { loginAction } from './userapi'
 import decodeJwt from 'jwt-decode';
 
 type IProps = {};
@@ -41,6 +42,7 @@ export class LoginComponent extends React.Component<IProps, IState>{
       throw new Error('Password was not provided');
     }
 
+    
     // Create request
     const request = new Request('http://localhost:9000/auth/login', {
       method: 'POST',
@@ -143,5 +145,4 @@ export class LoginComponent extends React.Component<IProps, IState>{
       </Box>
     );
   }
-
 };

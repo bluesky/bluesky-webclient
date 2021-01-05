@@ -6,7 +6,8 @@ var axiosInstance = axios.create({
 
 export enum UserActionTypes {
     GETINFO = "USER/GETACTION",
-    LOADING = "USER/LOADING"
+    LOADING = "USER/LOADING",
+    LOGIN = "USER/LOGIN",
 }
 
 export interface IUser {
@@ -34,7 +35,6 @@ export interface IExperiment {
     resource_id: number
 }
 
-
 export interface IUserGetAction {
     type: UserActionTypes.GETINFO,
     user: IUser
@@ -49,6 +49,8 @@ export type UserInfo =
 
 export interface IUserState {
     readonly user: IUser;
+    readonly token: any;
+    readonly permissions: string;
     readonly userLoading: boolean;
 }
 

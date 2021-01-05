@@ -5,7 +5,7 @@ var axiosUserInstance = axios.create({
   baseURL: process.env.REACT_APP_USER_API_PREFIX,
 });
 
-export const login = async(email: string, password: string): Promise<Object> => {
+export const loginAPI = async(email: string, password: string): Promise<Object> => {
   const res = await axiosUserInstance.post('auth/login',
       {
           email: email,
@@ -46,7 +46,6 @@ if ('access_token' in data) {
 }
   return data
 };
-*/
   register = async (firstName, lastName, email, password, passwordConfirmation) => {
     // Assert firstName, lastName and phone not empty
     if (!((firstName.length) > 0)) {
@@ -139,3 +138,5 @@ if ('access_token' in data) {
 }
 
 export default new Auth();
+
+*/

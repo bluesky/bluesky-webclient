@@ -10,6 +10,8 @@ const initialUserState: IUserState = {
         username:'jdoe',
         orcid:''
     },
+    token: null,
+    permissions: "",
     userLoading: false
 };
 
