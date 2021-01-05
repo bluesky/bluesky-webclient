@@ -15,62 +15,21 @@ export const loginAPI = async(email: string, password: string): Promise<Object> 
   return res.data;
 }
 
-/*
-login = async (email, password) => {
-  const request = new Request('http://localhost:9000/auth/login', {
-    method: 'POST',
-    body: formData,
-  });
-  // Fetch request
-  const response = await fetch(request);
-  // 500 error handling
-  if (response.status === 500) {
-    throw new Error('Internal server error');
-  }
-  // Extracting response data
-  const data = await response.json();
-  // 400 error handling
-  if (response.status >= 400 && response.status < 500) {
-    if (data.detail) {
-      throw data.detail;
-    }
-    throw data;
-  }
-// Successful login handling
-if ('access_token' in data) {
-  // eslint-disable-next-line
-  const decodedToken = decodeJwt(data['access_token']);
-  // console.log(decodedToken)
-  localStorage.setItem('token', data['access_token']);
-  localStorage.setItem('permissions', 'user');
+export const registerAPI = async(firstName: string, lastName: string, email: string, password: string): Promise<Object> => {
+  const res = await axiosUserInstance.post('auth/register',
+      {
+          firstName: firstName,
+          lastName: lastName,
+          email: email,
+          password: password,
+      });
+  console.log(res);
+  return res.data;
 }
-  return data
-};
-  register = async (firstName, lastName, email, password, passwordConfirmation) => {
-    // Assert firstName, lastName and phone not empty
-    if (!((firstName.length) > 0)) {
-      throw new Error('First Name was not provided');
-    }
-    // Assert firstName, lastName and phone not empty
-    if (!((lastName.length) > 0)) {
-      throw new Error('Last Name was not provided');
-    }
-    // Assert email is not empty
-    if (!(email.length > 0)) {
-      throw new Error('Email was not provided');
-    }
-    // Assert password is not empty
-    if (!(password.length > 0)) {
-      throw new Error('Password was not provided');
-    }
-    // Assert password confirmation is not empty
-    if (!(passwordConfirmation.length > 0)) {
-      throw new Error('Password confirmation was not provided');
-    }
-    // Assert email or password or password confirmation is not empty
-    if (password !== passwordConfirmation) {
-      throw new Error('Passwords do not match')
-    }
+
+/*
+  register = async (firstName, lastName, email, password) => {
+
     // Create data JSON
     const formData = {
       "email": email,
@@ -114,6 +73,7 @@ if ('access_token' in data) {
     // Using a callback to load '/' when logout is called
     callback();
   };
+*/
 
   getUser = async () => {
     const token = localStorage.getItem('token');

@@ -3,8 +3,7 @@ import { ThunkAction } from "redux-thunk"
 import { getUserByUsername as getUserByUsernameAPI,
          IUserState} from "./facility"
 import { UserActionTypes, IUserGetAction, IUserLoadingAction} from "./facility"
-import { loginAPI } from "./userapi"
-
+import { loginAPI, registerAPI } from "./userapi"
 
 const loading: ActionCreator<IUserLoadingAction> = () => ({
     type: UserActionTypes.LOADING
@@ -25,6 +24,18 @@ export const loginAction: ActionCreator<ThunkAction<Promise<AnyAction>, any, nul
   return async (dispatch: Dispatch) => {
       dispatch(loading());
       const result = await loginAPI(email, password);
+      return dispatch({
+        result,
+        type: UserActionTypes.LOGIN,
+      });
+  };
+};
+
+export const registerAction: ActionCreator<ThunkAction<Promise<AnyAction>, any, null, any>> = (firstName: string, lastName: string, 
+                                                                                               email: string, password: string) => {
+  return async (dispatch: Dispatch) => {
+      dispatch(loading());
+      const result = await registerAPI(firstName, lastName, email, password);
       return dispatch({
         result,
         type: UserActionTypes.LOGIN,
