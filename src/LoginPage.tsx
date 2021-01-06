@@ -28,9 +28,9 @@ class LoginPage extends React.Component<IProps, IState> {
         return (
           <Container maxWidth="sm">
           <Box my={4}>
-            <LoginComponent />
+            <LoginComponent loginActionCreator={this.props.loginActionCreator}/>
             <Box width="80vw" height="2vh"></Box>
-            <RegisterComponent />
+            <RegisterComponent registerActionCreator={this.props.registerActionCreator}/>
           </Box>
         </Container>
         )

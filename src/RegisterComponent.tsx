@@ -1,9 +1,11 @@
 import { Box, ListItem, Typography, List, TextField, Button, InputAdornment, IconButton } from '@material-ui/core';
 import { FirstPageRounded, Visibility, VisibilityOff } from '@material-ui/icons';
 import React from 'react';
-import { registerAction } from './useractions'
+import { registerActionCreator } from './useractions'
 
-type IProps = {};
+type IProps = {
+  registerActionCreator: typeof registerActionCreator
+};
   
 interface IState {
   firstName: string,
@@ -64,7 +66,7 @@ export class RegisterComponent extends React.Component<IProps, IState>{
           throw new Error('Passwords do not match')
         }
 
-        registerAction(this.state.firstName, this.state.lastName, this.state.email, this.state.password)
+        this.props.registerActionCreator(this.state.firstName, this.state.lastName, this.state.email, this.state.password)
   }
 
   render(){

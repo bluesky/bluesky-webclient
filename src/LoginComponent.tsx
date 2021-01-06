@@ -1,10 +1,12 @@
 import React from 'react';
 import { Button, Box, TextField, ListItem, List, Typography, IconButton, InputAdornment } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import { loginAction } from './useractions'
 import decodeJwt from 'jwt-decode';
+import { loginActionCreator } from './useractions';
 
-type IProps = {};
+type IProps = {
+  loginActionCreator: typeof loginActionCreator;
+};
   
 interface IState {
   email: string,
@@ -40,7 +42,7 @@ export class LoginComponent extends React.Component<IProps, IState>{
     if (!(this.state.password.length > 0)) {
       throw new Error('Password was not provided');
     }
-    loginAction(this.state.email, this.state.password);
+    this.props.loginActionCreator(this.state.email, this.state.password);
   };
 
   render(){

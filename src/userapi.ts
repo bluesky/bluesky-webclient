@@ -49,7 +49,5 @@ export const registerAPI = async(firstName: string, lastName: string, email: str
     return permissions === 'user' ? true : false;
   };
 }
-
 export default new Auth();
-
 */
