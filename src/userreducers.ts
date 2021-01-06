@@ -1,7 +1,33 @@
 import { Reducer } from "redux";
 import { IUserState, UserActionTypes } from "./facility";
 
-import {UserActions} from "./LoginPage";
+export interface IUser {
+    userid: number,
+    username: string,
+    email: string,
+    orcid: string
+}
+
+export interface ILoginAction {
+    type: UserActionTypes.LOGIN,
+    token: any,
+}
+
+export interface IRegisterAction {
+    type: UserActionTypes.REGISTER,
+    token: any,
+}
+
+export interface IUserGetAction {
+    type: UserActionTypes.GETINFO,
+    user: IUser
+}
+
+export type UserActions = 
+| IUserGetAction
+| ILoginAction
+| IRegisterAction
+
 
 const initialUserState: IUserState = {
     user: {
@@ -24,19 +50,6 @@ export const userReducer: Reducer<IUserState, UserActions> = (state=initialUserS
                 userLoading: false
             };
         }
-        default: {
-            return state;
-        }
-    }
-};
-
-export interface ILoginAction {
-    type: UserActionTypes.LOGIN,
-    token: any,
-}
-
-export const loginReducer: Reducer<IUserState, ILoginAction> = (state=initialUserState, action) => {
-    switch (action.type) {
         case UserActionTypes.LOGIN: {
             return {
                 ...state,
@@ -44,20 +57,7 @@ export const loginReducer: Reducer<IUserState, ILoginAction> = (state=initialUse
                 permissions: "user"
             };
         }
-        default: {
-            return state;
-        }
-    }
-};
-
-export interface IRegisterAction {
-    type: UserActionTypes.REGISTER,
-    token: any,
-}
-
-export const registerReducer: Reducer<IUserState, ILoginAction> = (state=initialUserState, action) => {
-    switch (action.type) {
-        case UserActionTypes.LOGIN: {
+        case UserActionTypes.REGISTER: {
             return {
                 ...state,
                 token: action.token,

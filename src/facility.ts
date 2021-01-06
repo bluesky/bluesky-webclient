@@ -36,13 +36,24 @@ export interface IExperiment {
     resource_id: number
 }
 
-export interface IUserGetAction {
+
+export interface IUserLoginAction {
+    type: UserActionTypes.GETINFO,
+    user: IUser
+}
+
+export interface IUserRegisterAction {
     type: UserActionTypes.GETINFO,
     user: IUser
 }
   
 export interface IUserLoadingAction {
 type: UserActionTypes.LOADING
+}
+
+export interface IUserGetAction {
+    type: UserActionTypes.GETINFO,
+    user: IUser
 }
 
 export type UserInfo =

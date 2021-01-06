@@ -1,26 +1,18 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
-import Tooltip from '@material-ui/core/Tooltip';
 import { IApplicationState } from './store';
-import { getUser } from './useractions'
-import { IUser, IUserGetAction } from './facility';
-import {
-    RouteComponentProps
-} from "react-router-dom";
+import { getUser, loginActionCreator, registerActionCreator } from './useractions'
+import { IUser } from './facility';
+import { RouteComponentProps } from "react-router-dom";
 import { LoginComponent } from './LoginComponent';
 import { RegisterComponent } from './RegisterComponent';
 
-export type UserActions = 
-| IUserGetAction
-
-
-type RouteParams = { id: string, uid: string };
-
 interface IProps extends RouteComponentProps {
     getUser: typeof getUser;
+    loginActionCreator: typeof loginActionCreator;
+    registerActionCreator: typeof registerActionCreator;
     loading: boolean;
     user: IUser;
 }
@@ -52,12 +44,18 @@ const mapStateToProps = (store: IApplicationState) => {
   return {
     loading: store.user.userLoading,
     user: store.user.user,
+    token: store.user.token,
+    permissions: store.user.permissions,
   };
 };
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
-    getUser: (username: string) => dispatch(getUser(username))
+    getUser: (username: string) => dispatch(getUser(username)),
+    loginAction: (email: string, password: string) => dispatch(loginActionCreator(email, password)),
+    registerActionCreator: (firstName: string, lastName: string, 
+                            email: string, password: string) => dispatch(registerActionCreator(firstName, lastName, 
+                                                                                               email, password))
   };
 };
 

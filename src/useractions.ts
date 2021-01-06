@@ -20,7 +20,7 @@ export const getUser: ActionCreator<ThunkAction<Promise<AnyAction>, IUserState, 
     };
 };
 
-export const loginAction: ActionCreator<ThunkAction<Promise<AnyAction>, any, null, any>> = (email: string, password: string) => {
+export const loginActionCreator: ActionCreator<ThunkAction<Promise<AnyAction>, any, null, any>> = (email: string, password: string) => {
   return async (dispatch: Dispatch) => {
       dispatch(loading());
       const result = await loginAPI(email, password);
@@ -31,7 +31,7 @@ export const loginAction: ActionCreator<ThunkAction<Promise<AnyAction>, any, nul
   };
 };
 
-export const registerAction: ActionCreator<ThunkAction<Promise<AnyAction>, any, null, any>> = (firstName: string, lastName: string, 
+export const registerActionCreator: ActionCreator<ThunkAction<Promise<AnyAction>, any, null, any>> = (firstName: string, lastName: string, 
                                                                                                email: string, password: string) => {
   return async (dispatch: Dispatch) => {
       dispatch(loading());

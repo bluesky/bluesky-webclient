@@ -25,7 +25,7 @@ const rootReducer = combineReducers<IApplicationState>({
     submitted: planSubmitReducer,
     environment: environmentModifyReducer,
     queue: queueModifyReducer,
-    user: userReducer,
+    user: userReducer
 })
 
 export default function configureStore(): Store<IApplicationState> {
