@@ -5,7 +5,7 @@ import decodeJwt from 'jwt-decode';
 import { loginActionCreator } from './useractions';
 
 type IProps = {
-  loginActionCreator: typeof loginActionCreator;
+  loginActionCreator: (email: string, password: string) => void;
 };
   
 interface IState {

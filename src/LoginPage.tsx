@@ -52,7 +52,7 @@ const mapStateToProps = (store: IApplicationState) => {
 const mapDispatchToProps = (dispatch: any) => {
   return {
     getUser: (username: string) => dispatch(getUser(username)),
-    loginAction: (email: string, password: string) => dispatch(loginActionCreator(email, password)),
+    loginActionCreator: (email: string, password: string) => dispatch(loginActionCreator(email, password)),
     registerActionCreator: (firstName: string, lastName: string, 
                             email: string, password: string) => dispatch(registerActionCreator(firstName, lastName, 
                                                                                                email, password))
