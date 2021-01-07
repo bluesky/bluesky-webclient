@@ -1,4 +1,3 @@
-import { ContactSupportOutlined } from "@material-ui/icons"
 import { ActionCreator, AnyAction, Dispatch } from "redux"
 import { ThunkAction } from "redux-thunk"
 import { getUserByUsername as getUserByUsernameAPI,
@@ -21,11 +20,12 @@ export const getUser: ActionCreator<ThunkAction<Promise<AnyAction>, IUserState, 
     };
 };
 
-export const loginActionCreator: ActionCreator<ThunkAction<Promise<AnyAction>, any, null, any>> = (email: string, password: string) => {
+export const loginActionCreator: ActionCreator<ThunkAction<Promise<AnyAction>, any, null, any>> = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {
       console.log("loginActionCreator")
       dispatch(loading());
-      const result = await loginAPI(email, password);
+      const result = await loginAPI(username, password);
+      console.log("loginActionCreator2")
       return dispatch({
         result,
         type: UserActionTypes.LOGIN,
@@ -41,7 +41,7 @@ export const registerActionCreator: ActionCreator<ThunkAction<Promise<AnyAction>
       const result = await registerAPI(firstName, lastName, email, password);
       return dispatch({
         result,
-        type: UserActionTypes.LOGIN,
+        type: UserActionTypes.REGISTER,
       });
   };
 };

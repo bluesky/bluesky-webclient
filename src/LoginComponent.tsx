@@ -1,8 +1,6 @@
 import React from 'react';
 import { Button, Box, TextField, ListItem, List, Typography, IconButton, InputAdornment } from '@material-ui/core';
 import { Visibility, VisibilityOff } from '@material-ui/icons';
-import decodeJwt from 'jwt-decode';
-import { loginActionCreator } from './useractions';
 
 type IProps = {
   loginActionCreator: (email: string, password: string) => void;

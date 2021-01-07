@@ -5,10 +5,10 @@ var axiosUserInstance = axios.create({
   baseURL: process.env.REACT_APP_USER_API_PREFIX,
 });
 
-export const loginAPI = async(email: string, password: string): Promise<Object> => {
+export const loginAPI = async(username: string, password: string): Promise<Object> => {
   const res = await axiosUserInstance.post('auth/login',
       {
-          email: email,
+          username: username,
           password: password,
       });
   console.log(res);
