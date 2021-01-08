@@ -22,10 +22,8 @@ export const getUser: ActionCreator<ThunkAction<Promise<AnyAction>, IUserState, 
 
 export const loginActionCreator: ActionCreator<ThunkAction<Promise<AnyAction>, any, null, any>> = (username: string, password: string) => {
   return async (dispatch: Dispatch) => {
-      console.log("loginActionCreator")
       dispatch(loading());
       const result = await loginAPI(username, password);
-      console.log("loginActionCreator2")
       return dispatch({
         result,
         type: UserActionTypes.LOGIN,
