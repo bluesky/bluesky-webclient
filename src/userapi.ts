@@ -6,11 +6,12 @@ var axiosUserInstance = axios.create({
 });
 
 export const loginAPI = async(username: string, password: string): Promise<Object> => {
-  const res = await axiosUserInstance.post('auth/login',
-      {
-          username: username,
-          password: password,
-      });
+  const formData = new FormData();
+  formData.set('username', username);
+  formData.set('password', password);
+  const res = await axiosUserInstance.post('auth/login', formData,
+                                           {headers: { 'Content-Type': 'multipart/form-data'}})
+
   console.log(res);
   return res.data;
 }
