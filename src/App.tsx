@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import { IApplicationState } from './store';
 import { getOverview, getQueuedPlans, getHistoricalPlans,
-         clearQueue, deletePlan, modifyEnvironment, modifyQueue, editPlan } from './planactions';
+         clearQueue, deletePlan, modifyEnvironment, modifyQueue, submitEditedPlan } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
 import { IPlan, IPlanObject, IHistoricalPlan } from './queueserver';
 import { PlanList } from './PlanList';
@@ -33,7 +33,6 @@ interface IProps extends RouteComponentProps {
   getHistoricalPlans: typeof getHistoricalPlans;
   clearQueue: typeof clearQueue;
   deletePlan: typeof deletePlan;
-  editPlan: typeof editPlan;
   modifyEnvironment: typeof modifyEnvironment;
   modifyQueue: typeof modifyQueue;
   loadingPlan: boolean;
@@ -46,13 +45,18 @@ interface IProps extends RouteComponentProps {
 }
 
 class App extends React.Component<IProps> {
+
+  private editPlan = (itemUid: string) => {
+    return 0;
+  }
+
   render() {
       return (
         <Container maxWidth="xl">
           <Box width="80vw" height="2vh"></Box>
           <Grid container spacing={5} direction="row" justify="center">
             <Grid item justify="center" spacing={10} xs={3}>    
-              <PlanList editPlan={this.props.editPlan} deletePlan={this.props.deletePlan} clearQueue={this.props.clearQueue} plans={this.props.plans}
+              <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} clearQueue={this.props.clearQueue} plans={this.props.plans}
               modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}> </PlanList>
             </Grid>
             <Grid item justify="center" spacing={10} xs={5}>
@@ -91,7 +95,6 @@ const mapDispatchToProps = (dispatch: any) => {
     getOverview: () => dispatch(getOverview()),
     clearQueue: () => dispatch(clearQueue()),
     deletePlan: () => dispatch(deletePlan()),
-    editPlan: () => dispatch(editPlan()),
     modifyEnvironment: () => dispatch(modifyEnvironment()),
     modifyQueue: () => dispatch(modifyQueue()),
     getQueuedPlans: () => dispatch(getQueuedPlans()),

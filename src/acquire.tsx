@@ -35,6 +35,7 @@ interface IProps extends RouteComponentProps {
 
 interface IState {
     selectedPlan: string;
+    selectedForEditing: string;
     onPlanChange: (selectedPlan: string) => void;
     planParam: number;
     onPlanParamChange: (planParam: number) => void;
@@ -49,6 +50,7 @@ class AcquirePage extends React.Component<IProps, IState> {
         super(props);
         this.state = {
           selectedPlan: "",
+          selectedForEditing: "",
           onPlanChange: this.handleSelectPlan,
           planParam: 10,
           onPlanParamChange: this.handlePlanParamChange,
@@ -96,8 +98,9 @@ class AcquirePage extends React.Component<IProps, IState> {
         this.setState({ queue });
     };
 
-    private editPlan = (itemUid: string) => {
-        return 0;
+    private editPlan = (itemUid: string, planType: string) => {
+        this.setState({selectedForEditing: itemUid})
+        this.setState({selectedPlan: planType})
     }
     
     componentDidMount() {
