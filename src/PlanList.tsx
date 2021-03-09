@@ -11,16 +11,18 @@ import LoopIcon from '@material-ui/icons/Loop';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IPlanObject, QueueOps, EnvOps, incrementPosition, decrementPosition } from './queueserver';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
-import { clearQueue, deletePlan, modifyQueue, modifyEnvironment } from './planactions';
+import { clearQueue, deletePlan, editPlan, modifyQueue, modifyEnvironment } from './planactions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import StopIcon from '@material-ui/icons/Stop';
+import EditIcon from '@material-ui/icons/Edit';
 
 type Plans = {
   plans: IPlanObject[];
   clearQueue: typeof clearQueue;
   deletePlan: typeof deletePlan;
+  editPlan: typeof editPlan;
   modifyEnvironment: typeof modifyEnvironment;
   modifyQueue: typeof modifyQueue;
 }
@@ -132,6 +134,9 @@ export class PlanList extends React.Component<Plans, IState>{
                           </IconButton>}
                         <IconButton onClick={() => this.props.deletePlan(planObject.item_uid)} edge="end" aria-label="comments">
                           <DeleteForeverIcon />
+                        </IconButton>
+                        <IconButton onClick={() => this.props.editPlan(planObject.item_uid)} edge="end" aria-label="comments">
+                          <EditIcon />
                         </IconButton>
                         <IconButton />
                       </ListItemSecondaryAction>

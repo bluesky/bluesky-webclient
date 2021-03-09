@@ -114,3 +114,14 @@ export const deletePlan: ActionCreator<ThunkAction<Promise<AnyAction>, null, nul
         });
     };
 };
+
+export const editPlan: ActionCreator<ThunkAction<Promise<AnyAction>, null, null, any>> = (item_uid: string) => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const queueState = await deletePlanAPI(item_uid);
+        return dispatch({
+            queueState,
+            type: PlanActionTypes.DELETEPLAN
+        });
+    };
+};
