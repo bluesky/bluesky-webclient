@@ -215,9 +215,9 @@ export enum PlanActionTypes {
     GETPLANLIST = "PLANS/GETPLANLIST",
     GETHISTORICAL = "PLANS/GETHISORICAL",
     SUBMITPLAN = "PLANS/SUBMITPLAN",
+    SUBMITEDITEDPLAN = "PLAN/SUMBITEDITEDPLAN",
     CLEARQUEUE = "PLANS/CLEARQUEUE",
     DELETEPLAN = "PLAN/DELETEPLAN",
-    EDITPLAN = "PLAN/EDITPLAN",
     MODIFYENVIRONMENT = "PLANS/MODIFYENVIRONMENT",
     MODIFYQUEUE = "PLANS/MODIFYQUEUE",
 }
@@ -308,7 +308,7 @@ export interface IPlanSubmitAction {
 }
 
 export interface IPlanEditAction {
-    type: PlanActionTypes.EDITPLAN,
+    type: PlanActionTypes.SUBMITEDITEDPLAN,
     plan: IPlanObject
 }
 
@@ -341,6 +341,7 @@ export type PlanActions =
   | IPlanObjectsAction
   | IPlanObjectsLoadingAction
   | IPlanSubmitAction
+  | IPlanEditAction
   | IPlanSubmitLoadingAction
   | IPlanModifyEnvironmentAction
   | IPlanModifyEnvironmentLoadingAction
@@ -434,7 +435,12 @@ export interface IEditPlanObjectFixed {
     kwargs: {[name: string]: (string|number)[]|string|number} 
 }
 
-export const editPlan = async(editPlan: IEditPlanObject): Promise<IPlanObject> => {
+export interface IPlanEditState {
+    readonly plan: IPlanObject;
+    readonly planLoading: boolean;
+}
+
+export const submitEditedPlan = async(editPlan: IEditPlanObject): Promise<IPlanObject> => {
 
     var plan : IEditPlanObjectFixed = {item_uid: editPlan.item_uid,
                                        name: editPlan.name,

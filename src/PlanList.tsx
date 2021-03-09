@@ -11,7 +11,7 @@ import LoopIcon from '@material-ui/icons/Loop';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IPlanObject, QueueOps, EnvOps, incrementPosition, decrementPosition } from './queueserver';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
-import { clearQueue, deletePlan, editPlan, modifyQueue, modifyEnvironment } from './planactions';
+import { clearQueue, deletePlan, modifyQueue, modifyEnvironment} from './planactions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
@@ -22,7 +22,7 @@ type Plans = {
   plans: IPlanObject[];
   clearQueue: typeof clearQueue;
   deletePlan: typeof deletePlan;
-  editPlan: typeof editPlan;
+  editPlan: any;
   modifyEnvironment: typeof modifyEnvironment;
   modifyQueue: typeof modifyQueue;
 }

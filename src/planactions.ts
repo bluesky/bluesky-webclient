@@ -7,7 +7,7 @@ import { getOverview as getOverviewAPI,
          submitPlan as submitPlanAPI,
          clearQueue as clearQueueAPI,
          deletePlan as deletePlanAPI,
-         editPlan as editPlanAPI,
+         submitEditedPlan as editPlanAPI,
          modifyEnvironment as modifyEnvironmentAPI, EnvOps,
          modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, 
                         IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, 
@@ -76,13 +76,13 @@ export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubm
     };
 };
 
-export const editPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanEditState, null, IPlanEditAction>> = (editPlan: IEditPlanObject) => {
+export const submitEditedPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanEditState, null, IPlanEditAction>> = (editPlan: IEditPlanObject) => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
         const plan = await editPlanAPI(editPlan);
         return dispatch({
           plan,
-          type: PlanActionTypes.EDITPLAN
+          type: PlanActionTypes.SUBMITEDITEDPLAN
         });
     };
 };

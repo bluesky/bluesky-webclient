@@ -9,6 +9,7 @@ type IProps = {
   name: string;
   allowedPlans: IAllowedPlans;
   submitPlan: (selectedPlan: ISumbitPlanObject) => void;
+  submitEditedPlan: (selectedPlan: ISumbitPlanObject) => void;
 }
 
 interface IState {

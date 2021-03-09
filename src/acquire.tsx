@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import { IApplicationState } from './store';
-import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans, editPlan } from './planactions';
+import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans, submitEditedPlan } from './planactions';
 import { clearQueue, deletePlan } from './planactions';
-import { IPlanObject, EnvOps, QueueOps, IAllowedPlans } from './queueserver';
+import { IPlanObject, IAllowedPlans } from './queueserver';
 import { getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from "react-router-dom";
 import { Grid } from '@material-ui/core';
@@ -19,11 +19,11 @@ interface Props extends RouteComponentProps<RouteParams> { }
 
 interface IProps extends RouteComponentProps {
     submitPlan: typeof submitPlan;
+    submitEditedPlan: typeof submitEditedPlan;
     modifyEnvironment: typeof modifyEnvironment;
     modifyQueue: typeof modifyQueue;
     clearQueue: typeof clearQueue;
     deletePlan: typeof deletePlan;
-    editPlan: typeof editPlan;
     getOverview: typeof getOverview;
     getQueuedPlans: typeof getQueuedPlans;
     getAllowedPlans: typeof getAllowedPlans;
@@ -68,11 +68,11 @@ class AcquirePage extends React.Component<IProps, IState> {
                   <AvailablePlans selectedPlan={this.state.selectedPlan} handleSelect={this.handleSelectPlan}
                   plans={this.props.allowedPlans}> </AvailablePlans>
                 </Grid>
-                <Grid item justify="center" spacing={1} xs={7}> 
-                  <PlanFormContainer submitPlan={this.props.submitPlan} name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}> </PlanFormContainer>   
+                <Grid item justify="center" spacing={1} xs={6}> 
+                  <PlanFormContainer submitEditedPlan={this.props.submitEditedPlan} submitPlan={this.props.submitPlan} name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}> </PlanFormContainer>   
                 </Grid>   
-                <Grid item justify="center" spacing={1} xs={2}>
-                  <PlanList editPlan={this.props.editPlan} deletePlan={this.props.deletePlan} clearQueue={this.props.clearQueue} plans={this.props.plans}
+                <Grid item justify="center" spacing={1} xs={3}>
+                  <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} clearQueue={this.props.clearQueue} plans={this.props.plans}
                   modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}></PlanList>
                 </Grid>
             </Grid>
@@ -82,10 +82,6 @@ class AcquirePage extends React.Component<IProps, IState> {
 
     private handleSelectPlan = (selectedPlan: string) => {
         this.setState({ selectedPlan });
-    };
-
-    private handleParamChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        this.state.onPlanParamChange(event.target.value as number);
     };
 
     private handlePlanParamChange = (planParam: number) => {
@@ -100,30 +96,8 @@ class AcquirePage extends React.Component<IProps, IState> {
         this.setState({ queue });
     };
 
-    private handleSubmitClick = () => {
-        this.props.submitPlan(this.state.selectedPlan, this.state.planParam);
-    }
-
-    private handleEnvClick = () => {
-        if (this.state.env === "Open") {
-            this.props.modifyEnvironment(EnvOps.open);
-            this.state.onEnvChange("Close");
-        }
-        else {
-            this.props.modifyEnvironment(EnvOps.close);
-            this.state.onEnvChange("Open");
-        }
-    }
-
-    private handleQueueClick = () => {
-        if (this.state.queue === "Start") {
-            this.props.modifyQueue(QueueOps.start);
-            this.state.onQueueChange("Stop");
-        }
-        else {
-            this.props.modifyQueue(QueueOps.stop);
-            this.state.onQueueChange("Start");
-        }
+    private editPlan = (itemUid: string) => {
+        return 0;
     }
     
     componentDidMount() {
@@ -149,6 +123,7 @@ const mapDispatchToProps = (dispatch: any) => {
       modifyEnvironment: (opId: number) => dispatch(modifyEnvironment(opId)),
       modifyQueue: (opId: number) => dispatch(modifyQueue(opId)),
       submitPlan: (planId: number, param: number) => dispatch(submitPlan(planId, param)),
+      submitEditedPlan: (itemUid: string, planId: number, param: number) => dispatch(submitEditedPlan(itemUid, planId, param)),
       clearQueue: () => dispatch(clearQueue()),
       deletePlan: () => dispatch(deletePlan()),
       getOverview: () => dispatch(getOverview()),
