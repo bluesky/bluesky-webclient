@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import { IApplicationState } from './store';
-import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans } from './planactions';
+import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans, editPlan } from './planactions';
 import { clearQueue, deletePlan } from './planactions';
 import { IPlanObject, EnvOps, QueueOps, IAllowedPlans } from './queueserver';
 import { getOverview, getQueuedPlans } from './planactions';
@@ -23,6 +23,7 @@ interface IProps extends RouteComponentProps {
     modifyQueue: typeof modifyQueue;
     clearQueue: typeof clearQueue;
     deletePlan: typeof deletePlan;
+    editPlan: typeof editPlan;
     getOverview: typeof getOverview;
     getQueuedPlans: typeof getQueuedPlans;
     getAllowedPlans: typeof getAllowedPlans;
@@ -71,7 +72,7 @@ class AcquirePage extends React.Component<IProps, IState> {
                   <PlanFormContainer submitPlan={this.props.submitPlan} name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}> </PlanFormContainer>   
                 </Grid>   
                 <Grid item justify="center" spacing={1} xs={2}>
-                  <PlanList deletePlan={this.props.deletePlan} clearQueue={this.props.clearQueue} plans={this.props.plans}
+                  <PlanList editPlan={this.props.editPlan} deletePlan={this.props.deletePlan} clearQueue={this.props.clearQueue} plans={this.props.plans}
                   modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}></PlanList>
                 </Grid>
             </Grid>

@@ -7,9 +7,14 @@ import { getOverview as getOverviewAPI,
          submitPlan as submitPlanAPI,
          clearQueue as clearQueueAPI,
          deletePlan as deletePlanAPI,
+         editPlan as editPlanAPI,
          modifyEnvironment as modifyEnvironmentAPI, EnvOps,
-         modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, AllowedPlansActionTypes, HistoricalPlansActionTypes, ISumbitPlanObject } from "./queueserver"
-import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, IPlanSubmitAction,
+         modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, 
+                        IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, 
+                        AllowedPlansActionTypes, HistoricalPlansActionTypes, ISumbitPlanObject, 
+                        IEditPlanObject } from "./queueserver"
+import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, 
+         IPlanSubmitAction, IPlanEditAction, IPlanEditState,
          IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes } from "./queueserver"
 
 const loading: ActionCreator<IPlanLoadingAction> = () => ({
@@ -71,6 +76,17 @@ export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubm
     };
 };
 
+export const editPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanEditState, null, IPlanEditAction>> = (editPlan: IEditPlanObject) => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const plan = await editPlanAPI(editPlan);
+        return dispatch({
+          plan,
+          type: PlanActionTypes.EDITPLAN
+        });
+    };
+};
+
 export const modifyEnvironment: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (op: EnvOps) => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
@@ -105,17 +121,6 @@ export const clearQueue: ActionCreator<ThunkAction<Promise<AnyAction>, null, nul
 };
 
 export const deletePlan: ActionCreator<ThunkAction<Promise<AnyAction>, null, null, any>> = (item_uid: string) => {
-    return async (dispatch: Dispatch) => {
-        dispatch(loading());
-        const queueState = await deletePlanAPI(item_uid);
-        return dispatch({
-            queueState,
-            type: PlanActionTypes.DELETEPLAN
-        });
-    };
-};
-
-export const editPlan: ActionCreator<ThunkAction<Promise<AnyAction>, null, null, any>> = (item_uid: string) => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
         const queueState = await deletePlanAPI(item_uid);

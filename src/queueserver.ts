@@ -217,6 +217,7 @@ export enum PlanActionTypes {
     SUBMITPLAN = "PLANS/SUBMITPLAN",
     CLEARQUEUE = "PLANS/CLEARQUEUE",
     DELETEPLAN = "PLAN/DELETEPLAN",
+    EDITPLAN = "PLAN/EDITPLAN",
     MODIFYENVIRONMENT = "PLANS/MODIFYENVIRONMENT",
     MODIFYQUEUE = "PLANS/MODIFYQUEUE",
 }
@@ -303,6 +304,11 @@ export interface IPlanObjectsLoadingAction {
 
 export interface IPlanSubmitAction {
     type: PlanActionTypes.SUBMITPLAN,
+    plan: IPlanObject
+}
+
+export interface IPlanEditAction {
+    type: PlanActionTypes.EDITPLAN,
     plan: IPlanObject
 }
 
@@ -411,6 +417,55 @@ export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObj
     const res = await axiosInstance.post('/queue/item/add',
         {
             plan: plan
+        });
+    console.log(res);
+    return res.data;
+}
+
+export interface IEditPlanObject {
+    item_uid: string,
+    name: string;
+    kwargs: {[name: string]: (string|number)[]};
+}
+
+export interface IEditPlanObjectFixed {
+    item_uid: string,
+    name: string;
+    kwargs: {[name: string]: (string|number)[]|string|number} 
+}
+
+export const editPlan = async(editPlan: IEditPlanObject): Promise<IPlanObject> => {
+
+    var plan : IEditPlanObjectFixed = {item_uid: editPlan.item_uid,
+                                       name: editPlan.name,
+                                       kwargs: {}};
+
+    // Remove the square brackets from parameters that are not intended to be lists.
+    // For now we assume that kwargs ending with the letter 's' are lists.
+    // TODO: Update this, once the have the correct information from the 
+    // queueserver about which kwargs are list.
+    for (const [key, value] of Object.entries(editPlan.kwargs)) {
+      if (key.slice(-1) !== 's'){
+        if (value[0] !== "None"){
+            // Convert string to a number if possible.
+            // TODO: Use the type information from the server (once available), 
+            // and use a numeric input.
+            if (isNaN(Number(value[0]))){
+                plan.kwargs[key] = value[0];
+            } else {
+                plan.kwargs[key] = Number(value[0])
+            }
+        }
+      } else {
+        plan.kwargs[key] = value;
+      }
+    }
+    
+    alert(JSON.stringify(plan));
+    const res = await axiosInstance.post('/queue/item/update',
+        {
+            plan: plan,
+            replace: true
         });
     console.log(res);
     return res.data;
