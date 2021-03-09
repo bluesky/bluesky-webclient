@@ -71,11 +71,13 @@ class AcquirePage extends React.Component<IProps, IState> {
                   plans={this.props.allowedPlans}> </AvailablePlans>
                 </Grid>
                 <Grid item justify="center" spacing={1} xs={6}> 
-                  <PlanFormContainer submitEditedPlan={this.props.submitEditedPlan} submitPlan={this.props.submitPlan} name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}> </PlanFormContainer>   
+                  <PlanFormContainer submitEditedPlan={this.props.submitEditedPlan} submitPlan={this.props.submitPlan} 
+                                     name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}
+                                     itemUid={this.state.selectedForEditing}> </PlanFormContainer>   
                 </Grid>   
                 <Grid item justify="center" spacing={1} xs={3}>
                   <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} clearQueue={this.props.clearQueue} plans={this.props.plans}
-                  modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}></PlanList>
+                            modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}></PlanList>
                 </Grid>
             </Grid>
           </Container>
@@ -84,6 +86,7 @@ class AcquirePage extends React.Component<IProps, IState> {
 
     private handleSelectPlan = (selectedPlan: string) => {
         this.setState({ selectedPlan });
+        this.setState({ selectedForEditing: ""});
     };
 
     private handlePlanParamChange = (planParam: number) => {
@@ -99,14 +102,13 @@ class AcquirePage extends React.Component<IProps, IState> {
     };
 
     private editPlan = (itemUid: string, planType: string) => {
-        this.setState({selectedForEditing: itemUid})
-        this.setState({selectedPlan: planType})
+        this.setState({selectedForEditing: itemUid});
+        this.setState({selectedPlan: planType});
     }
     
     componentDidMount() {
         this.props.getOverview();
         setInterval(this.props.getQueuedPlans, 500);
-        //this.props.submitPlan();
         this.props.getAllowedPlans();
     }
 }

@@ -18,8 +18,10 @@ const defaultRegions = 4;
 
 type IProps = {
   name: string;
+  itemUid: string;
   allowedPlans: IAllowedPlans;
   submitPlan: (selectedPlan: ISumbitPlanObject) => void;
+  submitEditedPlan: (selectedPlan: ISumbitPlanObject) => void;
 }
 
 interface IState {

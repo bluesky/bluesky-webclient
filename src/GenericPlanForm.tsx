@@ -11,8 +11,10 @@ import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 
 type IProps = {
   name: string;
+  itemUid: string;
   allowedPlans: IAllowedPlans;
   submitPlan: (selectedPlan: ISumbitPlanObject) => void;
+  submitEditedPlan: (selectedPlan: ISumbitPlanObject) => void;
 }
 
 interface IState {
