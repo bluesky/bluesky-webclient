@@ -35,7 +35,8 @@ interface IProps extends RouteComponentProps {
 
 interface IState {
     selectedPlan: string;
-    selectedForEditing: string;
+    editItemUid: string;
+    editKwargs: object;
     onPlanChange: (selectedPlan: string) => void;
     planParam: number;
     onPlanParamChange: (planParam: number) => void;
@@ -50,7 +51,8 @@ class AcquirePage extends React.Component<IProps, IState> {
         super(props);
         this.state = {
           selectedPlan: "",
-          selectedForEditing: "",
+          editItemUid: "",
+          editKwargs: {},
           onPlanChange: this.handleSelectPlan,
           planParam: 10,
           onPlanParamChange: this.handlePlanParamChange,
@@ -73,7 +75,7 @@ class AcquirePage extends React.Component<IProps, IState> {
                 <Grid item justify="center" spacing={1} xs={6}> 
                   <PlanFormContainer submitEditedPlan={this.props.submitEditedPlan} submitPlan={this.props.submitPlan} 
                                      name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}
-                                     itemUid={this.state.selectedForEditing}> </PlanFormContainer>   
+                                     itemUid={this.state.editItemUid} editKwargs={this.state.editKwargs}> </PlanFormContainer>   
                 </Grid>   
                 <Grid item justify="center" spacing={1} xs={3}>
                   <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} clearQueue={this.props.clearQueue} plans={this.props.plans}
@@ -86,7 +88,7 @@ class AcquirePage extends React.Component<IProps, IState> {
 
     private handleSelectPlan = (selectedPlan: string) => {
         this.setState({ selectedPlan });
-        this.setState({ selectedForEditing: ""});
+        this.setState({ editItemUid: ""});
     };
 
     private handlePlanParamChange = (planParam: number) => {
@@ -101,9 +103,13 @@ class AcquirePage extends React.Component<IProps, IState> {
         this.setState({ queue });
     };
 
-    private editPlan = (itemUid: string, planType: string) => {
-        this.setState({selectedForEditing: itemUid});
+    private editPlan = (itemUid: string, planType: string, kwargs: object) => {
+        console.log("EDIT", JSON.stringify(itemUid));
+        console.log("EDIT", JSON.stringify(planType));
+        console.log("EDIT", JSON.stringify(kwargs));
+        this.setState({editItemUid: itemUid});
         this.setState({selectedPlan: planType});
+        this.setState({editKwargs: kwargs});
     }
     
     componentDidMount() {
@@ -137,7 +143,6 @@ const mapDispatchToProps = (dispatch: any) => {
     };
 };
 
-  
 export default connect(
     mapStateToProps,
     mapDispatchToProps

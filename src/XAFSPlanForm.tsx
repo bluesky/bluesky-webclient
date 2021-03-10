@@ -19,9 +19,10 @@ const defaultRegions = 4;
 type IProps = {
   name: string;
   itemUid: string;
+  editKwargs: object;
   allowedPlans: IAllowedPlans;
   submitPlan: (selectedPlan: ISumbitPlanObject) => void;
-  submitEditedPlan: (selectedPlan: ISumbitPlanObject) => void;
+  submitEditedPlan: (itemUid: string, selectedPlan: ISumbitPlanObject) => void;
 }
 
 interface IState {
@@ -90,6 +91,15 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
         plan: new_plan
     });
     this.props.submitPlan(this.state.plan)
+  }
+
+  private submitEdited(){
+    const new_plan = this.state.plan;
+    new_plan.name = this.props.name;
+    this.setState({
+        plan: new_plan
+    });
+    this.props.submitEditedPlan(this.props.itemUid, this.state.plan)
   }
 
   render(){
@@ -177,9 +187,15 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
               </div>
             </CardContent>
             <CardActions disableSpacing style={{ width: '100%', justifyContent: 'flex-end' }}>
-              <Button onClick={() => this.submit()}  variant="contained" color="primary">
-                submit plan
-              </Button>
+              {
+                this.props.itemUid === "" ?
+                <Button onClick={() => this.submit()}  variant="contained" color="primary">
+                  submit plan
+                </Button>:
+                <Button onClick={() => this.submitEdited()}  variant="contained" color="primary">
+                  edit plan
+                </Button>
+              }
             </CardActions>
           </Card>
     );

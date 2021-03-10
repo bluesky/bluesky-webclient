@@ -8,9 +8,10 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 type IProps = {
   name: string;
   itemUid: string;
+  editKwargs: object;
   allowedPlans: IAllowedPlans;
   submitPlan: (selectedPlan: ISumbitPlanObject) => void;
-  submitEditedPlan: (selectedPlan: ISumbitPlanObject) => void;
+  submitEditedPlan: (itemUid: string, selectedPlan: ISumbitPlanObject) => void;
 }
 
 interface IState {
@@ -26,11 +27,13 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
                                                       submitEditedPlan={this.props.submitEditedPlan}
                                                       name={this.props.name}
                                                       itemUid={this.props.itemUid}
+                                                      editKwargs={this.props.editKwargs}
                                                       allowedPlans={this.props.allowedPlans}/>,
                                 'default': <GenericPlanForm submitPlan={this.props.submitPlan} 
                                                             submitEditedPlan={this.props.submitEditedPlan}
                                                             name={this.props.name} 
                                                             itemUid={this.props.itemUid}
+                                                            editKwargs={this.props.editKwargs}
                                                             allowedPlans={this.props.allowedPlans}/>,
                                 '': <Card raised={true}>
                                       <CardHeader
