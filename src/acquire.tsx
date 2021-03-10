@@ -36,7 +36,7 @@ interface IProps extends RouteComponentProps {
 interface IState {
     selectedPlan: string;
     editItemUid: string;
-    editKwargs: object;
+    editKwargs: {[name: string]: (string|number)[]};
     onPlanChange: (selectedPlan: string) => void;
     planParam: number;
     onPlanParamChange: (planParam: number) => void;
@@ -103,7 +103,7 @@ class AcquirePage extends React.Component<IProps, IState> {
         this.setState({ queue });
     };
 
-    private editPlan = (itemUid: string, planType: string, kwargs: object) => {
+    private editPlan = (itemUid: string, planType: string, kwargs: {[name: string]: (string|number)[]}) => {
         console.log("EDIT", JSON.stringify(itemUid));
         console.log("EDIT", JSON.stringify(planType));
         console.log("EDIT", JSON.stringify(kwargs));

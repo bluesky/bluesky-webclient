@@ -19,7 +19,7 @@ const defaultRegions = 4;
 type IProps = {
   name: string;
   itemUid: string;
-  editKwargs: object;
+  editKwargs: {[name: string]: (string|number)[]};
   allowedPlans: IAllowedPlans;
   submitPlan: (selectedPlan: ISumbitPlanObject) => void;
   submitEditedPlan: (itemUid: string, selectedPlan: ISumbitPlanObject) => void;

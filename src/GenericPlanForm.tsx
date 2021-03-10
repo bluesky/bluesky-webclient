@@ -12,7 +12,7 @@ import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
 type IProps = {
   name: string;
   itemUid: string;
-  editKwargs: object;
+  editKwargs: {[name: string]: (string|number)[]};
   allowedPlans: IAllowedPlans;
   submitPlan: (selectedPlan: ISumbitPlanObject) => void;
   submitEditedPlan: (itemUid: string, selectedPlan: ISumbitPlanObject) => void;
@@ -74,6 +74,19 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
         plan: new_plan
     });
     this.props.submitEditedPlan(this.props.itemUid, this.state.plan)
+  }
+
+  componentDidMount(){
+    if (this.props.itemUid !== ""){
+      const new_plan = {
+        name: this.props.name,
+        kwargs: this.props.editKwargs
+      }
+      console.log("PLAN", new_plan);
+      this.setState({
+        plan: new_plan
+      })
+    }
   }
 
   private getWidgetList(parameterObject: IParameter): JSX.Element[]|JSX.Element {
