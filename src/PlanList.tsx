@@ -135,10 +135,14 @@ export class PlanList extends React.Component<Plans, IState>{
                         <IconButton onClick={() => this.props.deletePlan(planObject.item_uid)} edge="end" aria-label="comments">
                           <DeleteForeverIcon />
                         </IconButton>
-                        <IconButton onClick={() => this.props.editPlan(planObject.item_uid, planObject.name, planObject.kwargs)} edge="end" aria-label="comments">
-                          <EditIcon />
-                        </IconButton>
+                        {
+                          planObject.action !== "queue_stop" ?
+                          <IconButton onClick={() => this.props.editPlan(planObject.item_uid, planObject.name, planObject.kwargs)} edge="end" aria-label="comments">
+                            <EditIcon />
+                          </IconButton>: null
+                        }
                         <IconButton />
+
                       </ListItemSecondaryAction>
                     </AccordionSummary>
                     <AccordionDetails>
