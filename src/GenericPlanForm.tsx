@@ -19,6 +19,7 @@ type IProps = {
 }
 
 interface IState {
+  itemUid: string;
   plan: ISumbitPlanObject;
 }
 
@@ -26,6 +27,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
+      itemUid: "",
       plan: {name: this.props.name,
              kwargs: {}}
     }
@@ -64,6 +66,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
     this.setState({
         plan: new_plan
     });
+    console.log("PLAN", "SUBMIT", new_plan)
     this.props.submitPlan(this.state.plan)
   }
 
@@ -74,19 +77,6 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
         plan: new_plan
     });
     this.props.submitEditedPlan(this.props.itemUid, this.state.plan)
-  }
-
-  componentDidMount(){
-    if (this.props.itemUid !== ""){
-      const new_plan = {
-        name: this.props.name,
-        kwargs: this.props.editKwargs
-      }
-      console.log("PLAN", new_plan);
-      this.setState({
-        plan: new_plan
-      })
-    }
   }
 
   private getWidgetList(parameterObject: IParameter): JSX.Element[]|JSX.Element {
@@ -130,7 +120,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
 
   static getDerivedStateFromProps(props : IProps, current_state: IState) {
     const temp_dict: Record<string, (string|number)[]> = {};
-    if (current_state.plan.name !== props.name) {
+    if (current_state.plan.name !== props.name || current_state.itemUid !== props.itemUid) {
       var i;
       for (i = 0; i < props.allowedPlans.plans_allowed[props.name].parameters.length; i++) {
         if (props.allowedPlans.plans_allowed[props.name].parameters[i].default){
@@ -138,8 +128,15 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
         } else {
           temp_dict[props.allowedPlans.plans_allowed[props.name].parameters[i].name] = [""];
         }
+        if (current_state.itemUid !== props.itemUid){
+          Object.keys(props.editKwargs).forEach(key => {
+            const x = Array.isArray(props.editKwargs[key]) ? props.editKwargs[key] : [props.editKwargs[key]];
+            temp_dict[key] = x as (string | number)[];
+          });
+        }
       }
       return {
+        itemUid: props.itemUid,
         plan: {name: props.name,
                kwargs: temp_dict}
       }
@@ -164,6 +161,10 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                           this.props.allowedPlans.plans_allowed[this.props.name]["description"] ?
                           this.props.allowedPlans.plans_allowed[this.props.name]["description"] : "No plan description found."}
                       </Typography>
+                      {this.state.itemUid ?
+                      <Typography align="center" gutterBottom>
+                          Editing queue item: {this.state.itemUid}
+                      </Typography>: null }
                     </Box>
                   </GridListTile>
                   {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(
