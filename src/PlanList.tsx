@@ -17,7 +17,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import StopIcon from '@material-ui/icons/Stop';
 import EditIcon from '@material-ui/icons/Edit';
-import { blue } from '@material-ui/core/colors';
+import { blue, green, red } from '@material-ui/core/colors';
 
 type Plans = {
   plans: IPlanObject[];
@@ -110,7 +110,9 @@ export class PlanList extends React.Component<Plans, IState>{
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
                 {this.props.plans.map((planObject: IPlanObject, index) => (
                   <Accordion key={index}>
-                    <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" expandIcon={<ExpandMoreIcon />}>
+                    <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" 
+                                      style={{ backgroundColor: this.props.editItemUid === planObject.item_uid ? green[500] : '#fff'}}
+                                      expandIcon={<ExpandMoreIcon />}>
                       {(planObject.action === "queue_stop") ?
                         <ListItemIcon>
                           <StopIcon fontSize='large' color="primary" />
@@ -139,12 +141,11 @@ export class PlanList extends React.Component<Plans, IState>{
                         </IconButton>
                         {
                           planObject.action !== "queue_stop" ?
-                          <IconButton onClick={() => this.props.editPlan(planObject.item_uid, planObject.name, planObject.kwargs)} edge="end" aria-label="comments">
+                          <IconButton  onClick={() => this.props.editPlan(planObject.item_uid, planObject.name, planObject.kwargs)} edge="end" aria-label="comments">
                             <EditIcon />
                           </IconButton>: null
                         }
                         <IconButton />
-
                       </ListItemSecondaryAction>
                     </AccordionSummary>
                     <AccordionDetails>

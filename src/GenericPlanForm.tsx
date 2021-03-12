@@ -205,7 +205,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                   submit plan
                 </Button>:
                 <Button onClick={() => this.submitEdited()}  variant="contained" color="primary">
-                  edit plan
+                  update plan
                 </Button>
               }
             </CardActions>
