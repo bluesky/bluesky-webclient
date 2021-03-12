@@ -47,9 +47,7 @@ export class AvailablePlans extends React.Component<Plans>{
                     <MenuItem selected={planObject === this.props.selectedPlan} onClick={() => this.props.handleSelect(planObject)} divider={true} button={true} key={planObject}>
                         <ListItemIcon>
                           <Avatar>
-                            <Typography align="center" variant="body2" gutterBottom>
-                              BMM
-                            </Typography>
+                            <Star />
                           </Avatar>
                         </ListItemIcon>
                         <ListItemText

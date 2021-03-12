@@ -17,6 +17,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import StopIcon from '@material-ui/icons/Stop';
 import EditIcon from '@material-ui/icons/Edit';
+import { blue } from '@material-ui/core/colors';
 
 type Plans = {
   plans: IPlanObject[];
@@ -25,6 +26,7 @@ type Plans = {
   editPlan: any;
   modifyEnvironment: typeof modifyEnvironment;
   modifyQueue: typeof modifyQueue;
+  editItemUid: string;
 }
 
 interface IState {

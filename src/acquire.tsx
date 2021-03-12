@@ -78,8 +78,10 @@ class AcquirePage extends React.Component<IProps, IState> {
                                      itemUid={this.state.editItemUid} editKwargs={this.state.editKwargs}> </PlanFormContainer>   
                 </Grid>   
                 <Grid item justify="center" spacing={1} xs={3}>
-                  <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} clearQueue={this.props.clearQueue} plans={this.props.plans}
-                            modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}></PlanList>
+                  <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} 
+                            clearQueue={this.props.clearQueue} plans={this.props.plans}
+                            modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}
+                            editItemUid={this.state.editItemUid}></PlanList>
                 </Grid>
             </Grid>
           </Container>

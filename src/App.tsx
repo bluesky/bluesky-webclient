@@ -56,8 +56,10 @@ class App extends React.Component<IProps> {
           <Box width="80vw" height="2vh"></Box>
           <Grid container spacing={5} direction="row" justify="center">
             <Grid item justify="center" spacing={10} xs={3}>    
-              <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} clearQueue={this.props.clearQueue} plans={this.props.plans}
-              modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}> </PlanList>
+              <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} 
+                        clearQueue={this.props.clearQueue} plans={this.props.plans}
+                        modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}
+                        editItemUid={""}> </PlanList>
             </Grid>
             <Grid item justify="center" spacing={10} xs={5}>
               <CurrentPlan plans={this.props.plans}></CurrentPlan> 
