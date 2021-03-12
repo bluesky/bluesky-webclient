@@ -104,9 +104,6 @@ class AcquirePage extends React.Component<IProps, IState> {
     };
 
     private editPlan = (itemUid: string, planType: string, kwargs: {[name: string]: (string|number)[]}) => {
-        console.log("EDIT", JSON.stringify(itemUid));
-        console.log("EDIT", JSON.stringify(planType));
-        console.log("EDIT", JSON.stringify(kwargs));
         this.setState({editItemUid: itemUid});
         this.setState({selectedPlan: planType});
         this.setState({editKwargs: kwargs});

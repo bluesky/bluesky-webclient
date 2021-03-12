@@ -378,19 +378,19 @@ export interface IPlanSubmitState {
     readonly planLoading: boolean;
 }
 
-export interface ISumbitPlanObject {
+export interface ISubmitPlanObject {
     name: string;
     kwargs: {[name: string]: (string|number)[]};
 }
 
-export interface ISumbitPlanObjectFixed {
+export interface ISubmitPlanObjectFixed {
     name: string;
     kwargs: {[name: string]: (string|number)[]|string|number} 
 }
 
-export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObject> => {
+export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObject> => {
 
-    var plan : ISumbitPlanObjectFixed = {name: submitPlan.name,
+    var plan : ISubmitPlanObjectFixed = {name: submitPlan.name,
                                          kwargs: {}};
 
     // Remove the square brackets from parameters that are not intended to be lists.
@@ -440,9 +440,9 @@ export interface IPlanEditState {
     readonly planLoading: boolean;
 }
 
-export const submitEditedPlan = async(editPlan: IEditPlanObject): Promise<IPlanObject> => {
+export const submitEditedPlan = async(itemUid: string, editPlan: ISubmitPlanObject): Promise<IPlanObject> => {
 
-    var plan : IEditPlanObjectFixed = {item_uid: editPlan.item_uid,
+    var plan : IEditPlanObjectFixed = {item_uid: itemUid,
                                        name: editPlan.name,
                                        kwargs: {}};
 
@@ -467,7 +467,10 @@ export const submitEditedPlan = async(editPlan: IEditPlanObject): Promise<IPlanO
       }
     }
     
-    alert(JSON.stringify(plan));
+    alert(JSON.stringify({
+        plan: plan,
+        replace: true
+    }));
     const res = await axiosInstance.post('/queue/item/update',
         {
             plan: plan,

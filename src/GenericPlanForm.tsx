@@ -4,7 +4,7 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { IAllowedPlans, IParameter, ISumbitPlanObject } from './queueserver';
+import { IAllowedPlans, IParameter, ISubmitPlanObject } from './queueserver';
 import { Box, Button, Grid, GridList, GridListTile, List, ListItem, ListItemText, Select, Switch, TextField, Tooltip } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
@@ -14,13 +14,13 @@ type IProps = {
   itemUid: string;
   editKwargs: {[name: string]: (string|number)[]};
   allowedPlans: IAllowedPlans;
-  submitPlan: (selectedPlan: ISumbitPlanObject) => void;
-  submitEditedPlan: (itemUid: string, selectedPlan: ISumbitPlanObject) => void;
+  submitPlan: (selectedPlan: ISubmitPlanObject) => void;
+  submitEditedPlan: (itemUid: string, selectedPlan: ISubmitPlanObject) => void;
 }
 
 interface IState {
   itemUid: string;
-  plan: ISumbitPlanObject;
+  plan: ISubmitPlanObject;
 }
 
 export class GenericPlanForm extends React.Component<IProps, IState> {
@@ -66,7 +66,6 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
     this.setState({
         plan: new_plan
     });
-    console.log("PLAN", "SUBMIT", new_plan)
     this.props.submitPlan(this.state.plan)
   }
 
@@ -83,39 +82,39 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
       if (this.state.plan.kwargs[parameterObject.name] === undefined){
         return <Card />
       } else {
-        return this.state.plan.kwargs[parameterObject.name].map(() =>
+        return this.state.plan.kwargs[parameterObject.name].map((value, index) =>
         (<ListItem dense={true}>
-          {this.getWidget(parameterObject)}
+          {this.getWidget(index, value, parameterObject.name, parameterObject.type)}
         </ListItem>))
       }                                            
   }
 
-  private getWidget(parameterObject: IParameter): JSX.Element {
-    const widgetDict : Record<string, JSX.Element> = {'number': <TextField  name={parameterObject.name}
-                                                                            id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
-                                                                            defaultValue={parameterObject.default}
+  private getWidget(index: number, value: (string| number), name: string, type: string): JSX.Element {
+    const widgetDict : Record<string, JSX.Element> = {'number': <TextField  name={name}
+                                                                            id={String(index)}
+                                                                            value={value}
                                                                             onChange={this.onChange.bind(this)}
                                                                             variant="outlined"/>,
-                                                      'boolean': <Switch name={parameterObject.name}
-                                                                          id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
-                                                                          defaultValue={parameterObject.default}
+                                                      'boolean': <Switch name={name}
+                                                                          id={String(index)}
+                                                                          value={value}
                                                                           onChange={this.onChange.bind(this)}/>,
-                                                      'str': <TextField name={parameterObject.name}
-                                                                           id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
-                                                                           defaultValue={parameterObject.default}
+                                                      'str': <TextField name={name}
+                                                                           id={String(index)}
+                                                                           value={value}
                                                                            onChange={this.onChange.bind(this)}
                                                                            variant="outlined"/>,
-                                                      'enum': <Select name={parameterObject.name}
-                                                                      id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
-                                                                      defaultValue={parameterObject.default}/>,
-                                                      'default': <TextField name={parameterObject.name}
-                                                                            id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
-                                                                            defaultValue={parameterObject.default}
+                                                      'enum': <Select name={name}
+                                                                      id={String(index)}
+                                                                      value={value}/>,
+                                                      'default': <TextField name={name}
+                                                                            id={String(index)}
+                                                                            value={value}
                                                                             onChange={this.onChange.bind(this)}
                                                                             margin="dense"
                                                                             variant="outlined"/>}
 
-    return widgetDict[parameterObject.type] ? widgetDict[parameterObject.type] : widgetDict['default']
+    return widgetDict[type] ? widgetDict[type] : widgetDict['default']
   }
 
   static getDerivedStateFromProps(props : IProps, current_state: IState) {

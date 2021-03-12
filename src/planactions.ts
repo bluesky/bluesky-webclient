@@ -11,7 +11,7 @@ import { getOverview as getOverviewAPI,
          modifyEnvironment as modifyEnvironmentAPI, EnvOps,
          modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, 
                         IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, 
-                        AllowedPlansActionTypes, HistoricalPlansActionTypes, ISumbitPlanObject, 
+                        AllowedPlansActionTypes, HistoricalPlansActionTypes, ISubmitPlanObject, 
                         IEditPlanObject } from "./queueserver"
 import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, 
          IPlanSubmitAction, IPlanEditAction, IPlanEditState,
@@ -65,7 +65,7 @@ export const getHistoricalPlans: ActionCreator<ThunkAction<Promise<AnyAction>, I
     };
 };
 
-export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (submitPlan: ISumbitPlanObject) => {
+export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (submitPlan: ISubmitPlanObject) => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
         const plan = await submitPlanAPI(submitPlan);
@@ -76,10 +76,10 @@ export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubm
     };
 };
 
-export const submitEditedPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanEditState, null, IPlanEditAction>> = (editPlan: IEditPlanObject) => {
+export const submitEditedPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanEditState, null, IPlanEditAction>> = (itemUid: string, editPlan: IEditPlanObject) => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
-        const plan = await editPlanAPI(editPlan);
+        const plan = await editPlanAPI(itemUid, editPlan);
         return dispatch({
           plan,
           type: PlanActionTypes.SUBMITEDITEDPLAN

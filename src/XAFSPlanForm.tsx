@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
-import { IAllowedPlans, ISumbitPlanObject } from './queueserver';
+import { IAllowedPlans, ISubmitPlanObject } from './queueserver';
 import { Box, Button, FormControl, FormControlLabel, FormLabel, GridList, GridListTile, Radio, RadioGroup, Slider, TextField } from '@material-ui/core';
 
 const defaultBounds = [-200, -30, -10, 15.5, 1500];
@@ -21,12 +21,12 @@ type IProps = {
   itemUid: string;
   editKwargs: {[name: string]: (string|number)[]};
   allowedPlans: IAllowedPlans;
-  submitPlan: (selectedPlan: ISumbitPlanObject) => void;
-  submitEditedPlan: (itemUid: string, selectedPlan: ISumbitPlanObject) => void;
+  submitPlan: (selectedPlan: ISubmitPlanObject) => void;
+  submitEditedPlan: (itemUid: string, selectedPlan: ISubmitPlanObject) => void;
 }
 
 interface IState {
-  plan: ISumbitPlanObject;
+  plan: ISubmitPlanObject;
   numRegions: number;
 }
 

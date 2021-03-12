@@ -1,5 +1,5 @@
 import React from 'react';
-import { IAllowedPlans, ISumbitPlanObject } from './queueserver';
+import { IAllowedPlans, ISubmitPlanObject } from './queueserver';
 import { GenericPlanForm } from './GenericPlanForm';
 import { XAFSPlanForm } from './XAFSPlanForm'
 import { Card, CardContent, CardHeader, Paper, Typography } from '@material-ui/core';
@@ -10,8 +10,8 @@ type IProps = {
   itemUid: string;
   editKwargs: {[name: string]: (string|number)[]};
   allowedPlans: IAllowedPlans;
-  submitPlan: (selectedPlan: ISumbitPlanObject) => void;
-  submitEditedPlan: (itemUid: string, selectedPlan: ISumbitPlanObject) => void;
+  submitPlan: (selectedPlan: ISubmitPlanObject) => void;
+  submitEditedPlan: (itemUid: string, selectedPlan: ISubmitPlanObject) => void;
 }
 
 interface IState {
