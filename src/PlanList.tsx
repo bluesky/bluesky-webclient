@@ -131,18 +131,18 @@ export class PlanList extends React.Component<Plans, IState>{
                           primary={planObject.name}
                           secondary={planObject.item_uid.substr(0,8)}/>}
                       <ListItemSecondaryAction>
-                        {(index !== 0) && <IconButton onClick={() => this.handleDecrement(index)} edge="end" aria-label="comments">
+                        {(index !== 0) && <IconButton onClick={(e) => { e.stopPropagation(); this.handleDecrement(index)}} edge="end" aria-label="comments">
                             <ArrowUpwardIcon />
                           </IconButton>}
-                        {(index !== this.props.plans.length -1) && <IconButton onClick={() => this.handleIncrement(index)} edge="end" aria-label="comments">
+                        {(index !== this.props.plans.length -1) && <IconButton onClick={(e) => {e.stopPropagation(); this.handleIncrement(index)}} edge="end" aria-label="comments">
                             <ArrowDownwardIcon/>
                           </IconButton>}
-                        <IconButton onClick={() => this.props.deletePlan(planObject.item_uid)} edge="end" aria-label="comments">
+                        <IconButton onClick={(e) => {e.stopPropagation(); this.props.deletePlan(planObject.item_uid)}} edge="end" aria-label="comments">
                           <DeleteForeverIcon />
                         </IconButton>
                         {
                           planObject.action !== "queue_stop" && this.props.editable ?
-                          <IconButton  onClick={() => this.props.editPlan(planObject.item_uid, planObject.name, planObject.kwargs)} edge="end" aria-label="comments">
+                          <IconButton  onClick={(e) => {e.stopPropagation(); this.props.editPlan(planObject.item_uid, planObject.name, planObject.kwargs)}} edge="end" aria-label="comments">
                             <EditIcon />
                           </IconButton>: null
                         }
