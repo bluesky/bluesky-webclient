@@ -127,12 +127,12 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
         } else {
           temp_dict[props.allowedPlans.plans_allowed[props.name].parameters[i].name] = [""];
         }
-        if (current_state.itemUid !== props.itemUid){
-          Object.keys(props.editKwargs).forEach(key => {
-            const x = Array.isArray(props.editKwargs[key]) ? props.editKwargs[key] : [props.editKwargs[key]];
-            temp_dict[key] = x as (string | number)[];
-          });
-        }
+      }
+      if (current_state.itemUid !== props.itemUid){
+        Object.keys(props.editKwargs).forEach(key => {
+          const x = Array.isArray(props.editKwargs[key]) ? props.editKwargs[key] : [props.editKwargs[key]];
+          temp_dict[key] = x as (string | number)[];
+        });
       }
       return {
         itemUid: props.itemUid,
@@ -160,10 +160,6 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                           this.props.allowedPlans.plans_allowed[this.props.name]["description"] ?
                           this.props.allowedPlans.plans_allowed[this.props.name]["description"] : "No plan description found."}
                       </Typography>
-                      {this.state.itemUid ?
-                      <Typography align="center" gutterBottom>
-                          Editing queue item: {this.state.itemUid}
-                      </Typography>: null }
                     </Box>
                   </GridListTile>
                   {this.props.allowedPlans.plans_allowed[this.props.name].parameters.map(

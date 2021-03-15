@@ -20,7 +20,7 @@ export class AvailablePlans extends React.Component<Plans>{
             <Card style={{height: "6vh"}} raised={true}>
               <CardContent>
                 <Typography align="center" variant="h5" component="h1" gutterBottom>
-                  Queue Items
+                  Available Plans
                 </Typography>
               </CardContent>
             </Card>
@@ -44,7 +44,9 @@ export class AvailablePlans extends React.Component<Plans>{
                 </ListItem>
                 {Object.keys(this.props.plans.plans_allowed).map(
                   (planObject: string) => (
-                    <MenuItem selected={planObject === this.props.selectedPlan} onClick={() => this.props.handleSelect(planObject)} divider={true} button={true} key={planObject}>
+                    <MenuItem selected={planObject === this.props.selectedPlan} 
+                              onClick={() => this.props.handleSelect(planObject)} divider={true} 
+                              button={true} key={planObject}>
                         <ListItemIcon>
                           <Avatar>
                             <Star />
