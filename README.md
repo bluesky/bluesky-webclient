@@ -9,7 +9,6 @@ Install it and run:
 
 ```sh
 git clean -fdx
-rm -rf node_modules
 npm install
 npm audit fix  # an optional step to fix potential issues
 npm start
