@@ -8,6 +8,8 @@ import { IAllowedPlans, IParameter, ISubmitPlanObject } from './queueserver';
 import { Box, Button, Grid, GridList, GridListTile, List, ListItem, ListItemText, Select, Switch, TextField, Tooltip } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import EditIcon from '@material-ui/icons/Edit';
+import { green } from '@material-ui/core/colors';
 
 type IProps = {
   name: string;
