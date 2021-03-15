@@ -59,7 +59,7 @@ class App extends React.Component<IProps> {
               <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} 
                         clearQueue={this.props.clearQueue} plans={this.props.plans}
                         modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}
-                        editItemUid={""}> </PlanList>
+                        editItemUid={""} editable={false}> </PlanList>
             </Grid>
             <Grid item justify="center" spacing={10} xs={5}>
               <CurrentPlan plans={this.props.plans}></CurrentPlan> 

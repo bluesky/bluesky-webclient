@@ -81,7 +81,7 @@ class AcquirePage extends React.Component<IProps, IState> {
                   <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} 
                             clearQueue={this.props.clearQueue} plans={this.props.plans}
                             modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}
-                            editItemUid={this.state.editItemUid}></PlanList>
+                            editItemUid={this.state.editItemUid} editable={true}></PlanList>
                 </Grid>
             </Grid>
           </Container>

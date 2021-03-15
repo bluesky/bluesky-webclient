@@ -27,6 +27,7 @@ type Plans = {
   modifyEnvironment: typeof modifyEnvironment;
   modifyQueue: typeof modifyQueue;
   editItemUid: string;
+  editable: boolean;
 }
 
 interface IState {
@@ -140,7 +141,7 @@ export class PlanList extends React.Component<Plans, IState>{
                           <DeleteForeverIcon />
                         </IconButton>
                         {
-                          planObject.action !== "queue_stop" ?
+                          planObject.action !== "queue_stop" && this.props.editable ?
                           <IconButton  onClick={() => this.props.editPlan(planObject.item_uid, planObject.name, planObject.kwargs)} edge="end" aria-label="comments">
                             <EditIcon />
                           </IconButton>: null
