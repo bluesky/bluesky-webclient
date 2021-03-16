@@ -12,13 +12,13 @@ import { red } from '@material-ui/core/colors';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { IPlanObject } from './queueserver';
+import { IPlanObject, IActiveRun } from './queueserver';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import LinearProgress from '@material-ui/core/LinearProgress';
 import { Box } from '@material-ui/core';
 import { Previews } from './Previews';
+import { getActiveRuns } from './queueserver'
 
 type Plans = {
   plans: IPlanObject[];
@@ -31,6 +31,8 @@ interface IState {
   expandOpen: any;
   avatar: any;
   expanded: boolean;
+  activeRun: string;
+  activeRunsId: any;
 }
 
 export class CurrentPlan extends React.Component<Plans, IState> {
@@ -55,6 +57,8 @@ export class CurrentPlan extends React.Component<Plans, IState> {
         backgroundColor: red[500],
       },
       expanded: false,
+      activeRun: "",
+      activeRunsId: 0,
     }
 
   }
@@ -77,10 +81,27 @@ export class CurrentPlan extends React.Component<Plans, IState> {
 
   getName(plans: IPlanObject[]){
     if (plans.length === 0) {
-      return "No plan currently executing";
+      return "Current Plan";
     } else {
       return plans[0].name;
     }
+  }
+
+  getActiveUids(){
+    getActiveRuns().then((result) => {
+      if (result[0] !== undefined){
+        this.setState({activeRun: result[0].uid})
+      } 
+    })
+  }
+
+  componentDidMount(){
+    this.getActiveUids.bind(this)
+    this.setState({activeRunsId: setInterval(this.getActiveUids.bind(this), 1000)});
+  }
+
+  componentWillUnmount(){
+    clearInterval(this.state.activeRunsId);
   }
 
   getUid(plans: IPlanObject[]){
@@ -116,14 +137,10 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             }
             titleTypographyProps={{variant:'h6' }}
             title={this.getName(this.props.plans)}
-            subheader={this.getUid(this.props.plans)}
+            subheader={this.state.activeRun}
           />
           <CardContent>
-            <Previews runUid={this.getUid(this.props.plans)}/>
-            <Typography variant="body2" color="textSecondary" component="p">
-              Something interesting is happening!
-            </Typography>
-            <LinearProgress variant="determinate" value={50} />
+            { this.state.activeRun ? <Previews runUid={this.state.activeRun}/> : null }            
           </CardContent>
           <CardActions disableSpacing>
             <IconButton onClick={() => this.handlePlay()} edge="end" aria-label="comments">

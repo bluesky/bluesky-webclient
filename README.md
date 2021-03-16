@@ -8,6 +8,7 @@ package.
 Install it and run:
 
 ```sh
+git clean -fdx
 npm install
 npm audit fix  # an optional step to fix potential issues
 npm start
@@ -26,6 +27,11 @@ brew services list  # to make sure both services have been started
 ### Start the queueserver RE-manager with kafka.
 ```sh
 start-re-manager --kafka_server 127.0.0.1:9092 --kafka_topic widgets_test.bluesky.documents
+```
+
+### Start the queueserver HTTP server.
+```sh
+uvicorn bluesky_queueserver.server.server:app --host localhost --port 60610
 ```
 
 ### Set environment variable for preview directory.
