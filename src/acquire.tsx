@@ -3,9 +3,9 @@ import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import { IApplicationState } from './store';
-import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans } from './planactions';
+import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans, submitEditedPlan } from './planactions';
 import { clearQueue, deletePlan } from './planactions';
-import { IPlanObject, EnvOps, QueueOps, IAllowedPlans } from './queueserver';
+import { IPlanObject, IAllowedPlans } from './queueserver';
 import { getOverview, getQueuedPlans } from './planactions';
 import { RouteComponentProps } from "react-router-dom";
 import { Grid } from '@material-ui/core';
@@ -19,6 +19,7 @@ interface Props extends RouteComponentProps<RouteParams> { }
 
 interface IProps extends RouteComponentProps {
     submitPlan: typeof submitPlan;
+    submitEditedPlan: typeof submitEditedPlan;
     modifyEnvironment: typeof modifyEnvironment;
     modifyQueue: typeof modifyQueue;
     clearQueue: typeof clearQueue;
@@ -34,6 +35,8 @@ interface IProps extends RouteComponentProps {
 
 interface IState {
     selectedPlan: string;
+    editItemUid: string;
+    editKwargs: {[name: string]: (string|number)[]};
     onPlanChange: (selectedPlan: string) => void;
     planParam: number;
     onPlanParamChange: (planParam: number) => void;
@@ -48,6 +51,8 @@ class AcquirePage extends React.Component<IProps, IState> {
         super(props);
         this.state = {
           selectedPlan: "",
+          editItemUid: "",
+          editKwargs: {},
           onPlanChange: this.handleSelectPlan,
           planParam: 10,
           onPlanParamChange: this.handlePlanParamChange,
@@ -67,12 +72,16 @@ class AcquirePage extends React.Component<IProps, IState> {
                   <AvailablePlans selectedPlan={this.state.selectedPlan} handleSelect={this.handleSelectPlan}
                   plans={this.props.allowedPlans}> </AvailablePlans>
                 </Grid>
-                <Grid item justify="center" spacing={1} xs={7}> 
-                  <PlanFormContainer submitPlan={this.props.submitPlan} name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}> </PlanFormContainer>   
+                <Grid item justify="center" spacing={1} xs={6}> 
+                  <PlanFormContainer submitEditedPlan={this.props.submitEditedPlan} submitPlan={this.props.submitPlan} 
+                                     name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}
+                                     itemUid={this.state.editItemUid} editKwargs={this.state.editKwargs}> </PlanFormContainer>   
                 </Grid>   
-                <Grid item justify="center" spacing={1} xs={2}>
-                  <PlanList deletePlan={this.props.deletePlan} clearQueue={this.props.clearQueue} plans={this.props.plans}
-                  modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}></PlanList>
+                <Grid item justify="center" spacing={1} xs={3}>
+                  <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} 
+                            clearQueue={this.props.clearQueue} plans={this.props.plans}
+                            modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}
+                            editItemUid={this.state.editItemUid} editable={true}></PlanList>
                 </Grid>
             </Grid>
           </Container>
@@ -81,10 +90,7 @@ class AcquirePage extends React.Component<IProps, IState> {
 
     private handleSelectPlan = (selectedPlan: string) => {
         this.setState({ selectedPlan });
-    };
-
-    private handleParamChange = (event: React.ChangeEvent<{ value: unknown }>) => {
-        this.state.onPlanParamChange(event.target.value as number);
+        this.setState({ editItemUid: ""});
     };
 
     private handlePlanParamChange = (planParam: number) => {
@@ -99,36 +105,15 @@ class AcquirePage extends React.Component<IProps, IState> {
         this.setState({ queue });
     };
 
-    private handleSubmitClick = () => {
-        this.props.submitPlan(this.state.selectedPlan, this.state.planParam);
-    }
-
-    private handleEnvClick = () => {
-        if (this.state.env === "Open") {
-            this.props.modifyEnvironment(EnvOps.open);
-            this.state.onEnvChange("Close");
-        }
-        else {
-            this.props.modifyEnvironment(EnvOps.close);
-            this.state.onEnvChange("Open");
-        }
-    }
-
-    private handleQueueClick = () => {
-        if (this.state.queue === "Start") {
-            this.props.modifyQueue(QueueOps.start);
-            this.state.onQueueChange("Stop");
-        }
-        else {
-            this.props.modifyQueue(QueueOps.stop);
-            this.state.onQueueChange("Start");
-        }
+    private editPlan = (itemUid: string, planType: string, kwargs: {[name: string]: (string|number)[]}) => {
+        this.setState({editItemUid: itemUid});
+        this.setState({selectedPlan: planType});
+        this.setState({editKwargs: kwargs});
     }
     
     componentDidMount() {
         this.props.getOverview();
         setInterval(this.props.getQueuedPlans, 500);
-        //this.props.submitPlan();
         this.props.getAllowedPlans();
     }
 }
@@ -148,6 +133,7 @@ const mapDispatchToProps = (dispatch: any) => {
       modifyEnvironment: (opId: number) => dispatch(modifyEnvironment(opId)),
       modifyQueue: (opId: number) => dispatch(modifyQueue(opId)),
       submitPlan: (planId: number, param: number) => dispatch(submitPlan(planId, param)),
+      submitEditedPlan: (itemUid: string, planId: number, param: number) => dispatch(submitEditedPlan(itemUid, planId, param)),
       clearQueue: () => dispatch(clearQueue()),
       deletePlan: () => dispatch(deletePlan()),
       getOverview: () => dispatch(getOverview()),
@@ -156,7 +142,6 @@ const mapDispatchToProps = (dispatch: any) => {
     };
 };
 
-  
 export default connect(
     mapStateToProps,
     mapDispatchToProps

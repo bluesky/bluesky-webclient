@@ -215,6 +215,7 @@ export enum PlanActionTypes {
     GETPLANLIST = "PLANS/GETPLANLIST",
     GETHISTORICAL = "PLANS/GETHISORICAL",
     SUBMITPLAN = "PLANS/SUBMITPLAN",
+    SUBMITEDITEDPLAN = "PLAN/SUMBITEDITEDPLAN",
     CLEARQUEUE = "PLANS/CLEARQUEUE",
     DELETEPLAN = "PLAN/DELETEPLAN",
     MODIFYENVIRONMENT = "PLANS/MODIFYENVIRONMENT",
@@ -306,6 +307,11 @@ export interface IPlanSubmitAction {
     plan: IPlanObject
 }
 
+export interface IPlanEditAction {
+    type: PlanActionTypes.SUBMITEDITEDPLAN,
+    plan: IPlanObject
+}
+
 export interface IPlanSubmitLoadingAction {
     type: PlanActionTypes.LOADING
 }
@@ -335,6 +341,7 @@ export type PlanActions =
   | IPlanObjectsAction
   | IPlanObjectsLoadingAction
   | IPlanSubmitAction
+  | IPlanEditAction
   | IPlanSubmitLoadingAction
   | IPlanModifyEnvironmentAction
   | IPlanModifyEnvironmentLoadingAction
@@ -371,19 +378,19 @@ export interface IPlanSubmitState {
     readonly planLoading: boolean;
 }
 
-export interface ISumbitPlanObject {
+export interface ISubmitPlanObject {
     name: string;
     kwargs: {[name: string]: (string|number)[]};
 }
 
-export interface ISumbitPlanObjectFixed {
+export interface ISubmitPlanObjectFixed {
     name: string;
     kwargs: {[name: string]: (string|number)[]|string|number} 
 }
 
-export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObject> => {
+export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObject> => {
 
-    var plan : ISumbitPlanObjectFixed = {name: submitPlan.name,
+    var plan : ISubmitPlanObjectFixed = {name: submitPlan.name,
                                          kwargs: {}};
 
     // Remove the square brackets from parameters that are not intended to be lists.
@@ -411,6 +418,63 @@ export const submitPlan = async(submitPlan: ISumbitPlanObject): Promise<IPlanObj
     const res = await axiosInstance.post('/queue/item/add',
         {
             plan: plan
+        });
+    console.log(res);
+    return res.data;
+}
+
+export interface IEditPlanObject {
+    item_uid: string,
+    name: string;
+    kwargs: {[name: string]: (string|number)[]};
+}
+
+export interface IEditPlanObjectFixed {
+    item_uid: string,
+    name: string;
+    kwargs: {[name: string]: (string|number)[]|string|number} 
+}
+
+export interface IPlanEditState {
+    readonly plan: IPlanObject;
+    readonly planLoading: boolean;
+}
+
+export const submitEditedPlan = async(itemUid: string, editPlan: ISubmitPlanObject): Promise<IPlanObject> => {
+
+    var plan : IEditPlanObjectFixed = {item_uid: itemUid,
+                                       name: editPlan.name,
+                                       kwargs: {}};
+
+    // Remove the square brackets from parameters that are not intended to be lists.
+    // For now we assume that kwargs ending with the letter 's' are lists.
+    // TODO: Update this, once the have the correct information from the 
+    // queueserver about which kwargs are list.
+    for (const [key, value] of Object.entries(editPlan.kwargs)) {
+      if (key.slice(-1) !== 's'){
+        if (value[0] !== "None"){
+            // Convert string to a number if possible.
+            // TODO: Use the type information from the server (once available), 
+            // and use a numeric input.
+            if (isNaN(Number(value[0]))){
+                plan.kwargs[key] = value[0];
+            } else {
+                plan.kwargs[key] = Number(value[0])
+            }
+        }
+      } else {
+        plan.kwargs[key] = value;
+      }
+    }
+    
+    alert(JSON.stringify({
+        plan: plan,
+        replace: true
+    }));
+    const res = await axiosInstance.post('/queue/item/update',
+        {
+            plan: plan,
+            replace: true
         });
     console.log(res);
     return res.data;

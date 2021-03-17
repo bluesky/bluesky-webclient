@@ -4,25 +4,32 @@ import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
-import { IAllowedPlans, IParameter, ISumbitPlanObject } from './queueserver';
+import { IAllowedPlans, IParameter, ISubmitPlanObject } from './queueserver';
 import { Box, Button, Grid, GridList, GridListTile, List, ListItem, ListItemText, Select, Switch, TextField, Tooltip } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
+import EditIcon from '@material-ui/icons/Edit';
+import { green } from '@material-ui/core/colors';
 
 type IProps = {
   name: string;
+  itemUid: string;
+  editKwargs: {[name: string]: (string|number)[]};
   allowedPlans: IAllowedPlans;
-  submitPlan: (selectedPlan: ISumbitPlanObject) => void;
+  submitPlan: (selectedPlan: ISubmitPlanObject) => void;
+  submitEditedPlan: (itemUid: string, selectedPlan: ISubmitPlanObject) => void;
 }
 
 interface IState {
-  plan: ISumbitPlanObject;
+  itemUid: string;
+  plan: ISubmitPlanObject;
 }
 
 export class GenericPlanForm extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
+      itemUid: "",
       plan: {name: this.props.name,
              kwargs: {}}
     }
@@ -64,48 +71,57 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
     this.props.submitPlan(this.state.plan)
   }
 
+  private submitEdited(){
+    const new_plan = this.state.plan;
+    new_plan.name = this.props.name;
+    this.setState({
+        plan: new_plan
+    });
+    this.props.submitEditedPlan(this.props.itemUid, this.state.plan)
+  }
+
   private getWidgetList(parameterObject: IParameter): JSX.Element[]|JSX.Element {
       if (this.state.plan.kwargs[parameterObject.name] === undefined){
         return <Card />
       } else {
-        return this.state.plan.kwargs[parameterObject.name].map(() =>
+        return this.state.plan.kwargs[parameterObject.name].map((value, index) =>
         (<ListItem dense={true}>
-          {this.getWidget(parameterObject)}
+          {this.getWidget(index, value, parameterObject.name, parameterObject.type)}
         </ListItem>))
       }                                            
   }
 
-  private getWidget(parameterObject: IParameter): JSX.Element {
-    const widgetDict : Record<string, JSX.Element> = {'number': <TextField  name={parameterObject.name}
-                                                                            id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
-                                                                            defaultValue={parameterObject.default}
+  private getWidget(index: number, value: (string| number), name: string, type: string): JSX.Element {
+    const widgetDict : Record<string, JSX.Element> = {'number': <TextField  name={name}
+                                                                            id={String(index)}
+                                                                            value={value}
                                                                             onChange={this.onChange.bind(this)}
                                                                             variant="outlined"/>,
-                                                      'boolean': <Switch name={parameterObject.name}
-                                                                          id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
-                                                                          defaultValue={parameterObject.default}
+                                                      'boolean': <Switch name={name}
+                                                                          id={String(index)}
+                                                                          value={value}
                                                                           onChange={this.onChange.bind(this)}/>,
-                                                      'str': <TextField name={parameterObject.name}
-                                                                           id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
-                                                                           defaultValue={parameterObject.default}
+                                                      'str': <TextField name={name}
+                                                                           id={String(index)}
+                                                                           value={value}
                                                                            onChange={this.onChange.bind(this)}
                                                                            variant="outlined"/>,
-                                                      'enum': <Select name={parameterObject.name}
-                                                                      id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
-                                                                      defaultValue={parameterObject.default}/>,
-                                                      'default': <TextField name={parameterObject.name}
-                                                                            id={String(this.state.plan.kwargs[parameterObject.name].length-1)}
-                                                                            defaultValue={parameterObject.default}
+                                                      'enum': <Select name={name}
+                                                                      id={String(index)}
+                                                                      value={value}/>,
+                                                      'default': <TextField name={name}
+                                                                            id={String(index)}
+                                                                            value={value}
                                                                             onChange={this.onChange.bind(this)}
                                                                             margin="dense"
                                                                             variant="outlined"/>}
 
-    return widgetDict[parameterObject.type] ? widgetDict[parameterObject.type] : widgetDict['default']
+    return widgetDict[type] ? widgetDict[type] : widgetDict['default']
   }
 
   static getDerivedStateFromProps(props : IProps, current_state: IState) {
     const temp_dict: Record<string, (string|number)[]> = {};
-    if (current_state.plan.name !== props.name) {
+    if (current_state.plan.name !== props.name || current_state.itemUid !== props.itemUid) {
       var i;
       for (i = 0; i < props.allowedPlans.plans_allowed[props.name].parameters.length; i++) {
         if (props.allowedPlans.plans_allowed[props.name].parameters[i].default){
@@ -114,7 +130,14 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
           temp_dict[props.allowedPlans.plans_allowed[props.name].parameters[i].name] = [""];
         }
       }
+      if (current_state.itemUid !== props.itemUid){
+        Object.keys(props.editKwargs).forEach(key => {
+          const x = Array.isArray(props.editKwargs[key]) ? props.editKwargs[key] : [props.editKwargs[key]];
+          temp_dict[key] = x as (string | number)[];
+        });
+      }
       return {
+        itemUid: props.itemUid,
         plan: {name: props.name,
                kwargs: temp_dict}
       }
@@ -135,7 +158,8 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                         {this.props.name}
                       </Typography>
                       <Typography align="center" gutterBottom>
-                        {this.props.allowedPlans.plans_allowed[this.props.name]["description"] ?
+                        {
+                          this.props.allowedPlans.plans_allowed[this.props.name]["description"] ?
                           this.props.allowedPlans.plans_allowed[this.props.name]["description"] : "No plan description found."}
                       </Typography>
                     </Box>
@@ -173,9 +197,15 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
               </div>
             </CardContent>
             <CardActions disableSpacing style={{ width: '100%', justifyContent: 'flex-end' }}>
-              <Button onClick={() => this.submit()}  variant="contained" color="primary">
-                submit plan
-              </Button>
+              {
+                this.props.itemUid === "" ?
+                <Button onClick={() => this.submit()}  variant="contained" color="primary">
+                  submit plan
+                </Button>:
+                <Button onClick={() => this.submitEdited()}  variant="contained" color="primary">
+                  update plan
+                </Button>
+              }
             </CardActions>
           </Card>
     );

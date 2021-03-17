@@ -3,7 +3,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Typography from '@material-ui/core/Typography';
-import { IAllowedPlans, ISumbitPlanObject } from './queueserver';
+import { IAllowedPlans, ISubmitPlanObject } from './queueserver';
 import { Box, Button, FormControl, FormControlLabel, FormLabel, GridList, GridListTile, Radio, RadioGroup, Slider, TextField } from '@material-ui/core';
 
 const defaultBounds = [-200, -30, -10, 15.5, 1500];
@@ -18,12 +18,16 @@ const defaultRegions = 4;
 
 type IProps = {
   name: string;
+  itemUid: string;
+  editKwargs: {[name: string]: (string|number)[]};
   allowedPlans: IAllowedPlans;
-  submitPlan: (selectedPlan: ISumbitPlanObject) => void;
+  submitPlan: (selectedPlan: ISubmitPlanObject) => void;
+  submitEditedPlan: (itemUid: string, selectedPlan: ISubmitPlanObject) => void;
 }
 
 interface IState {
-  plan: ISumbitPlanObject;
+  itemUid: string;
+  plan: ISubmitPlanObject;
   numRegions: number;
 }
 
@@ -33,6 +37,7 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
   constructor(props: IProps) {
     super(props);
     this.state = {
+      itemUid: "",
       plan: {name: this.props.name,
              kwargs: {
               element: [defaultElement],
@@ -90,6 +95,32 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
     this.props.submitPlan(this.state.plan)
   }
 
+  private submitEdited(){
+    const new_plan = this.state.plan;
+    new_plan.name = this.props.name;
+    this.setState({
+        plan: new_plan
+    });
+    this.props.submitEditedPlan(this.props.itemUid, this.state.plan)
+  }
+
+  static getDerivedStateFromProps(props : IProps, current_state: IState) {
+    const temp_dict: Record<string, (string|number)[]> = {};
+      if (current_state.itemUid !== props.itemUid){
+        Object.keys(props.editKwargs).forEach(key => {
+          const x = Array.isArray(props.editKwargs[key]) ? props.editKwargs[key] : [props.editKwargs[key]];
+          temp_dict[key] = x as (string | number)[];
+        });
+        return {
+          itemUid: props.itemUid,
+          plan: {name: props.name,
+                kwargs: temp_dict}
+        }
+      } else {
+        return null;
+      }
+  }
+  
   render(){
     return (
           <Card raised={true}>
@@ -111,9 +142,9 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
                     <form noValidate autoComplete="off">
                       <div>
                         <TextField onChange={this.onChange.bind(this)} required 
-                                    name="element" id="0" label="Element" defaultValue={this.state.plan.kwargs.element[0]} /> &nbsp;
+                                    name="element" id="0" label="Element" value={this.state.plan.kwargs.element[0]} /> &nbsp;
                         <TextField onChange={this.onChange.bind(this)} required 
-                                    name="edge" id="0" label="Edge" defaultValue={this.state.plan.kwargs.edge[0]} />
+                                    name="edge" id="0" label="Edge" value={this.state.plan.kwargs.edge[0]} />
                       </div>
                       <FormControl fullWidth>
                         <TextField onChange={this.onChange.bind(this)} required 
@@ -129,9 +160,9 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
                       </FormControl>
                       <div>
                         <TextField onChange={this.onChange.bind(this)} required 
-                                    name="nscans" id="0" label="Number of scans" type="number" defaultValue={this.state.plan.kwargs.nscans[0]} /> &nbsp;
+                                    name="nscans" id="0" label="Number of scans" type="number" value={this.state.plan.kwargs.nscans[0]} /> &nbsp;
                         <TextField onChange={this.onChange.bind(this)} required 
-                                    name="start" id="0" label="Start" type="number" defaultValue={this.state.plan.kwargs.start[0]} />
+                                    name="start" id="0" label="Start" type="number" value={this.state.plan.kwargs.start[0]} />
                       </div><br />
                       <FormControl>
                         <FormLabel component="legend">Mode</FormLabel>
@@ -152,21 +183,21 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
                           <FormLabel component="legend">Bounds:</FormLabel>
                           {Array.from(Array(this.state.numRegions+1).keys()).map((value: number, index) => (
                               <TextField onChange={this.onChange.bind(this)} required 
-                                          name="bounds" id={String(index)} style={{width: 60}} defaultValue={this.state.plan.kwargs.bounds[index]} />
+                                          name="bounds" id={String(index)} style={{width: 60}} value={this.state.plan.kwargs.bounds[index]} />
                           ))}
                       </div>
                       <div>
                           <FormLabel component="legend">Steps:</FormLabel>
                           {Array.from(Array(this.state.numRegions).keys()).map((value: number, index) => (
                               <TextField onChange={this.onChange.bind(this)} required 
-                                          name="steps" id={String(index)} style={{width: 60}} defaultValue={this.state.plan.kwargs.steps[index]} />
+                                          name="steps" id={String(index)} style={{width: 60}} value={this.state.plan.kwargs.steps[index]} />
                           ))}
                       </div>
                       <div>
                           <FormLabel component="legend">Times:</FormLabel>
                           {Array.from(Array(this.state.numRegions).keys()).map((value: number, index) => (
                               <TextField onChange={this.onChange.bind(this)} required 
-                                          name="times" id={String(index)} style={{width: 60}} defaultValue={this.state.plan.kwargs.times[index]} />
+                                          name="times" id={String(index)} style={{width: 60}} value={this.state.plan.kwargs.times[index]} />
                           ))}
                       </div><br />
                     </form>
@@ -175,9 +206,15 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
               </div>
             </CardContent>
             <CardActions disableSpacing style={{ width: '100%', justifyContent: 'flex-end' }}>
-              <Button onClick={() => this.submit()}  variant="contained" color="primary">
-                submit plan
-              </Button>
+              {
+                this.props.itemUid === "" ?
+                <Button onClick={() => this.submit()}  variant="contained" color="primary">
+                  submit plan
+                </Button>:
+                <Button onClick={() => this.submitEdited()}  variant="contained" color="primary">
+                  edit plan
+                </Button>
+              }
             </CardActions>
           </Card>
     );

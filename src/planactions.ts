@@ -7,9 +7,14 @@ import { getOverview as getOverviewAPI,
          submitPlan as submitPlanAPI,
          clearQueue as clearQueueAPI,
          deletePlan as deletePlanAPI,
+         submitEditedPlan as editPlanAPI,
          modifyEnvironment as modifyEnvironmentAPI, EnvOps,
-         modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, AllowedPlansActionTypes, HistoricalPlansActionTypes, ISumbitPlanObject } from "./queueserver"
-import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, IPlanSubmitAction,
+         modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, 
+                        IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, 
+                        AllowedPlansActionTypes, HistoricalPlansActionTypes, ISubmitPlanObject, 
+                        IEditPlanObject } from "./queueserver"
+import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, 
+         IPlanSubmitAction, IPlanEditAction, IPlanEditState,
          IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes } from "./queueserver"
 
 const loading: ActionCreator<IPlanLoadingAction> = () => ({
@@ -60,13 +65,24 @@ export const getHistoricalPlans: ActionCreator<ThunkAction<Promise<AnyAction>, I
     };
 };
 
-export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (submitPlan: ISumbitPlanObject) => {
+export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubmitState, null, IPlanSubmitAction>> = (submitPlan: ISubmitPlanObject) => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
         const plan = await submitPlanAPI(submitPlan);
         return dispatch({
           plan,
           type: PlanActionTypes.SUBMITPLAN
+        });
+    };
+};
+
+export const submitEditedPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanEditState, null, IPlanEditAction>> = (itemUid: string, editPlan: IEditPlanObject) => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const plan = await editPlanAPI(itemUid, editPlan);
+        return dispatch({
+          plan,
+          type: PlanActionTypes.SUBMITEDITEDPLAN
         });
     };
 };

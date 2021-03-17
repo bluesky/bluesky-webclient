@@ -1,5 +1,5 @@
 import React from 'react';
-import { IAllowedPlans, ISumbitPlanObject } from './queueserver';
+import { IAllowedPlans, ISubmitPlanObject } from './queueserver';
 import { GenericPlanForm } from './GenericPlanForm';
 import { XAFSPlanForm } from './XAFSPlanForm'
 import { Card, CardContent, CardHeader, Paper, Typography } from '@material-ui/core';
@@ -7,8 +7,11 @@ import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 type IProps = {
   name: string;
+  itemUid: string;
+  editKwargs: {[name: string]: (string|number)[]};
   allowedPlans: IAllowedPlans;
-  submitPlan: (selectedPlan: ISumbitPlanObject) => void;
+  submitPlan: (selectedPlan: ISubmitPlanObject) => void;
+  submitEditedPlan: (itemUid: string, selectedPlan: ISubmitPlanObject) => void;
 }
 
 interface IState {
@@ -21,11 +24,17 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
   private getPlanForm() {
    const planFormDict : Record<string, JSX.Element> = {
                                 'xafs': <XAFSPlanForm submitPlan={this.props.submitPlan} 
-                                                    name={this.props.name} 
-                                                    allowedPlans={this.props.allowedPlans}/>,
+                                                      submitEditedPlan={this.props.submitEditedPlan}
+                                                      name={this.props.name}
+                                                      itemUid={this.props.itemUid}
+                                                      editKwargs={this.props.editKwargs}
+                                                      allowedPlans={this.props.allowedPlans}/>,
                                 'default': <GenericPlanForm submitPlan={this.props.submitPlan} 
-                                                    name={this.props.name} 
-                                                    allowedPlans={this.props.allowedPlans}/>,
+                                                            submitEditedPlan={this.props.submitEditedPlan}
+                                                            name={this.props.name} 
+                                                            itemUid={this.props.itemUid}
+                                                            editKwargs={this.props.editKwargs}
+                                                            allowedPlans={this.props.allowedPlans}/>,
                                 '': <Card raised={true}>
                                       <CardHeader
                                         avatar={
