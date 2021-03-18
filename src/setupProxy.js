@@ -31,4 +31,14 @@ module.exports = function(app) {
       },
     })
   );
+  app.use(
+    '/auth',
+    createProxyMiddleware({
+      target: 'http://localhost:9000',
+      changeOrigin: true,
+      pathRewrite: {
+        "^/auth": "",
+      },
+    })
+  );
 };
