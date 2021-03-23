@@ -17,8 +17,7 @@
     "react-scripts": "latest",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "typescript": "latest",
-    "material-ui-dropzone": "latest"
+    "typescript": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
