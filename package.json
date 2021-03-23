@@ -9,6 +9,7 @@
     "@types/react-dom": "latest",
     "axios": "^0.20.0",
     "http-proxy-middleware": "^1.0.6",
+    "material-ui-dropzone": "^3.5.0",
     "react": "latest",
     "react-dom": "latest",
     "react-redux": "^7.2.1",
@@ -16,7 +17,8 @@
     "react-scripts": "latest",
     "redux": "^4.0.5",
     "redux-thunk": "^2.3.0",
-    "typescript": "latest"
+    "typescript": "latest",
+    "material-ui-dropzone": "latest"
   },
   "scripts": {
     "start": "react-scripts start",
