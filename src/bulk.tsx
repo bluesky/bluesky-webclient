@@ -12,18 +12,18 @@ import {DropzoneDialog} from 'material-ui-dropzone'
 import Button from '@material-ui/core/Button';
 
 
-interface IProps extends RouteComponentProps {
+interface IPropsBulk {
+    //submitExcel: typeof submitExcel;
+    submitExcel: any,
 }
-
-
 
 interface IState {
   open: boolean,
-  files: File[];
+  files: File[],
 }
 
-export default class BulkPage extends React.Component<IProps, IState> {
-    constructor(props) {
+export class BulkAdd extends React.Component<IPropsBulk, IState> {
+    constructor(props: IPropsBulk) {
         super(props);
         this.state = {
             open: false,
@@ -54,13 +54,13 @@ export default class BulkPage extends React.Component<IProps, IState> {
     render() {
         return (
             <div>
-                <Button onClick={this.handleOpen.bind(this)}>
-                  Add Image
+                <Button onClick={this.handleOpen.bind(this)} variant="contained" color="primary">
+                  Upload
                 </Button>
                 <DropzoneDialog
                     open={this.state.open}
                     onSave={this.handleSave.bind(this)}
-                    acceptedFiles={['image/jpeg', 'image/png', 'image/bmp']}
+                    acceptedFiles={['image/jpeg', 'image/png', 'image/bmp', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']}
                     showPreviews={true}
                     maxFileSize={5000000}
                     onClose={this.handleClose.bind(this)}

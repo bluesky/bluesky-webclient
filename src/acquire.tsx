@@ -12,7 +12,6 @@ import { Grid } from '@material-ui/core';
 import { PlanList } from './PlanList';
 import { AvailablePlans } from './AvailablePlans';
 import { PlanFormContainer } from './PlanFormContainer';
-import {DropzoneArea} from 'material-ui-dropzone'
 
 type RouteParams = { id: string, uid: string };
 
@@ -71,11 +70,11 @@ class AcquirePage extends React.Component<IProps, IState> {
           <Container maxWidth="xl">
             <Box width="60vw" height="2vh"></Box>
             <Grid container spacing={5} direction="row" justify="center">
-                <Grid item justify="center" spacing={1} xs={2}>    
+                <Grid item justify="center" spacing={1} xs={3}>    
                   <AvailablePlans selectedPlan={this.state.selectedPlan} handleSelect={this.handleSelectPlan}
                   plans={this.props.allowedPlans}> </AvailablePlans>
                 </Grid>
-                <Grid item justify="center" spacing={1} xs={6}> 
+                <Grid item justify="center" spacing={1} xs={5}> 
                   <PlanFormContainer submitEditedPlan={this.props.submitEditedPlan} submitPlan={this.props.submitPlan} 
                                      name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}
                                      itemUid={this.state.editItemUid} editKwargs={this.state.editKwargs}> </PlanFormContainer>   
@@ -87,9 +86,6 @@ class AcquirePage extends React.Component<IProps, IState> {
                             editItemUid={this.state.editItemUid} editable={true}></PlanList>
                 </Grid>
             </Grid>
-            <DropzoneArea
-              onChange={this.handleChange.bind(this)}
-            />
           </Container>
         )
     }

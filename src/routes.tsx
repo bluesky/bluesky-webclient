@@ -14,7 +14,6 @@ const Routes: React.FunctionComponent = () => {
                 <Route exact path="/" component={App} />
                 <Route exact path="/acquire" component={AcquirePage} />
                 <Route exact path="/user" component={UserPage} />
-                <Route exact path="/bulk" component={UserPage} />
             </div>
         </Router>
     );
