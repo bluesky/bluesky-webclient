@@ -80,10 +80,10 @@ export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubm
     };
 };
 
-export const submitExcel: ActionCreator<ThunkAction<Promise<AnyAction>, ISubmitExcelState, null, ISubmitExcelAction>> = (submitExcel: ISubmitExcelObject) => {
+export const submitExcel: ActionCreator<ThunkAction<Promise<AnyAction>, ISubmitExcelState, null, ISubmitExcelAction>> = (files: File[]) => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
-        const plan = await submitExcelAPI(submitExcel);
+        const plan = await submitExcelAPI(files);
         return dispatch({
           plan,
           type: PlanActionTypes.SUBMITEXCEL

@@ -502,12 +502,11 @@ export interface ISubmitExcelObjectFixed {
     kwargs: {[name: string]: (string|number)[]|string|number} 
 }
 
-export const submitExcel = async(submitExcel: ISubmitExcelObject): Promise<any> => {
+export const submitExcel = async(files: File[]): Promise<any> => {
 
     console.log("EXCELLLL")
-    alert(JSON.stringify(submitExcel));
+    alert(JSON.stringify(files));
     //const res = await axiosInstance.post('/queue/item/add',
-     //   {
       //      plan: submitExcel
        // });
     //console.log(res);
