@@ -215,6 +215,7 @@ export enum PlanActionTypes {
     GETPLANLIST = "PLANS/GETPLANLIST",
     GETHISTORICAL = "PLANS/GETHISORICAL",
     SUBMITPLAN = "PLANS/SUBMITPLAN",
+    SUBMITEXCEL = "PLANS/SUBMITEXCEL",
     SUBMITEDITEDPLAN = "PLAN/SUMBITEDITEDPLAN",
     CLEARQUEUE = "PLANS/CLEARQUEUE",
     DELETEPLAN = "PLAN/DELETEPLAN",
@@ -307,6 +308,11 @@ export interface IPlanSubmitAction {
     plan: IPlanObject
 }
 
+export interface ISubmitExcelAction {
+    type: PlanActionTypes.SUBMITEXCEL,
+    plan: IPlanObject
+}
+
 export interface IPlanEditAction {
     type: PlanActionTypes.SUBMITEDITEDPLAN,
     plan: IPlanObject
@@ -341,6 +347,7 @@ export type PlanActions =
   | IPlanObjectsAction
   | IPlanObjectsLoadingAction
   | IPlanSubmitAction
+  | ISubmitExcelAction
   | IPlanEditAction
   | IPlanSubmitLoadingAction
   | IPlanModifyEnvironmentAction
@@ -475,6 +482,32 @@ export const submitEditedPlan = async(itemUid: string, editPlan: ISubmitPlanObje
         {
             plan: plan,
             replace: true
+        });
+    console.log(res);
+    return res.data;
+}
+
+export interface ISubmitExcelState {
+    readonly plan: IPlanObject;
+    readonly planLoading: boolean;
+}
+
+export interface ISubmitExcelObject {
+    name: string;
+    kwargs: {[name: string]: (string|number)[]};
+}
+
+export interface ISubmitExcelObjectFixed {
+    name: string;
+    kwargs: {[name: string]: (string|number)[]|string|number} 
+}
+
+export const submitExcel = async(submitExcel: ISubmitExcelObject): Promise<ISubmitExcelObject> => {
+
+    alert(JSON.stringify(submitExcel));
+    const res = await axiosInstance.post('/queue/item/add',
+        {
+            plan: submitExcel
         });
     console.log(res);
     return res.data;

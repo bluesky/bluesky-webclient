@@ -5,6 +5,7 @@ import { getOverview as getOverviewAPI,
          getAllowedPlans as getAllowedPlansAPI,
          getHistoricalPlans as getHistoricalPlansAPI,
          submitPlan as submitPlanAPI,
+         submitExcel as submitExcelAPI,
          clearQueue as clearQueueAPI,
          deletePlan as deletePlanAPI,
          submitEditedPlan as editPlanAPI,
@@ -12,7 +13,10 @@ import { getOverview as getOverviewAPI,
          modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, 
                         IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, 
                         AllowedPlansActionTypes, HistoricalPlansActionTypes, ISubmitPlanObject, 
-                        IEditPlanObject } from "./queueserver"
+                        IEditPlanObject, 
+                        ISubmitExcelState,
+                        ISubmitExcelAction,
+                        ISubmitExcelObject} from "./queueserver"
 import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, 
          IPlanSubmitAction, IPlanEditAction, IPlanEditState,
          IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes } from "./queueserver"
@@ -72,6 +76,17 @@ export const submitPlan: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanSubm
         return dispatch({
           plan,
           type: PlanActionTypes.SUBMITPLAN
+        });
+    };
+};
+
+export const submitExcel: ActionCreator<ThunkAction<Promise<AnyAction>, ISubmitExcelState, null, ISubmitExcelAction>> = (submitExcel: ISubmitExcelObject) => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const plan = await submitExcelAPI(submitExcel);
+        return dispatch({
+          plan,
+          type: PlanActionTypes.SUBMITEXCEL
         });
     };
 };

@@ -39,6 +39,8 @@ export class BulkAdd extends React.Component<IPropsBulk, IState> {
 
     handleSave(files: File[]) {
         //Saving files to state for further use and closing Modal.
+        console.log("SUBMIT", files);
+        this.props.submitExcel(files);
         this.setState({
             files: files,
             open: false
