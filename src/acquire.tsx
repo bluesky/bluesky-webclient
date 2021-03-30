@@ -3,7 +3,7 @@ import { connect } from 'react-redux';
 import Container from '@material-ui/core/Container';
 import Box from '@material-ui/core/Box';
 import { IApplicationState } from './store';
-import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans, submitEditedPlan } from './planactions';
+import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans, submitEditedPlan, submitExcel } from './planactions';
 import { clearQueue, deletePlan } from './planactions';
 import { IPlanObject, IAllowedPlans } from './queueserver';
 import { getOverview, getQueuedPlans } from './planactions';
@@ -19,6 +19,7 @@ interface Props extends RouteComponentProps<RouteParams> { }
 
 interface IProps extends RouteComponentProps {
     submitPlan: typeof submitPlan;
+    submitExcel: typeof submitExcel;
     submitEditedPlan: typeof submitEditedPlan;
     modifyEnvironment: typeof modifyEnvironment;
     modifyQueue: typeof modifyQueue;
@@ -72,7 +73,7 @@ class AcquirePage extends React.Component<IProps, IState> {
             <Grid container spacing={5} direction="row" justify="center">
                 <Grid item justify="center" spacing={1} xs={3}>    
                   <AvailablePlans selectedPlan={this.state.selectedPlan} handleSelect={this.handleSelectPlan}
-                  plans={this.props.allowedPlans}> </AvailablePlans>
+                                  plans={this.props.allowedPlans} submitExcel={this.props.submitExcel}> </AvailablePlans>
                 </Grid>
                 <Grid item justify="center" spacing={1} xs={5}> 
                   <PlanFormContainer submitEditedPlan={this.props.submitEditedPlan} submitPlan={this.props.submitPlan} 
@@ -141,6 +142,7 @@ const mapDispatchToProps = (dispatch: any) => {
       modifyEnvironment: (opId: number) => dispatch(modifyEnvironment(opId)),
       modifyQueue: (opId: number) => dispatch(modifyQueue(opId)),
       submitPlan: (planId: number, param: number) => dispatch(submitPlan(planId, param)),
+      submitExcel: (files: File[]) => dispatch(submitExcel(files)),
       submitEditedPlan: (itemUid: string, planId: number, param: number) => dispatch(submitEditedPlan(itemUid, planId, param)),
       clearQueue: () => dispatch(clearQueue()),
       deletePlan: () => dispatch(deletePlan()),

@@ -10,11 +10,12 @@ import { IUser, IUserGetAction } from './facility';
 import { RouteComponentProps } from "react-router-dom";
 import {DropzoneDialog} from 'material-ui-dropzone'
 import Button from '@material-ui/core/Button';
+import {submitExcel } from './planactions';
 
 
 interface IPropsBulk {
     //submitExcel: typeof submitExcel;
-    submitExcel: any,
+    submitExcel: typeof submitExcel,
 }
 
 interface IState {
@@ -39,7 +40,6 @@ export class BulkAdd extends React.Component<IPropsBulk, IState> {
 
     handleSave(files: File[]) {
         //Saving files to state for further use and closing Modal.
-        console.log("SUBMIT", files);
         this.props.submitExcel(files);
         this.setState({
             files: files,

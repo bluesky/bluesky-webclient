@@ -502,15 +502,17 @@ export interface ISubmitExcelObjectFixed {
     kwargs: {[name: string]: (string|number)[]|string|number} 
 }
 
-export const submitExcel = async(submitExcel: ISubmitExcelObject): Promise<ISubmitExcelObject> => {
+export const submitExcel = async(submitExcel: ISubmitExcelObject): Promise<any> => {
 
+    console.log("EXCELLLL")
     alert(JSON.stringify(submitExcel));
-    const res = await axiosInstance.post('/queue/item/add',
-        {
-            plan: submitExcel
-        });
-    console.log(res);
-    return res.data;
+    //const res = await axiosInstance.post('/queue/item/add',
+     //   {
+      //      plan: submitExcel
+       // });
+    //console.log(res);
+    //return res.data;
+    return 0
 }
 
 export const clearQueue = async(): Promise<IPlan> => {
