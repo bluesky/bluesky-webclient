@@ -64,6 +64,7 @@ export class BulkAdd extends React.Component<IPropsBulk, IState> {
                     onSave={this.handleSave.bind(this)}
                     acceptedFiles={['image/jpeg', 'image/png', 'image/bmp', 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet']}
                     showPreviews={true}
+                    filesLimit={1}
                     maxFileSize={5000000}
                     onClose={this.handleClose.bind(this)}
                 />
