@@ -488,7 +488,7 @@ export const submitEditedPlan = async(itemUid: string, editPlan: ISubmitPlanObje
 }
 
 export interface ISubmitExcelState {
-    readonly plan: IPlanObject;
+    readonly files: File[];
     readonly planLoading: boolean;
 }
 
@@ -497,21 +497,17 @@ export interface ISubmitExcelObject {
     kwargs: {[name: string]: (string|number)[]};
 }
 
-export interface ISubmitExcelObjectFixed {
-    name: string;
-    kwargs: {[name: string]: (string|number)[]|string|number} 
-}
-
 export const submitExcel = async(files: File[]): Promise<any> => {
 
-    console.log("EXCELLLL")
-    alert(JSON.stringify(files));
-    //const res = await axiosInstance.post('/queue/item/add',
-      //      plan: submitExcel
-       // });
-    //console.log(res);
-    //return res.data;
-    return 0
+    var formData = new FormData();
+    formData.append("spreadsheet", files[0]);
+    const res = await axiosInstance.post('/queue/upload/spreadsheet', formData, {
+        headers: {
+            'Content-Type': 'multipart/form-data'
+        }
+    })
+    console.log(res)
+    return res.data;
 }
 
 export const clearQueue = async(): Promise<IPlan> => {
