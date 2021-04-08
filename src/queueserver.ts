@@ -204,7 +204,7 @@ export const getHistoricalPlans = async(): Promise<IHistoricalPlan[]> => {
     const res = await axiosInstance.get('/history/get',
         {});
     console.log(res);
-    return res.data.history;
+    return res.data.items;
 }
 
 /*******************************************/
@@ -377,7 +377,7 @@ export interface IPlanObjectsState {
 export const getQueuedPlans = async(): Promise<IPlanObject[]> => {
     const res = await axiosInstance.get('/queue/get');
     console.log(res);
-    return res.data.queue;
+    return res.data.items;
 }
 
 export interface IPlanSubmitState {
@@ -424,10 +424,11 @@ export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObj
     alert(JSON.stringify(plan));
     const res = await axiosInstance.post('/queue/item/add',
         {
-            plan: plan
+            item: plan,
+            item_type: "plan",
         });
-    console.log(res);
-    return res.data;
+    console.log("QADD", res);
+    return res.data.item;
 }
 
 export interface IEditPlanObject {
@@ -480,11 +481,12 @@ export const submitEditedPlan = async(itemUid: string, editPlan: ISubmitPlanObje
     }));
     const res = await axiosInstance.post('/queue/item/update',
         {
-            plan: plan,
-            replace: true
+            item: plan,
+            item_type: "plan",
+            replace: true,
         });
     console.log(res);
-    return res.data;
+    return res.data.item;
 }
 
 export interface ISubmitExcelState {
@@ -583,7 +585,8 @@ export const decrementPosition = async(uid: string, after_uid: string): Promise<
 export const addQueueStop = async(): Promise<IPlanModify> => {
     const res = await axiosInstance.post('/queue/item/add',
         {
-            instruction: {action: "queue_stop"}
+            item: {name: "queue_stop"},
+            item_type: "instruction",
         });
     console.log(res);
     return res.data;
