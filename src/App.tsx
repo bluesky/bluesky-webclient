@@ -6,7 +6,7 @@ import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import { IApplicationState } from './store';
 import { getOverview, getQueuedPlans, getHistoricalPlans,
-         clearQueue, deletePlan, modifyEnvironment, modifyQueue, submitEditedPlan } from './planactions';
+         clearQueue, deletePlan, modifyEnvironment, modifyQueue, submitEditedPlan, submitExcel } from './planactions';
 import { RouteComponentProps } from 'react-router-dom';
 import { IPlan, IPlanObject, IHistoricalPlan } from './queueserver';
 import { PlanList } from './PlanList';

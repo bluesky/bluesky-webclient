@@ -35,8 +35,8 @@ const Header: React.SFC = () => {
                     <MenuIcon />
                 </IconButton>
                 <Typography variant="h6" className={classes.title}>
-                    <Link color="inherit" component={RouterLink} to="/">Home </Link>
-                    <Link color="inherit" component={RouterLink} to="/acquire">Acquire</Link>
+                    <Link color="inherit" component={RouterLink} to="/">Monitor </Link>
+                    <Link color="inherit" component={RouterLink} to="/acquire">Edit </Link>
                 </Typography>
                 <img src={logo} alt="logo" style={{position: 'absolute', 
                                                     height: '100%',

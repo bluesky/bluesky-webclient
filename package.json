@@ -9,6 +9,7 @@
     "@types/react-dom": "latest",
     "axios": "^0.20.0",
     "http-proxy-middleware": "^1.0.6",
+    "material-ui-dropzone": "^3.5.0",
     "react": "latest",
     "react-dom": "latest",
     "react-redux": "^7.2.1",

@@ -2,13 +2,16 @@ import React from 'react';
 import List from '@material-ui/core/List';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import { IAllowedPlans, addQueueStop } from './queueserver';
+import { IAllowedPlans, addQueueStop} from './queueserver';
+import {submitExcel } from './planactions';
 import { Avatar, Box, Button, Card, CardContent, ListItem, ListItemSecondaryAction, MenuItem, Paper, Typography } from '@material-ui/core';
 import { Star } from '@material-ui/icons';
+import { BulkAdd } from './bulk'
 
 type Plans = {
   plans: IAllowedPlans;
   selectedPlan: string;
+  submitExcel: typeof submitExcel;
   handleSelect: (selectedPlan: string) => void;
 }
 
@@ -20,13 +23,26 @@ export class AvailablePlans extends React.Component<Plans>{
             <Card style={{height: "6vh"}} raised={true}>
               <CardContent>
                 <Typography align="center" variant="h5" component="h1" gutterBottom>
-                  Available Plans
-                </Typography>
-              </CardContent>
+                  Add items to queue
+                </Typography>      
+              </CardContent>  
             </Card>
             <Box height="2vh"></Box>
             <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
               <List>
+                <ListItem divider={true}>
+                  <ListItemIcon color="secondary">
+                    <Avatar>
+                      <Star />
+                    </Avatar>
+                  </ListItemIcon>
+                  <ListItemText
+                    primary="Bulk insert"
+                    secondary="upload excel sheet"/>
+                  <ListItemSecondaryAction>
+                    <BulkAdd submitExcel={this.props.submitExcel}></BulkAdd>
+                  </ListItemSecondaryAction>
+                </ListItem>
                 <ListItem divider={true}>
                   <ListItemIcon color="secondary">
                     <Avatar>
