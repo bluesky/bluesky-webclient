@@ -427,7 +427,7 @@ export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObj
             item: plan,
             item_type: "plan",
         });
-    console.log("QADD", res);
+    console.log(res);
     return res.data.item;
 }
 
