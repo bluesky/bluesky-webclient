@@ -7,107 +7,25 @@ var axiosInstance = axios.create({
 var axiosPreviewInstance = axios.create({
     baseURL: process.env.REACT_APP_PREVIEW_API_PREFIX,
 });
-/*******************************************/
 
 export enum AllowedPlansActionTypes {
     LOADING = "ALLOWEDPLANS/LOADING",
-    // LOADED = "ALLOWEDPLANS/LOADED",
     GET = "ALLOWEDPLANS/GET"
 }
 
 export type AllowedPlansActions =
   | IAllowedPlansLoadingAction
   | IAllowedPlansGetAction
-//   | IAllowedPlansLoadedAction
 
 export interface IAllowedPlansLoadingAction {
     type: AllowedPlansActionTypes.LOADING
 }
-
-// export interface IAllowedPlansLoadedAction {
-//     type: AllowedPlansActionTypes.LOADED
-// }
 
 export interface IAllowedPlansGetAction {
     type: AllowedPlansActionTypes.GET,
     allowedPlans: IAllowedPlans
 }
 
-// interracts with /plans/allowed
-// dict_keys(['success', 'msg', 'plans_allowed'])
-/*
-In [52]: r.json()['plans_allowed']['adaptive_scan']
-Out[52]:
-{'name': 'adaptive_scan',
- 'parameters': [{'annotation': '',
-   'annotation_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'default': '',
-   'default_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'kind': {'name': 'POSITIONAL_OR_KEYWORD', 'value': 1},
-   'name': 'detectors'},
-  {'annotation': '',
-   'annotation_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'default': '',
-   'default_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'kind': {'name': 'POSITIONAL_OR_KEYWORD', 'value': 1},
-   'name': 'target_field'},
-  {'annotation': '',
-   'annotation_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'default': '',
-   'default_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'kind': {'name': 'POSITIONAL_OR_KEYWORD', 'value': 1},
-   'name': 'motor'},
-  {'annotation': '',
-   'annotation_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'default': '',
-   'default_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'kind': {'name': 'POSITIONAL_OR_KEYWORD', 'value': 1},
-   'name': 'start'},
-  {'annotation': '',
-   'annotation_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'default': '',
-   'default_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'kind': {'name': 'POSITIONAL_OR_KEYWORD', 'value': 1},
-   'name': 'stop'},
-  {'annotation': '',
-   'annotation_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'default': '',
-   'default_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'kind': {'name': 'POSITIONAL_OR_KEYWORD', 'value': 1},
-   'name': 'min_step'},
-  {'annotation': '',
-   'annotation_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'default': '',
-   'default_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'kind': {'name': 'POSITIONAL_OR_KEYWORD', 'value': 1},
-   'name': 'max_step'},
-  {'annotation': '',
-   'annotation_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'default': '',
-   'default_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'kind': {'name': 'POSITIONAL_OR_KEYWORD', 'value': 1},
-   'name': 'target_delta'},
-  {'annotation': '',
-   'annotation_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'default': '',
-   'default_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'kind': {'name': 'POSITIONAL_OR_KEYWORD', 'value': 1},
-   'name': 'backstep'},
-  {'annotation': '',
-   'annotation_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'default': '0.8',
-   'default_pickled': '80 03 47 3f e9 99 99 99 99 99 9a 2e',
-   'kind': {'name': 'POSITIONAL_OR_KEYWORD', 'value': 1},
-   'name': 'threshold'},
-  {'annotation': '',
-   'annotation_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e',
-   'default': 'None',
-   'default_pickled': '80 03 4e 2e',
-   'kind': {'name': 'KEYWORD_ONLY', 'value': 3},
-   'name': 'md'}],
- 'returns': {'annotation': '',
-  'annotation_pickled': '80 03 63 69 6e 73 70 65 63 74 0a 5f 65 6d 70 74 79 0a 71 00 2e'}}
-*/
 export interface IKind {
     name: string;
     value: number;
@@ -204,10 +122,8 @@ export const getHistoricalPlans = async(): Promise<IHistoricalPlan[]> => {
     const res = await axiosInstance.get('/history/get',
         {});
     console.log(res);
-    return res.data.history;
+    return res.data.items;
 }
-
-/*******************************************/
 
 export enum PlanActionTypes {
     GETOVERVIEW = "PLANS/GETOVERVIEWS",
@@ -223,18 +139,6 @@ export enum PlanActionTypes {
     MODIFYQUEUE = "PLANS/MODIFYQUEUE",
 }
 
-
-/*******************************************/
-// interracts with "/"
-/*
-{'msg': 'RE Manager',
- 'plans_in_queue': 4,
- 'plans_in_history': 1,
- 'running_item_uid': None,
- 'manager_state': 'idle',
- 'queue_stop_pending': False,
- 'worker_environment_exists': False}
-*/
 export interface IPlan {
     manager_state: string,
     msg: string,
@@ -257,32 +161,6 @@ export interface IPlanLoadingAction {
     type: PlanActionTypes.LOADING
 }
 
-/*****************************************/
-// interracts with /queue/get
-/*
-{'queue': [{'name': 'count',
-   'args': [['det1', 'det2']],
-   'kwargs': {'num': None, 'delay': 1},
-   'item_uid': '0f43ab26-1ce5-4216-8cb2-a705833488d6',
-   'user': 'John Doe',
-   'user_group': 'admin'},
-  {'name': 'scan',
-   'args': [['det1', 'det2'], 'motor', -1, 1, None],
-   'item_uid': 'ff00456a-c20d-4e04-8b3d-9f9038100be0',
-   'user': 'John Doe',
-   'user_group': 'admin'},
-  {'name': 'scan',
-   'args': [['det1', 'det2'], 'motor', -1, 1, None],
-   'item_uid': '519306e6-9eae-4de4-83a4-6dfce7027d6c',
-   'user': 'John Doe',
-   'user_group': 'admin'},
-  {'name': 'scan',
-   'args': [['det1', 'det2'], 'motor', -1, 1, None],
-   'item_uid': '6674b9a9-e148-407d-98d6-a75be1773ea0',
-   'user': 'John Doe',
-   'user_group': 'admin'}],
- 'running_plan': {}}
-*/
 export interface IPlanObject {
     name: string,
     args: (string|number|string[])[],
@@ -340,7 +218,6 @@ export interface IPlanModifyQueueLoadingAction {
     type: PlanActionTypes.LOADING
 }
 
-
 export type PlanActions =
   | IPlanGetOverviewAction
   | IPlanLoadingAction
@@ -355,13 +232,10 @@ export type PlanActions =
   | IPlanModifyQueueAction
   | IPlanModifyQueueLoadingAction
 
-
 export interface IPlanState {
     readonly plan: IPlan;
     readonly planLoading: boolean;
 }
-/*******************************************/
-
 
 export const getOverview = async(): Promise<IPlan> => {
     const res = await axiosInstance.get('/status');
@@ -377,7 +251,7 @@ export interface IPlanObjectsState {
 export const getQueuedPlans = async(): Promise<IPlanObject[]> => {
     const res = await axiosInstance.get('/queue/get');
     console.log(res);
-    return res.data.queue;
+    return res.data.items;
 }
 
 export interface IPlanSubmitState {
@@ -424,10 +298,11 @@ export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObj
     alert(JSON.stringify(plan));
     const res = await axiosInstance.post('/queue/item/add',
         {
-            plan: plan
+            item: plan,
+            item_type: "plan",
         });
     console.log(res);
-    return res.data;
+    return res.data.item;
 }
 
 export interface IEditPlanObject {
@@ -480,11 +355,12 @@ export const submitEditedPlan = async(itemUid: string, editPlan: ISubmitPlanObje
     }));
     const res = await axiosInstance.post('/queue/item/update',
         {
-            plan: plan,
-            replace: true
+            item: plan,
+            item_type: "plan",
+            replace: true,
         });
     console.log(res);
-    return res.data;
+    return res.data.item;
 }
 
 export interface ISubmitExcelState {
@@ -583,7 +459,8 @@ export const decrementPosition = async(uid: string, after_uid: string): Promise<
 export const addQueueStop = async(): Promise<IPlanModify> => {
     const res = await axiosInstance.post('/queue/item/add',
         {
-            instruction: {action: "queue_stop"}
+            item: {name: "queue_stop"},
+            item_type: "instruction",
         });
     console.log(res);
     return res.data;
