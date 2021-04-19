@@ -266,12 +266,14 @@ export interface ISubmitPlanObject {
 
 export interface ISubmitPlanObjectFixed {
     name: string;
+    item_type: string;
     kwargs: {[name: string]: (string|number)[]|string|number} 
 }
 
 export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObject> => {
 
     var plan : ISubmitPlanObjectFixed = {name: submitPlan.name,
+                                         item_type: "plan",
                                          kwargs: {}};
 
     // Remove the square brackets from parameters that are not intended to be lists.
@@ -299,7 +301,6 @@ export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObj
     const res = await axiosInstance.post('/queue/item/add',
         {
             item: plan,
-            item_type: "plan",
         });
     console.log(res);
     return res.data.item;
@@ -314,6 +315,7 @@ export interface IEditPlanObject {
 export interface IEditPlanObjectFixed {
     item_uid: string,
     name: string;
+    item_type: string;
     kwargs: {[name: string]: (string|number)[]|string|number} 
 }
 
@@ -326,6 +328,7 @@ export const submitEditedPlan = async(itemUid: string, editPlan: ISubmitPlanObje
 
     var plan : IEditPlanObjectFixed = {item_uid: itemUid,
                                        name: editPlan.name,
+                                       item_type: "plan",
                                        kwargs: {}};
 
     // Remove the square brackets from parameters that are not intended to be lists.
@@ -356,7 +359,6 @@ export const submitEditedPlan = async(itemUid: string, editPlan: ISubmitPlanObje
     const res = await axiosInstance.post('/queue/item/update',
         {
             item: plan,
-            item_type: "plan",
             replace: true,
         });
     console.log(res);
