@@ -8,6 +8,7 @@ import configureStore from './store';
 import { IApplicationState } from './store'
 import theme from './theme';
 import Routes from './routes';
+import { PlanDrawer } from './PlanDrawer';
 
 interface IProps {
   store: Store<IApplicationState>;
