@@ -88,7 +88,6 @@ class AcquirePage extends React.Component<IProps, IState> {
                             editItemUid={this.state.editItemUid} editable={true}></PlanList>
                 </Grid>
             </Grid>
-            <PlanDrawer/>
           </Container>
           
         )

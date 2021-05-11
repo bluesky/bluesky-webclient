@@ -30,7 +30,7 @@ const Header: React.SFC = () => {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar position="absolute" style={{zIndex: 2000}}>
             <Toolbar>
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
                     <MenuIcon />

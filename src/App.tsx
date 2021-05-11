@@ -13,6 +13,7 @@ import { PlanList } from './PlanList';
 import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
 import { Grid } from '@material-ui/core';
+import { PlanDrawer } from './PlanDrawer';
 
 function Copyright() {
   return (
@@ -69,6 +70,7 @@ class App extends React.Component<IProps> {
             </Grid>   
           </Grid>
           <Copyright/>
+          <PlanDrawer/>
         </Container>
       )
   }
