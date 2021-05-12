@@ -8,18 +8,12 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import InboxIcon from '@material-ui/icons/MoveToInbox';
 import MailIcon from '@material-ui/icons/Mail';
-import { IAllowedPlans, submitExcel } from './queueserver';
+import { addQueueStop, IAllowedPlans, submitExcel } from './queueserver';
 import makeStyles from '@material-ui/core/styles/makeStyles';
-import { Box, createStyles, Theme } from '@material-ui/core';
+import { Avatar, Box, Button, createStyles, ListItemSecondaryAction, MenuItem, Theme, Typography } from '@material-ui/core';
 import theme from './theme';
-
-/*type IProps = {
-    plans: IAllowedPlans;
-    selectedPlan: string;
-    submitExcel: typeof submitExcel;
-    handleSelect: (selectedPlan: string) => void;
-  }
-*/
+import { Star } from '@material-ui/icons';
+import { BulkAdd } from './bulk';
 
 type IProps = {
   open: boolean
@@ -55,20 +49,58 @@ export class PlanDrawer extends React.Component<IProps, IState>{
                   <Box width="20vw" height="2vh"></Box>
                     <div>
                         <List>
-                            {['Inbox', 'Starred', 'Send email', 'Drafts'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
-                            ))}
+                          <Box width="20vw" height="7vh"></Box>
+                          <Typography align="center" variant="h5" component="h1" gutterBottom>
+                             Queue Actions
+                          </Typography>
+                          <ListItem divider={true}>
+                            <ListItemIcon color="secondary">
+                              <Avatar>
+                                <Star />
+                              </Avatar>
+                            </ListItemIcon>
+                            <ListItemText
+                              primary="Bulk insert"
+                              secondary="upload excel sheet"/>
+                            <ListItemSecondaryAction>
+                              <BulkAdd submitExcel={this.props.submitExcel}></BulkAdd>
+                            </ListItemSecondaryAction>
+                          </ListItem>
+                          <ListItem divider={true}>
+                            <ListItemIcon color="secondary">
+                              <Avatar>
+                                <Star />
+                              </Avatar>
+                            </ListItemIcon>
+                            <ListItemText
+                              primary="queue_stop"
+                              secondary="stops the queue"/>
+                            <ListItemSecondaryAction>
+                              <Button onClick={() => addQueueStop()} variant="contained" color="primary">
+                                Add
+                              </Button>
+                            </ListItemSecondaryAction>
+                          </ListItem>
                         </List>
-                        <Divider />
                         <List>
-                            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-                            <ListItem button key={text}>
-                                <ListItemIcon>{index % 2 === 0 ? <InboxIcon /> : <MailIcon />}</ListItemIcon>
-                                <ListItemText primary={text} />
-                            </ListItem>
+                        <Box width="20vw" height="2vh"></Box>
+                          <Typography align="center" variant="h5" component="h1" gutterBottom>
+                             Plans
+                          </Typography>
+                          {Object.keys(this.props.plans.plans_allowed).map(
+                            (planObject: string) => (
+                              <MenuItem selected={planObject === this.props.selectedPlan} 
+                                        onClick={() => this.props.handleSelect(planObject)} divider={true} 
+                                        button={true} key={planObject}>
+                                  <ListItemIcon>
+                                    <Avatar>
+                                      <Star />
+                                    </Avatar>
+                                  </ListItemIcon>
+                                  <ListItemText
+                                    primary={planObject}
+                                    secondary={planObject}/>
+                              </MenuItem>
                             ))}
                         </List>
                     </div>

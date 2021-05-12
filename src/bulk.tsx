@@ -14,8 +14,7 @@ import {submitExcel } from './planactions';
 
 
 interface IPropsBulk {
-    //submitExcel: typeof submitExcel;
-    submitExcel: typeof submitExcel,
+    submitExcel: (files: File[]) => void;
 }
 
 interface IState {
