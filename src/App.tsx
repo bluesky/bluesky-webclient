@@ -45,10 +45,37 @@ interface IProps extends RouteComponentProps {
   previews: {[uid: string]: string[];};
 }
 
+interface IState {
+  selectedPlan: string;
+  editItemUid: string;
+  editKwargs: {[name: string]: (string|number)[]};
+  onPlanChange: (selectedPlan: string) => void;
+  planParam: number;
+  onPlanParamChange: (planParam: number) => void;
+  env: string;
+  onEnvChange: (env: string) => void;
+  queue: string;
+  onQueueChange: (queue: string) => void;
+  files: File[];
+}
+
 class App extends React.Component<IProps> {
 
-  private editPlan = (itemUid: string) => {
-    return 0;
+  public constructor(props: IProps) {
+    super(props);
+    this.state = {
+      selectedPlan: "",
+      editItemUid: "",
+      editKwargs: {},
+      onPlanChange: this.handleSelectPlan,
+      planParam: 10,
+      onPlanParamChange: this.handlePlanParamChange,
+      env: "Open",
+      onEnvChange: this.handleEnvChange,
+      queue: "Start",
+      onQueueChange: this.handleQueueChange,
+      files: [],
+    };
   }
 
   render() {
@@ -73,6 +100,35 @@ class App extends React.Component<IProps> {
           <PlanDrawer/>
         </Container>
       )
+  }
+
+  private handleSelectPlan = (selectedPlan: string) => {
+      this.setState({ selectedPlan });
+      this.setState({ editItemUid: ""});
+  };
+
+  private handlePlanParamChange = (planParam: number) => {
+      this.setState({ planParam });
+  };
+
+  private handleEnvChange = (env: string) => {
+      this.setState({ env });
+  };
+
+  private handleQueueChange = (queue: string) => {
+      this.setState({ queue });
+  };
+
+  handleChange(files: File[]){
+    this.setState({
+      files: files
+    });
+  }
+
+  private editPlan = (itemUid: string, planType: string, kwargs: {[name: string]: (string|number)[]}) => {
+      this.setState({editItemUid: itemUid});
+      this.setState({selectedPlan: planType});
+      this.setState({editKwargs: kwargs});
   }
 
   componentDidMount() {
