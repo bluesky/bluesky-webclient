@@ -20,20 +20,15 @@ import theme from './theme';
     handleSelect: (selectedPlan: string) => void;
   }
 */
-type IProps = {};
+
+type IProps = {
+  open: boolean
+};
+
 type IState = {
     open: boolean;
 }
 
-/*const useStyles = makeStyles({
-  list: {
-    width: 250,
-  },
-  fullList: {
-    width: 'auto',
-  },
-});
-*/
 const styles = (theme: { zIndex: { drawer: number; }; }) => ({
   appBar: {
     // Make the app bar z-index always one more than the drawer z-index
@@ -52,7 +47,7 @@ export class PlanDrawer extends React.Component<IProps, IState>{
     render() {
         return (
             <div>
-                <Drawer anchor='left' open={this.state['open']}>
+                <Drawer anchor='left' open={this.props['open']}>
                   <Box width="20vw" height="2vh"></Box>
                     <div>
                         <List>

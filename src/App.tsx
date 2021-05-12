@@ -4,16 +4,22 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
+import { Link as RouterLink, RouteComponentProps } from 'react-router-dom'
 import { IApplicationState } from './store';
 import { getOverview, getQueuedPlans, getHistoricalPlans,
-         clearQueue, deletePlan, modifyEnvironment, modifyQueue, submitEditedPlan, submitExcel } from './planactions';
-import { RouteComponentProps } from 'react-router-dom';
-import { IPlan, IPlanObject, IHistoricalPlan } from './queueserver';
+         clearQueue, deletePlan, modifyEnvironment, modifyQueue, submitEditedPlan, submitExcel, submitPlan, getAllowedPlans } from './planactions';
+import { IPlan, IPlanObject, IHistoricalPlan, IAllowedPlans } from './queueserver';
 import { PlanList } from './PlanList';
 import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
-import { Grid } from '@material-ui/core';
+import { AppBar, Avatar, Grid, IconButton, Toolbar } from '@material-ui/core';
 import { PlanDrawer } from './PlanDrawer';
+import Header from './header';
+import Button from '@material-ui/core/Button';
+import MenuIcon from '@material-ui/icons/Menu';
+import logo from './assets/bluesky-logo.svg'
+import { ThreeSixty } from '@material-ui/icons';
+
 
 function Copyright() {
   return (
@@ -29,6 +35,9 @@ function Copyright() {
 }
 
 interface IProps extends RouteComponentProps {
+  submitPlan: typeof submitPlan;
+  submitEditedPlan: typeof submitEditedPlan;
+  submitExcel: typeof submitExcel;
   getOverview: typeof getOverview;
   getQueuedPlans: typeof getQueuedPlans;
   getHistoricalPlans: typeof getHistoricalPlans;
@@ -36,13 +45,17 @@ interface IProps extends RouteComponentProps {
   deletePlan: typeof deletePlan;
   modifyEnvironment: typeof modifyEnvironment;
   modifyQueue: typeof modifyQueue;
+  getAllowedPlans: typeof getAllowedPlans;
+  allowedPlans: IAllowedPlans;
+  loading: boolean;
   loadingPlan: boolean;
-  plan: IPlan;
+  plan: IPlanObject;
   loadingPlans: boolean;
   plans: IPlanObject[];
   loadingHistoricalPlans: boolean;
   historicalPlans: IHistoricalPlan[];
-  previews: {[uid: string]: string[];};
+  //previews: {[uid: string]: string[];};  // Need to add map dispatch to props, or map state to props
+  //drawerOpen: boolean;
 }
 
 interface IState {
@@ -57,9 +70,11 @@ interface IState {
   queue: string;
   onQueueChange: (queue: string) => void;
   files: File[];
+  drawerOpen: boolean
 }
 
-class App extends React.Component<IProps> {
+
+class App extends React.Component<IProps, IState> {
 
   public constructor(props: IProps) {
     super(props);
@@ -75,30 +90,52 @@ class App extends React.Component<IProps> {
       queue: "Start",
       onQueueChange: this.handleQueueChange,
       files: [],
+      drawerOpen: false,
     };
   }
 
   render() {
       return (
-        <Container maxWidth="xl">
-          <Box width="80vw" height="2vh"></Box>
-          <Grid container spacing={5} direction="row" justify="center">
-            <Grid item justify="center" spacing={10} xs={3}>    
-              <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} 
-                        clearQueue={this.props.clearQueue} plans={this.props.plans}
-                        modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}
-                        editItemUid={""} editable={false}> </PlanList>
+        <div>
+          <div>
+              <AppBar position="absolute" style={{zIndex: 2000}}>
+                <Toolbar>
+                  <Box display='flex' flexGrow={1}>
+                    <IconButton edge="start" color="inherit" aria-label="menu" onClick={this.openDrawer.bind(this)}>
+                            <MenuIcon/>
+                    </IconButton>
+                    <img src={logo} alt="logo" style={{position: 'absolute', 
+                                                        height: '100%',
+                                                        left: '50%', 
+                                                        top: '50%', 
+                                                        transform: 'translate(-50%, -50%)'}}/>
+                  </Box>
+                  <Button color="inherit" component={RouterLink} to="/user">Logout</Button>
+                  <Avatar>BR</Avatar>
+                </Toolbar>
+              </AppBar>
+          </div>
+          <Container maxWidth="xl">
+            <Box width="80vw" height="2vh"></Box>
+            <Grid container spacing={5} direction="row" justify="center">
+              <Grid item justify="center" spacing={10} xs={3}>    
+                <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} 
+                          clearQueue={this.props.clearQueue} plans={this.props.plans}
+                          modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}
+                          editItemUid={""} editable={false}> </PlanList>
+              </Grid>
+              <Grid item justify="center" spacing={10} xs={5}>
+                <CurrentPlan plans={this.props.plans}></CurrentPlan> 
+              </Grid>
+              <Grid item justify="center" spacing={10} xs={3}>    
+                <HistoricalPlanList history={this.props.historicalPlans}> </HistoricalPlanList>
+              </Grid>   
             </Grid>
-            <Grid item justify="center" spacing={10} xs={5}>
-              <CurrentPlan plans={this.props.plans}></CurrentPlan> 
-            </Grid>
-            <Grid item justify="center" spacing={10} xs={3}>    
-              <HistoricalPlanList history={this.props.historicalPlans}> </HistoricalPlanList>
-            </Grid>   
-          </Grid>
-          <Copyright/>
-          <PlanDrawer/>
-        </Container>
+            <Copyright/>
+            <PlanDrawer open={this.state.drawerOpen}/>
+          </Container>
+        </div>
+
       )
   }
 
@@ -125,6 +162,12 @@ class App extends React.Component<IProps> {
     });
   }
 
+  private openDrawer(){
+    this.setState({
+      drawerOpen: !this.state.drawerOpen
+    })
+  }
+
   private editPlan = (itemUid: string, planType: string, kwargs: {[name: string]: (string|number)[]}) => {
       this.setState({editItemUid: itemUid});
       this.setState({selectedPlan: planType});
@@ -135,30 +178,39 @@ class App extends React.Component<IProps> {
       this.props.getOverview();
       setInterval(this.props.getQueuedPlans, 1000);
       setInterval(this.props.getHistoricalPlans, 1000);
+      this.props.getAllowedPlans();
   }
 
 }
 
 const mapStateToProps = (store: IApplicationState) => {
   return {
+    loading: store.submitted.planLoading,
     loadingPlan: store.plan.planLoading,
-    plan: store.plan.plan,
+    //plan: store.plan.plan,
+    plan: store.submitted.plan,
     loadingPlans: store.plans.plansLoading,
     plans: store.plans.plans,
     loadingHistoricalPlans: store.historicalPlans.plansLoading,
     historicalPlans: store.historicalPlans.historicalPlans,
+    allowedPlans: store.allowedPlans.allowedPlans,
   };
 };
 
+
 const mapDispatchToProps = (dispatch: any) => {
   return {
+    modifyEnvironment: (opId: number) => dispatch(modifyEnvironment(opId)),
+    modifyQueue: (opId: number) => dispatch(modifyQueue(opId)),
+    submitPlan: (planId: number, param: number) => dispatch(submitPlan(planId, param)),
+    submitExcel: (files: File[]) => dispatch(submitExcel(files)),
+    submitEditedPlan: (itemUid: string, planId: number, param: number) => dispatch(submitEditedPlan(itemUid, planId, param)),
     getOverview: () => dispatch(getOverview()),
     clearQueue: () => dispatch(clearQueue()),
     deletePlan: () => dispatch(deletePlan()),
-    modifyEnvironment: () => dispatch(modifyEnvironment()),
-    modifyQueue: () => dispatch(modifyQueue()),
     getQueuedPlans: () => dispatch(getQueuedPlans()),
     getHistoricalPlans: () => dispatch(getHistoricalPlans()),
+    getAllowedPlans: () => dispatch(getAllowedPlans()),
   };
 };
 
