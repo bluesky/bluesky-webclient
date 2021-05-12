@@ -23,6 +23,10 @@ import theme from './theme';
 
 type IProps = {
   open: boolean
+  plans: IAllowedPlans;
+  selectedPlan: string;
+  submitExcel: (files: File[]) => void;
+  handleSelect: (selectedPlan: string) => void;
 };
 
 type IState = {

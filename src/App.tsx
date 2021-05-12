@@ -8,17 +8,15 @@ import { Link as RouterLink, RouteComponentProps } from 'react-router-dom'
 import { IApplicationState } from './store';
 import { getOverview, getQueuedPlans, getHistoricalPlans,
          clearQueue, deletePlan, modifyEnvironment, modifyQueue, submitEditedPlan, submitExcel, submitPlan, getAllowedPlans } from './planactions';
-import { IPlan, IPlanObject, IHistoricalPlan, IAllowedPlans } from './queueserver';
+import { IPlanObject, IHistoricalPlan, IAllowedPlans, ISubmitPlanObject } from './queueserver';
 import { PlanList } from './PlanList';
 import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
 import { AppBar, Avatar, Grid, IconButton, Toolbar } from '@material-ui/core';
 import { PlanDrawer } from './PlanDrawer';
-import Header from './header';
 import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import logo from './assets/bluesky-logo.svg'
-import { ThreeSixty } from '@material-ui/icons';
 
 
 function Copyright() {
@@ -37,7 +35,7 @@ function Copyright() {
 interface IProps extends RouteComponentProps {
   submitPlan: typeof submitPlan;
   submitEditedPlan: typeof submitEditedPlan;
-  submitExcel: typeof submitExcel;
+  submitExcel: (files: File[]) => void,
   getOverview: typeof getOverview;
   getQueuedPlans: typeof getQueuedPlans;
   getHistoricalPlans: typeof getHistoricalPlans;
@@ -55,7 +53,6 @@ interface IProps extends RouteComponentProps {
   loadingHistoricalPlans: boolean;
   historicalPlans: IHistoricalPlan[];
   //previews: {[uid: string]: string[];};  // Need to add map dispatch to props, or map state to props
-  //drawerOpen: boolean;
 }
 
 interface IState {
@@ -116,7 +113,7 @@ class App extends React.Component<IProps, IState> {
               </AppBar>
           </div>
           <Container maxWidth="xl">
-            <Box width="80vw" height="2vh"></Box>
+            <Box width="80vw" height="7vh"></Box>
             <Grid container spacing={5} direction="row" justify="center">
               <Grid item justify="center" spacing={10} xs={3}>    
                 <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} 
@@ -132,7 +129,9 @@ class App extends React.Component<IProps, IState> {
               </Grid>   
             </Grid>
             <Copyright/>
-            <PlanDrawer open={this.state.drawerOpen}/>
+            <PlanDrawer open={this.state.drawerOpen} selectedPlan={this.state.selectedPlan} 
+                        handleSelect={this.handleSelectPlan} plans={this.props.allowedPlans} 
+                        submitExcel={this.props.submitExcel}/>
           </Container>
         </div>
 
