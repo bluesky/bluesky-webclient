@@ -114,7 +114,7 @@ export class PlanList extends React.Component<Plans, IState>{
                     <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" 
                                       style={{ backgroundColor: this.props.editItemUid === planObject.item_uid ? green[500] : '#fff'}}
                                       expandIcon={<ExpandMoreIcon />}>
-                      {(planObject.action === "queue_stop") ?
+                      {(planObject.name === "queue_stop") ?
                         <ListItemIcon>
                           <StopIcon fontSize='large' color="primary" />
                         </ListItemIcon> :
@@ -124,7 +124,7 @@ export class PlanList extends React.Component<Plans, IState>{
                       {(planObject.item_type === "instruction") ?
                         <Typography component="div" color="primary">
                           <Box textAlign="justify" m={1} fontWeight="fontWeightMedium">
-                            {planObject.action}
+                            {planObject.name}
                           </Box> 
                         </Typography> :
                         <ListItemText
@@ -141,7 +141,7 @@ export class PlanList extends React.Component<Plans, IState>{
                           <DeleteForeverIcon />
                         </IconButton>
                         {
-                          planObject.action !== "queue_stop" && this.props.editable ?
+                          planObject.name !== "queue_stop" && this.props.editable ?
                           <IconButton  onClick={(e) => {e.stopPropagation(); this.props.editPlan(planObject.item_uid, planObject.name, planObject.kwargs)}} edge="end" aria-label="comments">
                             <EditIcon />
                           </IconButton>: null
@@ -172,9 +172,9 @@ export class PlanList extends React.Component<Plans, IState>{
                           <Typography>
                             item_type: {planObject.item_type}
                           </Typography>
-                          {planObject.action ?
+                          {planObject.name ?
                             <Typography>
-                              action: {planObject.action}
+                              name: {planObject.name}
                             </Typography> : null}
                         </div>
                       </AccordionDetails>
