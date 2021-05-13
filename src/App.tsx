@@ -139,6 +139,7 @@ class App extends React.Component<IProps, IState> {
   }
 
   private handleSelectPlan = (selectedPlan: string) => {
+      this.openDrawer()
       this.setState({ selectedPlan });
       this.setState({ editItemUid: ""});
   };
