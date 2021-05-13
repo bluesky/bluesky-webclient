@@ -12,11 +12,15 @@ import { IPlanObject, IHistoricalPlan, IAllowedPlans, ISubmitPlanObject } from '
 import { PlanList } from './PlanList';
 import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
-import { AppBar, Avatar, Grid, IconButton, Toolbar } from '@material-ui/core';
+import { AppBar, Avatar, Grid, IconButton, Popover, Toolbar } from '@material-ui/core';
 import { PlanDrawer } from './PlanDrawer';
 import Button from '@material-ui/core/Button';
 import MenuIcon from '@material-ui/icons/Menu';
 import logo from './assets/bluesky-logo.svg'
+import bmm_logo from './assets/BMM_Logo.png'
+import { PlanFormContainer } from './PlanFormContainer';
+import nsls2Background from "./assets/NSLS-II_Aerial_Filter.png"
+import { Height } from '@material-ui/icons';
 
 
 function Copyright() {
@@ -89,17 +93,26 @@ class App extends React.Component<IProps, IState> {
       files: [],
       drawerOpen: false,
     };
+
+    const Background = {
+      backgroundImage: 'url(' + nsls2Background + ')',
+      height: '100%'
+      }
   }
+/*
+                  <IconButton color="inherit" aria-label="menu" component={RouterLink} to="/user">Logout</IconButton>
+                  <Avatar>BR</Avatar>
+*/
 
   render() {
       return (
-        <div>
+        <div style={{backgroundImage: 'url(' + nsls2Background + ')'}}>
           <div>
               <AppBar position="absolute" style={{zIndex: 2000}}>
                 <Toolbar>
                   <Box display='flex' flexGrow={1}>
-                    <IconButton edge="start" color="inherit" aria-label="menu" onClick={this.openDrawer.bind(this)}>
-                            <MenuIcon/>
+                    <IconButton color="inherit" aria-label="menu" onClick={this.openDrawer.bind(this)}>
+                      Actions
                     </IconButton>
                     <img src={logo} alt="logo" style={{position: 'absolute', 
                                                         height: '100%',
@@ -107,12 +120,18 @@ class App extends React.Component<IProps, IState> {
                                                         top: '50%', 
                                                         transform: 'translate(-50%, -50%)'}}/>
                   </Box>
-                  <Button color="inherit" component={RouterLink} to="/user">Logout</Button>
-                  <Avatar>BR</Avatar>
+
+                  <Box width="3vw">
+                      <img src={bmm_logo} alt="bmm_logo" style={{position: 'absolute', 
+                                                                height: '100%',
+                                                                left: '97%', 
+                                                                top: '50%', 
+                                                                transform: 'translate(-50%, -50%)'}}/>
+                  </Box>
                 </Toolbar>
               </AppBar>
           </div>
-          <Container maxWidth="xl">
+          <Container maxWidth="xl" >
             <Box width="80vw" height="7vh"></Box>
             <Grid container spacing={5} direction="row" justify="center">
               <Grid item justify="center" spacing={10} xs={3}>    
@@ -132,6 +151,20 @@ class App extends React.Component<IProps, IState> {
             <PlanDrawer open={this.state.drawerOpen} selectedPlan={this.state.selectedPlan} 
                         handleSelect={this.handleSelectPlan} plans={this.props.allowedPlans} 
                         submitExcel={this.props.submitExcel}/>
+            <Popover 
+                  anchorReference="anchorPosition"
+                  anchorPosition={{ top: 200, left: 400 }}
+                  anchorOrigin={{
+                    vertical: 'center',
+                    horizontal: 'left',
+                  }}
+                  transformOrigin={{
+                    vertical: 'top',
+                    horizontal: 'left',
+                  }}
+                  open={true}>
+                      Hello
+            </Popover>
           </Container>
         </div>
 
