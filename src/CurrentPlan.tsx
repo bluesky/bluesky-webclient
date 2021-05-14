@@ -16,9 +16,10 @@ import { IPlanObject, IActiveRun } from './queueserver';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import { Box } from '@material-ui/core';
+import { Box, CardMedia } from '@material-ui/core';
 import { Previews } from './Previews';
 import { getActiveRuns } from './queueserver'
+import bmm_logo from './assets/BMM_Logo.png'
 
 type Plans = {
   plans: IPlanObject[];
@@ -140,7 +141,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             subheader={this.state.activeRun}
           />
           <CardContent>
-            { this.state.activeRun ? <Previews runUid={this.state.activeRun}/> : null }            
+            { this.state.activeRun ? <Previews runUid={this.state.activeRun}/> : <CardMedia image={bmm_logo}/> }            
           </CardContent>
           <CardActions disableSpacing>
             <IconButton onClick={() => this.handlePlay()} edge="end" aria-label="comments">

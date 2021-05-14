@@ -18,6 +18,7 @@ type IProps = {
   allowedPlans: IAllowedPlans;
   submitPlan: (selectedPlan: ISubmitPlanObject) => void;
   submitEditedPlan: (itemUid: string, selectedPlan: ISubmitPlanObject) => void;
+  hideForm: () => void;
 }
 
 interface IState {
@@ -69,6 +70,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
         plan: new_plan
     });
     this.props.submitPlan(this.state.plan)
+    this.props.hideForm()
   }
 
   private submitEdited(){
@@ -78,6 +80,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
         plan: new_plan
     });
     this.props.submitEditedPlan(this.props.itemUid, this.state.plan)
+    this.props.hideForm()
   }
 
   private getWidgetList(parameterObject: IParameter): JSX.Element[]|JSX.Element {

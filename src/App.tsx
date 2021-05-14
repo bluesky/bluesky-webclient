@@ -19,7 +19,8 @@ import MenuIcon from '@material-ui/icons/Menu';
 import logo from './assets/bluesky-logo.svg'
 import bmm_logo from './assets/BMM_Logo.png'
 import { PlanFormContainer } from './PlanFormContainer';
-import nsls2Background from "./assets/NSLS-II_Aerial_Filter.png"
+import nsls2Background from "./assets/NSLS2-aerial-filter-crop5.png"
+import lightBackground from "./assets/Concept_1_BG_AllFiveColors_NoGray_Cropped.jpg"
 import { Height } from '@material-ui/icons';
 
 
@@ -71,7 +72,8 @@ interface IState {
   queue: string;
   onQueueChange: (queue: string) => void;
   files: File[];
-  drawerOpen: boolean
+  drawerOpen: boolean;
+  planFormVisible: boolean;
 }
 
 
@@ -92,6 +94,7 @@ class App extends React.Component<IProps, IState> {
       onQueueChange: this.handleQueueChange,
       files: [],
       drawerOpen: false,
+      planFormVisible: false,
     };
 
     const Background = {
@@ -99,19 +102,19 @@ class App extends React.Component<IProps, IState> {
       height: '100%'
       }
   }
-/*
-                  <IconButton color="inherit" aria-label="menu" component={RouterLink} to="/user">Logout</IconButton>
-                  <Avatar>BR</Avatar>
-*/
 
   render() {
       return (
-        <div style={{backgroundImage: 'url(' + nsls2Background + ')'}}>
+        <div style={{height: '100vh',
+                    backgroundImage: 'url(' + nsls2Background + ')',
+                    backgroundRepeat: 'no-repeat',
+                    backgroundSize: '100%',
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)'}}>
           <div>
               <AppBar position="absolute" style={{zIndex: 2000}}>
                 <Toolbar>
                   <Box display='flex' flexGrow={1}>
-                    <IconButton color="inherit" aria-label="menu" onClick={this.openDrawer.bind(this)}>
+                    <IconButton color="inherit" aria-label="menu" onClick={this.toggleDrawer.bind(this)}>
                       Actions
                     </IconButton>
                     <img src={logo} alt="logo" style={{position: 'absolute', 
@@ -162,8 +165,11 @@ class App extends React.Component<IProps, IState> {
                     vertical: 'top',
                     horizontal: 'left',
                   }}
-                  open={true}>
-                      Hello
+                  open={this.state.planFormVisible}>
+                    <PlanFormContainer submitEditedPlan={this.props.submitEditedPlan} submitPlan={this.props.submitPlan} 
+                                       name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}
+                                       itemUid={this.state.editItemUid} editKwargs={this.state.editKwargs}
+                                       hideForm={() => this.hidePlanForm}> </PlanFormContainer> 
             </Popover>
           </Container>
         </div>
@@ -171,8 +177,10 @@ class App extends React.Component<IProps, IState> {
       )
   }
 
+
   private handleSelectPlan = (selectedPlan: string) => {
-      this.openDrawer()
+      this.closeDrawer()
+      this.showPlanForm()
       this.setState({ selectedPlan });
       this.setState({ editItemUid: ""});
   };
@@ -195,9 +203,27 @@ class App extends React.Component<IProps, IState> {
     });
   }
 
-  private openDrawer(){
+  private toggleDrawer(){
     this.setState({
       drawerOpen: !this.state.drawerOpen
+    })
+  }
+
+  private closeDrawer(){
+    this.setState({
+      drawerOpen: false
+    })
+  }
+
+  private showPlanForm(){
+    this.setState({
+      planFormVisible: true
+    })
+  }
+
+  private hidePlanForm(){
+    this.setState({
+      planFormVisible: false
     })
   }
 

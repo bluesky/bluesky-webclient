@@ -12,6 +12,7 @@ type IProps = {
   allowedPlans: IAllowedPlans;
   submitPlan: (selectedPlan: ISubmitPlanObject) => void;
   submitEditedPlan: (itemUid: string, selectedPlan: ISubmitPlanObject) => void;
+  hideForm: () => void;
 }
 
 interface IState {
@@ -28,13 +29,15 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
                                                       name={this.props.name}
                                                       itemUid={this.props.itemUid}
                                                       editKwargs={this.props.editKwargs}
-                                                      allowedPlans={this.props.allowedPlans}/>,
+                                                      allowedPlans={this.props.allowedPlans}
+                                                      hideForm={this.props.hideForm}/>,
                                 'default': <GenericPlanForm submitPlan={this.props.submitPlan} 
                                                             submitEditedPlan={this.props.submitEditedPlan}
                                                             name={this.props.name} 
                                                             itemUid={this.props.itemUid}
                                                             editKwargs={this.props.editKwargs}
-                                                            allowedPlans={this.props.allowedPlans}/>,
+                                                            allowedPlans={this.props.allowedPlans}
+                                                            hideForm={this.props.hideForm}/>,
                                 '': <Card raised={true}>
                                       <CardHeader
                                         avatar={
