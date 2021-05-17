@@ -297,7 +297,7 @@ export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObj
       }
     }
     
-    alert(JSON.stringify(plan));
+    //alert(JSON.stringify(plan));
     const res = await axiosInstance.post('/queue/item/add',
         {
             item: plan,
@@ -352,10 +352,10 @@ export const submitEditedPlan = async(itemUid: string, editPlan: ISubmitPlanObje
       }
     }
     
-    alert(JSON.stringify({
+    /*alert(JSON.stringify({
         plan: plan,
         replace: true
-    }));
+    }));*/
     const res = await axiosInstance.post('/queue/item/update',
         {
             item: plan,
