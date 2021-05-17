@@ -3,9 +3,10 @@ import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IHistoricalPlan, clearHistory } from './queueserver';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardContent, Grid, Paper, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Button, Card, CardContent, Grid, IconButton, Paper, Typography } from '@material-ui/core';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import { Previews } from './Previews';
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 
 type HistoricalPlans = {
   history: IHistoricalPlan[];
@@ -26,23 +27,14 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
 
   render() {
     return (
-          <Box> 
-            <Card style={{height: "6vh"}} raised={true}>
-              <CardContent>
-                <Grid container spacing={5} direction="row" justify="space-evenly" alignContent="center">
-                  <Grid item>
-                    <Typography align="center" variant="h5" component="h1">
+          <Box>
+            <Box height="1vh"></Box>
+                    <Typography align="center" variant="h4" component="h1" gutterBottom>
                       History
+                      <IconButton onClick={() => clearHistory()} edge="end" aria-label="comments">
+                        <DeleteForeverIcon />
+                      </IconButton>
                     </Typography>
-                  </Grid>
-                  <Grid item>
-                    <Button onClick={() => clearHistory()} variant="contained" color="primary">
-                      clear
-                    </Button>
-                  </Grid>
-                </Grid>
-              </CardContent>
-            </Card>
             <Box height="2vh"></Box>
             <Paper elevation={0} style={{height: "75vh", overflow: 'auto', margin: "auto", backgroundColor: 'transparent'}}>
                 {this.props.history.map(

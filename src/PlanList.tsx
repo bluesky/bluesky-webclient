@@ -10,7 +10,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import LoopIcon from '@material-ui/icons/Loop';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IPlanObject, QueueOps, EnvOps, incrementPosition, decrementPosition } from './queueserver';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardContent, Paper, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardContent, Grid, Paper, Typography } from '@material-ui/core';
 import { clearQueue, deletePlan, modifyQueue, modifyEnvironment} from './planactions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
@@ -86,27 +86,25 @@ export class PlanList extends React.Component<Plans, IState>{
   render() {
     return (
           <Box> 
-            <Card style={{height: "6vh"}} raised={true}>
-              <CardContent>
-                <Typography align="center" variant="h5" component="h1" gutterBottom>
-                  Queue
-                  <Tooltip title={`${this.state.env} RE environment`}>
-                    <IconButton onClick={() => this.handleEnvClick()} edge="end" aria-label="comments">
-                      <LoopIcon />
-                    </IconButton>
-                  </Tooltip>
-                  <IconButton onClick={() => this.handlePlay()} edge="end" aria-label="comments">
-                    <PlayCircleOutlineIcon />
+            <Box height="1vh"></Box>
+              <Typography align="center" variant="h4" component="h1" gutterBottom>
+                Queue
+                <Tooltip title={`${this.state.env} RE environment`}>
+                  <IconButton onClick={() => this.handleEnvClick()} edge="end" aria-label="comments">
+                    <LoopIcon />
                   </IconButton>
-                  <IconButton onClick={() => this.handlePause()} edge="end" aria-label="comments">
-                    <PauseCircleOutlineIcon />
-                  </IconButton>
-                  <IconButton onClick={() => this.props.clearQueue()} edge="end" aria-label="comments">
-                    <DeleteForeverIcon />
-                  </IconButton>
-                </Typography>
-              </CardContent>
-            </Card>
+                </Tooltip>
+                <IconButton onClick={() => this.handlePlay()} edge="end" aria-label="comments">
+                  <PlayCircleOutlineIcon />
+                </IconButton>
+                <IconButton onClick={() => this.handlePause()} edge="end" aria-label="comments">
+                  <PauseCircleOutlineIcon />
+                </IconButton>
+                <IconButton onClick={() => this.props.clearQueue()} edge="end" aria-label="comments">
+                  <DeleteForeverIcon />
+                </IconButton>
+              </Typography>
+
             <Box height="2vh"></Box>
             <Paper elevation={0} style={{height: "75vh", overflow: 'auto', margin: "auto", backgroundColor: 'transparent'}}>
                 {this.props.plans.map((planObject: IPlanObject, index) => (

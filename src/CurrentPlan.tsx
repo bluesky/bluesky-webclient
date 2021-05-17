@@ -130,14 +130,11 @@ export class CurrentPlan extends React.Component<Plans, IState> {
   render(){
     return (
       <Box>
-        <Card style={{height: "6vh"}} raised={true}>
-          <CardContent>
-            <Typography align="center" variant="h5" component="h1" gutterBottom>
-              Current Plan
-            </Typography>
-          </CardContent>
-        </Card>
-      <Box height="2vh"></Box>
+        <Box height="1vh"></Box>
+        <Typography align="center" variant="h4" component="h1" gutterBottom>
+          Current Plan
+        </Typography>
+      <Box height="1vh"></Box>
       { this.getName(this.props.plans) != "None" ?
         <Card raised={true} >
           <GridList spacing={3} cellHeight="auto">
