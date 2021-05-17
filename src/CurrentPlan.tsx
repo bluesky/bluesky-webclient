@@ -131,11 +131,6 @@ export class CurrentPlan extends React.Component<Plans, IState> {
                 R
               </Avatar>
             }
-            action={
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
-            }
             titleTypographyProps={{variant:'h6' }}
             title={this.getName(this.props.plans)}
             subheader={this.state.activeRun}
@@ -144,15 +139,6 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             { this.state.activeRun ? <Previews runUid={this.state.activeRun}/> : <CardMedia image={bmm_logo}/> }            
           </CardContent>
           <CardActions disableSpacing>
-            <IconButton onClick={() => this.handlePlay()} edge="end" aria-label="comments">
-              <PlayCircleOutlineIcon />
-            </IconButton>
-            <IconButton onClick={() => this.handlePause()} edge="end" aria-label="comments">
-              <PauseCircleOutlineIcon />
-            </IconButton>
-            <IconButton onClick={() => this.handleDelete("temp_string_uid")} edge="end" aria-label="comments">
-              <HighlightOffIcon />
-            </IconButton>
             <IconButton>
               <ShareIcon />
             </IconButton>

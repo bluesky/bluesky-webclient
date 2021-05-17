@@ -44,7 +44,7 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
               </CardContent>
             </Card>
             <Box height="2vh"></Box>
-            <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
+            <Paper elevation={0} style={{height: "75vh", overflow: 'auto', margin: "auto", backgroundColor: 'transparent'}}>
                 {this.props.history.map(
                     (planObject: IHistoricalPlan, index: number) => (
                     <Accordion key={index} TransitionProps={{ unmountOnExit: true }}>

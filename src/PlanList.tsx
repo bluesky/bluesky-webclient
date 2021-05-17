@@ -108,7 +108,7 @@ export class PlanList extends React.Component<Plans, IState>{
               </CardContent>
             </Card>
             <Box height="2vh"></Box>
-            <Paper style={{height: "75vh", overflow: 'auto', margin: "auto"}}>
+            <Paper elevation={0} style={{height: "75vh", overflow: 'auto', margin: "auto", backgroundColor: 'transparent'}}>
                 {this.props.plans.map((planObject: IPlanObject, index) => (
                   <Accordion key={index}>
                     <AccordionSummary aria-controls="panel1d-content" id="panel1d-header" 
