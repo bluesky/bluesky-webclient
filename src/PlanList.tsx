@@ -17,7 +17,7 @@ import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';
 import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import StopIcon from '@material-ui/icons/Stop';
 import EditIcon from '@material-ui/icons/Edit';
-import { blue, green, red } from '@material-ui/core/colors';
+import { green } from '@material-ui/core/colors';
 
 type Plans = {
   plans: IPlanObject[];
@@ -104,7 +104,6 @@ export class PlanList extends React.Component<Plans, IState>{
                   <DeleteForeverIcon />
                 </IconButton>
               </Typography>
-
             <Box height="2vh"></Box>
             <Paper elevation={0} style={{height: "75vh", overflow: 'auto', margin: "auto", backgroundColor: 'transparent'}}>
                 {this.props.plans.map((planObject: IPlanObject, index) => (
@@ -129,7 +128,7 @@ export class PlanList extends React.Component<Plans, IState>{
                           primary={planObject.name}
                           secondary={planObject.item_uid.substr(0,8)}/>}
                       <ListItemSecondaryAction>
-                        {(index !== 0) && <IconButton onClick={(e) => { e.stopPropagation(); this.handleDecrement(index)}} edge="end" aria-label="comments">
+                        {(index !== 0) && <IconButton onClick={(e) => {e.stopPropagation(); this.handleDecrement(index)}} edge="end" aria-label="comments">
                             <ArrowUpwardIcon />
                           </IconButton>}
                         {(index !== this.props.plans.length -1) && <IconButton onClick={(e) => {e.stopPropagation(); this.handleIncrement(index)}} edge="end" aria-label="comments">

@@ -8,20 +8,17 @@ import { Link as RouterLink, RouteComponentProps } from 'react-router-dom'
 import { IApplicationState } from './store';
 import { getOverview, getQueuedPlans, getHistoricalPlans,
          clearQueue, deletePlan, modifyEnvironment, modifyQueue, submitEditedPlan, submitExcel, submitPlan, getAllowedPlans } from './planactions';
-import { IPlanObject, IHistoricalPlan, IAllowedPlans, ISubmitPlanObject } from './queueserver';
+import { IPlanObject, IHistoricalPlan, IAllowedPlans } from './queueserver';
 import { PlanList } from './PlanList';
 import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
-import { AppBar, Avatar, Grid, IconButton, Popover, Toolbar } from '@material-ui/core';
+import { AppBar, Grid, IconButton, Popover, Toolbar } from '@material-ui/core';
 import { PlanDrawer } from './PlanDrawer';
-import Button from '@material-ui/core/Button';
-import MenuIcon from '@material-ui/icons/Menu';
 import logo from './assets/bluesky-logo.svg'
 import bmm_logo from './assets/BMM_Logo.png'
 import { PlanFormContainer } from './PlanFormContainer';
 import nsls2Background from "./assets/NSLS2-aerial-filter-crop6.png"
 import lightBackground from "./assets/Concept_1_BG_AllFiveColors_NoGray_Cropped.jpg"
-import { Height } from '@material-ui/icons';
 
 
 function Copyright() {
@@ -75,7 +72,6 @@ interface IState {
   drawerOpen: boolean;
   planFormVisible: boolean;
 }
-
 
 class App extends React.Component<IProps, IState> {
 

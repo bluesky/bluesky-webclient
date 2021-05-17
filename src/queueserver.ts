@@ -395,7 +395,7 @@ export const clearQueue = async(): Promise<IPlan> => {
     return res.data;
 }
 
-// http POST http://localhost:60610/queue/plan/remove uid:='<uid>'
+
 export const deletePlan = async(item_uid: string): Promise<IPlan> => {
     const res = await axiosInstance.post('/queue/item/remove',
         {
