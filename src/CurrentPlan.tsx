@@ -16,7 +16,7 @@ import { IPlanObject, IActiveRun, IParameter } from './queueserver';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import { Box, CardMedia, Grid, GridList, GridListTile, List, ListItemText, Tooltip } from '@material-ui/core';
+import { Box, Button, CardMedia, Grid, GridList, GridListTile, List, ListItemText, Tooltip } from '@material-ui/core';
 import { Previews } from './Previews';
 import { getActiveRuns } from './queueserver'
 import bmm_logo from './assets/BMM_Logo.png'
@@ -149,9 +149,12 @@ export class CurrentPlan extends React.Component<Plans, IState> {
                 </Typography>
               </Box>
             </GridListTile>
-            <GridListTile style={{ height: 'auto' }}>
+            <GridListTile cols={2} style={{ height: 'auto' }}>
               <CardContent>
-                { this.state.activeRun ? <Previews runUid={this.state.activeRun}/> : <CardMedia image={bmm_logo}/> }            
+                { this.state.activeRun ? <Previews runUid={this.state.activeRun}/> : 
+                  <Typography align="center" variant="h5" component="h1" >
+                    Press the queue play button the start the plan.
+                  </Typography> }            
               </CardContent>
             </GridListTile>
           </GridList>
