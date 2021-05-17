@@ -131,10 +131,12 @@ export class CurrentPlan extends React.Component<Plans, IState> {
     return (
       <Box>
         <Box height="1vh"></Box>
-        <Typography align="center" variant="h4" component="h1" gutterBottom>
+        <Typography style={{ fontWeight: 500, height: 48 }} align="center" variant="h4" component="h1" gutterBottom>
           Current Plan
+          <IconButton disabled edge="end" aria-label="comments">
+          </IconButton>
         </Typography>
-      <Box height="1vh"></Box>
+      <Box height="2vh"></Box>
       { this.getName(this.props.plans) != "None" ?
         <Card raised={true} >
           <GridList spacing={3} cellHeight="auto">
@@ -153,7 +155,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
               <CardContent>
                 { this.state.activeRun ? <Previews runUid={this.state.activeRun}/> : 
                   <Typography align="center" variant="h5" component="h1" >
-                    Press the queue play button the start the plan.
+                    Press the queue play button to start the plan.
                   </Typography> }            
               </CardContent>
             </GridListTile>

@@ -29,7 +29,7 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
     return (
           <Box>
             <Box height="1vh"></Box>
-                    <Typography align="center" variant="h4" component="h1" gutterBottom>
+                    <Typography style={{ fontWeight: 500 }} align="center" variant="h4" component="h1" gutterBottom>
                       History
                       <IconButton onClick={() => clearHistory()} edge="end" aria-label="comments">
                         <DeleteForeverIcon />

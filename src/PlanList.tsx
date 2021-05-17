@@ -87,7 +87,7 @@ export class PlanList extends React.Component<Plans, IState>{
     return (
           <Box> 
             <Box height="1vh"></Box>
-              <Typography align="center" variant="h4" component="h1" gutterBottom>
+              <Typography style={{ fontWeight: 500 }} align="center" variant="h4" component="h1" gutterBottom>
                 Queue
                 <Tooltip title={`${this.state.env} RE environment`}>
                   <IconButton onClick={() => this.handleEnvClick()} edge="end" aria-label="comments">
