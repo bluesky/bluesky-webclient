@@ -8,8 +8,6 @@ import { IAllowedPlans, IParameter, ISubmitPlanObject } from './queueserver';
 import { Box, Button, Grid, GridList, GridListTile, List, ListItem, ListItemText, Select, Switch, TextField, Tooltip } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-import EditIcon from '@material-ui/icons/Edit';
-import { green } from '@material-ui/core/colors';
 
 type IProps = {
   name: string;
@@ -153,7 +151,6 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
     return (
           <Card raised={true}>
             <CardContent>
-              <div>
                 <GridList spacing={3} cellHeight="auto">
                   <GridListTile key="Subheader" cols={2} style={{ color: "black", border:5, height: 'auto'}}>
                     <Box borderBottom={3}>
@@ -177,7 +174,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                               <ListItemText primary={parameterObject.name} />
                             </Tooltip> : <ListItemText primary={parameterObject.name} />}
                           </Grid>
-                          <Grid item justify="space-evenly" spacing={1} xs={6}>
+                          <Grid item justify="space-evenly" spacing={0} xs={5}>
                             <List dense={true}>
                               {this.getWidgetList(parameterObject)}
                             </List>
@@ -197,7 +194,6 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                       </GridListTile>
                   ))}
                 </GridList>
-              </div>
             </CardContent>
             <CardActions disableSpacing style={{ width: '100%', justifyContent: 'flex-end' }}>
               {

@@ -24,7 +24,7 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
 
   private getPlanForm() {
    const planFormDict : Record<string, JSX.Element> = {
-                                'xafs': <XAFSPlanForm submitPlan={this.props.submitPlan} 
+                                'fly': <XAFSPlanForm submitPlan={this.props.submitPlan} 
                                                       submitEditedPlan={this.props.submitEditedPlan}
                                                       name={this.props.name}
                                                       itemUid={this.props.itemUid}
@@ -61,9 +61,7 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
     }
 
   render(){
-    return (
-      <Paper style={{height: "83vh", overflow: 'auto', margin: "auto"}}>
-          {this.getPlanForm()}
-      </Paper>)
+    return this.getPlanForm()
+
   }
 }

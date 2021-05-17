@@ -105,7 +105,7 @@ class App extends React.Component<IProps, IState> {
 
   render() {
       return (
-        <div style={{height: '100vh',
+        <div style={{height: '100%',
                     backgroundImage: 'url(' + nsls2Background + ')',
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: '100%',
@@ -141,7 +141,7 @@ class App extends React.Component<IProps, IState> {
                 <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} 
                           clearQueue={this.props.clearQueue} plans={this.props.plans}
                           modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}
-                          editItemUid={""} editable={false}> </PlanList>
+                          editItemUid={""} editable={true}> </PlanList>
               </Grid>
               <Grid item justify="center" spacing={10} xs={5}>
                 <CurrentPlan plans={this.props.plans}></CurrentPlan> 
@@ -154,26 +154,28 @@ class App extends React.Component<IProps, IState> {
             <PlanDrawer open={this.state.drawerOpen} selectedPlan={this.state.selectedPlan} 
                         handleSelect={this.handleSelectPlan} plans={this.props.allowedPlans} 
                         submitExcel={this.props.submitExcel}/>
-            <Popover 
-                  anchorReference="anchorPosition"
-                  anchorPosition={{ top: 200, left: 400 }}
-                  anchorOrigin={{
-                    vertical: 'center',
-                    horizontal: 'left',
-                  }}
-                  transformOrigin={{
-                    vertical: 'top',
-                    horizontal: 'left',
-                  }}
-                  open={this.state.planFormVisible}>
-                    <PlanFormContainer submitEditedPlan={this.props.submitEditedPlan} submitPlan={this.props.submitPlan} 
-                                       name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}
-                                       itemUid={this.state.editItemUid} editKwargs={this.state.editKwargs}
-                                       hideForm={this.hidePlanForm.bind(this)}> </PlanFormContainer> 
-            </Popover>
-          </Container>
-        </div>
 
+          </Container>
+            <Popover 
+                    anchorOrigin={{
+                      vertical: 'center',
+                      horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                      vertical: 'center',
+                      horizontal: 'center',
+                    }}
+                    PaperProps={{
+                      style: { width: '50%' },
+                    }}
+                    BackdropProps={{ invisible: false }}
+                    open={this.state.planFormVisible}>
+                      <PlanFormContainer submitEditedPlan={this.props.submitEditedPlan} submitPlan={this.props.submitPlan} 
+                                        name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}
+                                        itemUid={this.state.editItemUid} editKwargs={this.state.editKwargs}
+                                        hideForm={this.hidePlanForm.bind(this)}> </PlanFormContainer> 
+            </Popover>
+        </div>
       )
   }
 
@@ -181,7 +183,7 @@ class App extends React.Component<IProps, IState> {
   private handleSelectPlan = (selectedPlan: string) => {
       this.closeDrawer()
       this.showPlanForm()
-      this.setState({ selectedPlan });
+      this.setState({ selectedPlan: selectedPlan });  // Check this line
       this.setState({ editItemUid: ""});
   };
 
@@ -239,14 +241,12 @@ class App extends React.Component<IProps, IState> {
       setInterval(this.props.getHistoricalPlans, 1000);
       this.props.getAllowedPlans();
   }
-
 }
 
 const mapStateToProps = (store: IApplicationState) => {
   return {
     loading: store.submitted.planLoading,
     loadingPlan: store.plan.planLoading,
-    //plan: store.plan.plan,
     plan: store.submitted.plan,
     loadingPlans: store.plans.plansLoading,
     plans: store.plans.plans,
