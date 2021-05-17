@@ -196,6 +196,9 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                 </GridList>
             </CardContent>
             <CardActions disableSpacing style={{ width: '100%', justifyContent: 'flex-end' }}>
+              <Button  style={{ margin: 4 }} onClick={() => this.props.hideForm()}  variant="contained" color="primary">
+                  cancel
+              </Button>
               {
                 this.props.itemUid === "" ?
                 <Button onClick={() => this.submit()}  variant="contained" color="primary">

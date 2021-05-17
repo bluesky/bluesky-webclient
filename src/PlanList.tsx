@@ -144,7 +144,9 @@ export class PlanList extends React.Component<Plans, IState>{
                           planObject.name !== "queue_stop" && this.props.editable ?
                           <IconButton  onClick={(e) => {e.stopPropagation(); this.props.editPlan(planObject.item_uid, planObject.name, planObject.kwargs)}} edge="end" aria-label="comments">
                             <EditIcon />
-                          </IconButton>: null
+                          </IconButton>: <IconButton disabled edge="end" aria-label="comments">
+                            <EditIcon />
+                          </IconButton>
                         }
                         <IconButton />
                       </ListItemSecondaryAction>

@@ -19,7 +19,7 @@ import MenuIcon from '@material-ui/icons/Menu';
 import logo from './assets/bluesky-logo.svg'
 import bmm_logo from './assets/BMM_Logo.png'
 import { PlanFormContainer } from './PlanFormContainer';
-import nsls2Background from "./assets/NSLS2-aerial-filter-crop5.png"
+import nsls2Background from "./assets/NSLS2-aerial-filter-crop6.png"
 import lightBackground from "./assets/Concept_1_BG_AllFiveColors_NoGray_Cropped.jpg"
 import { Height } from '@material-ui/icons';
 
@@ -144,7 +144,7 @@ class App extends React.Component<IProps, IState> {
                           editItemUid={""} editable={true}> </PlanList>
               </Grid>
               <Grid item justify="center" spacing={10} xs={5}>
-                <CurrentPlan plans={this.props.plans}></CurrentPlan> 
+                <CurrentPlan allowedPlans={this.props.allowedPlans} plans={this.props.plans}></CurrentPlan> 
               </Grid>
               <Grid item justify="center" spacing={10} xs={3}>    
                 <HistoricalPlanList history={this.props.historicalPlans}> </HistoricalPlanList>
