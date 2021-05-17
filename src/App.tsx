@@ -169,7 +169,7 @@ class App extends React.Component<IProps, IState> {
                     <PlanFormContainer submitEditedPlan={this.props.submitEditedPlan} submitPlan={this.props.submitPlan} 
                                        name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}
                                        itemUid={this.state.editItemUid} editKwargs={this.state.editKwargs}
-                                       hideForm={() => this.hidePlanForm}> </PlanFormContainer> 
+                                       hideForm={this.hidePlanForm.bind(this)}> </PlanFormContainer> 
             </Popover>
           </Container>
         </div>
