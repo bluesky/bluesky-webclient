@@ -105,7 +105,7 @@ class App extends React.Component<IProps, IState> {
 
   render() {
       return (
-        <div style={{height: '100%',
+        <div style={{height: '100vh',
                     backgroundImage: 'url(' + nsls2Background + ')',
                     backgroundRepeat: 'no-repeat',
                     backgroundSize: '100%',
@@ -233,6 +233,7 @@ class App extends React.Component<IProps, IState> {
       this.setState({editItemUid: itemUid});
       this.setState({selectedPlan: planType});
       this.setState({editKwargs: kwargs});
+      this.showPlanForm()
   }
 
   componentDidMount() {

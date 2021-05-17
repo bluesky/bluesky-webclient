@@ -29,7 +29,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       itemUid: "",
-      plan: {name: this.props.name,
+      plan: {name: "",
              kwargs: {}}
     }
   }
@@ -122,7 +122,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
 
   static getDerivedStateFromProps(props : IProps, current_state: IState) {
     const temp_dict: Record<string, (string|number)[]> = {};
-    if (current_state.plan.name !== props.name || current_state.itemUid !== props.itemUid) {
+    if (current_state.plan.name !== props.name || current_state.itemUid !== props.itemUid || current_state.plan.kwargs == {}) {
       var i;
       for (i = 0; i < props.allowedPlans.plans_allowed[props.name].parameters.length; i++) {
         if (props.allowedPlans.plans_allowed[props.name].parameters[i].default){
