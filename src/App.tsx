@@ -17,7 +17,7 @@ import { PlanDrawer } from './PlanDrawer';
 import logo from './assets/bluesky-logo.svg'
 import bmm_logo from './assets/BMM_Logo.png'
 import { PlanFormContainer } from './PlanFormContainer';
-import nsls2Background from "./assets/NSLS2-aerial-filter-crop6.png"
+import nsls2Background from "./assets/nsls2_background.png"
 import lightBackground from "./assets/Concept_1_BG_AllFiveColors_NoGray_Cropped.jpg"
 
 
@@ -54,7 +54,7 @@ interface IProps extends RouteComponentProps {
   plans: IPlanObject[];
   loadingHistoricalPlans: boolean;
   historicalPlans: IHistoricalPlan[];
-  //previews: {[uid: string]: string[];};  // Need to add map dispatch to props, or map state to props
+  //previews: {[uid: string]: string[];}; I don't think this does anything.
 }
 
 interface IState {
