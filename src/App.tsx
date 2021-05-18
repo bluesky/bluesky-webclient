@@ -148,8 +148,7 @@ class App extends React.Component<IProps, IState> {
             </Grid>
             <Copyright/>
             <PlanDrawer open={this.state.drawerOpen} selectedPlan={this.state.selectedPlan} 
-                        handleSelect={this.handleSelectPlan} plans={this.props.allowedPlans} 
-                        submitExcel={this.props.submitExcel}/>
+                        handleSelect={this.handleSelectPlan} plans={this.props.allowedPlans}/>
 
           </Container>
             <Popover 

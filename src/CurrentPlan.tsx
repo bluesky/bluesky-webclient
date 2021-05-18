@@ -35,8 +35,8 @@ interface IState {
   expandOpen: any;
   avatar: any;
   expanded: boolean;
-  activeRun: string;
-  activeRunsId: any;
+  activeRun: any;
+  activeRunsId: any,
 }
 
 export class CurrentPlan extends React.Component<Plans, IState> {
@@ -84,15 +84,16 @@ export class CurrentPlan extends React.Component<Plans, IState> {
   }
 
   getName(plans: IPlanObject[]){
-    if (plans.length === 0) {
-      return "None";
+   console.log(this.state.activeRun)
+   if (plans.length === 0) {
+      return "Current Plan";
     } else {
       return plans[0].name;
     }
   }
 
   getDescription(plansAllowed: IAllowedPlans, name: string){
-    if (name === "None" || name == ""){
+    if (name === "Current Plan" || name == ""){
       return null;
     } else {
        if (plansAllowed.plans_allowed[name]['description'] != undefined) {
@@ -105,7 +106,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
   getActiveUids(){
     getActiveRuns().then((result) => {
       if (result[0] !== undefined){
-        this.setState({activeRun: result[0].uid})
+        this.setState({activeRun: result[0]})
       } 
     })
   }
@@ -137,23 +138,13 @@ export class CurrentPlan extends React.Component<Plans, IState> {
           </IconButton>
         </Typography>
       <Box height="2vh"></Box>
-      { this.getName(this.props.plans) != "None" ?
-        <Card raised={true} >
+      <Card raised={true} >
           <GridList spacing={3} cellHeight="auto">
             <GridListTile key="Subheader" cols={2} style={{ color: "black", border:5, height: 'auto'}}>
-              <Box borderBottom={3}>
-                <Typography align="center" variant="h5" component="h1" >
-                  {this.getName(this.props.plans)}
-                </Typography>
-                <Typography align="center" gutterBottom>
-                  {
-                    this.getDescription(this.props.allowedPlans, this.getName(this.props.plans))}
-                </Typography>
-              </Box>
             </GridListTile>
             <GridListTile cols={2} style={{ height: 'auto' }}>
               <CardContent>
-                { this.state.activeRun ? <Previews runUid={this.state.activeRun}/> : 
+                { this.state.activeRun.uid ? <Previews width="100%" runUid={this.state.activeRun.uid}/> : 
                   <Typography align="center" variant="h5" component="h1" >
                     Press the queue play button to start the plan.
                   </Typography> }            
@@ -183,7 +174,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
               </Typography>
             </CardContent>
           </Collapse>
-        </Card> : null }
+        </Card>
       </Box>
     );
   }

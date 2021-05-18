@@ -19,7 +19,6 @@ type IProps = {
   open: boolean
   plans: IAllowedPlans;
   selectedPlan: string;
-  submitExcel: (files: File[]) => void;
   handleSelect: (selectedPlan: string) => void;
 };
 
@@ -63,7 +62,7 @@ export class PlanDrawer extends React.Component<IProps, IState>{
                               primary="Bulk insert"
                               secondary="upload excel sheet"/>
                             <ListItemSecondaryAction>
-                              <BulkAdd submitExcel={this.props.submitExcel}></BulkAdd>
+                              <BulkAdd submitExcel={submitExcel}></BulkAdd>
                             </ListItemSecondaryAction>
                           </ListItem>
                           <ListItem divider={true}>

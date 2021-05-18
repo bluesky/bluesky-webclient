@@ -24,7 +24,7 @@ export class PlanFormContainer extends React.Component<IProps, IState> {
 
   private getPlanForm() {
    const planFormDict : Record<string, JSX.Element> = {
-                                'fly': <XAFSPlanForm submitPlan={this.props.submitPlan} 
+                                'xafs': <XAFSPlanForm submitPlan={this.props.submitPlan} 
                                                       submitEditedPlan={this.props.submitEditedPlan}
                                                       name={this.props.name}
                                                       itemUid={this.props.itemUid}

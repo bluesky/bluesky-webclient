@@ -136,10 +136,8 @@ export const clearQueue: ActionCreator<ThunkAction<Promise<AnyAction>, null, nul
 };
 
 export const deletePlan: ActionCreator<ThunkAction<Promise<AnyAction>, null, null, any>> = (item_uid: string) => {
-    alert(item_uid)
     return async (dispatch: Dispatch) => {
         dispatch(loading());
-        alert(item_uid)
         const queueState = await deletePlanAPI(item_uid);
         return dispatch({
             queueState,
