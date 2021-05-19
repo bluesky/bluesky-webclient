@@ -386,7 +386,6 @@ export interface ISubmitExcelObject {
 
 export const submitExcel = async(files: File[]): Promise<any> => {
 
-    alert(files)
     var formData = new FormData();
     formData.append("spreadsheet", files[0]);
     formData.append("data_type", "wheel_xafs")
