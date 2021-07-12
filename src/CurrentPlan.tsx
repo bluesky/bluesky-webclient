@@ -12,16 +12,20 @@ import { red } from '@material-ui/core/colors';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { IPlanObject, IActiveRun } from './queueserver';
+import { IPlanObject, IActiveRun, IParameter } from './queueserver';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import { Box } from '@material-ui/core';
+import { Box, Button, CardMedia, Grid, GridList, GridListTile, List, ListItemText, Tooltip } from '@material-ui/core';
 import { Previews } from './Previews';
 import { getActiveRuns } from './queueserver'
+import bmm_logo from './assets/BMM_Logo.png'
+import AccountCircleIcon from '@material-ui/icons/AccountCircle';
+import { IAllowedPlans } from './queueserver';
 
 type Plans = {
   plans: IPlanObject[];
+  allowedPlans: IAllowedPlans;
 }
 
 interface IState {
@@ -31,8 +35,8 @@ interface IState {
   expandOpen: any;
   avatar: any;
   expanded: boolean;
-  activeRun: string;
-  activeRunsId: any;
+  activeRun: any;
+  activeRunsId: any,
 }
 
 export class CurrentPlan extends React.Component<Plans, IState> {
@@ -80,17 +84,29 @@ export class CurrentPlan extends React.Component<Plans, IState> {
   }
 
   getName(plans: IPlanObject[]){
-    if (plans.length === 0) {
+   console.log(this.state.activeRun)
+   if (plans.length === 0) {
       return "Current Plan";
     } else {
       return plans[0].name;
     }
   }
 
+  getDescription(plansAllowed: IAllowedPlans, name: string){
+    if (name === "Current Plan" || name == ""){
+      return null;
+    } else {
+       if (plansAllowed.plans_allowed[name]['description'] != undefined) {
+        return plansAllowed.plans_allowed[name]['description'];
+       } else
+        return "";
+    }
+  }
+
   getActiveUids(){
     getActiveRuns().then((result) => {
       if (result[0] !== undefined){
-        this.setState({activeRun: result[0].uid})
+        this.setState({activeRun: result[0]})
       } 
     })
   }
@@ -115,43 +131,27 @@ export class CurrentPlan extends React.Component<Plans, IState> {
   render(){
     return (
       <Box>
-        <Card style={{height: "6vh"}} raised={true}>
-          <CardContent>
-            <Typography align="center" variant="h5" component="h1" gutterBottom>
-              Current Plan
-            </Typography>
-          </CardContent>
-        </Card>
+        <Box height="1vh"></Box>
+        <Typography style={{ fontWeight: 500, height: 48 }} align="center" variant="h4" component="h1" gutterBottom>
+          Current Plan
+          <IconButton disabled edge="end" aria-label="comments">
+          </IconButton>
+        </Typography>
       <Box height="2vh"></Box>
-        <Card raised={true} >
-          <CardHeader
-            avatar={
-              <Avatar aria-label="recipe" className={this.state.avatar}>
-                R
-              </Avatar>
-            }
-            action={
-              <IconButton aria-label="settings">
-                <MoreVertIcon />
-              </IconButton>
-            }
-            titleTypographyProps={{variant:'h6' }}
-            title={this.getName(this.props.plans)}
-            subheader={this.state.activeRun}
-          />
-          <CardContent>
-            { this.state.activeRun ? <Previews runUid={this.state.activeRun}/> : null }            
-          </CardContent>
+      <Card raised={true} >
+          <GridList spacing={3} cellHeight="auto">
+            <GridListTile key="Subheader" cols={2} style={{ color: "black", border:5, height: 'auto'}}>
+            </GridListTile>
+            <GridListTile cols={2} style={{ height: 'auto' }}>
+              <CardContent>
+                { this.state.activeRun.uid ? <Previews width="100%" runUid={this.state.activeRun.uid}/> : 
+                  <Typography align="center" variant="h5" component="h1" >
+                    Press the queue play button to start the plan.
+                  </Typography> }            
+              </CardContent>
+            </GridListTile>
+          </GridList>
           <CardActions disableSpacing>
-            <IconButton onClick={() => this.handlePlay()} edge="end" aria-label="comments">
-              <PlayCircleOutlineIcon />
-            </IconButton>
-            <IconButton onClick={() => this.handlePause()} edge="end" aria-label="comments">
-              <PauseCircleOutlineIcon />
-            </IconButton>
-            <IconButton onClick={() => this.handleDelete("temp_string_uid")} edge="end" aria-label="comments">
-              <HighlightOffIcon />
-            </IconButton>
             <IconButton>
               <ShareIcon />
             </IconButton>

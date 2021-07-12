@@ -10,9 +10,7 @@ const Routes: React.FunctionComponent = () => {
     return (
         <Router>
             <div>
-                <Header />
                 <Route exact path="/" component={App} />
-                <Route exact path="/acquire" component={AcquirePage} />
                 <Route exact path="/user" component={UserPage} />
             </div>
         </Router>

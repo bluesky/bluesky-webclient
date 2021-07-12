@@ -12,6 +12,7 @@ import { Grid } from '@material-ui/core';
 import { PlanList } from './PlanList';
 import { AvailablePlans } from './AvailablePlans';
 import { PlanFormContainer } from './PlanFormContainer';
+import { PlanDrawer } from './PlanDrawer';
 
 type RouteParams = { id: string, uid: string };
 
@@ -75,10 +76,7 @@ class AcquirePage extends React.Component<IProps, IState> {
                   <AvailablePlans selectedPlan={this.state.selectedPlan} handleSelect={this.handleSelectPlan}
                                   plans={this.props.allowedPlans} submitExcel={this.props.submitExcel}> </AvailablePlans>
                 </Grid>
-                <Grid item justify="center" spacing={1} xs={5}> 
-                  <PlanFormContainer submitEditedPlan={this.props.submitEditedPlan} submitPlan={this.props.submitPlan} 
-                                     name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}
-                                     itemUid={this.state.editItemUid} editKwargs={this.state.editKwargs}> </PlanFormContainer>   
+                <Grid item justify="center" spacing={1} xs={5}>   
                 </Grid>   
                 <Grid item justify="center" spacing={1} xs={3}>
                   <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} 
@@ -88,6 +86,7 @@ class AcquirePage extends React.Component<IProps, IState> {
                 </Grid>
             </Grid>
           </Container>
+          
         )
     }
 

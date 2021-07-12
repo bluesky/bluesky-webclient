@@ -267,7 +267,7 @@ export interface ISubmitPlanObject {
 export interface ISubmitPlanObjectFixed {
     name: string;
     item_type: string;
-    kwargs: {[name: string]: (string|number)[]|string|number} 
+    kwargs: {[name: string]: (string|number|object|boolean)[]|string|number|object|boolean} 
 }
 
 export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObject> => {
@@ -281,7 +281,7 @@ export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObj
     // TODO: Update this, once the have the correct information from the 
     // queueserver about which kwargs are list.
     for (const [key, value] of Object.entries(submitPlan.kwargs)) {
-      if (key.slice(-1) !== 's'){
+      if ((key.slice(-1) !== 's') || (key == "axis") || (key == "nsteps")){
         if (value[0] !== "None"){
             // Convert string to a number if possible.
             // TODO: Use the type information from the server (once available), 
@@ -291,13 +291,26 @@ export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObj
             } else {
                 plan.kwargs[key] = Number(value[0])
             }
-        }
-      } else {
-        plan.kwargs[key] = value;
+	} else {
+		if (key == "md"){
+		plan.kwargs[key] = {"foo": "bar"};
+		} else {
+			plan.kwargs[key] = value;
+		}
+	}
       }
     }
+
+
+    if (submitPlan.name === "xafs"){
+      plan.kwargs['bounds'] = "-30 40"
+      plan.kwargs['steps'] = "0.5"
+      plan.kwargs['times'] = "0.5"
+      plan.kwargs['snapshots'] = false
+      plan.kwargs['htmlpage'] = false
+      plan.kwargs['lims'] = false
+    }
     
-    alert(JSON.stringify(plan));
     const res = await axiosInstance.post('/queue/item/add',
         {
             item: plan,
@@ -352,10 +365,6 @@ export const submitEditedPlan = async(itemUid: string, editPlan: ISubmitPlanObje
       }
     }
     
-    alert(JSON.stringify({
-        plan: plan,
-        replace: true
-    }));
     const res = await axiosInstance.post('/queue/item/update',
         {
             item: plan,
@@ -379,12 +388,13 @@ export const submitExcel = async(files: File[]): Promise<any> => {
 
     var formData = new FormData();
     formData.append("spreadsheet", files[0]);
+    formData.append("data_type", "wheel_xafs")
     const res = await axiosInstance.post('/queue/upload/spreadsheet', formData, {
         headers: {
             'Content-Type': 'multipart/form-data'
         }
     })
-    console.log(res)
+    console.log("EXCEL", res)
     return res.data;
 }
 
@@ -395,7 +405,7 @@ export const clearQueue = async(): Promise<IPlan> => {
     return res.data;
 }
 
-// http POST http://localhost:60610/queue/plan/remove uid:='<uid>'
+
 export const deletePlan = async(item_uid: string): Promise<IPlan> => {
     const res = await axiosInstance.post('/queue/item/remove',
         {
@@ -460,10 +470,12 @@ export const decrementPosition = async(uid: string, after_uid: string): Promise<
 
 export const addQueueStop = async(): Promise<IPlanModify> => {
     const res = await axiosInstance.post('/queue/item/add',
-        {
-            item: {name: "queue_stop"},
-            item_type: "instruction",
-        });
+            { 
+                item: {name:"queue_stop", 
+                       item_type: "instruction"}
+            }
+        );
+
     console.log(res);
     return res.data;
 }

@@ -34,6 +34,7 @@ function TabPanel(props: TabPanelProps) {
 
 type PreviewsProps = {
   runUid: string;
+  width: string;
 }
   
 type PreviewsState = {
@@ -97,7 +98,7 @@ export class Previews extends React.Component<PreviewsProps, PreviewsState> {
           {this.state.previews.map(
                 (preview: string, index: number) => (
                   <TabPanel value={this.state.value} index={index} key={index}>
-                    <img src={`${process.env.REACT_APP_PREVIEW_SERVER}/${this.props.runUid}/${preview}?${Math.random()}`} alt={"preview"} width="100%" />
+                    <img src={`${process.env.REACT_APP_PREVIEW_SERVER}/${this.props.runUid}/${preview}?${Math.random()}`} alt={"preview"} width={this.props.width}/>
                   </TabPanel>
                 ))}
         </div>

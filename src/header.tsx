@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom'
+import { Link as RouterLink, RouteComponentProps } from 'react-router-dom'
 import Link from '@material-ui/core/Link';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
@@ -9,6 +9,8 @@ import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import logo from './assets/bluesky-logo.svg'
+import { PlanDrawer } from './PlanDrawer';
+import { Avatar, Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>
   createStyles({
@@ -29,21 +31,20 @@ const Header: React.SFC = () => {
 
     return (
         <div className={classes.root}>
-            <AppBar position="static">
+            <AppBar position="absolute" style={{zIndex: 2000}}>
             <Toolbar>
+              <Box display='flex' flexGrow={1}>
                 <IconButton edge="start" className={classes.menuButton} color="inherit" aria-label="menu">
-                    <MenuIcon />
+                        <MenuIcon/>
                 </IconButton>
-                <Typography variant="h6" className={classes.title}>
-                    <Link color="inherit" component={RouterLink} to="/">Monitor </Link>
-                    <Link color="inherit" component={RouterLink} to="/acquire">Edit </Link>
-                </Typography>
                 <img src={logo} alt="logo" style={{position: 'absolute', 
                                                     height: '100%',
                                                     left: '50%', 
                                                     top: '50%', 
                                                     transform: 'translate(-50%, -50%)'}}/>
-                <Button color="inherit" component={RouterLink} to="/user">Login</Button>
+              </Box>
+              <Button color="inherit" component={RouterLink} to="/user">Logout</Button>
+              <Avatar>BR</Avatar>
             </Toolbar>
             </AppBar>
         </div>

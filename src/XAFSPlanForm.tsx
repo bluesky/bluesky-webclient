@@ -9,10 +9,11 @@ import { Box, Button, FormControl, FormControlLabel, FormLabel, GridList, GridLi
 const defaultBounds = [-200, -30, -10, 15.5, 1500];
 const defaultSteps = [10, 2, 0.3, 0.05];
 const defaultTimes = [0.5, 0.5, 0.5, 0.25];
-const defaultElement = "Au";
+const defaultElement = "Ni";
 const defaultEdge = "K";
-const defaultStart = 1;
-const defaultNscans = 3;
+const defaultFilename = "default_filename"
+const defaultStart = "next";
+const defaultNscans = 1;
 const defaultMode = "transmission";
 const defaultRegions = 4;
 
@@ -23,6 +24,7 @@ type IProps = {
   allowedPlans: IAllowedPlans;
   submitPlan: (selectedPlan: ISubmitPlanObject) => void;
   submitEditedPlan: (itemUid: string, selectedPlan: ISubmitPlanObject) => void;
+  hideForm: () => void;
 }
 
 interface IState {
@@ -46,6 +48,7 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
               prop: [""],
               comment: [""],
               nscans: [defaultNscans], 
+              filename: [defaultFilename],
               start: [defaultStart],
               mode: [defaultMode],
               bounds: defaultBounds,
@@ -93,6 +96,7 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
         plan: new_plan
     });
     this.props.submitPlan(this.state.plan)
+    this.props.hideForm()
   }
 
   private submitEdited(){
@@ -102,6 +106,7 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
         plan: new_plan
     });
     this.props.submitEditedPlan(this.props.itemUid, this.state.plan)
+    this.props.hideForm()
   }
 
   static getDerivedStateFromProps(props : IProps, current_state: IState) {
@@ -162,7 +167,9 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
                         <TextField onChange={this.onChange.bind(this)} required 
                                     name="nscans" id="0" label="Number of scans" type="number" value={this.state.plan.kwargs.nscans[0]} /> &nbsp;
                         <TextField onChange={this.onChange.bind(this)} required 
-                                    name="start" id="0" label="Start" type="number" value={this.state.plan.kwargs.start[0]} />
+                                    name="start" id="0" label="Filename" type="string" value={this.state.plan.kwargs.filename[0]} />
+                        <TextField onChange={this.onChange.bind(this)} required 
+                                    name="start" id="0" label="Start" type="string" value={this.state.plan.kwargs.start[0]} />
                       </div><br />
                       <FormControl>
                         <FormLabel component="legend">Mode</FormLabel>
@@ -206,6 +213,9 @@ export class XAFSPlanForm extends React.Component<IProps, IState> {
               </div>
             </CardContent>
             <CardActions disableSpacing style={{ width: '100%', justifyContent: 'flex-end' }}>
+              <Button  style={{ margin: 4 }} onClick={() => this.props.hideForm()}  variant="contained" color="primary">
+                  cancel
+              </Button>
               {
                 this.props.itemUid === "" ?
                 <Button onClick={() => this.submit()}  variant="contained" color="primary">

@@ -8,8 +8,6 @@ import { IAllowedPlans, IParameter, ISubmitPlanObject } from './queueserver';
 import { Box, Button, Grid, GridList, GridListTile, List, ListItem, ListItemText, Select, Switch, TextField, Tooltip } from '@material-ui/core';
 import AddCircleOutlineIcon from '@material-ui/icons/AddCircleOutline';
 import RemoveCircleOutlineIcon from '@material-ui/icons/RemoveCircleOutline';
-import EditIcon from '@material-ui/icons/Edit';
-import { green } from '@material-ui/core/colors';
 
 type IProps = {
   name: string;
@@ -18,6 +16,7 @@ type IProps = {
   allowedPlans: IAllowedPlans;
   submitPlan: (selectedPlan: ISubmitPlanObject) => void;
   submitEditedPlan: (itemUid: string, selectedPlan: ISubmitPlanObject) => void;
+  hideForm: () => void;
 }
 
 interface IState {
@@ -30,7 +29,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
     super(props);
     this.state = {
       itemUid: "",
-      plan: {name: this.props.name,
+      plan: {name: "",
              kwargs: {}}
     }
   }
@@ -69,6 +68,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
         plan: new_plan
     });
     this.props.submitPlan(this.state.plan)
+    this.props.hideForm()
   }
 
   private submitEdited(){
@@ -78,6 +78,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
         plan: new_plan
     });
     this.props.submitEditedPlan(this.props.itemUid, this.state.plan)
+    this.props.hideForm()
   }
 
   private getWidgetList(parameterObject: IParameter): JSX.Element[]|JSX.Element {
@@ -121,7 +122,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
 
   static getDerivedStateFromProps(props : IProps, current_state: IState) {
     const temp_dict: Record<string, (string|number)[]> = {};
-    if (current_state.plan.name !== props.name || current_state.itemUid !== props.itemUid) {
+    if (current_state.plan.name !== props.name || current_state.itemUid !== props.itemUid || current_state.plan.kwargs == {}) {
       var i;
       for (i = 0; i < props.allowedPlans.plans_allowed[props.name].parameters.length; i++) {
         if (props.allowedPlans.plans_allowed[props.name].parameters[i].default){
@@ -150,7 +151,6 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
     return (
           <Card raised={true}>
             <CardContent>
-              <div>
                 <GridList spacing={3} cellHeight="auto">
                   <GridListTile key="Subheader" cols={2} style={{ color: "black", border:5, height: 'auto'}}>
                     <Box borderBottom={3}>
@@ -174,7 +174,7 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                               <ListItemText primary={parameterObject.name} />
                             </Tooltip> : <ListItemText primary={parameterObject.name} />}
                           </Grid>
-                          <Grid item justify="space-evenly" spacing={1} xs={6}>
+                          <Grid item justify="space-evenly" spacing={0} xs={5}>
                             <List dense={true}>
                               {this.getWidgetList(parameterObject)}
                             </List>
@@ -194,9 +194,11 @@ export class GenericPlanForm extends React.Component<IProps, IState> {
                       </GridListTile>
                   ))}
                 </GridList>
-              </div>
             </CardContent>
             <CardActions disableSpacing style={{ width: '100%', justifyContent: 'flex-end' }}>
+              <Button  style={{ margin: 4 }} onClick={() => this.props.hideForm()}  variant="contained" color="primary">
+                  cancel
+              </Button>
               {
                 this.props.itemUid === "" ?
                 <Button onClick={() => this.submit()}  variant="contained" color="primary">
