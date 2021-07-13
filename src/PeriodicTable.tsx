@@ -6,7 +6,38 @@ import CardActions from '@material-ui/core/CardActions';
 import { Button, Grid, GridList, Paper } from '@material-ui/core';
 
 //The following periodic table data is from: https://github.com/Bowserinator/Periodic-Table-JSON
-const periodic_table = {    '1 1': {    'appearance': 'colorless gas',
+// I changed it around a bit to make lookup better.
+
+interface Element {
+    'appearance': string | null,
+    'atomic_mass': number,
+    'boil': number | null,
+    'category': string,
+    'color': string | null,
+    'density': number | null,
+    'discovered_by': string | null,
+    'electron_affinity': number | null,
+    'electron_configuration': string,
+    'electron_configuration_semantic': string,
+    'electronegativity_pauling': number | null,
+    'ionization_energies': number[],
+    'melt': number | null,
+    'molar_heat': number | null,
+    'name': string,
+    'named_by': string | null,
+    'number': number,
+    'period': number,
+    'phase': string,
+    'shells': number[],
+    'source': string,
+    'spectral_img': string | null,
+    'summary': string,
+    'symbol': string,
+    'xpos': number,
+    'ypos': number,
+}
+
+const periodic_table :{[key: string]: Element } = {    '1 1': {    'appearance': 'colorless gas',
 'atomic_mass': 1.008,
 'boil': 20.271,
 'category': 'diatomic nonmetal',
@@ -3132,7 +3163,11 @@ export class PeriodicTable extends React.Component<IProps, IState> {
                             <Grid container>
                              {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18].map((row: number, x_pos) => (
                                       <Grid item xs={1}>
-                                        <Paper>{y_pos + ' ' + x_pos}</Paper>
+                                        <Paper>{
+                                            `${ y_pos } ${ x_pos }` in periodic_table ? 
+                                            periodic_table[`${ y_pos } ${ x_pos }`]['symbol']:
+                                            null
+                                        }</Paper>
                                       </Grid>
                               ))}
                             </Grid>
