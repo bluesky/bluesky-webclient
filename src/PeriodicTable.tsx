@@ -3,7 +3,7 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import { Button, Grid, Paper } from '@material-ui/core';
+import { Button, Grid, GridList, Paper } from '@material-ui/core';
 
 //The following periodic table data is from: https://github.com/Bowserinator/Periodic-Table-JSON
 const periodic_table = {
@@ -5111,15 +5111,16 @@ export class PeriodicTable extends React.Component<IProps, IState> {
     return (
           <Card raised={true}>
             <CardContent>
-                <Grid container spacing={1}>
-                    {[1,2,3,4,5].map((row: number, y_pos) => (
-                              <React.Fragment>
-                              {[1,2,3,4,5].map((row: number, x_pos) => (
-                                      <Grid item xs={4}>
+                <Grid container spacing={0}>
+                    {[1,2,3,4,5,6,7,8,9].map((row: number, y_pos) => (
+                            <Grid container>
+                             {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18].map((row: number, x_pos) => (
+                                      <Grid item xs={1}>
                                         <Paper>{y_pos + ' ' + x_pos}</Paper>
                                       </Grid>
                               ))}
-                            </React.Fragment>))}
+                            </Grid>
+                            ))}
                 </Grid>
             </CardContent>
             <CardActions disableSpacing style={{ width: '100%', justifyContent: 'flex-end' }}>
