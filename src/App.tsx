@@ -19,6 +19,7 @@ import bmm_logo from './assets/BMM_Logo.png'
 import { PlanFormContainer } from './PlanFormContainer';
 import nsls2Background from "./assets/nsls2_background.png"
 import lightBackground from "./assets/Concept_1_BG_AllFiveColors_NoGray_Cropped.jpg"
+import { PeriodicTable } from './PeriodicTable';
 
 
 function Copyright() {
@@ -143,7 +144,7 @@ class App extends React.Component<IProps, IState> {
                 <CurrentPlan allowedPlans={this.props.allowedPlans} plans={this.props.plans}></CurrentPlan> 
               </Grid>
               <Grid item justify="center" spacing={10} xs={3}>    
-                <HistoricalPlanList history={this.props.historicalPlans}> </HistoricalPlanList>
+                <PeriodicTable></PeriodicTable>
               </Grid>   
             </Grid>
             <Copyright/>
