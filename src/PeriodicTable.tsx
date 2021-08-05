@@ -3,7 +3,7 @@ import React from 'react';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
-import { Button, Grid, GridList, Paper } from '@material-ui/core';
+import { Box, Button, Grid, GridList, Paper } from '@material-ui/core';
 
 //The following periodic table data is from: https://github.com/Bowserinator/Periodic-Table-JSON
 // I changed it around a bit to make lookup better.
@@ -3158,16 +3158,16 @@ export class PeriodicTable extends React.Component<IProps, IState> {
     return (
           <Card raised={true}>
             <CardContent>
-                <Grid container spacing={0}>
-                    {[1,2,3,4,5,6,7,8,9].map((row: number, y_pos) => (
-                            <Grid container>
+                <Grid container direction="column">
+                    {[0,1,2,3,4,5,6,7,8,9].map((row: number, y_pos) => (
+                            <Grid container direction="row">
                              {[1,2,3,4,5,6,7,8,9,10,11,12,13,14,15,16,17,18].map((row: number, x_pos) => (
-                                      <Grid item xs={1}>
-                                        <Paper>{
-                                            `${ y_pos } ${ x_pos }` in periodic_table ? 
-                                            periodic_table[`${ y_pos } ${ x_pos }`]['symbol']:
-                                            null
-                                        }</Paper>
+                                      <Grid xs={1}>
+                                            {
+                                                `${ x_pos } ${ y_pos }` in periodic_table ? 
+                                                periodic_table[`${ x_pos } ${ y_pos }`]['symbol']:
+                                                "NA"
+                                            }
                                       </Grid>
                               ))}
                             </Grid>

@@ -144,7 +144,7 @@ class App extends React.Component<IProps, IState> {
                 <CurrentPlan allowedPlans={this.props.allowedPlans} plans={this.props.plans}></CurrentPlan> 
               </Grid>
               <Grid item justify="center" spacing={10} xs={3}>    
-                <PeriodicTable></PeriodicTable>
+                <HistoricalPlanList history={this.props.historicalPlans}> </HistoricalPlanList>
               </Grid>   
             </Grid>
             <Copyright/>
@@ -170,6 +170,22 @@ class App extends React.Component<IProps, IState> {
                                         name={this.state.selectedPlan} allowedPlans={this.props.allowedPlans}
                                         itemUid={this.state.editItemUid} editKwargs={this.state.editKwargs}
                                         hideForm={this.hidePlanForm.bind(this)}> </PlanFormContainer> 
+            </Popover>
+            <Popover 
+                    anchorOrigin={{
+                      vertical: 'center',
+                      horizontal: 'center',
+                    }}
+                    transformOrigin={{
+                      vertical: 'center',
+                      horizontal: 'center',
+                    }}
+                    PaperProps={{
+                      style: { width: '50%' },
+                    }}
+                    BackdropProps={{ invisible: false }}
+                    open={true}>
+                      <PeriodicTable/>
             </Popover>
         </div>
       )
