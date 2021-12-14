@@ -4,7 +4,6 @@ import Container from '@material-ui/core/Container';
 import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
-import { Link as RouterLink, RouteComponentProps } from 'react-router-dom'
 import { IApplicationState } from './store';
 import { getOverview, getQueuedPlans, getHistoricalPlans,
          clearQueue, deletePlan, modifyEnvironment, modifyQueue, submitEditedPlan, submitExcel, submitPlan, getAllowedPlans } from './planactions';
@@ -34,7 +33,7 @@ function Copyright() {
   );
 }
 
-interface IProps extends RouteComponentProps {
+interface IProps {
   submitPlan: typeof submitPlan;
   submitEditedPlan: typeof submitEditedPlan;
   submitExcel: (files: File[]) => void,

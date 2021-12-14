@@ -42,7 +42,8 @@
     "@types/react-router-dom": "^5.1.5",
     "@types/redux-thunk": "^2.1.0"
   },
-    "eslintConfig": {
+  "homepage": ".",
+  "eslintConfig": {
       "extends": [
         "react-app"
       ]

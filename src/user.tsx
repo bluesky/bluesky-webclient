@@ -7,16 +7,13 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { IApplicationState } from './store';
 import { getUser } from './useractions'
 import { IUser, IUserGetAction } from './facility';
-import {
-    RouteComponentProps
-} from "react-router-dom";
 
 export type UserActions = 
 | IUserGetAction
 
 type RouteParams = { id: string, uid: string };
 
-interface IProps extends RouteComponentProps {
+interface IProps {
     getUser: typeof getUser;
     loading: boolean;
     user: IUser;
