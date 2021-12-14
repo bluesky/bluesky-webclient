@@ -22,7 +22,7 @@ const Root: React.FunctionComponent<IProps> = props => {
     <Provider store={props.store}>
       <Router>
           <Routes>
-              <Route path="/*" element={<App/>} />
+              <Route path="/" element={<App/>} />
               <Route path="/user" element={<UserPage/>} />
           </Routes>
       </Router>
