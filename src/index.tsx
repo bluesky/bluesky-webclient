@@ -7,8 +7,12 @@ import { ThemeProvider } from '@material-ui/core/styles';
 import configureStore from './store';
 import { IApplicationState } from './store'
 import theme from './theme';
-import Routes from './routes';
-import { PlanDrawer } from './PlanDrawer';
+import { Routes, Route } from 'react-router-dom';
+import { BrowserRouter as Router } from 'react-router-dom';
+
+import App from './App'
+import UserPage from './user'
+
 
 interface IProps {
   store: Store<IApplicationState>;
@@ -16,7 +20,12 @@ interface IProps {
 const Root: React.FunctionComponent<IProps> = props => {
   return (
     <Provider store={props.store}>
-      <Routes />
+      <Router>
+          <Routes>
+              <Route path="/*" element={<App/>} />
+              <Route path="/user" element={<UserPage/>} />
+          </Routes>
+      </Router>
     </Provider>
   );
 };

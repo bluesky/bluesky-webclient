@@ -1,5 +1,5 @@
 import React from 'react';
-import { Link as RouterLink, RouteComponentProps } from 'react-router-dom'
+import { Link as RouterLink } from 'react-router-dom'
 import Link from '@material-ui/core/Link';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';

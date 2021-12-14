@@ -7,7 +7,6 @@ import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans, submitEdit
 import { clearQueue, deletePlan } from './planactions';
 import { IPlanObject, IAllowedPlans } from './queueserver';
 import { getOverview, getQueuedPlans } from './planactions';
-import { RouteComponentProps } from "react-router-dom";
 import { Grid } from '@material-ui/core';
 import { PlanList } from './PlanList';
 import { AvailablePlans } from './AvailablePlans';
@@ -16,9 +15,9 @@ import { PlanDrawer } from './PlanDrawer';
 
 type RouteParams = { id: string, uid: string };
 
-interface Props extends RouteComponentProps<RouteParams> { }
+interface Props { }
 
-interface IProps extends RouteComponentProps {
+interface IProps {
     submitPlan: typeof submitPlan;
     submitExcel: typeof submitExcel;
     submitEditedPlan: typeof submitEditedPlan;

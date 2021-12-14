@@ -7,7 +7,6 @@ import Tooltip from '@material-ui/core/Tooltip';
 import { IApplicationState } from './store';
 import { getUser } from './useractions'
 import { IUser, IUserGetAction } from './facility';
-import { RouteComponentProps } from "react-router-dom";
 import {DropzoneDialog} from 'material-ui-dropzone'
 import Button from '@material-ui/core/Button';
 import {submitExcel } from './planactions';
