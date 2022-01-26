@@ -1,6 +1,6 @@
 import { ActionCreator, AnyAction, Dispatch } from "redux"
 import { ThunkAction } from "redux-thunk"
-import { getOverview as getOverviewAPI,
+import { getStatus as getStatusAPI,
          getQueuedPlans as getQueuedPlansAPI,
          getAllowedPlans as getAllowedPlansAPI,
          getHistoricalPlans as getHistoricalPlansAPI,
@@ -25,13 +25,13 @@ const loading: ActionCreator<IPlanLoadingAction> = () => ({
     type: PlanActionTypes.LOADING
 });
 
-export const getOverview: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanState, null, IPlanGetOverviewAction>> = () => {
+export const getStatus: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanState, null, IPlanGetOverviewAction>> = () => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
-        const plan = await getOverviewAPI();
+        const plan = await getStatusAPI();
         return dispatch({
           plan,
-          type: PlanActionTypes.GETOVERVIEW
+          type: PlanActionTypes.GETSTATUS
         });
     };
 };

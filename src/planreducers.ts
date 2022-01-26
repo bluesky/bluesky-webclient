@@ -29,7 +29,7 @@ export const planReducer: Reducer<IPlanState, PlanActions> = (
                 planLoading: true
             };
         }
-        case PlanActionTypes.GETOVERVIEW: {
+        case PlanActionTypes.GETSTATUS: {
             return {
                 ...state,
                 plan: action.plan,

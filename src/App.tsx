@@ -5,7 +5,7 @@ import Typography from '@material-ui/core/Typography';
 import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import { IApplicationState } from './store';
-import { getOverview, getQueuedPlans, getHistoricalPlans,
+import { getStatus, getQueuedPlans, getHistoricalPlans,
          clearQueue, deletePlan, modifyEnvironment, modifyQueue, submitEditedPlan, submitExcel, submitPlan, getAllowedPlans } from './planactions';
 import { IPlanObject, IHistoricalPlan, IAllowedPlans } from './queueserver';
 import { PlanList } from './PlanList';
@@ -37,7 +37,7 @@ interface IProps {
   submitPlan: typeof submitPlan;
   submitEditedPlan: typeof submitEditedPlan;
   submitExcel: (files: File[]) => void,
-  getOverview: typeof getOverview;
+  getStatus: typeof getStatus;
   getQueuedPlans: typeof getQueuedPlans;
   getHistoricalPlans: typeof getHistoricalPlans;
   clearQueue: typeof clearQueue;
@@ -231,7 +231,7 @@ class App extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
-      this.props.getOverview();
+      this.props.getStatus();
       setInterval(this.props.getQueuedPlans, 1000);
       setInterval(this.props.getHistoricalPlans, 1000);
       this.props.getAllowedPlans();
@@ -259,7 +259,7 @@ const mapDispatchToProps = (dispatch: any) => {
     submitPlan: (planId: number, param: number) => dispatch(submitPlan(planId, param)),
     submitExcel: (files: File[]) => dispatch(submitExcel(files)),
     submitEditedPlan: (itemUid: string, planId: number, param: number) => dispatch(submitEditedPlan(itemUid, planId, param)),
-    getOverview: () => dispatch(getOverview()),
+    getStatus: () => dispatch(getStatus()),
     clearQueue: () => dispatch(clearQueue()),
     deletePlan: () => dispatch(deletePlan()),
     getQueuedPlans: () => dispatch(getQueuedPlans()),

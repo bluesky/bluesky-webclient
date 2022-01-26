@@ -126,7 +126,7 @@ export const getHistoricalPlans = async(): Promise<IHistoricalPlan[]> => {
 }
 
 export enum PlanActionTypes {
-    GETOVERVIEW = "PLANS/GETOVERVIEWS",
+    GETSTATUS = "PLANS/GETSTATUS",
     LOADING = "PLANS/LOADING",
     GETPLANLIST = "PLANS/GETPLANLIST",
     GETHISTORICAL = "PLANS/GETHISORICAL",
@@ -153,7 +153,7 @@ export interface IPlanModify {
 }
 
 export interface IPlanGetOverviewAction {
-    type: PlanActionTypes.GETOVERVIEW,
+    type: PlanActionTypes.GETSTATUS,
     plan: IPlan
 }
 
@@ -237,7 +237,7 @@ export interface IPlanState {
     readonly planLoading: boolean;
 }
 
-export const getOverview = async(): Promise<IPlan> => {
+export const getStatus = async(): Promise<IPlan> => {
     const res = await axiosInstance.get('/status');
     console.log(res)
     return res.data;
