@@ -28,9 +28,9 @@ const loading: ActionCreator<IPlanLoadingAction> = () => ({
 export const getStatus: ActionCreator<ThunkAction<Promise<AnyAction>, IStatus, null, IGetStatusAction>> = () => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
-        const plan = await getStatusAPI();
+        const status = await getStatusAPI();
         return dispatch({
-          plan,
+          status,
           type: PlanActionTypes.GETSTATUS
         });
     };
