@@ -18,6 +18,7 @@ import bmm_logo from './assets/BMM_Logo.png'
 import { PlanFormContainer } from './PlanFormContainer';
 import nsls2Background from "./assets/nsls2_background.png"
 import lightBackground from "./assets/Concept_1_BG_AllFiveColors_NoGray_Cropped.jpg"
+import { Store } from '@material-ui/icons';
 
 
 function Copyright() {
@@ -231,9 +232,9 @@ class App extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
-      this.props.getStatus();
-      setInterval(this.props.getQueuedPlans, 1000);
-      setInterval(this.props.getHistoricalPlans, 1000);
+      setInterval(this.props.getStatus, 1000);
+      //setInterval(this.props.getQueuedPlans, 1000);
+      //setInterval(this.props.getHistoricalPlans, 1000);
       this.props.getAllowedPlans();
   }
 }
@@ -248,6 +249,7 @@ const mapStateToProps = (store: IApplicationState) => {
     loadingHistoricalPlans: store.historicalPlans.plansLoading,
     historicalPlans: store.historicalPlans.historicalPlans,
     allowedPlans: store.allowedPlans.allowedPlans,
+    status: store.status,
   };
 };
 

@@ -273,7 +273,7 @@ export interface IStatus {
 
 export const getStatus = async(): Promise<IStatus> => {
     const res = await axiosInstance.get('/status');
-    console.log(res)
+    console.log(res.data)
     return res.data;
 }
 
