@@ -237,7 +237,35 @@ export interface IPlanState {
     readonly planLoading: boolean;
 }
 
-export const getStatus = async(): Promise<IPlan> => {
+export interface IPlanQueueMode {
+    loop: boolean;
+}
+
+export interface IStatus {
+        msg: string,
+        items_in_queue: number,
+        items_in_history: number,
+        running_item_uid: string | null,
+        manager_state: string,
+        queue_stop_pending: boolean,
+        worker_environment_exists: boolean,
+        worker_environment_state: string,
+        worker_background_tasks: number,
+        re_state: string | null,
+        pause_pending: boolean,
+        run_list_uid: string,
+        plan_queue_uid: string,
+        plan_history_uid: string,
+        devices_existing_uid: string,
+        plans_existing_uid: string,
+        devices_allowed_uid: string,
+        plans_allowed_uid: string,
+        plan_queue_mode: IPlanQueueMode,
+        task_results_uid: string
+      
+}
+
+export const getStatus = async(): Promise<IStatus> => {
     const res = await axiosInstance.get('/status');
     console.log(res)
     return res.data;
