@@ -152,7 +152,7 @@ export interface IPlanModify {
     success: boolean;
 }
 
-export interface IPlanGetOverviewAction {
+export interface IPlanGetStatusAction {
     type: PlanActionTypes.GETSTATUS,
     plan: IPlan
 }
@@ -219,7 +219,7 @@ export interface IPlanModifyQueueLoadingAction {
 }
 
 export type PlanActions =
-  | IPlanGetOverviewAction
+  | IPlanGetStatusAction
   | IPlanLoadingAction
   | IPlanObjectsAction
   | IPlanObjectsLoadingAction

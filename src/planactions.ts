@@ -17,7 +17,7 @@ import { getStatus as getStatusAPI,
                         ISubmitExcelState,
                         ISubmitExcelAction,
                         ISubmitExcelObject} from "./queueserver"
-import { IPlanGetOverviewAction, IPlanLoadingAction, IPlanObjectsAction, 
+import { IPlanGetStatusAction, IPlanLoadingAction, IPlanObjectsAction, 
          IPlanSubmitAction, IPlanEditAction, IPlanEditState,
          IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes } from "./queueserver"
 
@@ -25,7 +25,7 @@ const loading: ActionCreator<IPlanLoadingAction> = () => ({
     type: PlanActionTypes.LOADING
 });
 
-export const getStatus: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanState, null, IPlanGetOverviewAction>> = () => {
+export const getStatus: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanState, null, IPlanGetStatusAction>> = () => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
         const plan = await getStatusAPI();

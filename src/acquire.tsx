@@ -119,7 +119,7 @@ class AcquirePage extends React.Component<IProps, IState> {
     }
     
     componentDidMount() {
-        this.props.getStatus();
+        setInterval(this.props.getStatus, 500);
         setInterval(this.props.getQueuedPlans, 500);
         this.props.getAllowedPlans();
     }
