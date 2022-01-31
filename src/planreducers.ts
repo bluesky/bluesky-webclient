@@ -39,7 +39,6 @@ export const statusReducer: Reducer<IStatus, PlanActions> = (
 ) => {
     switch (action.type) {
         case PlanActionTypes.GETSTATUS: {
-            console.log("ACTION", action);
             return action.status;
         }
         default: {

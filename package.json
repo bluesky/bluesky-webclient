@@ -16,6 +16,7 @@
     "react-router-dom": "latest",
     "react-scripts": "latest",
     "redux": "^4.0.5",
+    "redux-devtools-extension": "^2.13.9",
     "redux-thunk": "^2.3.0",
     "typescript": "latest"
   },
@@ -44,8 +45,8 @@
   },
   "homepage": ".",
   "eslintConfig": {
-      "extends": [
-        "react-app"
-      ]
+    "extends": [
+      "react-app"
+    ]
   }
 }

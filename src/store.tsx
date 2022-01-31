@@ -1,4 +1,4 @@
-import { applyMiddleware, combineReducers, createStore, Store } from "redux"
+import { applyMiddleware, combineReducers, createStore, Store, compose } from "redux"
 import thunk from "redux-thunk"
 import { planObjectsReducer, planReducer, planSubmitReducer,
     environmentModifyReducer, queueModifyReducer, allowedPlansReducer, historicalPlansReducer, statusReducer } from "./planreducers"
@@ -31,6 +31,7 @@ const rootReducer = combineReducers<IApplicationState>({
 })
 
 export default function configureStore(): Store<IApplicationState> {
-    const store = createStore(rootReducer, undefined, applyMiddleware(thunk));
+    const composeEnhancers = (window as any).__REDUX_DEVTOOLS_EXTENSION_COMPOSE__ || compose;
+    const store = createStore(rootReducer, undefined, composeEnhancers(applyMiddleware(thunk)));
     return store;
 }

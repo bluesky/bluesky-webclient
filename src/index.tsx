@@ -31,6 +31,7 @@ const Root: React.FunctionComponent<IProps> = props => {
 };
 
 const store = configureStore();
+store.subscribe(() => {console.log("STORE UPDATE", store.getState())})
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>

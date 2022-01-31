@@ -273,7 +273,6 @@ export interface IStatus {
 
 export const getStatus = async(): Promise<IStatus> => {
     const res = await axiosInstance.get('/status');
-    console.log("API", res.data)
     return res.data;
 }
 
@@ -284,7 +283,6 @@ export interface IPlanObjectsState {
 
 export const getQueuedPlans = async(): Promise<IPlanObject[]> => {
     const res = await axiosInstance.get('/queue/get');
-    console.log(res);
     return res.data.items;
 }
 
@@ -533,8 +531,6 @@ export interface IActiveRun {
 
 export const getActiveRuns = async(): Promise<IActiveRun[]> => {
         const res = await axiosInstance.get(`/re/runs/active`);
-        console.log(res);
-        console.log(res.data.run_list);
         return res.data.run_list;
 }
 
