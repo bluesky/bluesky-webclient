@@ -1,15 +1,12 @@
 import React from 'react';
 import { Link as RouterLink } from 'react-router-dom'
-import Link from '@material-ui/core/Link';
 import { createStyles, makeStyles, Theme } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Typography from '@material-ui/core/Typography';
 import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
 import MenuIcon from '@material-ui/icons/Menu';
 import logo from './assets/bluesky-logo.svg'
-import { PlanDrawer } from './PlanDrawer';
 import { Avatar, Box } from '@material-ui/core';
 
 const useStyles = makeStyles((theme: Theme) =>

@@ -1,26 +1,18 @@
 import React from 'react';
 import clsx from 'clsx';
 import Card from '@material-ui/core/Card';
-import CardHeader from '@material-ui/core/CardHeader';
 import CardContent from '@material-ui/core/CardContent';
 import CardActions from '@material-ui/core/CardActions';
 import Collapse from '@material-ui/core/Collapse';
-import Avatar from '@material-ui/core/Avatar';
 import IconButton from '@material-ui/core/IconButton';
 import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import MoreVertIcon from '@material-ui/icons/MoreVert';
-import { IPlanObject, IActiveRun, IParameter } from './queueserver';
-import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
-import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
-import HighlightOffIcon from '@material-ui/icons/HighlightOff';
-import { Box, Button, CardMedia, Grid, GridList, GridListTile, List, ListItemText, Tooltip } from '@material-ui/core';
+import { IPlanObject } from './queueserver';
+import { Box, GridList, GridListTile } from '@material-ui/core';
 import { Previews } from './Previews';
 import { getActiveRuns } from './queueserver'
-import bmm_logo from './assets/BMM_Logo.png'
-import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IAllowedPlans } from './queueserver';
 
 type Plans = {

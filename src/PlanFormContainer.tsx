@@ -2,7 +2,7 @@ import React from 'react';
 import { IAllowedPlans, ISubmitPlanObject } from './queueserver';
 import { GenericPlanForm } from './GenericPlanForm';
 import { XAFSPlanForm } from './XAFSPlanForm'
-import { Card, CardContent, CardHeader, Paper, Typography } from '@material-ui/core';
+import { Card, CardContent, CardHeader, Typography } from '@material-ui/core';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 
 type IProps = {

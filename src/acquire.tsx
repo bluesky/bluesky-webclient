@@ -10,8 +10,6 @@ import { getStatus, getQueuedPlans } from './planactions';
 import { Grid } from '@material-ui/core';
 import { PlanList } from './PlanList';
 import { AvailablePlans } from './AvailablePlans';
-import { PlanFormContainer } from './PlanFormContainer';
-import { PlanDrawer } from './PlanDrawer';
 
 type RouteParams = { id: string, uid: string };
 

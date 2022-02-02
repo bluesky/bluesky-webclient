@@ -1,15 +1,6 @@
 import React from 'react';
-import { connect } from 'react-redux';
-import Container from '@material-ui/core/Container';
-import Typography from '@material-ui/core/Typography';
-import Box from '@material-ui/core/Box';
-import Tooltip from '@material-ui/core/Tooltip';
-import { IApplicationState } from './store';
-import { getUser } from './useractions'
-import { IUser, IUserGetAction } from './facility';
 import {DropzoneDialog} from 'material-ui-dropzone'
 import Button from '@material-ui/core/Button';
-import {submitExcel } from './planactions';
 
 
 interface IPropsBulk {

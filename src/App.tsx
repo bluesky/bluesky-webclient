@@ -17,8 +17,6 @@ import logo from './assets/bluesky-logo.svg'
 import bmm_logo from './assets/BMM_Logo.png'
 import { PlanFormContainer } from './PlanFormContainer';
 import nsls2Background from "./assets/nsls2_background.png"
-import lightBackground from "./assets/Concept_1_BG_AllFiveColors_NoGray_Cropped.jpg"
-import { Store } from '@material-ui/icons';
 
 
 function Copyright() {

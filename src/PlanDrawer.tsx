@@ -1,17 +1,11 @@
 import React from 'react';
-import clsx from 'clsx';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
-import Divider from '@material-ui/core/Divider';
 import ListItem from '@material-ui/core/ListItem';
 import ListItemIcon from '@material-ui/core/ListItemIcon';
 import ListItemText from '@material-ui/core/ListItemText';
-import InboxIcon from '@material-ui/icons/MoveToInbox';
-import MailIcon from '@material-ui/icons/Mail';
 import { addQueueStop, IAllowedPlans, submitExcel } from './queueserver';
-import makeStyles from '@material-ui/core/styles/makeStyles';
-import { Avatar, Box, Button, createStyles, ListItemSecondaryAction, MenuItem, Theme, Typography } from '@material-ui/core';
-import theme from './theme';
+import { Avatar, Box, Button, ListItemSecondaryAction, MenuItem, Typography } from '@material-ui/core';
 import { Star } from '@material-ui/icons';
 import { BulkAdd } from './bulk';
 
