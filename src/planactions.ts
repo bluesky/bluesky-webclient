@@ -60,7 +60,6 @@ export const getPlanStatus: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanS
 export const getQueuedPlans: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanObjectsState, null, IPlanObjectsAction>> = () => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
-        console.log("GET_QUEUED_PLANS")
         const plans = await getQueuedPlansAPI();
         return dispatch({
           plans,
