@@ -6,7 +6,8 @@ import { IPlanState, IPlanObjectsState,
          AllowedPlansActionTypes, IAllowedPlans,
          IHistoricalPlansState, HistoricalPlansActions, 
          HistoricalPlansActionTypes, IStatus } from "./queueserver";
-
+import { getQueuedPlans, getHistoricalPlans } from './planactions';
+import { store } from "./index"
 
 const initialStatusState: IStatus = {
         "msg": "RE Manager",

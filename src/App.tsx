@@ -230,9 +230,7 @@ class App extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
-      setInterval(this.props.getStatus, 1000);
-      //setInterval(this.props.getQueuedPlans, 1000);
-      //setInterval(this.props.getHistoricalPlans, 1000);
+      setInterval(this.props.getStatus, 500);
       this.props.getAllowedPlans();
   }
 }

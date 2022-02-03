@@ -1,5 +1,6 @@
-import { ActionCreator, AnyAction, Dispatch } from "redux"
-import { ThunkAction } from "redux-thunk"
+import { State } from "history";
+import { Action, ActionCreator, AnyAction, Dispatch } from "redux"
+import { ThunkAction, ThunkDispatch } from "redux-thunk"
 import { getStatus as getStatusAPI,
          getQueuedPlans as getQueuedPlansAPI,
          getAllowedPlans as getAllowedPlansAPI,
@@ -15,20 +16,29 @@ import { getStatus as getStatusAPI,
                         AllowedPlansActionTypes, HistoricalPlansActionTypes, ISubmitPlanObject, 
                         IEditPlanObject, 
                         ISubmitExcelState,
-                        ISubmitExcelAction,
-                        ISubmitExcelObject} from "./queueserver"
+                        ISubmitExcelAction} from "./queueserver"
 import { IStatus, IGetStatusAction, IPlanGetStatusAction, IPlanLoadingAction, IPlanObjectsAction, 
          IPlanSubmitAction, IPlanEditAction, IPlanEditState,
          IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes } from "./queueserver"
+import { IApplicationState } from "./store";
+
 
 const loading: ActionCreator<IPlanLoadingAction> = () => ({
     type: PlanActionTypes.LOADING
 });
 
-export const getStatus: ActionCreator<ThunkAction<Promise<AnyAction>, IStatus, null, IGetStatusAction>> = () => {
-    return async (dispatch: Dispatch) => {
+export const getStatus: ActionCreator<ThunkAction<Promise<AnyAction>, IApplicationState, null, IGetStatusAction>> = () => {
+    return async (dispatch: ThunkDispatch<any, void, any>, getState) => {
         dispatch(loading());
         const status = await getStatusAPI();
+        const state = getState();
+        // Update state if status uid has changed.
+        if (state.status.plan_history_uid != status.plan_history_uid) {
+            dispatch(getHistoricalPlans())
+        }
+        if (state.status.plan_queue_uid != status.plan_queue_uid) {
+            dispatch(getQueuedPlans())
+        }
         return dispatch({
           status,
           type: PlanActionTypes.GETSTATUS
@@ -50,6 +60,7 @@ export const getPlanStatus: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanS
 export const getQueuedPlans: ActionCreator<ThunkAction<Promise<AnyAction>, IPlanObjectsState, null, IPlanObjectsAction>> = () => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
+        console.log("GET_QUEUED_PLANS")
         const plans = await getQueuedPlansAPI();
         return dispatch({
           plans,
