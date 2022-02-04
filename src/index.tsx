@@ -30,7 +30,7 @@ const Root: React.FunctionComponent<IProps> = props => {
   );
 };
 
-const store = configureStore();
+export const store = configureStore();
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>

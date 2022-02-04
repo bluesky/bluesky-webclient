@@ -126,7 +126,8 @@ export const getHistoricalPlans = async(): Promise<IHistoricalPlan[]> => {
 }
 
 export enum PlanActionTypes {
-    GETOVERVIEW = "PLANS/GETOVERVIEWS",
+    GETPLANSTATUS = "PLANS/GETPLANSTATUS",
+    GETSTATUS = "PLANS/GETSTATUS",
     LOADING = "PLANS/LOADING",
     GETPLANLIST = "PLANS/GETPLANLIST",
     GETHISTORICAL = "PLANS/GETHISORICAL",
@@ -152,8 +153,13 @@ export interface IPlanModify {
     success: boolean;
 }
 
-export interface IPlanGetOverviewAction {
-    type: PlanActionTypes.GETOVERVIEW,
+export interface IGetStatusAction {
+    type: PlanActionTypes.GETSTATUS,
+    status: IStatus
+}
+
+export interface IPlanGetStatusAction {
+    type: PlanActionTypes.GETPLANSTATUS,
     plan: IPlan
 }
 
@@ -219,7 +225,8 @@ export interface IPlanModifyQueueLoadingAction {
 }
 
 export type PlanActions =
-  | IPlanGetOverviewAction
+  | IGetStatusAction
+  | IPlanGetStatusAction
   | IPlanLoadingAction
   | IPlanObjectsAction
   | IPlanObjectsLoadingAction
@@ -237,9 +244,35 @@ export interface IPlanState {
     readonly planLoading: boolean;
 }
 
-export const getOverview = async(): Promise<IPlan> => {
+export interface IPlanQueueMode {
+    loop: boolean;
+}
+
+export interface IStatus {
+    msg: string,
+    items_in_queue: number,
+    items_in_history: number,
+    running_item_uid: string | null,
+    manager_state: string,
+    queue_stop_pending: boolean,
+    worker_environment_exists: boolean,
+    worker_environment_state: string,
+    worker_background_tasks: number,
+    re_state: string | null,
+    pause_pending: boolean,
+    run_list_uid: string,
+    plan_queue_uid: string,
+    plan_history_uid: string,
+    devices_existing_uid: string,
+    plans_existing_uid: string,
+    devices_allowed_uid: string,
+    plans_allowed_uid: string,
+    plan_queue_mode: IPlanQueueMode,
+    task_results_uid: string  
+}
+
+export const getStatus = async(): Promise<IStatus> => {
     const res = await axiosInstance.get('/status');
-    console.log(res)
     return res.data;
 }
 
@@ -250,7 +283,6 @@ export interface IPlanObjectsState {
 
 export const getQueuedPlans = async(): Promise<IPlanObject[]> => {
     const res = await axiosInstance.get('/queue/get');
-    console.log(res);
     return res.data.items;
 }
 
@@ -499,8 +531,6 @@ export interface IActiveRun {
 
 export const getActiveRuns = async(): Promise<IActiveRun[]> => {
         const res = await axiosInstance.get(`/re/runs/active`);
-        console.log(res);
-        console.log(res.data.run_list);
         return res.data.run_list;
 }
 

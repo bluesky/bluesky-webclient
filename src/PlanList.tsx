@@ -10,7 +10,7 @@ import Tooltip from '@material-ui/core/Tooltip';
 import LoopIcon from '@material-ui/icons/Loop';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IPlanObject, QueueOps, EnvOps, incrementPosition, decrementPosition } from './queueserver';
-import { Accordion, AccordionDetails, AccordionSummary, Box, Card, CardContent, Grid, Paper, Typography } from '@material-ui/core';
+import { Accordion, AccordionDetails, AccordionSummary, Box, Paper, Typography } from '@material-ui/core';
 import { clearQueue, deletePlan, modifyQueue, modifyEnvironment} from './planactions';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ArrowUpwardIcon from '@material-ui/icons/ArrowUpward';

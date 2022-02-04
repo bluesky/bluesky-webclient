@@ -5,7 +5,48 @@ import { IPlanState, IPlanObjectsState,
          IAllowedPlansState, AllowedPlansActions, 
          AllowedPlansActionTypes, IAllowedPlans,
          IHistoricalPlansState, HistoricalPlansActions, 
-         HistoricalPlansActionTypes } from "./queueserver";
+         HistoricalPlansActionTypes, IStatus } from "./queueserver";
+import { getQueuedPlans, getHistoricalPlans } from './planactions';
+import { store } from "./index"
+
+const initialStatusState: IStatus = {
+        "msg": "RE Manager",
+        "items_in_queue": 0,
+        "items_in_history": 0,
+        "running_item_uid": null,
+        "manager_state": "idle",
+        "queue_stop_pending": false,
+        "worker_environment_exists": false,
+        "worker_environment_state": "closed",
+        "worker_background_tasks": 0,
+        "re_state": null,
+        "pause_pending": false,
+        "run_list_uid": "",
+        "plan_queue_uid": "",
+        "plan_history_uid": "",
+        "devices_existing_uid": "",
+        "plans_existing_uid": "",
+        "devices_allowed_uid": "",
+        "plans_allowed_uid": "",
+        "plan_queue_mode": {
+          "loop": false
+        },
+        "task_results_uid": "5aac32cb-b5b4-4a42-a915-296c73caea81"
+};
+
+export const statusReducer: Reducer<IStatus, PlanActions> = (
+    state = initialStatusState,
+    action
+) => {
+    switch (action.type) {
+        case PlanActionTypes.GETSTATUS: {
+            return action.status;
+        }
+        default: {
+            return state;
+        }
+    }
+};
 
 const initialPlanState: IPlanState = {
     plan: {
@@ -29,7 +70,7 @@ export const planReducer: Reducer<IPlanState, PlanActions> = (
                 planLoading: true
             };
         }
-        case PlanActionTypes.GETOVERVIEW: {
+        case PlanActionTypes.GETPLANSTATUS: {
             return {
                 ...state,
                 plan: action.plan,

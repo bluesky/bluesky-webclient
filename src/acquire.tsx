@@ -6,12 +6,10 @@ import { IApplicationState } from './store';
 import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans, submitEditedPlan, submitExcel } from './planactions';
 import { clearQueue, deletePlan } from './planactions';
 import { IPlanObject, IAllowedPlans } from './queueserver';
-import { getOverview, getQueuedPlans } from './planactions';
+import { getStatus, getQueuedPlans } from './planactions';
 import { Grid } from '@material-ui/core';
 import { PlanList } from './PlanList';
 import { AvailablePlans } from './AvailablePlans';
-import { PlanFormContainer } from './PlanFormContainer';
-import { PlanDrawer } from './PlanDrawer';
 
 type RouteParams = { id: string, uid: string };
 
@@ -25,7 +23,7 @@ interface IProps {
     modifyQueue: typeof modifyQueue;
     clearQueue: typeof clearQueue;
     deletePlan: typeof deletePlan;
-    getOverview: typeof getOverview;
+    getStatus: typeof getStatus;
     getQueuedPlans: typeof getQueuedPlans;
     getAllowedPlans: typeof getAllowedPlans;
     loading: boolean;
@@ -119,8 +117,6 @@ class AcquirePage extends React.Component<IProps, IState> {
     }
     
     componentDidMount() {
-        this.props.getOverview();
-        setInterval(this.props.getQueuedPlans, 500);
         this.props.getAllowedPlans();
     }
 }
@@ -144,7 +140,7 @@ const mapDispatchToProps = (dispatch: any) => {
       submitEditedPlan: (itemUid: string, planId: number, param: number) => dispatch(submitEditedPlan(itemUid, planId, param)),
       clearQueue: () => dispatch(clearQueue()),
       deletePlan: () => dispatch(deletePlan()),
-      getOverview: () => dispatch(getOverview()),
+      getStatus: () => dispatch(getStatus()),
       getQueuedPlans: () => dispatch(getQueuedPlans()),
       getAllowedPlans: () => dispatch(getAllowedPlans()),
     };
