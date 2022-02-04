@@ -126,7 +126,7 @@ class App extends React.Component<IProps, IState> {
                   </Box>
 
                   <Box width="3vw">
-                      <img src={this.tabs[process.env.REACT_APP_BEAMLINE || 'default']} alt="bmmTab" style={{position: 'absolute', 
+                      <img src={this.tabs[process.env.REACT_APP_BEAMLINE || 'default']} alt="tab" style={{position: 'absolute', 
                                                                 height: '100%',
                                                                 left: '97%', 
                                                                 top: '50%', 
@@ -209,7 +209,7 @@ class App extends React.Component<IProps, IState> {
     this.setState({
       drawerOpen: !this.state.drawerOpen
     })
-    console.log("BEAMLINE", process.env.REACT_APP_BEAMLINE)
+    
   }
 
   private closeDrawer(){
