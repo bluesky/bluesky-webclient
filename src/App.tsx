@@ -14,7 +14,8 @@ import { CurrentPlan } from './CurrentPlan';
 import { AppBar, Grid, IconButton, Popover, Toolbar } from '@material-ui/core';
 import { PlanDrawer } from './PlanDrawer';
 import logo from './assets/bluesky-logo.svg'
-import bmm_logo from './assets/BMM_Logo.png'
+import bmmTab from './assets/BMM_Logo.png'
+import pdfTab from './assets/28-ID-1_TopAlign.png'
 import { PlanFormContainer } from './PlanFormContainer';
 import nsls2Background from "./assets/nsls2_background.png"
 
@@ -73,6 +74,12 @@ interface IState {
 
 class App extends React.Component<IProps, IState> {
 
+  tabs: {[name: string]: any} = {
+    'bmm': bmmTab,
+    'pdf': pdfTab,
+    'default': pdfTab
+  }
+
   public constructor(props: IProps) {
     super(props);
     this.state = {
@@ -119,7 +126,7 @@ class App extends React.Component<IProps, IState> {
                   </Box>
 
                   <Box width="3vw">
-                      <img src={bmm_logo} alt="bmm_logo" style={{position: 'absolute', 
+                      <img src={this.tabs[process.env.REACT_APP_BEAMLINE || 'default']} alt="bmmTab" style={{position: 'absolute', 
                                                                 height: '100%',
                                                                 left: '97%', 
                                                                 top: '50%', 
@@ -202,6 +209,7 @@ class App extends React.Component<IProps, IState> {
     this.setState({
       drawerOpen: !this.state.drawerOpen
     })
+    console.log("BEAMLINE", process.env.REACT_APP_BEAMLINE)
   }
 
   private closeDrawer(){
