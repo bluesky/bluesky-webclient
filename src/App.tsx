@@ -209,7 +209,6 @@ class App extends React.Component<IProps, IState> {
     this.setState({
       drawerOpen: !this.state.drawerOpen
     })
-    
   }
 
   private closeDrawer(){
