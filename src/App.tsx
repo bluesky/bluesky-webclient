@@ -13,11 +13,37 @@ import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
 import { AppBar, Grid, IconButton, Popover, Toolbar } from '@material-ui/core';
 import { PlanDrawer } from './PlanDrawer';
-import logo from './assets/bluesky-logo.svg'
-import bmm_logo from './assets/BMM_Logo.png'
 import { PlanFormContainer } from './PlanFormContainer';
-import nsls2Background from "./assets/nsls2_background.png"
-
+import nsls2Background from "./assets/nsls2_background.png";
+import logo from './assets/bluesky-logo.svg';
+import amxTab from './assets/amx_tab.png';
+import bmmTab from './assets/bmm_tab.png';
+import chxTab from './assets/chx_tab.png';
+import cmsTab from './assets/cms_tab.png';
+import csxTab from './assets/cxs_tab.png';
+import esmTab from './assets/esm_tab.png';
+import fisTab from './assets/fis_tab.png';
+import fmxTab from './assets/fmx_tab.png';
+import fxiTab from './assets/fxi_tab.png';
+import hexTab from './assets/hex_tab.png';
+import iosTab from './assets/ios_tab.png';
+import isrTab from './assets/isr_tab.png';
+import lixTab from './assets/lix_tab.png';
+import metTab from './assets/met_tab.png';
+import nyxTab from './assets/nyx_tab.png';
+import pdfTab from './assets/pdf_tab.png';
+import qasTab from './assets/qas_tab.png';
+import sixTab from './assets/six_tab.png';
+import smiTab from './assets/smi_tab.png';
+import srxTab from './assets/srx_tab.png';
+import sst1Tab from './assets/sst1_tab.png';
+import sst2Tab from './assets/sst2_tab.png';
+import tesTab from './assets/tes_tab.png';
+import xfmTab from './assets/xfm_tab.png';
+import xfpTab from './assets/xfp_tab.png';
+import xpdTab from './assest/xpd_tab.png';
+import issTab from './assets/iss_tab.png';
+import ixsTab from './assets/ixs_tab.png';
 
 function Copyright() {
   return (
@@ -73,6 +99,38 @@ interface IState {
 
 class App extends React.Component<IProps, IState> {
 
+  tabs: {[name: string]: any} = {
+    'amx': amxTab,
+    'bmm': bmmTab,
+    'chx': chxTab,
+    'cms': cmsTab,
+    'csx': csxTab,
+    'esm': esmTab,
+    'fis': fisTab,
+    'fmx': fmxTab,
+    'fxi': fxiTab,
+    'hex': hexTab,
+    'ios': iosTab,
+    'isr': isrTab,
+    'iss': issTab,
+    'ixs': ixsTab,
+    'lix': lixTab,
+    'met': metTab,
+    'nyx': nyxTab,
+    'pdf': pdfTab,
+    'qas': qasTab,
+    'six': sixTab,
+    'smi': smiTab,
+    'srx': srxTab,
+    'sst1': sst1Tab,
+    'sst2': sst2Tab,
+    'tes': tesTab,
+    'xfm': xfmTab,
+    'xfp': xfpTab,
+    'xpd': xpdTab,
+    'default': pdfTab
+  }
+
   public constructor(props: IProps) {
     super(props);
     this.state = {
@@ -119,7 +177,7 @@ class App extends React.Component<IProps, IState> {
                   </Box>
 
                   <Box width="3vw">
-                      <img src={bmm_logo} alt="bmm_logo" style={{position: 'absolute', 
+                      <img src={this.tabs[process.env.REACT_APP_BEAMLINE || 'default']} alt="tab" style={{position: 'absolute', 
                                                                 height: '100%',
                                                                 left: '97%', 
                                                                 top: '50%', 

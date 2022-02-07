@@ -1,10 +1,21 @@
 # TypeScript React app using Material UI for a Bluesky queueserver client.
 
-Install it and run:
+Install it:
 
 ```sh
 yarn
+```
+
+Run with default variables:
+
+```sh
 yarn start
+```
+
+Run with custom REACT_APP_BEAMLINE variable: (changes the banner)
+
+```sh
+REACT_APP_BEAMLINE=beamline_name yarn start
 ```
 
 To use the Preview server for displaying live plots and thumbnails:
