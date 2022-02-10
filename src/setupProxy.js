@@ -4,7 +4,7 @@ module.exports = function(app) {
   app.use(
     '/qs',
     createProxyMiddleware({
-      target: 'http://localhost:60610',
+      target: process.env.REACT_APP_HTTP_SERVER || 'http://localhost:60610',
       changeOrigin: true,
       pathRewrite: {
         "^/qs": "",
