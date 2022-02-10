@@ -20,7 +20,7 @@ import amxTab from './assets/amx_tab.png';
 import bmmTab from './assets/bmm_tab.png';
 import chxTab from './assets/chx_tab.png';
 import cmsTab from './assets/cms_tab.png';
-import csxTab from './assets/cxs_tab.png';
+import csxTab from './assets/csx_tab.png';
 import esmTab from './assets/esm_tab.png';
 import fisTab from './assets/fis_tab.png';
 import fmxTab from './assets/fmx_tab.png';
@@ -41,7 +41,7 @@ import sst2Tab from './assets/sst2_tab.png';
 import tesTab from './assets/tes_tab.png';
 import xfmTab from './assets/xfm_tab.png';
 import xfpTab from './assets/xfp_tab.png';
-import xpdTab from './assest/xpd_tab.png';
+import xpdTab from './assets/xpd_tab.png';
 import issTab from './assets/iss_tab.png';
 import ixsTab from './assets/ixs_tab.png';
 
