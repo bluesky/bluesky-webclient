@@ -13,6 +13,7 @@ import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
 import { AppBar, Grid, IconButton, Popover, Toolbar } from '@material-ui/core';
 import { PlanDrawer } from './PlanDrawer';
+import { ConsoleDrawer } from './ConsoleDrawer';
 import { PlanFormContainer } from './PlanFormContainer';
 import nsls2Background from "./assets/nsls2_background.png";
 import logo from './assets/bluesky-logo.svg';
@@ -93,7 +94,8 @@ interface IState {
   queue: string;
   onQueueChange: (queue: string) => void;
   files: File[];
-  drawerOpen: boolean;
+  actionDrawerOpen: boolean;
+  consoleDrawerOpen: boolean;
   planFormVisible: boolean;
 }
 
@@ -145,7 +147,8 @@ class App extends React.Component<IProps, IState> {
       queue: "Start",
       onQueueChange: this.handleQueueChange,
       files: [],
-      drawerOpen: false,
+      actionDrawerOpen: false,
+      consoleDrawerOpen: false,
       planFormVisible: false,
     };
 
@@ -166,8 +169,11 @@ class App extends React.Component<IProps, IState> {
               <AppBar position="absolute" style={{zIndex: 2000}}>
                 <Toolbar>
                   <Box display='flex' flexGrow={1}>
-                    <IconButton color="inherit" aria-label="menu" onClick={this.toggleDrawer.bind(this)}>
+                    <IconButton color="inherit" aria-label="menu" onClick={this.toggleActionDrawer.bind(this)}>
                       Actions
+                    </IconButton>
+                    <IconButton color="inherit" aria-label="menu" onClick={this.toggleConsoleDrawer.bind(this)}>
+                      Console
                     </IconButton>
                     <img src={logo} alt="logo" style={{position: 'absolute', 
                                                         height: '100%',
@@ -203,9 +209,9 @@ class App extends React.Component<IProps, IState> {
               </Grid>   
             </Grid>
             <Copyright/>
-            <PlanDrawer open={this.state.drawerOpen} selectedPlan={this.state.selectedPlan} 
+            <PlanDrawer open={this.state.actionDrawerOpen} selectedPlan={this.state.selectedPlan} 
                         handleSelect={this.handleSelectPlan} plans={this.props.allowedPlans}/>
-
+            <ConsoleDrawer open={this.state.consoleDrawerOpen}/>
           </Container>
             <Popover 
                     anchorOrigin={{
@@ -232,7 +238,7 @@ class App extends React.Component<IProps, IState> {
 
 
   private handleSelectPlan = (selectedPlan: string) => {
-      this.closeDrawer()
+      this.closeActionDrawer()
       this.showPlanForm()
       this.setState({ selectedPlan: selectedPlan });  // Check this line
       this.setState({ editItemUid: ""});
@@ -256,15 +262,31 @@ class App extends React.Component<IProps, IState> {
     });
   }
 
-  private toggleDrawer(){
+  private toggleActionDrawer(){
     this.setState({
-      drawerOpen: !this.state.drawerOpen
+      actionDrawerOpen: !this.state.actionDrawerOpen
     })
+    if (this.state.consoleDrawerOpen){
+      this.setState({
+        consoleDrawerOpen: false
+      })
+    }
   }
 
-  private closeDrawer(){
+  private toggleConsoleDrawer(){
     this.setState({
-      drawerOpen: false
+      consoleDrawerOpen: !this.state.consoleDrawerOpen
+    })
+    if (this.state.actionDrawerOpen){
+      this.setState({
+        actionDrawerOpen: false
+      })
+    }
+  }
+
+  private closeActionDrawer(){
+    this.setState({
+      actionDrawerOpen: false
     })
   }
 
