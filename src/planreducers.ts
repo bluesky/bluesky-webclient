@@ -5,7 +5,8 @@ import { IPlanState, IPlanObjectsState,
          IAllowedPlansState, AllowedPlansActions, 
          AllowedPlansActionTypes, IAllowedPlans,
          IHistoricalPlansState, HistoricalPlansActions, 
-         HistoricalPlansActionTypes, IStatus } from "./queueserver";
+         HistoricalPlansActionTypes, IStatus, 
+         IConsoleOutput, ConsoleOutputActions, ConsoleOutputActionTypes } from "./queueserver";
 import { getQueuedPlans, getHistoricalPlans } from './planactions';
 import { store } from "./index"
 
@@ -284,6 +285,29 @@ export const queueModifyReducer: Reducer<IPlanModifyState, PlanActions> = (
                 modify: action.modify,
                 loading: false
             };
+        }
+        default: {
+            return state;
+        }
+    }
+};
+
+
+
+const initialConsoleOutputState: IConsoleOutput = {
+    output: ""
+};
+
+export const consoleOutputReducer: Reducer<IConsoleOutput, ConsoleOutputActions> = (
+    state = initialConsoleOutputState,
+    action
+) => {
+    switch (action.type) {
+        case ConsoleOutputActionTypes.OPEN: {
+            return state;
+        }
+        case ConsoleOutputActionTypes.CLOSED: {
+            return state;
         }
         default: {
             return state;
