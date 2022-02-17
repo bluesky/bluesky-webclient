@@ -304,9 +304,15 @@ export const consoleOutputReducer: Reducer<IConsoleOutput, ConsoleOutputActions>
 ) => {
     switch (action.type) {
         case ConsoleOutputActionTypes.OPEN: {
+            console.log("OPEN REDUCER", action)
             return state;
         }
-        case ConsoleOutputActionTypes.CLOSED: {
+        case ConsoleOutputActionTypes.CONNECT: {
+            console.log("CONNECT REDUCER", action)
+            return state;
+        }
+        case ConsoleOutputActionTypes.ERROR: {
+            console.log("ERROR REDUCER", action)
             return state;
         }
         default: {

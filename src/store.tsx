@@ -1,12 +1,12 @@
 import { applyMiddleware, combineReducers, createStore, Store, compose } from "redux"
 import thunk from "redux-thunk"
 import { planObjectsReducer, planReducer, planSubmitReducer,
-    environmentModifyReducer, queueModifyReducer, allowedPlansReducer, historicalPlansReducer, statusReducer } from "./planreducers"
-import { IStatus, IPlanState, IPlanObjectsState, IPlanSubmitState, IPlanModifyState, IAllowedPlansState, IHistoricalPlansState} from "./queueserver"
+    environmentModifyReducer, queueModifyReducer, allowedPlansReducer, historicalPlansReducer, statusReducer, consoleOutputReducer } from "./planreducers"
+import { IStatus, IPlanState, IPlanObjectsState, IPlanSubmitState, IPlanModifyState, IAllowedPlansState, IHistoricalPlansState, IConsoleOutput} from "./queueserver"
 import { userReducer } from "./userreducers"
 import { IUserState } from "./facility"
 import reduxWebsocket from '@giantmachines/redux-websocket';
-import { connect } from '@giantmachines/redux-websocket';
+
 
 export interface IApplicationState {
     plan: IPlanState;
@@ -18,6 +18,7 @@ export interface IApplicationState {
     queue: IPlanModifyState;
     user: IUserState;
     status: IStatus;
+    output: IConsoleOutput;
 }
 
 const rootReducer = combineReducers<IApplicationState>({
@@ -30,6 +31,7 @@ const rootReducer = combineReducers<IApplicationState>({
     queue: queueModifyReducer,
     user: userReducer,
     status: statusReducer,
+    output: consoleOutputReducer
 })
 
 export default function configureStore(): Store<IApplicationState> {

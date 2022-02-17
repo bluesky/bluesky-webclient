@@ -239,17 +239,16 @@ export type PlanActions =
   | IPlanModifyQueueAction
   | IPlanModifyQueueLoadingAction
 
-
 export enum ConsoleOutputActionTypes {
-    WEBSOCKETCONNECT = "REDUX_WEBSOCKET::WEBSOCKET_CONNECT",
+    CONNECT = "REDUX_WEBSOCKET::CONNECT",
     ERROR = "REDUX_WEBSOCKET::ERROR",
     OPEN = "REDUX_WEBSOCKET::OPEN",
     CLOSED = "REDUX_WEBSOCKET::CLOSED",
     MESSAGE = "REDUX_WEBSOCKET::MESSAGE"
 } 
 
-export interface IConsoleOutputWebsocketConnectAction {
-    type: ConsoleOutputActionTypes.WEBSOCKETCONNECT
+export interface IConsoleOutputConnectAction {
+    type: ConsoleOutputActionTypes.CONNECT
 }
 
 export interface IConsoleOutputErrorAction {
@@ -273,7 +272,7 @@ export type ConsoleOutputActions =
   | IConsoleOutputMessageAction
   | IConsoleOutputOpenAction
   | IConsoleOutputClosedAction
-  | IConsoleOutputWebsocketConnectAction
+  | IConsoleOutputConnectAction
 
 export interface IPlanState {
     readonly plan: IPlan;
