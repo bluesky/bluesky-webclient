@@ -3,6 +3,7 @@
   "version": "0.0.1",
   "private": true,
   "dependencies": {
+    "@giantmachines/redux-websocket": "^1.5.1",
     "@material-ui/core": "latest",
     "@material-ui/icons": "latest",
     "@types/react": "latest",

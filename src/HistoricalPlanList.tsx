@@ -71,7 +71,6 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                           <Typography>
                             run_uids: {JSON.stringify(planObject.result.run_uids)}
                           </Typography>
-                          <Previews width="45%" runUid={planObject.result.run_uids[0]}/>
                         </div>
                       </AccordionDetails>
                     </Accordion>

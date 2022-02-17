@@ -239,6 +239,41 @@ export type PlanActions =
   | IPlanModifyQueueAction
   | IPlanModifyQueueLoadingAction
 
+export enum ConsoleOutputActionTypes {
+    CONNECT = "REDUX_WEBSOCKET::CONNECT",
+    ERROR = "REDUX_WEBSOCKET::ERROR",
+    OPEN = "REDUX_WEBSOCKET::OPEN",
+    CLOSED = "REDUX_WEBSOCKET::CLOSED",
+    MESSAGE = "REDUX_WEBSOCKET::MESSAGE"
+} 
+
+export interface IConsoleOutputConnectAction {
+    type: ConsoleOutputActionTypes.CONNECT
+}
+
+export interface IConsoleOutputErrorAction {
+    type: ConsoleOutputActionTypes.ERROR
+}
+
+export interface IConsoleOutputOpenAction {
+    type: ConsoleOutputActionTypes.OPEN
+}
+
+export interface IConsoleOutputClosedAction {
+    type: ConsoleOutputActionTypes.CLOSED
+}
+
+export interface IConsoleOutputMessageAction {
+    type: ConsoleOutputActionTypes.MESSAGE
+}
+
+export type ConsoleOutputActions =
+  | IConsoleOutputErrorAction
+  | IConsoleOutputMessageAction
+  | IConsoleOutputOpenAction
+  | IConsoleOutputClosedAction
+  | IConsoleOutputConnectAction
+
 export interface IPlanState {
     readonly plan: IPlan;
     readonly planLoading: boolean;
@@ -269,6 +304,10 @@ export interface IStatus {
     plans_allowed_uid: string,
     plan_queue_mode: IPlanQueueMode,
     task_results_uid: string  
+}
+
+export interface IConsoleOutput {
+    output: string
 }
 
 export const getStatus = async(): Promise<IStatus> => {

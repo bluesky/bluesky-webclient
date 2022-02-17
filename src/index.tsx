@@ -9,9 +9,9 @@ import { IApplicationState } from './store'
 import theme from './theme';
 import { Routes, Route } from 'react-router-dom';
 import { BrowserRouter as Router } from 'react-router-dom';
-
 import App from './App'
 import UserPage from './user'
+import { connect } from '@giantmachines/redux-websocket';
 
 
 interface IProps {
@@ -31,6 +31,8 @@ const Root: React.FunctionComponent<IProps> = props => {
 };
 
 export const store = configureStore();
+// Connect websocket
+store.dispatch(connect(process.env.REACT_APP_HTTP_SERVER || 'ws://localhost:60610/' + 'stream_console_output'));
 
 ReactDOM.render(
   <ThemeProvider theme={theme}>

@@ -1084,6 +1084,13 @@
     minimatch "^3.0.4"
     strip-json-comments "^3.1.1"
 
+"@giantmachines/redux-websocket@^1.5.1":
+  version "1.5.1"
+  resolved "https://registry.yarnpkg.com/@giantmachines/redux-websocket/-/redux-websocket-1.5.1.tgz#90a335f531d31a54e1217d051014cde0f69dd28b"
+  integrity sha512-s/vyWsfjyCK7lRWgRk4gjV1mg0E6kjxcKE1y4wUrE4kBf3Vvtj64g/fIe1w6Jw5UaoABrEjm4XxQVOXOAaOSAg==
+  dependencies:
+    redux "~4"
+
 "@humanwhocodes/config-array@^0.9.2":
   version "0.9.2"
   resolved "https://registry.yarnpkg.com/@humanwhocodes/config-array/-/config-array-0.9.2.tgz"
@@ -7292,7 +7299,7 @@ redux-thunk@*, redux-thunk@^2.3.0:
   resolved "https://registry.yarnpkg.com/redux-thunk/-/redux-thunk-2.4.1.tgz"
   integrity sha512-OOYGNY5Jy2TWvTL1KgAlVy6dcx3siPJ1wTq741EPyUKfn6W6nChdICjZwCd0p8AZBs5kWpZlbkXW2nE/zjUa+Q==
 
-redux@^4.0.0, redux@^4.0.5:
+redux@^4.0.0, redux@^4.0.5, redux@~4:
   version "4.1.2"
   resolved "https://registry.yarnpkg.com/redux/-/redux-4.1.2.tgz"
   integrity sha512-SH8PglcebESbd/shgf6mii6EIoRM0zrQyjcuQ+ojmfxjTtE0z9Y8pa62iA/OJ58qjP6j27uyW4kUF4jl/jd6sw==
