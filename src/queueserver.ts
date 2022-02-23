@@ -312,27 +312,28 @@ export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObj
     // For now we assume that kwargs ending with the letter 's' are lists.
     // TODO: Update this, once the have the correct information from the 
     // queueserver about which kwargs are list.
+    console.log("SUBMIT", submitPlan)
     for (const [key, value] of Object.entries(submitPlan.kwargs)) {
-      if ((key.slice(-1) !== 's') || (key == "axis") || (key == "nsteps")){
-        if (value[0] !== "None"){
-            // Convert string to a number if possible.
-            // TODO: Use the type information from the server (once available), 
-            // and use a numeric input.
-            if (isNaN(Number(value[0]))){
-                plan.kwargs[key] = value[0];
-            } else {
-                plan.kwargs[key] = Number(value[0])
+        if ((key.slice(-1) !== 's') || (key == "axis") || (key == "nsteps")){
+            if (value[0] !== "None"){
+                // Convert string to a number if possible.
+                // TODO: Use the type information from the server (once available), 
+                // and use a numeric input.
+                if (isNaN(Number(value[0]))){
+                    plan.kwargs[key] = value[0];
+                } else {
+                    plan.kwargs[key] = Number(value[0])
+                }
             }
-	} else {
-		if (key == "md"){
-		plan.kwargs[key] = {"foo": "bar"};
-		} else {
-			plan.kwargs[key] = value;
-		}
-	}
-      }
+        } else {
+            if (key == "md"){
+                plan.kwargs[key] = {"foo": "bar"};
+            } else {
+                console.log('KEY', key)
+                plan.kwargs[key] = value;
+            }
+        }
     }
-
 
     if (submitPlan.name === "xafs"){
       plan.kwargs['bounds'] = "-30 40"
@@ -347,6 +348,7 @@ export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObj
         {
             item: plan,
         });
+    console.log("PLAN", plan)
     console.log(res);
     return res.data.item;
 }
