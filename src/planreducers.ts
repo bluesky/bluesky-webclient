@@ -5,9 +5,28 @@ import { IPlanState, IPlanObjectsState,
          IAllowedPlansState, AllowedPlansActions, 
          AllowedPlansActionTypes, IAllowedPlans,
          IHistoricalPlansState, HistoricalPlansActions, 
-         HistoricalPlansActionTypes, IStatus } from "./queueserver";
+         HistoricalPlansActionTypes, IStatus, IConsoleOutput } from "./queueserver";
 import { getQueuedPlans, getHistoricalPlans } from './planactions';
 import { store } from "./index"
+
+const initialConsoleOutputState: IConsoleOutput = {
+    text: ""
+}
+
+export const consoleOutputReducer: Reducer<IConsoleOutput, PlanActions> = (
+    state = initialConsoleOutputState,
+    action
+) => {
+    switch (action.type) {
+        case PlanActionTypes.GETCONSOLEOUTPUT: {
+            return action;
+            console.log("CONSOLE OUTPUT REDUCER")
+        }
+        default: {
+            return state;
+        }
+    }
+};
 
 const initialStatusState: IStatus = {
         "msg": "RE Manager",

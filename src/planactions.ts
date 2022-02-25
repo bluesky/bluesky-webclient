@@ -2,6 +2,7 @@ import { State } from "history";
 import { Action, ActionCreator, AnyAction, Dispatch } from "redux"
 import { ThunkAction, ThunkDispatch } from "redux-thunk"
 import { getStatus as getStatusAPI,
+         getConsoleOutput as getConsoleOutputAPI,
          getQueuedPlans as getQueuedPlansAPI,
          getAllowedPlans as getAllowedPlansAPI,
          getHistoricalPlans as getHistoricalPlansAPI,
@@ -11,13 +12,15 @@ import { getStatus as getStatusAPI,
          deletePlan as deletePlanAPI,
          submitEditedPlan as editPlanAPI,
          modifyEnvironment as modifyEnvironmentAPI, EnvOps,
-         modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, 
-                        IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, 
-                        AllowedPlansActionTypes, HistoricalPlansActionTypes, ISubmitPlanObject, 
-                        IEditPlanObject, 
-                        ISubmitExcelState,
-                        ISubmitExcelAction} from "./queueserver"
-import { IStatus, IGetStatusAction, IPlanGetStatusAction, IPlanLoadingAction, IPlanObjectsAction, 
+         modifyQueue as modifyQueueAPI, 
+         QueueOps, IAllowedPlansState, 
+         IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, 
+         AllowedPlansActionTypes, HistoricalPlansActionTypes, ISubmitPlanObject, 
+         IEditPlanObject, 
+         ISubmitExcelState,
+         ISubmitExcelAction,
+         IGetConsoleOutputAction} from "./queueserver"
+import { IGetStatusAction, IPlanGetStatusAction, IPlanLoadingAction, IPlanObjectsAction, 
          IPlanSubmitAction, IPlanEditAction, IPlanEditState,
          IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes } from "./queueserver"
 import { IApplicationState } from "./store";
@@ -26,6 +29,17 @@ import { IApplicationState } from "./store";
 const loading: ActionCreator<IPlanLoadingAction> = () => ({
     type: PlanActionTypes.LOADING
 });
+
+export const getConsoleOutput: ActionCreator<ThunkAction<Promise<AnyAction>, IApplicationState, null, IGetConsoleOutputAction>> = () => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const console = await getConsoleOutputAPI();
+        return dispatch({
+          console,
+          type: PlanActionTypes.GETCONSOLEOUTPUT
+        });
+    };
+};
 
 export const getStatus: ActionCreator<ThunkAction<Promise<AnyAction>, IApplicationState, null, IGetStatusAction>> = () => {
     return async (dispatch: ThunkDispatch<any, void, any>, getState) => {

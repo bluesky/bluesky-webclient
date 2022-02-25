@@ -127,6 +127,7 @@ export const getHistoricalPlans = async(): Promise<IHistoricalPlan[]> => {
 
 export enum PlanActionTypes {
     GETPLANSTATUS = "PLANS/GETPLANSTATUS",
+    GETCONSOLEOUTPUT = "PLANS/GETCONSOLEOUTPUT",
     GETSTATUS = "PLANS/GETSTATUS",
     LOADING = "PLANS/LOADING",
     GETPLANLIST = "PLANS/GETPLANLIST",
@@ -151,6 +152,11 @@ export interface IPlan {
 export interface IPlanModify {
     msg: string;
     success: boolean;
+}
+
+export interface IGetConsoleOutputAction {
+    type: PlanActionTypes.GETCONSOLEOUTPUT,
+    text: string
 }
 
 export interface IGetStatusAction {
@@ -225,6 +231,7 @@ export interface IPlanModifyQueueLoadingAction {
 }
 
 export type PlanActions =
+  | IGetConsoleOutputAction
   | IGetStatusAction
   | IPlanGetStatusAction
   | IPlanLoadingAction
@@ -246,6 +253,15 @@ export interface IPlanState {
 
 export interface IPlanQueueMode {
     loop: boolean;
+}
+
+export interface IConsoleOutput{
+    text: string;
+}
+
+export const getConsoleOutput = async(): Promise<IConsoleOutput> => {
+    const res = await axiosInstance.get('/stream_console_output');
+    return res.data;
 }
 
 export interface IStatus {
