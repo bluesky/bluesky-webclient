@@ -314,24 +314,26 @@ export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObj
     // queueserver about which kwargs are list.
     console.log("SUBMIT", submitPlan)
     for (const [key, value] of Object.entries(submitPlan.kwargs)) {
+        // If it shouldn't be a list, remove square brackets.
         if ((key.slice(-1) !== 's') || (key == "axis") || (key == "nsteps")){
             if (value[0] !== "None"){
                 // Convert string to a number if possible.
                 // TODO: Use the type information from the server (once available), 
                 // and use a numeric input.
-                if (isNaN(Number(value[0]))){
+                if (value[0] === ''){
+                    // Do nothing.
+                    console.log("NOTHING", key)
+                } else if (isNaN(Number(value[0]))){
                     plan.kwargs[key] = value[0];
+                    console.log("NAN", key)
                 } else {
+                    console.log("NUM", key)
                     plan.kwargs[key] = Number(value[0])
                 }
             }
         } else {
-            if (key == "md"){
-                plan.kwargs[key] = {"foo": "bar"};
-            } else {
-                console.log('KEY', key)
-                plan.kwargs[key] = value;
-            }
+            console.log("LIST", key)
+            plan.kwargs[key] = value;
         }
     }
 
@@ -438,7 +440,6 @@ export const clearQueue = async(): Promise<IPlan> => {
     console.log(res);
     return res.data;
 }
-
 
 export const deletePlan = async(item_uid: string): Promise<IPlan> => {
     const res = await axiosInstance.post('/queue/item/remove',
