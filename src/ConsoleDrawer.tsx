@@ -36,40 +36,17 @@ export class ConsoleDrawer extends React.Component<IProps, IState>{
         return (
             <div>
                 <Drawer anchor='left' open={this.props['open']}>
-                  <Box width="20vw" height="2vh"></Box>
+                  <Box width="32vw" height="2vh"></Box>
                     <div>
                         <List>
-                          <Box width="20vw" height="7vh"></Box>
+                          <Box width="20vw" height="5vh"></Box>
                           <Typography align="center" variant="h5" component="h1" gutterBottom>
-                             Queue Actions
+                             Console Output
                           </Typography>
                           <ListItem divider={true}>
-                            <ListItemIcon color="secondary">
-                              <Avatar>
-                                <Star />
-                              </Avatar>
-                            </ListItemIcon>
-                            <ListItemText
-                              primary="Bulk insert"
-                              secondary="upload excel sheet"/>
-                            <ListItemSecondaryAction>
-                              <BulkAdd submitExcel={submitExcel}></BulkAdd>
-                            </ListItemSecondaryAction>
-                          </ListItem>
-                          <ListItem divider={true}>
-                            <ListItemIcon color="secondary">
-                              <Avatar>
-                                <Star />
-                              </Avatar>
-                            </ListItemIcon>
-                            <ListItemText
-                              primary="queue_stop"
-                              secondary="stops the queue"/>
-                            <ListItemSecondaryAction>
-                              <Button onClick={() => addQueueStop()} variant="contained" color="primary">
-                                Add
-                              </Button>
-                            </ListItemSecondaryAction>
+                            <Typography>
+                              Console output
+                            </Typography>
                           </ListItem>
                         </List>
                     </div>

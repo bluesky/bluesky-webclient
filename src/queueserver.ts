@@ -312,7 +312,6 @@ export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObj
     // For now we assume that kwargs ending with the letter 's' are lists.
     // TODO: Update this, once the have the correct information from the 
     // queueserver about which kwargs are list.
-    console.log("SUBMIT", submitPlan)
     for (const [key, value] of Object.entries(submitPlan.kwargs)) {
         // If it shouldn't be a list, remove square brackets.
         if ((key.slice(-1) !== 's') || (key == "axis") || (key == "nsteps")){
@@ -321,18 +320,14 @@ export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObj
                 // TODO: Use the type information from the server (once available), 
                 // and use a numeric input.
                 if (value[0] === ''){
-                    // Do nothing.
-                    console.log("NOTHING", key)
+                    // Do nothing. Don't send kwargs that use default values.
                 } else if (isNaN(Number(value[0]))){
                     plan.kwargs[key] = value[0];
-                    console.log("NAN", key)
                 } else {
-                    console.log("NUM", key)
                     plan.kwargs[key] = Number(value[0])
                 }
             }
         } else {
-            console.log("LIST", key)
             plan.kwargs[key] = value;
         }
     }
@@ -350,8 +345,7 @@ export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObj
         {
             item: plan,
         });
-    console.log("PLAN", plan)
-    console.log(res);
+    console.log("SUBMIT PLAN RESPONSE", res);
     return res.data.item;
 }
 
