@@ -5,7 +5,7 @@ import Box from '@material-ui/core/Box';
 import { IApplicationState } from './store';
 import { submitPlan, modifyEnvironment, modifyQueue, getAllowedPlans, submitEditedPlan, submitExcel } from './planactions';
 import { clearQueue, deletePlan } from './planactions';
-import { IPlanObject, IAllowedPlans } from './queueserver';
+import { IPlanObject, IAllowedPlans, IStatus } from './queueserver';
 import { getStatus, getQueuedPlans } from './planactions';
 import { Grid } from '@material-ui/core';
 import { PlanList } from './PlanList';
@@ -30,6 +30,7 @@ interface IProps {
     plan: IPlanObject;
     plans: IPlanObject[];
     allowedPlans: IAllowedPlans;
+    status: IStatus;
 }
 
 interface IState {
@@ -79,7 +80,7 @@ class AcquirePage extends React.Component<IProps, IState> {
                   <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} 
                             clearQueue={this.props.clearQueue} plans={this.props.plans}
                             modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}
-                            editItemUid={this.state.editItemUid} editable={true}></PlanList>
+                            editItemUid={this.state.editItemUid} editable={true} status={this.props.status}></PlanList>
                 </Grid>
             </Grid>
           </Container>
@@ -128,6 +129,7 @@ const mapStateToProps = (store: IApplicationState) => {
       loadingPlans: store.plans.plansLoading,
       plans: store.plans.plans,
       allowedPlans: store.allowedPlans.allowedPlans,
+      status: store.status,
     };
 };
 
