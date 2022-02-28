@@ -25,7 +25,6 @@ import { IGetStatusAction, IPlanGetStatusAction, IPlanLoadingAction, IPlanObject
          IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes } from "./queueserver"
 import { IApplicationState } from "./store";
 
-
 const loading: ActionCreator<IPlanLoadingAction> = () => ({
     type: PlanActionTypes.LOADING
 });
