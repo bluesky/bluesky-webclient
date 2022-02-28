@@ -136,7 +136,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             </GridListTile>
             <GridListTile cols={2} style={{ height: 'auto' }}>
               <CardContent>
-                { this.state.activeRun.uid ? <Previews width="100%" runUid={this.state.activeRun.uid}/> : 
+                { this.state.activeRun.uid && process.env.REACT_APP_PREVIEW ? <Previews width="100%" runUid={this.state.activeRun.uid}/> : 
                   <Typography align="center" variant="h5" component="h1" >
                     Press the queue play button to start the plan.
                   </Typography> }            
