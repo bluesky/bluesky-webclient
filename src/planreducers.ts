@@ -41,7 +41,7 @@ export const activeRunsReducer: Reducer<IActiveRuns, PlanActions> = (
 ) => {
     switch (action.type) {
         case PlanActionTypes.GETACTIVERUNS: {
-            return action.run_list;
+            return action
         }
         default: {
             return state;

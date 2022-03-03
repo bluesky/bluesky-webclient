@@ -1,8 +1,8 @@
 import { applyMiddleware, combineReducers, createStore, Store, compose } from "redux"
 import thunk from "redux-thunk"
 import { planObjectsReducer, planReducer, planSubmitReducer,
-    environmentModifyReducer, queueModifyReducer, allowedPlansReducer, historicalPlansReducer, statusReducer, consoleOutputReducer } from "./planreducers"
-import { IStatus, IPlanState, IPlanObjectsState, IPlanSubmitState, IPlanModifyState, IAllowedPlansState, IHistoricalPlansState, IConsoleOutput} from "./queueserver"
+    environmentModifyReducer, queueModifyReducer, allowedPlansReducer, historicalPlansReducer, statusReducer, consoleOutputReducer, activeRunsReducer } from "./planreducers"
+import { IStatus, IPlanState, IPlanObjectsState, IPlanSubmitState, IPlanModifyState, IAllowedPlansState, IHistoricalPlansState, IConsoleOutput, IActiveRuns} from "./queueserver"
 import { userReducer } from "./userreducers"
 import { IUserState } from "./facility"
 
@@ -17,6 +17,7 @@ export interface IApplicationState {
     user: IUserState;
     status: IStatus;
     console: IConsoleOutput;
+    activeRuns: IActiveRuns;
 }
 
 const rootReducer = combineReducers<IApplicationState>({
@@ -30,6 +31,7 @@ const rootReducer = combineReducers<IApplicationState>({
     user: userReducer,
     status: statusReducer,
     console: consoleOutputReducer,
+    activeRuns: activeRunsReducer,
 })
 
 export default function configureStore(): Store<IApplicationState> {
