@@ -46,7 +46,7 @@ export class ConsoleDrawer extends React.Component<IProps, IState>{
                           </Typography>
                           <ListItem divider={true}>
                             <Typography>
-                              {this.props.console.text}
+                              {this.props.console.bluesky_console}
                             </Typography>
                           </ListItem>
                         </List>

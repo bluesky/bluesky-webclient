@@ -313,8 +313,8 @@ class App extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
-      setInterval(this.props.getStatus, 500);
-      this.props.getConsoleOutput();
+      //setInterval(this.props.getStatus, 500);
+      //setInterval(this.props.getConsoleOutput, 1000);
       this.props.getAllowedPlans();
   }
 }

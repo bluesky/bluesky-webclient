@@ -126,6 +126,7 @@ export const getHistoricalPlans = async(): Promise<IHistoricalPlan[]> => {
 }
 
 export enum PlanActionTypes {
+    GETACTIVERUNS = "PLANS/GETACTIVERUNS",
     GETPLANSTATUS = "PLANS/GETPLANSTATUS",
     GETCONSOLEOUTPUT = "PLANS/GETCONSOLEOUTPUT",
     GETSTATUS = "PLANS/GETSTATUS",
@@ -156,7 +157,15 @@ export interface IPlanModify {
 
 export interface IGetConsoleOutputAction {
     type: PlanActionTypes.GETCONSOLEOUTPUT,
-    text: string
+    bluesky_console: string
+}
+
+export interface IGetActiveRunsAction {
+    type: PlanActionTypes.GETACTIVERUNS,
+    success: boolean,
+    msg: string,
+    run_list: string[],
+    run_list_uid: string
 }
 
 export interface IGetStatusAction {
@@ -231,6 +240,7 @@ export interface IPlanModifyQueueLoadingAction {
 }
 
 export type PlanActions =
+  | IGetActiveRunsAction
   | IGetConsoleOutputAction
   | IGetStatusAction
   | IPlanGetStatusAction
@@ -255,12 +265,20 @@ export interface IPlanQueueMode {
     loop: boolean;
 }
 
-export interface IConsoleOutput{
-    text: string;
+export interface IActiveRuns {
+    success: boolean,
+    msg: string,
+    run_list: string[],
+    run_list_uid: string
+}
+
+export interface IConsoleOutput {
+    bluesky_console: string;
 }
 
 export const getConsoleOutput = async(): Promise<IConsoleOutput> => {
-    const res = await axiosInstance.get('/stream_console_output');
+    const res = await axiosInstance.get('/console_output');
+    console.log("CONSOLE API CALL")
     return res.data;
 }
 
@@ -543,8 +561,8 @@ export interface IActiveRun {
 }
 
 export const getActiveRuns = async(): Promise<IActiveRun[]> => {
-        const res = await axiosInstance.get(`/re/runs/active`);
-        return res.data.run_list;
+    const res = await axiosInstance.get(`/re/runs/active`);
+    return res.data.run_list;
 }
 
 export const getPreviews = async(runUid: string): Promise<string[]> => {

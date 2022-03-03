@@ -19,7 +19,9 @@ import { getStatus as getStatusAPI,
          IEditPlanObject, 
          ISubmitExcelState,
          ISubmitExcelAction,
-         IGetConsoleOutputAction} from "./queueserver"
+         IGetConsoleOutputAction,
+         getActiveRuns as getActiveRunsAPI,
+         IGetActiveRunsAction} from "./queueserver"
 import { IGetStatusAction, IPlanGetStatusAction, IPlanLoadingAction, IPlanObjectsAction, 
          IPlanSubmitAction, IPlanEditAction, IPlanEditState,
          IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes } from "./queueserver"
@@ -29,12 +31,24 @@ const loading: ActionCreator<IPlanLoadingAction> = () => ({
     type: PlanActionTypes.LOADING
 });
 
+export const getActiveRuns: ActionCreator<ThunkAction<Promise<AnyAction>, IApplicationState, null, IGetActiveRunsAction>> = () => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const activeRuns = await getActiveRunsAPI();
+        return dispatch({
+          activeRuns,
+          type: PlanActionTypes.GETACTIVERUNS
+        });
+    };
+};
+
 export const getConsoleOutput: ActionCreator<ThunkAction<Promise<AnyAction>, IApplicationState, null, IGetConsoleOutputAction>> = () => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
-        const console = await getConsoleOutputAPI();
+        console.log("CONSOLE ACTION");
+        const bluesky_console = await getConsoleOutputAPI();
         return dispatch({
-          console,
+          bluesky_console,
           type: PlanActionTypes.GETCONSOLEOUTPUT
         });
     };

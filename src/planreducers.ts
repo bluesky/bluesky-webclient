@@ -5,12 +5,12 @@ import { IPlanState, IPlanObjectsState,
          IAllowedPlansState, AllowedPlansActions, 
          AllowedPlansActionTypes, IAllowedPlans,
          IHistoricalPlansState, HistoricalPlansActions, 
-         HistoricalPlansActionTypes, IStatus, IConsoleOutput } from "./queueserver";
+         HistoricalPlansActionTypes, IStatus, IConsoleOutput, IActiveRuns } from "./queueserver";
 import { getQueuedPlans, getHistoricalPlans } from './planactions';
 import { store } from "./index"
 
 const initialConsoleOutputState: IConsoleOutput = {
-    text: ""
+    bluesky_console: ""
 }
 
 export const consoleOutputReducer: Reducer<IConsoleOutput, PlanActions> = (
@@ -19,8 +19,29 @@ export const consoleOutputReducer: Reducer<IConsoleOutput, PlanActions> = (
 ) => {
     switch (action.type) {
         case PlanActionTypes.GETCONSOLEOUTPUT: {
+            console.log("CONSOLE OUTPUT REDUCER1", action)
             return action;
-            console.log("CONSOLE OUTPUT REDUCER")
+        }
+        default: {
+            return state;
+        }
+    }
+};
+
+const initialActiveRunState: IActiveRuns = {
+    success: false,
+    msg: "",
+    run_list: [],
+    run_list_uid: ""
+}
+
+export const activeRunsReducer: Reducer<IActiveRuns, PlanActions> = (
+    state = initialActiveRunState,
+    action
+) => {
+    switch (action.type) {
+        case PlanActionTypes.GETACTIVERUNS: {
+            return action.run_list;
         }
         default: {
             return state;
