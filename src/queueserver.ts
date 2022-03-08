@@ -157,7 +157,7 @@ export interface IPlanModify {
 
 export interface IGetConsoleOutputAction {
     type: PlanActionTypes.GETCONSOLEOUTPUT,
-    text: string
+    bluesky_console: any
 }
 
 export interface IGetActiveRunsAction {
@@ -267,7 +267,7 @@ export interface IActiveRuns {
 }
 
 export interface IConsoleOutput {
-    text: string;
+    bluesky_console: any;
 }
 
 export const getConsoleOutput = async(): Promise<IConsoleOutput> => {

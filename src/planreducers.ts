@@ -8,7 +8,11 @@ import { IPlanState, IPlanObjectsState,
          HistoricalPlansActionTypes, IStatus, IConsoleOutput, IActiveRuns } from "./queueserver";
 
 const initialConsoleOutputState: IConsoleOutput = {
-    text: ""
+    bluesky_console: {
+        msg: "",
+        success: false,
+        text: ""
+    }
 }
 
 export const consoleOutputReducer: Reducer<IConsoleOutput, PlanActions> = (

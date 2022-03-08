@@ -2,12 +2,8 @@ import React from 'react';
 import Drawer from '@material-ui/core/Drawer';
 import List from '@material-ui/core/List';
 import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
-import { addQueueStop, IAllowedPlans, IConsoleOutput, submitExcel } from './queueserver';
-import { Avatar, Box, Button, ListItemSecondaryAction, MenuItem, Typography } from '@material-ui/core';
-import { Star } from '@material-ui/icons';
-import { BulkAdd } from './bulk';
+import { IConsoleOutput } from './queueserver';
+import { Box, Typography } from '@material-ui/core';
 
 type IProps = {
   open: boolean,
@@ -46,7 +42,7 @@ export class ConsoleDrawer extends React.Component<IProps, IState>{
                           </Typography>
                           <ListItem divider={true}>
                             <Typography>
-                              {this.props.console.text}
+                              {this.props.console.bluesky_console.text}
                             </Typography>
                           </ListItem>
                         </List>
