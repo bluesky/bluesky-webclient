@@ -8,7 +8,7 @@ import { IPlanState, IPlanObjectsState,
          HistoricalPlansActionTypes, IStatus, IConsoleOutput, IActiveRuns } from "./queueserver";
 
 const initialConsoleOutputState: IConsoleOutput = {
-    bluesky_console: ""
+    text: ""
 }
 
 export const consoleOutputReducer: Reducer<IConsoleOutput, PlanActions> = (
@@ -17,6 +17,7 @@ export const consoleOutputReducer: Reducer<IConsoleOutput, PlanActions> = (
 ) => {
     switch (action.type) {
         case PlanActionTypes.GETCONSOLEOUTPUT: {
+            console.log("CONSOLE REDUCER", action)
             return action;
         }
         default: {
