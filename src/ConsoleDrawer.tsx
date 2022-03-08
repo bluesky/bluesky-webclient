@@ -36,14 +36,16 @@ export class ConsoleDrawer extends React.Component<IProps, IState>{
                   <Box width="32vw" height="2vh"></Box>
                     <div>
                         <List>
-                          <Box width="20vw" height="5vh"></Box>
+                          <Box width="20vw" height="7vh"></Box>
                           <Typography align="center" variant="h5" component="h1" gutterBottom>
                              Console Output
                           </Typography>
                           <ListItem divider={true}>
-                            <Typography>
-                              {this.props.console.bluesky_console.text}
-                            </Typography>
+                            <Box sx={{ width: "32vw" }}>
+                              <Typography style={{ wordWrap: "break-word" }}>
+                                {this.props.console.bluesky_console.text}
+                              </Typography>
+                            </Box>
                           </ListItem>
                         </List>
                     </div>
