@@ -45,7 +45,6 @@ export const getActiveRuns: ActionCreator<ThunkAction<Promise<AnyAction>, IAppli
 export const getConsoleOutput: ActionCreator<ThunkAction<Promise<AnyAction>, IApplicationState, null, IGetConsoleOutputAction>> = () => {
     return async (dispatch: Dispatch) => {
         dispatch(loading());
-        console.log("CONSOLE ACTION");
         const bluesky_console = await getConsoleOutputAPI();
         return dispatch({
           bluesky_console,
@@ -65,6 +64,9 @@ export const getStatus: ActionCreator<ThunkAction<Promise<AnyAction>, IApplicati
         }
         if (state.status.plan_queue_uid != status.plan_queue_uid) {
             dispatch(getQueuedPlans())
+        }
+        if (state.status.run_list_uid != status.run_list_uid){
+            dispatch(getActiveRuns())
         }
         return dispatch({
           status,

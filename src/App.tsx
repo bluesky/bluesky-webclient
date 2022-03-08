@@ -6,8 +6,8 @@ import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import { IApplicationState } from './store';
 import { getStatus, getQueuedPlans, getHistoricalPlans,
-         clearQueue, deletePlan, modifyEnvironment, modifyQueue, submitEditedPlan, submitExcel, submitPlan, getAllowedPlans, getConsoleOutput } from './planactions';
-import { IPlanObject, IHistoricalPlan, IAllowedPlans, IStatus, IConsoleOutput } from './queueserver';
+         clearQueue, deletePlan, modifyEnvironment, modifyQueue, submitEditedPlan, submitExcel, submitPlan, getAllowedPlans, getConsoleOutput, getActiveRuns } from './planactions';
+import { IPlanObject, IHistoricalPlan, IAllowedPlans, IStatus, IConsoleOutput, IActiveRuns } from './queueserver';
 import { PlanList } from './PlanList';
 import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
@@ -72,6 +72,7 @@ interface IProps {
   modifyEnvironment: typeof modifyEnvironment;
   modifyQueue: typeof modifyQueue;
   getAllowedPlans: typeof getAllowedPlans;
+  getActiveRuns: typeof getActiveRuns;
   allowedPlans: IAllowedPlans;
   loading: boolean;
   loadingPlan: boolean;
@@ -82,7 +83,7 @@ interface IProps {
   historicalPlans: IHistoricalPlan[];
   status: IStatus;
   console: IConsoleOutput;
-  //previews: {[uid: string]: string[];}; I don't think this does anything.
+  activeRuns: IActiveRuns;
 }
 
 interface IState {
@@ -205,7 +206,7 @@ class App extends React.Component<IProps, IState> {
                           editItemUid={""} editable={true} status={this.props.status}> </PlanList>
               </Grid>
               <Grid item justify="center" spacing={10} xs={5}>
-                <CurrentPlan allowedPlans={this.props.allowedPlans} plans={this.props.plans}></CurrentPlan> 
+                <CurrentPlan allowedPlans={this.props.allowedPlans} plans={this.props.plans} activeRuns={this.props.activeRuns}></CurrentPlan> 
               </Grid>
               <Grid item justify="center" spacing={10} xs={3}>    
                 <HistoricalPlanList history={this.props.historicalPlans}> </HistoricalPlanList>
@@ -313,8 +314,9 @@ class App extends React.Component<IProps, IState> {
   }
 
   componentDidMount() {
-      //setInterval(this.props.getStatus, 500);
-      //setInterval(this.props.getConsoleOutput, 1000);
+      setInterval(this.props.getStatus, 500);
+      //setInterval(this.props.getActiveRuns, 1000);
+      setInterval(this.props.getConsoleOutput, 1000);
       this.props.getAllowedPlans();
   }
 }
@@ -331,6 +333,7 @@ const mapStateToProps = (store: IApplicationState) => {
     allowedPlans: store.allowedPlans.allowedPlans,
     status: store.status,
     console: store.console,
+    activeRuns: store.activeRuns,
   };
 };
 
@@ -348,6 +351,7 @@ const mapDispatchToProps = (dispatch: any) => {
     getQueuedPlans: () => dispatch(getQueuedPlans()),
     getHistoricalPlans: () => dispatch(getHistoricalPlans()),
     getAllowedPlans: () => dispatch(getAllowedPlans()),
+    getActiveRuns: () => dispatch(getActiveRuns()),
   };
 };
 

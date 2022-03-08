@@ -162,10 +162,7 @@ export interface IGetConsoleOutputAction {
 
 export interface IGetActiveRunsAction {
     type: PlanActionTypes.GETACTIVERUNS,
-    success: boolean,
-    msg: string,
-    run_list: string[],
-    run_list_uid: string
+    activeRuns: string[]
 }
 
 export interface IGetStatusAction {
@@ -266,10 +263,7 @@ export interface IPlanQueueMode {
 }
 
 export interface IActiveRuns {
-    success: boolean,
-    msg: string,
-    run_list: string[],
-    run_list_uid: string
+    activeRuns: string[],
 }
 
 export interface IConsoleOutput {

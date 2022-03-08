@@ -9,15 +9,15 @@ import Typography from '@material-ui/core/Typography';
 import { red } from '@material-ui/core/colors';
 import ShareIcon from '@material-ui/icons/Share';
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
-import { IPlanObject } from './queueserver';
+import { IActiveRuns, IPlanObject } from './queueserver';
 import { Box, GridList, GridListTile } from '@material-ui/core';
 import { Previews } from './Previews';
-import { getActiveRuns } from './queueserver'
 import { IAllowedPlans } from './queueserver';
 
 type Plans = {
   plans: IPlanObject[];
   allowedPlans: IAllowedPlans;
+  activeRuns: IActiveRuns;
 }
 
 interface IState {
@@ -95,30 +95,13 @@ export class CurrentPlan extends React.Component<Plans, IState> {
     }
   }
 
-  getActiveUids(){
-    getActiveRuns().then((result) => {
-      if (result !== undefined && result.length > 0 && result[0] !== undefined) {
-        this.setState({ activeRun: result[0] })
-      }
-    })
-  }
-
-  componentDidMount(){
-    this.getActiveUids.bind(this)
-    this.setState({activeRunsId: setInterval(this.getActiveUids.bind(this), 1000)});
-  }
-
-  componentWillUnmount(){
-    clearInterval(this.state.activeRunsId);
-  }
-
-  getUid(plans: IPlanObject[]){
-    if (plans.length === 0) {
-      return "";
+  getActiveRun(){
+    if (this.props.activeRuns.activeRuns !== undefined && this.props.activeRuns.activeRuns.length > 0 && this.props.activeRuns.activeRuns[0] !== undefined) {
+      return this.props.activeRuns.activeRuns[0]
     } else {
-      return plans[0].item_uid;
+      return ""
     }
-  }
+}
 
   render(){
     return (
@@ -136,7 +119,7 @@ export class CurrentPlan extends React.Component<Plans, IState> {
             </GridListTile>
             <GridListTile cols={2} style={{ height: 'auto' }}>
               <CardContent>
-                { this.state.activeRun.uid && process.env.REACT_APP_PREVIEW ? <Previews width="100%" runUid={this.state.activeRun.uid}/> : 
+                { this.getActiveRun() && process.env.REACT_APP_PREVIEW ? <Previews width="100%" runUid={this.getActiveRun()}/> : 
                   <Typography align="center" variant="h5" component="h1" >
                     Press the queue play button to start the plan.
                   </Typography> }            
