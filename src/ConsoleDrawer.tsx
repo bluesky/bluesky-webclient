@@ -26,14 +26,16 @@ export class ConsoleDrawer extends React.Component<IProps, IState>{
         return (
             <div>
               <Drawer anchor='left' open={this.props['open']}>
-                <Box width="43vw" height="5vh"></Box>
-                  <List style={{backgroundColor: "#000000", padding:"15px", borderColor: "#ffefb2"}}>
+                  <List style={{borderColor: "#ffefb2", backgroundColor:"#151515"}}>
+                    <Box width="100wx" height="3vh"></Box>
                     <ListItem divider={false}>
+                      <Box width="100wx" style={{padding:"15px"}} >
                         <Typography variant="body1" style={{ wordWrap: "break-word", color: "#ffefb2" }} >
                           <pre style={{ fontFamily: 'inherit' }}>
                             {this.props.console.bluesky_console.text}
                           </pre>
                         </Typography>
+                      </Box>
                     </ListItem>
                   </List>
               </Drawer>
