@@ -272,7 +272,6 @@ export interface IConsoleOutput {
 
 export const getConsoleOutput = async(): Promise<IConsoleOutput> => {
     const res = await axiosInstance.get('/console_output');
-    console.log("CONSOLE API CALL")
     return res.data;
 }
 
