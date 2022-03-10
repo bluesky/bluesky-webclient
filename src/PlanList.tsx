@@ -7,7 +7,7 @@ import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
 import PauseCircleOutlineIcon from '@material-ui/icons/PauseCircleOutline';
 import PlayCircleOutlineIcon from '@material-ui/icons/PlayCircleOutline';
 import Tooltip from '@material-ui/core/Tooltip';
-import LoopIcon from '@material-ui/icons/Loop';
+import AirlineSeatReclineExtraIcon from '@material-ui/icons/AirlineSeatReclineExtra';
 import AccountCircleIcon from '@material-ui/icons/AccountCircle';
 import { IPlanObject, QueueOps, EnvOps, incrementPosition, decrementPosition, IStatus } from './queueserver';
 import { Accordion, AccordionDetails, AccordionSummary, Box, Paper, Typography } from '@material-ui/core';
@@ -18,6 +18,7 @@ import ArrowDownwardIcon from '@material-ui/icons/ArrowDownward';
 import StopIcon from '@material-ui/icons/Stop';
 import EditIcon from '@material-ui/icons/Edit';
 import { green } from '@material-ui/core/colors';
+import DirectionsRunIcon from '@material-ui/icons/DirectionsRun';
 
 type Plans = {
   plans: IPlanObject[];
@@ -90,19 +91,28 @@ export class PlanList extends React.Component<Plans, IState>{
             <Box height="1vh"></Box>
               <Typography style={{ fontWeight: 500 }} align="center" variant="h4" component="h1" gutterBottom>
                 Queue
-                <Tooltip title={`${this.state.env} RE environment`}>
-                  <IconButton onClick={() => this.handleEnvClick()} edge="end" aria-label="comments">
-                    <LoopIcon />
+                {(this.props.status.worker_environment_state === "closed") ?
+                  <Tooltip title={"Enable Worker"}>
+                    <IconButton onClick={() => this.handleEnvClick()} edge="end" aria-label="comments">
+                      <AirlineSeatReclineExtraIcon fontSize="large"/>
+                    </IconButton>
+                  </Tooltip> :
+                  <Tooltip title={"Disable worker"}>
+                    <IconButton onClick={() => this.handleEnvClick()} edge="end" aria-label="comments">
+                      <DirectionsRunIcon fontSize="large"/>
+                    </IconButton>
+                  </Tooltip>
+                }
+                {(this.props.status.re_state === "running") ?
+                  <IconButton onClick={() => this.handlePause()} edge="end" aria-label="comments">
+                    <PauseCircleOutlineIcon fontSize="large"/>
+                  </IconButton> :
+                  <IconButton onClick={() => this.handlePlay()} edge="end" aria-label="comments">
+                    <PlayCircleOutlineIcon fontSize="large"/>
                   </IconButton>
-                </Tooltip>
-                <IconButton onClick={() => this.handlePlay()} edge="end" aria-label="comments">
-                  <PlayCircleOutlineIcon />
-                </IconButton>
-                <IconButton onClick={() => this.handlePause()} edge="end" aria-label="comments">
-                  <PauseCircleOutlineIcon />
-                </IconButton>
+                }
                 <IconButton onClick={() => this.props.clearQueue()} edge="end" aria-label="comments">
-                  <DeleteForeverIcon />
+                  <DeleteForeverIcon fontSize="large"/>
                 </IconButton>
               </Typography>
             <Box height="2vh"></Box>

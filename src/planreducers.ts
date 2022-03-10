@@ -21,7 +21,6 @@ export const consoleOutputReducer: Reducer<IConsoleOutput, PlanActions> = (
 ) => {
     switch (action.type) {
         case PlanActionTypes.GETCONSOLEOUTPUT: {
-            console.log("CONSOLE REDUCER", action)
             return action;
         }
         default: {
@@ -79,6 +78,7 @@ export const statusReducer: Reducer<IStatus, PlanActions> = (
 ) => {
     switch (action.type) {
         case PlanActionTypes.GETSTATUS: {
+            console.log("STATUS", action)
             return action.status;
         }
         default: {
