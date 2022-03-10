@@ -2,6 +2,7 @@ import { State } from "history";
 import { Action, ActionCreator, AnyAction, Dispatch } from "redux"
 import { ThunkAction, ThunkDispatch } from "redux-thunk"
 import { getStatus as getStatusAPI,
+         getConsoleOutput as getConsoleOutputAPI,
          getQueuedPlans as getQueuedPlansAPI,
          getAllowedPlans as getAllowedPlansAPI,
          getHistoricalPlans as getHistoricalPlansAPI,
@@ -11,21 +12,46 @@ import { getStatus as getStatusAPI,
          deletePlan as deletePlanAPI,
          submitEditedPlan as editPlanAPI,
          modifyEnvironment as modifyEnvironmentAPI, EnvOps,
-         modifyQueue as modifyQueueAPI, QueueOps, IAllowedPlansState, 
-                        IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, 
-                        AllowedPlansActionTypes, HistoricalPlansActionTypes, ISubmitPlanObject, 
-                        IEditPlanObject, 
-                        ISubmitExcelState,
-                        ISubmitExcelAction} from "./queueserver"
-import { IStatus, IGetStatusAction, IPlanGetStatusAction, IPlanLoadingAction, IPlanObjectsAction, 
+         modifyQueue as modifyQueueAPI, 
+         QueueOps, IAllowedPlansState, 
+         IHistoricalPlansState, IAllowedPlansGetAction, IHistoricalPlansGetAction, 
+         AllowedPlansActionTypes, HistoricalPlansActionTypes, ISubmitPlanObject, 
+         IEditPlanObject, 
+         ISubmitExcelState,
+         ISubmitExcelAction,
+         IGetConsoleOutputAction,
+         getActiveRuns as getActiveRunsAPI,
+         IGetActiveRunsAction} from "./queueserver"
+import { IGetStatusAction, IPlanGetStatusAction, IPlanLoadingAction, IPlanObjectsAction, 
          IPlanSubmitAction, IPlanEditAction, IPlanEditState,
          IPlanState, IPlanObjectsState, IPlanSubmitState, PlanActionTypes } from "./queueserver"
 import { IApplicationState } from "./store";
 
-
 const loading: ActionCreator<IPlanLoadingAction> = () => ({
     type: PlanActionTypes.LOADING
 });
+
+export const getActiveRuns: ActionCreator<ThunkAction<Promise<AnyAction>, IApplicationState, null, IGetActiveRunsAction>> = () => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const activeRuns = await getActiveRunsAPI();
+        return dispatch({
+          activeRuns,
+          type: PlanActionTypes.GETACTIVERUNS
+        });
+    };
+};
+
+export const getConsoleOutput: ActionCreator<ThunkAction<Promise<AnyAction>, IApplicationState, null, IGetConsoleOutputAction>> = () => {
+    return async (dispatch: Dispatch) => {
+        dispatch(loading());
+        const bluesky_console = await getConsoleOutputAPI();
+        return dispatch({
+          bluesky_console,
+          type: PlanActionTypes.GETCONSOLEOUTPUT
+        });
+    };
+};
 
 export const getStatus: ActionCreator<ThunkAction<Promise<AnyAction>, IApplicationState, null, IGetStatusAction>> = () => {
     return async (dispatch: ThunkDispatch<any, void, any>, getState) => {
@@ -38,6 +64,9 @@ export const getStatus: ActionCreator<ThunkAction<Promise<AnyAction>, IApplicati
         }
         if (state.status.plan_queue_uid != status.plan_queue_uid) {
             dispatch(getQueuedPlans())
+        }
+        if (state.status.run_list_uid != status.run_list_uid){
+            dispatch(getActiveRuns())
         }
         return dispatch({
           status,

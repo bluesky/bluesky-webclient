@@ -126,7 +126,9 @@ export const getHistoricalPlans = async(): Promise<IHistoricalPlan[]> => {
 }
 
 export enum PlanActionTypes {
+    GETACTIVERUNS = "PLANS/GETACTIVERUNS",
     GETPLANSTATUS = "PLANS/GETPLANSTATUS",
+    GETCONSOLEOUTPUT = "PLANS/GETCONSOLEOUTPUT",
     GETSTATUS = "PLANS/GETSTATUS",
     LOADING = "PLANS/LOADING",
     GETPLANLIST = "PLANS/GETPLANLIST",
@@ -151,6 +153,16 @@ export interface IPlan {
 export interface IPlanModify {
     msg: string;
     success: boolean;
+}
+
+export interface IGetConsoleOutputAction {
+    type: PlanActionTypes.GETCONSOLEOUTPUT,
+    bluesky_console: any
+}
+
+export interface IGetActiveRunsAction {
+    type: PlanActionTypes.GETACTIVERUNS,
+    activeRuns: string[]
 }
 
 export interface IGetStatusAction {
@@ -225,6 +237,8 @@ export interface IPlanModifyQueueLoadingAction {
 }
 
 export type PlanActions =
+  | IGetActiveRunsAction
+  | IGetConsoleOutputAction
   | IGetStatusAction
   | IPlanGetStatusAction
   | IPlanLoadingAction
@@ -246,6 +260,20 @@ export interface IPlanState {
 
 export interface IPlanQueueMode {
     loop: boolean;
+}
+
+export interface IActiveRuns {
+    activeRuns: string[],
+}
+
+export interface IConsoleOutput {
+    bluesky_console: any;
+}
+
+export const getConsoleOutput = async(): Promise<IConsoleOutput> => {
+    const res = await axiosInstance.get('/console_output');
+    console.log("CONSOLE API CALL")
+    return res.data;
 }
 
 export interface IStatus {
@@ -313,26 +341,24 @@ export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObj
     // TODO: Update this, once the have the correct information from the 
     // queueserver about which kwargs are list.
     for (const [key, value] of Object.entries(submitPlan.kwargs)) {
-      if ((key.slice(-1) !== 's') || (key == "axis") || (key == "nsteps")){
-        if (value[0] !== "None"){
-            // Convert string to a number if possible.
-            // TODO: Use the type information from the server (once available), 
-            // and use a numeric input.
-            if (isNaN(Number(value[0]))){
-                plan.kwargs[key] = value[0];
-            } else {
-                plan.kwargs[key] = Number(value[0])
+        // If it shouldn't be a list, remove square brackets.
+        if ((key.slice(-1) !== 's') || (key == "axis") || (key == "nsteps")){
+            if (value[0] !== "None"){
+                // Convert string to a number if possible.
+                // TODO: Use the type information from the server (once available), 
+                // and use a numeric input.
+                if (value[0] === ''){
+                    // Do nothing. Don't send kwargs that use default values.
+                } else if (isNaN(Number(value[0]))){
+                    plan.kwargs[key] = value[0];
+                } else {
+                    plan.kwargs[key] = Number(value[0])
+                }
             }
-	} else {
-		if (key == "md"){
-		plan.kwargs[key] = {"foo": "bar"};
-		} else {
-			plan.kwargs[key] = value;
-		}
-	}
-      }
+        } else {
+            plan.kwargs[key] = value;
+        }
     }
-
 
     if (submitPlan.name === "xafs"){
       plan.kwargs['bounds'] = "-30 40"
@@ -347,7 +373,7 @@ export const submitPlan = async(submitPlan: ISubmitPlanObject): Promise<IPlanObj
         {
             item: plan,
         });
-    console.log(res);
+    console.log("SUBMIT PLAN RESPONSE", res);
     return res.data.item;
 }
 
@@ -436,7 +462,6 @@ export const clearQueue = async(): Promise<IPlan> => {
     console.log(res);
     return res.data;
 }
-
 
 export const deletePlan = async(item_uid: string): Promise<IPlan> => {
     const res = await axiosInstance.post('/queue/item/remove',
@@ -530,8 +555,8 @@ export interface IActiveRun {
 }
 
 export const getActiveRuns = async(): Promise<IActiveRun[]> => {
-        const res = await axiosInstance.get(`/re/runs/active`);
-        return res.data.run_list;
+    const res = await axiosInstance.get(`/re/runs/active`);
+    return res.data.run_list;
 }
 
 export const getPreviews = async(runUid: string): Promise<string[]> => {

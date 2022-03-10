@@ -6,13 +6,14 @@ import Box from '@material-ui/core/Box';
 import Link from '@material-ui/core/Link';
 import { IApplicationState } from './store';
 import { getStatus, getQueuedPlans, getHistoricalPlans,
-         clearQueue, deletePlan, modifyEnvironment, modifyQueue, submitEditedPlan, submitExcel, submitPlan, getAllowedPlans } from './planactions';
-import { IPlanObject, IHistoricalPlan, IAllowedPlans } from './queueserver';
+         clearQueue, deletePlan, modifyEnvironment, modifyQueue, submitEditedPlan, submitExcel, submitPlan, getAllowedPlans, getConsoleOutput, getActiveRuns } from './planactions';
+import { IPlanObject, IHistoricalPlan, IAllowedPlans, IStatus, IConsoleOutput, IActiveRuns } from './queueserver';
 import { PlanList } from './PlanList';
 import { HistoricalPlanList } from './HistoricalPlanList';
 import { CurrentPlan } from './CurrentPlan';
 import { AppBar, Grid, IconButton, Popover, Toolbar } from '@material-ui/core';
 import { PlanDrawer } from './PlanDrawer';
+import { ConsoleDrawer } from './ConsoleDrawer';
 import { PlanFormContainer } from './PlanFormContainer';
 import nsls2Background from "./assets/nsls2_background.png";
 import logo from './assets/bluesky-logo.svg';
@@ -63,6 +64,7 @@ interface IProps {
   submitEditedPlan: typeof submitEditedPlan;
   submitExcel: (files: File[]) => void,
   getStatus: typeof getStatus;
+  getConsoleOutput: typeof getConsoleOutput;
   getQueuedPlans: typeof getQueuedPlans;
   getHistoricalPlans: typeof getHistoricalPlans;
   clearQueue: typeof clearQueue;
@@ -70,6 +72,7 @@ interface IProps {
   modifyEnvironment: typeof modifyEnvironment;
   modifyQueue: typeof modifyQueue;
   getAllowedPlans: typeof getAllowedPlans;
+  getActiveRuns: typeof getActiveRuns;
   allowedPlans: IAllowedPlans;
   loading: boolean;
   loadingPlan: boolean;
@@ -78,7 +81,9 @@ interface IProps {
   plans: IPlanObject[];
   loadingHistoricalPlans: boolean;
   historicalPlans: IHistoricalPlan[];
-  //previews: {[uid: string]: string[];}; I don't think this does anything.
+  status: IStatus;
+  console: IConsoleOutput;
+  activeRuns: IActiveRuns;
 }
 
 interface IState {
@@ -93,7 +98,8 @@ interface IState {
   queue: string;
   onQueueChange: (queue: string) => void;
   files: File[];
-  drawerOpen: boolean;
+  actionDrawerOpen: boolean;
+  consoleDrawerOpen: boolean;
   planFormVisible: boolean;
 }
 
@@ -145,7 +151,8 @@ class App extends React.Component<IProps, IState> {
       queue: "Start",
       onQueueChange: this.handleQueueChange,
       files: [],
-      drawerOpen: false,
+      actionDrawerOpen: false,
+      consoleDrawerOpen: false,
       planFormVisible: false,
     };
 
@@ -166,8 +173,11 @@ class App extends React.Component<IProps, IState> {
               <AppBar position="absolute" style={{zIndex: 2000}}>
                 <Toolbar>
                   <Box display='flex' flexGrow={1}>
-                    <IconButton color="inherit" aria-label="menu" onClick={this.toggleDrawer.bind(this)}>
+                    <IconButton color="inherit" aria-label="menu" onClick={this.toggleActionDrawer.bind(this)}>
                       Actions
+                    </IconButton>
+                    <IconButton color="inherit" aria-label="menu" onClick={this.toggleConsoleDrawer.bind(this)}>
+                      Console
                     </IconButton>
                     <img src={logo} alt="logo" style={{position: 'absolute', 
                                                         height: '100%',
@@ -193,19 +203,19 @@ class App extends React.Component<IProps, IState> {
                 <PlanList editPlan={this.editPlan} deletePlan={this.props.deletePlan} 
                           clearQueue={this.props.clearQueue} plans={this.props.plans}
                           modifyEnvironment={this.props.modifyEnvironment} modifyQueue={this.props.modifyQueue}
-                          editItemUid={""} editable={true}> </PlanList>
+                          editItemUid={""} editable={true} status={this.props.status}> </PlanList>
               </Grid>
               <Grid item justify="center" spacing={10} xs={5}>
-                <CurrentPlan allowedPlans={this.props.allowedPlans} plans={this.props.plans}></CurrentPlan> 
+                <CurrentPlan allowedPlans={this.props.allowedPlans} plans={this.props.plans} activeRuns={this.props.activeRuns}></CurrentPlan> 
               </Grid>
               <Grid item justify="center" spacing={10} xs={3}>    
                 <HistoricalPlanList history={this.props.historicalPlans}> </HistoricalPlanList>
               </Grid>   
             </Grid>
             <Copyright/>
-            <PlanDrawer open={this.state.drawerOpen} selectedPlan={this.state.selectedPlan} 
+            <PlanDrawer open={this.state.actionDrawerOpen} selectedPlan={this.state.selectedPlan} 
                         handleSelect={this.handleSelectPlan} plans={this.props.allowedPlans}/>
-
+            <ConsoleDrawer open={this.state.consoleDrawerOpen} console={this.props.console}/>
           </Container>
             <Popover 
                     anchorOrigin={{
@@ -232,7 +242,7 @@ class App extends React.Component<IProps, IState> {
 
 
   private handleSelectPlan = (selectedPlan: string) => {
-      this.closeDrawer()
+      this.closeActionDrawer()
       this.showPlanForm()
       this.setState({ selectedPlan: selectedPlan });  // Check this line
       this.setState({ editItemUid: ""});
@@ -256,15 +266,31 @@ class App extends React.Component<IProps, IState> {
     });
   }
 
-  private toggleDrawer(){
+  private toggleActionDrawer(){
     this.setState({
-      drawerOpen: !this.state.drawerOpen
+      actionDrawerOpen: !this.state.actionDrawerOpen
     })
+    if (this.state.consoleDrawerOpen){
+      this.setState({
+        consoleDrawerOpen: false
+      })
+    }
   }
 
-  private closeDrawer(){
+  private toggleConsoleDrawer(){
     this.setState({
-      drawerOpen: false
+      consoleDrawerOpen: !this.state.consoleDrawerOpen
+    })
+    if (this.state.actionDrawerOpen){
+      this.setState({
+        actionDrawerOpen: false
+      })
+    }
+  }
+
+  private closeActionDrawer(){
+    this.setState({
+      actionDrawerOpen: false
     })
   }
 
@@ -289,6 +315,7 @@ class App extends React.Component<IProps, IState> {
 
   componentDidMount() {
       setInterval(this.props.getStatus, 500);
+      setInterval(this.props.getConsoleOutput, 1000);
       this.props.getAllowedPlans();
   }
 }
@@ -304,9 +331,10 @@ const mapStateToProps = (store: IApplicationState) => {
     historicalPlans: store.historicalPlans.historicalPlans,
     allowedPlans: store.allowedPlans.allowedPlans,
     status: store.status,
+    console: store.console,
+    activeRuns: store.activeRuns,
   };
 };
-
 
 const mapDispatchToProps = (dispatch: any) => {
   return {
@@ -316,11 +344,13 @@ const mapDispatchToProps = (dispatch: any) => {
     submitExcel: (files: File[]) => dispatch(submitExcel(files)),
     submitEditedPlan: (itemUid: string, planId: number, param: number) => dispatch(submitEditedPlan(itemUid, planId, param)),
     getStatus: () => dispatch(getStatus()),
+    getConsoleOutput: () => dispatch(getConsoleOutput()),
     clearQueue: () => dispatch(clearQueue()),
     deletePlan: () => dispatch(deletePlan()),
     getQueuedPlans: () => dispatch(getQueuedPlans()),
     getHistoricalPlans: () => dispatch(getHistoricalPlans()),
     getAllowedPlans: () => dispatch(getAllowedPlans()),
+    getActiveRuns: () => dispatch(getActiveRuns()),
   };
 };
 

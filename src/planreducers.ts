@@ -5,9 +5,48 @@ import { IPlanState, IPlanObjectsState,
          IAllowedPlansState, AllowedPlansActions, 
          AllowedPlansActionTypes, IAllowedPlans,
          IHistoricalPlansState, HistoricalPlansActions, 
-         HistoricalPlansActionTypes, IStatus } from "./queueserver";
-import { getQueuedPlans, getHistoricalPlans } from './planactions';
-import { store } from "./index"
+         HistoricalPlansActionTypes, IStatus, IConsoleOutput, IActiveRuns } from "./queueserver";
+
+const initialConsoleOutputState: IConsoleOutput = {
+    bluesky_console: {
+        msg: "",
+        success: false,
+        text: ""
+    }
+}
+
+export const consoleOutputReducer: Reducer<IConsoleOutput, PlanActions> = (
+    state = initialConsoleOutputState,
+    action
+) => {
+    switch (action.type) {
+        case PlanActionTypes.GETCONSOLEOUTPUT: {
+            console.log("CONSOLE REDUCER", action)
+            return action;
+        }
+        default: {
+            return state;
+        }
+    }
+};
+
+const initialActiveRunState: IActiveRuns = {
+    activeRuns: []
+}
+
+export const activeRunsReducer: Reducer<IActiveRuns, PlanActions> = (
+    state = initialActiveRunState,
+    action
+) => {
+    switch (action.type) {
+        case PlanActionTypes.GETACTIVERUNS: {
+            return action;
+        }
+        default: {
+            return state;
+        }
+    }
+};
 
 const initialStatusState: IStatus = {
         "msg": "RE Manager",
