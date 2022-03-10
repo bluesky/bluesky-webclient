@@ -32,7 +32,7 @@ export class HistoricalPlanList extends React.Component<HistoricalPlans, Histori
                     <Typography style={{ fontWeight: 500 }} align="center" variant="h4" component="h1" gutterBottom>
                       History
                       <IconButton onClick={() => clearHistory()} edge="end" aria-label="comments">
-                        <DeleteForeverIcon />
+                        <DeleteForeverIcon fontSize="large"/>
                       </IconButton>
                     </Typography>
             <Box height="2vh"></Box>
